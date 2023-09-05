@@ -42,6 +42,11 @@ const GlobalStyle = css`
 
 		--color-red: #ff4545;
 		--color-dark: #090b16;
+
+		--transition-duration: 0.2;
+
+		--btn-padding: 16px 24px;
+		--btn-font-size: 16px;
 	}
 
 	* {
@@ -51,17 +56,27 @@ const GlobalStyle = css`
 		border: 0;
 		vertical-align: baseline;
 		font-family: 'DM Mono', monospace;
-		font-family: 'Schibsted Grotesk', sans-serif;
+		font-family: 'Noto Sans KR', sans-serif;
 	}
 
 	body[data-theme='light'] {
-		--font-color: #000;
-		--body-bg-color: #fff;
+		--position-left: 2px;
+		--btn-text-color: var(--color-white);
+		--btn-bg-color: var(--color-dark);
+		--btn-hover-color: var(--color-gray-700);
+		--btn-hover-bg-color: var(--color-gray-800);
+		color: var(--color-dark);
+		background-color: var(--color-white);
 	}
 
 	body[data-theme='dark'] {
-		--font-color: #fff;
-		--body-bg-color: #000;
+		--position-left: 26px;
+		--btn-text-color: var(--color-dark);
+		--btn-bg-color: var(--color-white);
+		--btn-hover-color: var(--color-gray-200);
+		--btn-hover-bg-color: var(--color-gray-200);
+		color: var(--color-white);
+		background-color: var(--color-dark);
 	}
 
 	html {

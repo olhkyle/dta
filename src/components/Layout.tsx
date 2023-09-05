@@ -1,5 +1,11 @@
+import { Nav } from '.';
+
 const Layout = () => {
-	return <>Layout</>;
+	return (
+		<>
+			<Nav />
+		</>
+	);
 };
 
 export default Layout;

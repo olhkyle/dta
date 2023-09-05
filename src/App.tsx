@@ -1,7 +1,9 @@
 import { QueryClientProvider, QueryClient } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
+import { store } from './store/store';
 import { Details, Home, Register, SignIn } from './pages';
 import { Layout } from './components';
 import GlobalStyle from './styles/GlobalStyle';
@@ -43,9 +45,11 @@ const router = createBrowserRouter([
 const App = () => {
 	return (
 		<QueryClientProvider client={queryClient}>
-			<Global styles={GlobalStyle} />
-			<RouterProvider router={router} />
-			<ReactQueryDevtools initialIsOpen={false} />
+			<ReduxProvider store={store}>
+				<Global styles={GlobalStyle} />
+				<RouterProvider router={router} />
+				<ReactQueryDevtools initialIsOpen={false} />
+			</ReduxProvider>
 		</QueryClientProvider>
 	);
 };
