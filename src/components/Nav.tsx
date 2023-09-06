@@ -1,24 +1,48 @@
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
+import { RiMenuFill } from 'react-icons/ri';
 import routes from '../constants/routes';
 import { Flex, NavLink, ThemeButton } from './common';
-import { RiMenuFill } from 'react-icons/ri';
 import { SideNav } from '.';
 import useSideNavActive from '../hooks/useSideNavActive';
+import { useAppSelector } from '../store/store';
+import { getUser } from '../store/userSlice';
+import { logOut } from '../service/auth';
+import UserProfile from './auth/UserProfile';
+import useSetUser from '../hooks/useSetUser';
 
 const Nav = () => {
-	const [active, toggle] = useSideNavActive();
+	const navigate = useNavigate();
+
+	const {
+		active,
+		actions: { toggle, close },
+	} = useSideNavActive();
+	const username = useAppSelector(getUser);
+	const { setLogoutUser } = useSetUser();
+
+	const handleLogout = async () => {
+		try {
+			await logOut();
+			setLogoutUser();
+		} catch (e) {
+			console.error(e);
+		} finally {
+			navigate(routes.HOME);
+		}
+	};
 
 	return (
 		<>
 			<Container>
-				<Logo to={routes.HOME} onClick={toggle}>
-					<h1>Ttax</h1>
+				<Logo to={routes.HOME} onClick={close}>
+					<h1 className="underlined">Ttax</h1>
 				</Logo>
 				<NavLinkContainer>
 					<Flex justifyContent="space-between" gap="0.5rem">
 						<Details to={routes.DETAILS}>월별 세부 명세</Details>
 						<Register to={routes.REGISTER}>일용직 등록</Register>
-						<Login to={routes.LOGIN}>로그인</Login>
+						{username ? <UserProfile name={username} onLogout={handleLogout} /> : <Login to={routes.LOGIN}>로그인</Login>}
 					</Flex>
 					<ThemeButton />
 				</NavLinkContainer>
@@ -26,8 +50,8 @@ const Nav = () => {
 					<RiMenuFill size="32" color="var(--text-color)" />
 				</NavToggleButton>
 			</Container>
-			{active && <SideNav />}
-			{/* TODO: overlay */}
+			{active && <SideNav onLogout={handleLogout} />}
+			{active && <Overlay onClick={close} />}
 		</>
 	);
 };
@@ -117,6 +141,16 @@ const NavToggleButton = styled.button`
 	@media screen and (min-width: 768px) {
 		display: none;
 	}
+`;
+
+const Overlay = styled.div`
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	backdrop-filter: blur(10px);
+	z-index: 99;
 `;
 
 export default Nav;

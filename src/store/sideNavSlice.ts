@@ -14,14 +14,19 @@ const sideNavSlice = createSlice({
 	name: 'sideNav',
 	initialState,
 	reducers: {
-		setIsActive: state => {
+		setIsActive: (state: SideNavState) => {
 			localStorage.setItem(KEY, JSON.stringify(!state.active));
 
 			state.active = !state.active;
 		},
+		deActivate: (state: SideNavState) => {
+			localStorage.removeItem(KEY);
+
+			state.active = false;
+		},
 	},
 });
 
-export const { setIsActive } = sideNavSlice.actions;
+export const { setIsActive, deActivate } = sideNavSlice.actions;
 
 export default sideNavSlice.reducer;
