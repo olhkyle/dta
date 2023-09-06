@@ -45,7 +45,9 @@ const GlobalStyle = css`
 
 		--transition-duration: 0.2;
 
-		--btn-padding: 16px 24px;
+		--btn-sm-padding: 8px 16px;
+		--btn-md-padding: 12px 20px;
+		--btn-lg-padding: 16px 24px;
 		--btn-font-size: 16px;
 	}
 
@@ -65,6 +67,9 @@ const GlobalStyle = css`
 		--btn-bg-color: var(--color-dark);
 		--btn-hover-color: var(--color-gray-700);
 		--btn-hover-bg-color: var(--color-gray-800);
+		--outline-color: var(--color-gray-400);
+		--text-color: var(--color-dark);
+		--bg-color: var(--color-white);
 		color: var(--color-dark);
 		background-color: var(--color-white);
 	}
@@ -75,6 +80,9 @@ const GlobalStyle = css`
 		--btn-bg-color: var(--color-white);
 		--btn-hover-color: var(--color-gray-200);
 		--btn-hover-bg-color: var(--color-gray-200);
+		--outline-color: var(--color-gray-800);
+		--text-color: var(--color-white);
+		--bg-color: var(--color-dark);
 		color: var(--color-white);
 		background-color: var(--color-dark);
 	}
