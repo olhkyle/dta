@@ -7,6 +7,8 @@ import { store } from './store/store';
 import { Details, Home, Register, SignIn } from './pages';
 import { Layout } from './components';
 import GlobalStyle from './styles/GlobalStyle';
+import AuthenticationGuard from './guard/AuthenticationGuard';
+import routes from './constants/routes';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -27,12 +29,12 @@ const router = createBrowserRouter([
 				element: <Home />,
 			},
 			{
-				path: '/register',
-				element: <Register />,
+				path: routes.REGISTER,
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Register />} />,
 			},
 			{
 				path: '/details',
-				element: <Details />,
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Details />} />,
 			},
 			{
 				path: '/signin',

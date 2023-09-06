@@ -1,9 +1,14 @@
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { z } from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { signInSchema } from './schema';
 import { Button, Input, Spacer, Text } from '..';
+import { signIn } from '../../service/auth';
+import useSetUser from '../../hooks/useSetUser';
+import { useNavigate } from 'react-router-dom';
+import routes from '../../constants/routes';
 
 type SigninSchema = z.infer<typeof signInSchema>;
 
@@ -16,7 +21,24 @@ const SignInForm = () => {
 		setFocus,
 	} = useForm<SigninSchema>({ resolver: zodResolver(signInSchema), shouldFocusError: true });
 
-	const onSubmit = () => {};
+	const { setCurrentUser } = useSetUser();
+	const navigate = useNavigate();
+
+	const onSubmit = async (data: SigninSchema) => {
+		try {
+			const userData = await signIn(data);
+
+			setCurrentUser({ ...userData });
+			navigate(routes.HOME);
+		} catch (e) {
+			reset();
+			console.error(e);
+		}
+	};
+
+	useEffect(() => {
+		setFocus('email');
+	}, [setFocus]);
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
@@ -25,7 +47,7 @@ const SignInForm = () => {
 					type="text"
 					placeholder="이메일을 입력해 주세요."
 					{...register('email')}
-					error={errors?.email?.message!}
+					error={errors?.email?.message}
 					width={500}
 				/>
 			</Input>
@@ -35,7 +57,7 @@ const SignInForm = () => {
 					type="password"
 					placeholder="비밀번호를 입력해 주세요."
 					{...register('password')}
-					error={errors?.password?.message!}
+					error={errors?.password?.message}
 					width={500}
 				/>
 			</Input>

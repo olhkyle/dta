@@ -1,11 +1,12 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { themeReducer, sideNavReducer } from '.';
+import { themeReducer, sideNavReducer, userReducer } from '.';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export const store = configureStore({
 	reducer: {
 		theme: themeReducer,
 		sideNav: sideNavReducer,
+		user: userReducer,
 	},
 });
 
