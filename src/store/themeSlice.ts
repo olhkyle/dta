@@ -6,7 +6,7 @@ interface ThemeState {
 
 const initialState: ThemeState = {
 	theme: localStorage.getItem('theme') ?? (window.matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light'),
-};
+} as const;
 
 export const themeSlice = createSlice({
 	name: 'theme',

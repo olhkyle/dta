@@ -1,11 +1,10 @@
-import { RootState, useAppDispatch } from '../store/store';
-import { useSelector } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../store/store';
 import { toggleTheme as setTheme } from '../store/themeSlice';
 import { useEffect } from 'react';
 
 const useTheme = () => {
 	const dispatch = useAppDispatch();
-	const theme = useSelector((state: RootState) => state.theme);
+	const theme = useAppSelector(({ theme }) => theme);
 
 	const toggleTheme = () => dispatch(setTheme());
 
@@ -13,7 +12,7 @@ const useTheme = () => {
 		document.body.dataset.theme = theme.theme;
 	}, [theme]);
 
-	return { theme, toggleTheme };
+	return [theme, toggleTheme] as const;
 };
 
 export default useTheme;

@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { HiSun, HiMoon } from 'react-icons/hi';
 
 const ThemeButton = () => {
-	const { theme, toggleTheme } = useTheme();
+	const [theme, toggleTheme] = useTheme();
 
 	console.log(theme);
 
