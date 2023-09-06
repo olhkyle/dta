@@ -1,7 +1,7 @@
-import React from 'react';
+import { SignInForm } from '../components';
 
 const SignIn = () => {
-	return <>SignIn</>;
+	return <SignInForm />;
 };
 
 export default SignIn;
