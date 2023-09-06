@@ -38,13 +38,13 @@ interface TextFieldProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> 
 	type: 'text' | 'password';
 	name: string;
 	placeholder: string;
-	error: string;
+	error: string | undefined;
 	width: number;
 }
 
 Input.TextField = forwardRef(({ type, name, placeholder, error, width, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
 	return (
-		<TextField type={type} name={name} placeholder={placeholder} ref={ref} error={error} autoComplete="off" width={width} {...props} />
+		<TextField type={type} name={name} placeholder={placeholder} ref={ref} error={error!} autoComplete="off" width={width} {...props} />
 	);
 });
 
