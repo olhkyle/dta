@@ -23,6 +23,7 @@ const GlobalStyle = css`
 		--color-gray-800: #2e3039;
 		--color-gray-900: #1f2028;
 
+		--color-green-10: #46df8e60;
 		--color-green-50: #46df8e;
 		--color-green-100: #76e4b8;
 		--color-green-200: #3fd599;
@@ -49,6 +50,10 @@ const GlobalStyle = css`
 		--btn-md-padding: 12px 20px;
 		--btn-lg-padding: 16px 24px;
 		--btn-font-size: 16px;
+
+		--toastify-color-success: var(--color-green-50);
+		--toastify-color-error: var(--color-red);
+		--toastify-font-family: 'Noto Sans KR';
 	}
 
 	* {
@@ -135,6 +140,14 @@ const GlobalStyle = css`
 			outline: none;
 			box-shadow: none;
 		}
+	}
+
+	::-moz-selection {
+		background: var(--color-green-10);
+	}
+
+	::selection {
+		background: var(--color-green-10);
 	}
 
 	.underlined {
