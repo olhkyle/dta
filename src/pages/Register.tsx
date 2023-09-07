@@ -1,5 +1,11 @@
+import { Flex, RegisterForm } from '../components';
+
 const Register = () => {
-	return <>Register People</>;
+	return (
+		<Flex margin="0 auto">
+			<RegisterForm />
+		</Flex>
+	);
 };
 
 export default Register;
