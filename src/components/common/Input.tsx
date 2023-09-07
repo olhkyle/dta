@@ -1,14 +1,15 @@
 import { Children, ForwardedRef, HTMLAttributes, ReactElement, ReactNode, cloneElement, forwardRef } from 'react';
 import styled from '@emotion/styled';
-import { useId } from '../../hooks/useId';
+import { useId } from '../../hooks';
 
 interface InputProps extends HTMLAttributes<HTMLInputElement> {
 	label?: ReactNode;
 	children: ReactElement;
 	bottomText?: string;
+	rightText?: string;
 }
 
-const Input = ({ label, children, bottomText, ...props }: InputProps) => {
+const Input = ({ label, children, bottomText, rightText, ...props }: InputProps) => {
 	const child = Children.only(children);
 	const generatedId = useId('input');
 	const id = child.props.id ?? generatedId;
@@ -21,14 +22,17 @@ const Input = ({ label, children, bottomText, ...props }: InputProps) => {
 				css={{
 					display: `${label ? 'inline-block' : 'none'}`,
 					padding: '4px 0',
-					fontSize: '16px',
+					fontSize: '17px',
 					fontWeight: '500',
 					lineHeight: 1.6,
 					color: 'var(--text-color)',
 				}}>
 				{label}
 			</label>
-			{cloneElement(child, { id, ...child.props })}
+			<div css={{ display: 'flex', alignItems: 'center' }}>
+				{cloneElement(child, { id, ...child.props })}
+				{rightText !== null ? <RightText>{rightText}</RightText> : null}
+			</div>
 			{bottomText !== null ? <BottomText isError={isError}>{bottomText}</BottomText> : null}
 		</div>
 	);
@@ -48,10 +52,16 @@ Input.TextField = forwardRef(({ type, name, placeholder, error, width, ...props 
 	);
 });
 
+const RightText = styled.span`
+	display: inline-block;
+	margin-left: 0.5rem;
+	font-weight: 600;
+`;
+
 const BottomText = styled.p<{ isError: boolean }>`
 	display: inline-block;
 	margin-top: 4px;
-	color: ${({ isError }) => (isError ? 'var(--color-green-50)' : 'var(--color-gray-400)')};
+	color: ${({ isError }) => (isError ? 'var(--color-green-300)' : 'var(--color-gray-400)')};
 	font-size: 14px;
 	font-weight: 400;
 `;
@@ -59,8 +69,8 @@ const BottomText = styled.p<{ isError: boolean }>`
 const TextField = styled.input<{ width: number; error: string }>`
 	margin: 0;
 	padding: 0.75rem 1rem;
-	width: 340px;
-	font-size: 14px;
+	min-width: 200px;
+	font-size: 15px;
 	line-height: 24px;
 	border: none;
 	border-radius: 8px;
