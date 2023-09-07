@@ -13,4 +13,4 @@ const useId = (prefix?: string) => {
 	return id;
 };
 
-export { generateId, useId };
+export default useId;

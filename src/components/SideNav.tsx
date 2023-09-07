@@ -3,7 +3,7 @@ import { Button, Flex, NavLink, ThemeButton } from '.';
 import routes from '../constants/routes';
 import { useAppSelector } from '../store/store';
 import { getUser } from '../store/userSlice';
-import useSideNavActive from '../hooks/useSideNavActive';
+import { useSideNavActive } from '../hooks';
 
 interface SideNavProps {
 	onLogout: () => void;

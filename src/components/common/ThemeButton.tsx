@@ -1,6 +1,6 @@
-import useTheme from '../../hooks/useTheme';
 import styled from '@emotion/styled';
 import { HiSun, HiMoon } from 'react-icons/hi';
+import { useTheme } from '../../hooks';
 
 const ThemeButton = () => {
 	const [, toggleTheme] = useTheme();

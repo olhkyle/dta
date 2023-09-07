@@ -11,6 +11,7 @@ const Main = ({ children }: MainProps) => {
 
 const Container = styled.main`
 	margin: 0 auto;
+	padding: 0 1rem 5rem 1rem;
 
 	@media screen and (min-width: 640px) {
 		width: 640px;

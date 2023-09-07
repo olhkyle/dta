@@ -18,7 +18,7 @@ const NavLink = ({ to, children, onClick, ...props }: NavLinkProps) => {
 
 const StyledLink = styled(Link)`
 	padding: var(--btn-md-padding);
-	font-size: var(--btn-font-size);
+	font-size: 17px;
 	font-weight: 600;
 	line-height: 1;
 	border-radius: 9999px;
