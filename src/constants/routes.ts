@@ -6,3 +6,4 @@ const routes = {
 } as const;
 
 export default routes;
+export type Route<T> = T[keyof T];

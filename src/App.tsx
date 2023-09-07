@@ -33,11 +33,11 @@ const router = createBrowserRouter([
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Register />} />,
 			},
 			{
-				path: '/details',
+				path: routes.DETAILS,
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Details />} />,
 			},
 			{
-				path: '/signin',
+				path: routes.LOGIN,
 				element: <SignIn />,
 			},
 		],
