@@ -1,15 +1,15 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { RiMenuFill } from 'react-icons/ri';
+import { toast } from 'react-toastify';
 import routes from '../constants/routes';
 import { Flex, NavLink, ThemeButton } from './common';
 import { SideNav } from '.';
-import useSideNavActive from '../hooks/useSideNavActive';
 import { useAppSelector } from '../store/store';
 import { getUser } from '../store/userSlice';
 import { logOut } from '../service/auth';
 import UserProfile from './auth/UserProfile';
-import useSetUser from '../hooks/useSetUser';
+import { useSetUser, useSideNavActive } from '../hooks';
 
 const Nav = () => {
 	const navigate = useNavigate();
@@ -25,7 +25,9 @@ const Nav = () => {
 		try {
 			await logOut();
 			setLogoutUser();
+			toast.success('성공적으로 로그아웃 되었습니다.');
 		} catch (e) {
+			toast.error('문제가 발생하였습니다.');
 			console.error(e);
 		} finally {
 			navigate(routes.HOME);
