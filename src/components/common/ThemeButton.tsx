@@ -7,7 +7,7 @@ const ThemeButton = () => {
 
 	return (
 		<Container onClick={toggleTheme}>
-			<Switch className="ring-4 ring-blue-primary" />
+			<Switch />
 			<BtnText>
 				<BtnTextIcon>
 					<HiSun size="20" color="var(--color-dark)" />
@@ -36,7 +36,7 @@ const Switch = styled.div`
 	background-color: #fff;
 	border-radius: 100%;
 	transition: left calc(var(--transition-duration) * 1s);
-	outline: 2px solid var(--color-green-50);
+	outline: 3px solid var(--color-green-50);
 `;
 
 const BtnText = styled.div`
