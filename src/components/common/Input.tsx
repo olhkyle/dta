@@ -39,7 +39,7 @@ const Input = ({ label, children, bottomText, rightText, ...props }: InputProps)
 };
 
 interface TextFieldProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> {
-	type: 'text' | 'password';
+	type: 'text' | 'number' | 'password';
 	name: string;
 	placeholder: string;
 	error: string | undefined;
