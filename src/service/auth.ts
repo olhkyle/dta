@@ -7,12 +7,12 @@ interface SignIn {
 	password: string;
 }
 
-const COLLECTION = 'user';
+const COLLECTION_NAME = 'user';
 
 const signIn = async ({ email, password }: SignIn) => {
 	await signInWithEmailAndPassword(auth, email, password);
 
-	const userDocRef = doc(db, COLLECTION, email);
+	const userDocRef = doc(db, COLLECTION_NAME, email);
 	const userSnapShot = await getDoc(userDocRef);
 
 	const userData = userSnapShot.data();
