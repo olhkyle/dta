@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, DatePicker, Flex, Input, Select, Spacer, Text } from '..';
+import { Button, DatePicker, Flex, Input, NativeSelect, Spacer, Text } from '..';
 import { RegisterSchema, registerSchema } from './schema';
 import { addWorker } from '../../service/workData';
 import { useNavigate } from 'react-router-dom';
@@ -109,9 +109,9 @@ const RegisterForm = () => {
 			/>
 
 			<Flex alignItems="flex-start" gap="1rem">
-				<Select label="송금 유형" bottomText={errors?.remittanceType?.message}>
-					<Select.Field {...register('remittanceType')} error={errors?.remittanceType?.message} width={250} />
-				</Select>
+				<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
+					<NativeSelect.Field id="송금 유형" {...register('remittanceType')} error={errors?.remittanceType?.message} width={250} />
+				</NativeSelect>
 
 				<Controller
 					name="remittance"

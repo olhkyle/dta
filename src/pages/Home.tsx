@@ -2,16 +2,27 @@ import { useQuery } from '@tanstack/react-query';
 import { getWorkersQuery } from '../queries';
 import styled from '@emotion/styled';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
-import { Text } from '../components';
+import { Badge, CustomSelect, Flex, SearchInput, Text } from '../components';
+import { months, years } from '../constants/day';
 
 const Home = () => {
+	//TODO: keyword에 따라 debounce로 가져오기 구현
 	const { data } = useQuery(getWorkersQuery());
+
+	// TODO: 최신순 - 오래된 순 / 월 / 년도
 
 	return (
 		<>
-			<Text typo="h5" color="var(--text-color)">
-				총 합계 : {formatCurrencyUnit(data?.sumOfPayment)}
-			</Text>
+			<SearchInput />
+			<Flex justifyContent="space-between">
+				<Flex margin="2rem 0" gap="1rem">
+					<CustomSelect data={years} defaultValue={years[0]} width={120} />
+					<CustomSelect data={months} defaultValue={months[0]} width={120} />
+				</Flex>
+				<Badge label="총 합계" bgColor="var(--text-color)">
+					{formatCurrencyUnit(data?.sumOfPayment)}
+				</Badge>
+			</Flex>
 
 			<br />
 
@@ -35,6 +46,22 @@ const Home = () => {
 							<td>{formatCurrencyUnit(sumOfPayment)}</td>
 						</tr>
 					))}
+					{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
+						<tr key={workerName}>
+							<td>{idx + 4}</td>
+							<td>{workerName}</td>
+							<td>{workedDate.getMonth() + 1}월</td>
+							<td>{formatCurrencyUnit(sumOfPayment)}</td>
+						</tr>
+					))}
+					{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
+						<tr key={workerName}>
+							<td>{idx + 8}</td>
+							<td>{workerName}</td>
+							<td>{workedDate.getMonth() + 1}월</td>
+							<td>{formatCurrencyUnit(sumOfPayment)}</td>
+						</tr>
+					))}
 				</tbody>
 			</Table>
 		</>
@@ -45,6 +72,7 @@ const Table = styled.table`
 	display: flex;
 	flex-direction: column;
 	gap: 0.8rem;
+	margin-top: 2rem;
 	width: 100%;
 	text-align: center;
 
