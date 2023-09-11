@@ -1,9 +1,18 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, DatePicker, Flex, Input, Spacer, Text } from '..';
+import { Button, DatePicker, Flex, Input, Select, Spacer, Text } from '..';
 import { RegisterSchema, registerSchema } from './schema';
+import { addWorker } from '../../service/workData';
+import { useNavigate } from 'react-router-dom';
+import routes from '../../constants/routes';
+import { toast } from 'react-toastify';
+import { unformatCurrencyUnit } from '../../utils/currencyUnit';
+
+export interface Worker extends RegisterSchema {
+	workedDate: Date | any;
+}
 
 const RegisterForm = () => {
 	const {
@@ -11,11 +20,28 @@ const RegisterForm = () => {
 		handleSubmit,
 		formState: { errors },
 		setFocus,
+		control,
 	} = useForm<RegisterSchema>({ mode: 'onChange', resolver: zodResolver(registerSchema), shouldFocusError: true });
+
+	const navigate = useNavigate();
 
 	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
 
-	const onSubmit = async () => {};
+	const onSubmit = async (data: RegisterSchema) => {
+		try {
+			await addWorker({
+				...data,
+				workedDate: selectedDay ?? new Date(),
+				payment: unformatCurrencyUnit(data.payment),
+				remittance: unformatCurrencyUnit(data.remittance),
+			});
+			navigate(routes.HOME);
+			toast.success('성공적으로 등록되었습니다.');
+		} catch (e) {
+			console.error(e);
+			toast.error('등록에 문제가 발생하였습니다.');
+		}
+	};
 
 	useEffect(() => {
 		setFocus('workerName');
@@ -30,7 +56,7 @@ const RegisterForm = () => {
 			<Input label="성 명" bottomText={errors?.workerName?.message}>
 				<Input.TextField type="text" placeholder="이 름" {...register('workerName')} error={errors?.workerName?.message} width={300} />
 			</Input>
-			<Flex alignItems="center" gap="0.5rem">
+			<Flex alignItems="flex-start" gap="0.5rem">
 				<Input label="주민번호 앞 자리" bottomText={errors?.registrationNumberFront?.message} rightText="−">
 					<Input.TextField
 						type="text"
@@ -53,27 +79,65 @@ const RegisterForm = () => {
 
 			<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
 
-			<Flex gap="1rem">
-				<Input label="지급 금액" bottomText={errors?.paymentAmount?.message} rightText="원">
-					<Input.TextField
-						type="text"
-						placeholder="지급 금액"
-						{...register('paymentAmount')}
-						error={errors?.paymentAmount?.message}
-						width={300}
-					/>
-				</Input>
-			</Flex>
-			<Flex gap="1rem">
-				<Input label="송금 금액" bottomText={errors?.remittanceAmount?.message} rightText="원">
-					<Input.TextField
-						type="text"
-						placeholder="송금 금액"
-						{...register('remittanceAmount')}
-						error={errors?.remittanceAmount?.message}
-						width={300}
-					/>
-				</Input>
+			<Controller
+				name="payment"
+				control={control}
+				render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => {
+					console.log(value);
+					return (
+						<Input label="지급 금액" bottomText={error?.message} rightText="원">
+							<Input.ControlledTextField
+								type="text"
+								placeholder="지급 금액"
+								name={name}
+								value={
+									value
+										? value
+												.toString()
+												.replace(/,/gi, '')
+												.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+										: ''
+								}
+								onChange={onChange}
+								onBlur={onBlur}
+								error={error?.message}
+								width={300}
+							/>
+						</Input>
+					);
+				}}
+			/>
+
+			<Flex alignItems="flex-start" gap="1rem">
+				<Select label="송금 유형" bottomText={errors?.remittanceType?.message}>
+					<Select.Field {...register('remittanceType')} error={errors?.remittanceType?.message} width={250} />
+				</Select>
+
+				<Controller
+					name="remittance"
+					control={control}
+					render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
+						<Input label="송금 금액" bottomText={error?.message} rightText="원">
+							<Input.ControlledTextField
+								type="text"
+								placeholder="송금 금액"
+								name={name}
+								value={
+									value
+										? value
+												.toString()
+												.replace(/,/gi, '')
+												.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+										: ''
+								}
+								onChange={onChange}
+								onBlur={onBlur}
+								error={error?.message}
+								width={300}
+							/>
+						</Input>
+					)}
+				/>
 			</Flex>
 			<Input label="메모/기타" bottomText={errors?.memo?.message}>
 				<Input.TextField

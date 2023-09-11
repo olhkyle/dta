@@ -22,7 +22,7 @@ const Input = ({ label, children, bottomText, rightText, ...props }: InputProps)
 				css={{
 					display: `${label ? 'inline-block' : 'none'}`,
 					padding: '4px 0',
-					fontSize: '17px',
+					fontSize: 'var(--text-label)',
 					fontWeight: '500',
 					lineHeight: 1.6,
 					color: 'var(--text-color)',
@@ -42,6 +42,7 @@ interface TextFieldProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> 
 	type: 'text' | 'number' | 'password';
 	name: string;
 	placeholder: string;
+	value?: string;
 	error: string | undefined;
 	width: number;
 }
@@ -51,6 +52,23 @@ Input.TextField = forwardRef(({ type, name, placeholder, error, width, ...props 
 		<TextField type={type} name={name} placeholder={placeholder} ref={ref} error={error!} autoComplete="off" width={width} {...props} />
 	);
 });
+
+Input.ControlledTextField = ({ type, name, placeholder, value, onChange, onBlur, error, width, ...props }: TextFieldProps) => {
+	return (
+		<TextField
+			type={type}
+			name={name}
+			placeholder={placeholder}
+			value={value}
+			onChange={onChange}
+			onBlur={onBlur}
+			error={error!}
+			autoComplete="off"
+			width={width}
+			{...props}
+		/>
+	);
+};
 
 const RightText = styled.span`
 	display: inline-block;
@@ -70,7 +88,7 @@ const TextField = styled.input<{ width: number; error: string }>`
 	margin: 0;
 	padding: 0.75rem 1rem;
 	min-width: 200px;
-	font-size: 15px;
+	font-size: 16px;
 	line-height: 24px;
 	border: none;
 	border-radius: 8px;

@@ -5,7 +5,6 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { Text } from '..';
 import { useClickOutside } from '../../hooks';
 
 interface DatePickerProps {
@@ -24,9 +23,7 @@ const DatePicker = ({ selectedDay, setSelectedDay }: DatePickerProps) => {
 
 	return (
 		<Container ref={containerRef}>
-			<Text typo="h6" color="var(--text-color)">
-				출력일
-			</Text>
+			<FieldTitle>출력일</FieldTitle>
 			<CalendarSelectorContainer>
 				<CalendarSelector
 					type="text"
@@ -36,7 +33,7 @@ const DatePicker = ({ selectedDay, setSelectedDay }: DatePickerProps) => {
 					aria-label="calendar-selector"
 					readOnly
 				/>
-				<FaRegCalendarCheck size="18" color="var(--text-color)" />
+				<FaRegCalendarCheck size="20" color="var(--text-color)" />
 			</CalendarSelectorContainer>
 			{isDatePickerActive && (
 				<StyledDayPicker
@@ -71,6 +68,12 @@ const Container = styled.div`
 	width: 100%;
 `;
 
+const FieldTitle = styled.label`
+	padding: 4px 0;
+	font-size: 18px;
+	font-weight: 500;
+`;
+
 const CalendarSelectorContainer = styled.div`
 	position: relative;
 	width: 300px;
@@ -79,6 +82,7 @@ const CalendarSelectorContainer = styled.div`
 		position: absolute;
 		right: 1rem;
 		top: 1.3rem;
+		cursor: pointer;
 	}
 `;
 
@@ -86,10 +90,11 @@ const CalendarSelector = styled.input<{ active: boolean }>`
 	margin-top: 0.5rem;
 	padding: 0.8rem 1.2rem;
 	width: 300px;
-	font-size: 15px;
+	font-size: 16px;
 	font-weight: 500;
 	color: var(--text-color);
 	border-radius: 8px;
+	cursor: pointer;
 
 	box-shadow: ${({ active }) => (active ? 'inset 0 0 0 1px var(--text-color)' : 'inset 0 0 0 1px var(--outline-color)')};
 

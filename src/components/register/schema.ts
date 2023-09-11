@@ -14,13 +14,14 @@ export const registerSchema = z.object({
 		.nonempty('주민번호 뒷 자리를 입력해 주세요.')
 		.max(7, { message: '최대 7자리까지 입력 가능합니다.' })
 		.regex(/^[0-9]+$/, { message: '숫자만 입력 가능합니다.' }),
-	paymentAmount: z
+	payment: z
 		.string()
 		.nonempty('지급 금액을 입력해 주세요.')
-		.regex(/^[0-9]+$/, { message: '숫자만 입력 가능합니다.' }),
-	remittanceAmount: z
+		.regex(/^[0-9,]+$/, { message: '숫자만 입력 가능합니다.' }),
+	remittanceType: z.string().nonempty('송금 유형을 선택해 주세요.'),
+	remittance: z
 		.string()
 		.nonempty('송금 금액을 입력해 주세요.')
-		.regex(/^[0-9]+$/, { message: '숫자만 입력 가능합니다.' }),
+		.regex(/^[0-9,]+$/, { message: '숫자만 입력 가능합니다.' }),
 	memo: z.string(),
 });
