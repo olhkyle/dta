@@ -51,6 +51,8 @@ const GlobalStyle = css`
 		--btn-lg-padding: 16px 24px;
 		--btn-font-size: 16px;
 
+		--text-label: 18px;
+
 		--toastify-color-success: var(--color-green-50);
 		--toastify-color-error: var(--color-red);
 		--toastify-font-family: 'Noto Sans KR';
@@ -140,6 +142,12 @@ const GlobalStyle = css`
 			outline: none;
 			box-shadow: none;
 		}
+	}
+
+	select {
+		appearance: none;
+		/* -moz-appearance: none; */
+		/* -webkit-appearance: none; */
 	}
 
 	::-moz-selection {
