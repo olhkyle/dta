@@ -9,6 +9,7 @@ import { Layout } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import routes from './constants/routes';
+import { getWorkersLoader } from './loaders';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
+				loader: getWorkersLoader(queryClient),
 				element: <Home />,
 			},
 			{
