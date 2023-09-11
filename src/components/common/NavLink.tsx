@@ -10,7 +10,7 @@ interface NavLinkProps {
 
 const NavLink = ({ to, children, onClick, ...props }: NavLinkProps) => {
 	return (
-		<StyledLink to={to} onClick={onClick} {...props}>
+		<StyledLink to={to} onClick={onClick} tabIndex={0} {...props}>
 			{children}
 		</StyledLink>
 	);
