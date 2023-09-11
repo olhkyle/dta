@@ -29,7 +29,7 @@ const Container = styled.button`
 	align-items: center;
 	padding: 0.65rem;
 	border: 1px solid var(--outline-color);
-	border-radius: 12px;
+	border-radius: calc(var(--radius) * 1.5);
 
 	&:hover {
 		border-color: var(--color-gray-500);
