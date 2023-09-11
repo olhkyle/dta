@@ -1,7 +1,7 @@
-import { Footer, Main, Nav, ScrollToTopButton } from '.';
-import { Outlet } from 'react-router-dom';
-import { ToastContainer } from 'react-toastify';
 import styled from '@emotion/styled';
+import { Outlet } from 'react-router-dom';
+import { Footer, Main, Nav, ScrollToTopButton } from '.';
+import { ToastContainer } from 'react-toastify';
 
 const Layout = () => {
 	return (
