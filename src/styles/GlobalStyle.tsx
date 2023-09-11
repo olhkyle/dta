@@ -46,6 +46,8 @@ const GlobalStyle = css`
 
 		--transition-duration: 0.2;
 
+		--radius: 0.5rem;
+
 		--btn-sm-padding: 8px 16px;
 		--btn-md-padding: 12px 20px;
 		--btn-lg-padding: 16px 24px;
@@ -77,6 +79,7 @@ const GlobalStyle = css`
 		--outline-color: var(--color-gray-400);
 		--text-color: var(--color-dark);
 		--bg-color: var(--color-white);
+		--option-hover-bg-color: var(--color-gray-200);
 		color: var(--color-dark);
 		background-color: var(--color-white);
 	}
@@ -90,6 +93,7 @@ const GlobalStyle = css`
 		--outline-color: var(--color-gray-800);
 		--text-color: var(--color-white);
 		--bg-color: var(--color-dark);
+		--option-hover-bg-color: var(--color-gray-800);
 		color: var(--color-white);
 		background-color: var(--color-dark);
 	}
