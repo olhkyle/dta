@@ -176,7 +176,7 @@ const GlobalStyle = css`
 		transition: transform 0.25s ease;
 		transform-origin: left;
 		left: 0;
-		bottom: -4px;
+		bottom: -6px;
 		width: 100%;
 		display: block;
 		position: absolute;
