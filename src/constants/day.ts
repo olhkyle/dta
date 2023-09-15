@@ -1,5 +1,11 @@
-const months = ['12월', '11월', '10월', '9월', '8월', '7월', '6월', '5월', '4월', '3월', '2월', '1월'] as const;
+const months: number[] = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1];
 
-const years = ['2023', '2022', '2021', '2020'];
+const years: number[] = [2023, 2022, 2021, 2020];
 
-export { months, years };
+const today = new Date();
+
+const yearOfToday = today.getFullYear();
+
+const monthOfToday = today.getMonth() + 1;
+
+export { months, years, today, yearOfToday, monthOfToday };

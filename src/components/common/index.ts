@@ -1,8 +1,11 @@
 export { default as Badge } from './Badge';
 export { default as Button } from './Button';
 export { default as CustomSelect } from './CustomSelect';
+export { default as EmptyIndicator } from './EmptyIndicator';
 export { default as Flex } from './Flex';
+export { default as HighlightText } from './HighlightText';
 export { default as Input } from './Input';
+export { default as Loading } from './Loading';
 export { default as NavLink } from './NavLink';
 export { default as NativeSelect } from './NativeSelect';
 export { default as Spacer } from './Spacer';

@@ -1,13 +1,25 @@
 import { WorkerWithId, getWorkers } from '../service/workData';
+import { monthOfToday, yearOfToday } from '../constants/day';
 
 interface QueryData {
 	workers: WorkerWithId[];
 	totalLength: number;
 }
 
+export type InOrder = 'asc' | 'desc';
+
+export interface workerQuery {
+	inOrder: InOrder;
+	year: number;
+	month: number;
+	workerName: string;
+}
+
 interface UniqueWorker extends WorkerWithId {
 	sumOfPayment: number | undefined;
 }
+
+export const control: Record<string, InOrder> = { '최신 순': 'desc', '오래된 순': 'asc' };
 
 const getSumOfPayment = (data: QueryData, targetName: string) =>
 	data?.workers
@@ -19,10 +31,10 @@ const checkExist = (workers: WorkerWithId[], targetName: string) => workers.find
 
 const staleTime = 3000;
 
-const getWorkersQuery = () => ({
-	queryKey: ['workData'],
+const getWorkersQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: workerQuery) => ({
+	queryKey: ['workers', inOrder, year, month, workerName],
 	queryFn: async () => {
-		const data = await getWorkers();
+		const data = await getWorkers({ inOrder, year, month, workerName });
 		return data;
 	},
 	select: (data: QueryData) => ({

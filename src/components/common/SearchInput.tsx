@@ -1,42 +1,48 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Flex } from '.';
+import { HiOutlineSearch } from 'react-icons/hi';
+import { MdClose } from 'react-icons/md';
 
-const SearchInput = () => {
-	const [value, setValue] = useState<string>('');
+interface SearchInputProps {
+	value: string;
+	setValue: (value: string) => void;
+}
 
+const SearchInput = ({ value, setValue }: SearchInputProps) => {
 	return (
-		<Flex justifyContent="center" gap="1rem" margin="3rem 0" role="search">
+		<Container justifyContent="center" gap="1rem" margin="3rem 0" role="search">
 			<Input
 				type="text"
 				placeholder="이름을 입력해 주세요."
 				value={value}
-				onChange={e => setValue(e.target.value)}
+				onChange={e => setValue(e.currentTarget.value)}
 				ref={node => node?.focus()}
 			/>
-			<SearchButton type="button">검 색</SearchButton>
-		</Flex>
+			{value.length > 0 && (
+				<RefreshButton type="button" onClick={() => setValue('')}>
+					<MdClose />
+				</RefreshButton>
+			)}
+			<SearchButton type="button">
+				<HiOutlineSearch color="var(--text-color)" />
+			</SearchButton>
+		</Container>
 	);
 };
 
-const Input = styled.input`
-	padding: 1rem 1rem;
-	width: 240px;
-	font-size: 18px;
-	font-weight: 600;
-	border: none;
-	color: var(--text-color);
-	outline: none;
+const Container = styled(Flex)`
+	position: relative;
+	margin-left: auto;
+	margin-right: auto;
+	width: 340px;
 	border-bottom: 5px solid var(--outline-color);
 
-	&:focus {
+	&:focus-within {
 		border-bottom: 5px solid var(--text-color);
 	}
 
 	@media screen and (min-width: 640px) {
-		padding: 1rem 2rem;
 		width: 400px;
-		font-size: 24px;
 	}
 
 	@media screen and (min-width: 768px) {
@@ -44,19 +50,65 @@ const Input = styled.input`
 	}
 `;
 
-const SearchButton = styled(Button)`
-	padding: 0.75rem 1.2rem;
-	border-radius: 8px;
-	font-size: 19px;
-	color: var(--btn-text-color);
-	background-color: var(--btn-bg-color);
-
-	&:hover {
-		background-color: var(--btn-hover-bg-color);
-	}
+const Input = styled.input`
+	padding: 1rem 1rem;
+	width: 300px;
+	font-size: 24px;
+	font-weight: 600;
+	border: none;
+	color: var(--text-color);
+	outline: none;
 
 	@media screen and (min-width: 640px) {
 		padding: 1rem 2rem;
+		width: 400px;
+		font-size: 30px;
+	}
+
+	@media screen and (min-width: 768px) {
+		width: 600px;
+	}
+`;
+
+const RefreshButton = styled(Button)`
+	position: absolute;
+	right: 4rem;
+	display: inline-flex;
+	align-items: center;
+	padding: 0.3rem;
+	border-radius: 9999px;
+
+	&:hover {
+		background-color: var(--outline-color);
+	}
+
+	svg {
+		color: var(--text-color);
+		font-size: 30px;
+	}
+
+	@media screen and (min-width: 640px) {
+		right: 4.5rem;
+
+		svg {
+			font-size: 40px;
+		}
+	}
+`;
+
+const SearchButton = styled(Button)`
+	position: absolute;
+	right: 0;
+	display: inline-flex;
+	align-items: center;
+	padding: 0.5rem 1rem;
+	border-radius: 8px;
+	font-size: 27px;
+
+	@media screen and (min-width: 640px) {
+		svg {
+			font-size: 36px;
+		}
 	}
 `;
 

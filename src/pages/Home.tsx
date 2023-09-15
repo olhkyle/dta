@@ -1,72 +1,85 @@
-import { useQuery } from '@tanstack/react-query';
-import { getWorkersQuery } from '../queries';
+import { useState } from 'react';
 import styled from '@emotion/styled';
+import { useQuery } from '@tanstack/react-query';
+import { BsTrash } from 'react-icons/bs';
+import { getWorkersQuery } from '../queries';
+import { control } from '../queries/getWorkersQuery';
+import { useDebounce } from '../hooks';
+import { Badge, CustomSelect, EmptyIndicator, Flex, Loading, SearchInput, SegmentedControl } from '../components';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
-import { Badge, CustomSelect, Flex, SearchInput, Text } from '../components';
-import { months, years } from '../constants/day';
+import { monthOfToday, months, yearOfToday, years } from '../constants/day';
+import controls from '../constants/sortControls';
 
 const Home = () => {
-	//TODO: keyword에 따라 debounce로 가져오기 구현
-	const { data } = useQuery(getWorkersQuery());
+	const [inputValue, setInputValue] = useState('');
+	const workerName = useDebounce(inputValue, 500);
+	const [year, setYear] = useState(yearOfToday);
+	const [month, setMonth] = useState(monthOfToday);
+	const [currentPosition, setCurrentPosition] = useState(controls[0]);
 
-	// TODO: 최신순 - 오래된 순 / 월 / 년도
+	const { data, isLoading } = useQuery(getWorkersQuery({ inOrder: control[currentPosition], year, month, workerName }));
 
 	return (
 		<>
-			<SearchInput />
-			<Flex justifyContent="space-between">
+			<SearchInput value={inputValue} setValue={setInputValue} />
+			<SearchFilters>
 				<Flex margin="2rem 0" gap="1rem">
-					<CustomSelect data={years} defaultValue={years[0]} width={120} />
-					<CustomSelect data={months} defaultValue={months[0]} width={120} />
+					<SegmentedControl data={controls} value={currentPosition} setValue={setCurrentPosition} />
+					<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
+					<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
 				</Flex>
-				<Badge label="총 합계" bgColor="var(--text-color)">
-					{formatCurrencyUnit(data?.sumOfPayment)}
-				</Badge>
-			</Flex>
+				<Flex justifyContent="flex-end" margin="1rem 0">
+					<Badge label="총 합계" bgColor="var(--text-color)">
+						{formatCurrencyUnit(data?.sumOfPayment)}
+					</Badge>
+				</Flex>
+			</SearchFilters>
 
-			<br />
-
-			<Table>
-				<thead>
-					<tr>
-						<th>번 호</th>
-						<th>성 명</th>
-						<th>해당 월</th>
-						<th>
-							금 액<span>(원)</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
-						<tr key={workerName}>
-							<td>{idx + 1}</td>
-							<td>{workerName}</td>
-							<td>{workedDate.getMonth() + 1}월</td>
-							<td>{formatCurrencyUnit(sumOfPayment)}</td>
+			{isLoading ? (
+				<Loading />
+			) : data?.workers.length === 0 ? (
+				<EmptyIndicator>
+					<p>해당 일용직이 없습니다</p>
+					<BsTrash size="24" />
+				</EmptyIndicator>
+			) : (
+				<Table>
+					<thead>
+						<tr>
+							<th>번 호</th>
+							<th>성 명</th>
+							<th>해당 월</th>
+							<th>
+								금 액<span>(원)</span>
+							</th>
 						</tr>
-					))}
-					{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
-						<tr key={workerName}>
-							<td>{idx + 4}</td>
-							<td>{workerName}</td>
-							<td>{workedDate.getMonth() + 1}월</td>
-							<td>{formatCurrencyUnit(sumOfPayment)}</td>
-						</tr>
-					))}
-					{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
-						<tr key={workerName}>
-							<td>{idx + 8}</td>
-							<td>{workerName}</td>
-							<td>{workedDate.getMonth() + 1}월</td>
-							<td>{formatCurrencyUnit(sumOfPayment)}</td>
-						</tr>
-					))}
-				</tbody>
-			</Table>
+					</thead>
+					<tbody>
+						{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
+							<tr key={workerName}>
+								<td>{idx + 1}</td>
+								<td>{workerName}</td>
+								<td>{workedDate.getMonth() + 1}월</td>
+								<td>{formatCurrencyUnit(sumOfPayment)}</td>
+							</tr>
+						))}
+					</tbody>
+				</Table>
+			)}
 		</>
 	);
 };
+
+const SearchFilters = styled.div`
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+
+	@media screen and (min-width: 640px) {
+		flex-direction: row;
+		justify-content: space-between;
+	}
+`;
 
 const Table = styled.table`
 	display: flex;
