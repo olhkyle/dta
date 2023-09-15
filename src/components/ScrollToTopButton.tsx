@@ -22,7 +22,7 @@ const ScrollToTopButton = ({ topPosToShow = 500 }: ScrollToTopButtonProps) => {
 
 const Container = styled.button`
 	position: fixed;
-	bottom: 2rem;
+	bottom: 4rem;
 	right: 4vw;
 	display: inline-flex;
 	justify-content: center;
@@ -30,6 +30,7 @@ const Container = styled.button`
 	padding: 0.65rem;
 	border: 1px solid var(--outline-color);
 	border-radius: calc(var(--radius) * 1.5);
+	background-color: var(--bg-color);
 
 	&:hover {
 		border-color: var(--color-gray-500);
