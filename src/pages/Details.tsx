@@ -113,6 +113,7 @@ const PrintButton = styled(Button)`
 	padding: 0.6rem 1.5rem;
 	background-color: var(--color-green-50);
 	color: var(--bg-color);
+	border-radius: 9999px;
 
 	&:hover {
 		background-color: var(--color-green-200);
