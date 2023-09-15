@@ -8,7 +8,7 @@ import { SideNav } from '.';
 import { useAppSelector } from '../store/store';
 import { getUser } from '../store/userSlice';
 import { logOut } from '../service/auth';
-import UserProfile from './auth/UserProfile';
+import { UserProfile } from './auth';
 import { useSetUser, useSideNavActive } from '../hooks';
 
 const Nav = () => {

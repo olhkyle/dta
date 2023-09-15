@@ -175,7 +175,7 @@ const GlobalStyle = css`
 
 	.underlined:after {
 		content: '';
-		height: 2px;
+		height: 3px;
 		transform: scaleX(0);
 		transition: transform 0.25s ease;
 		transform-origin: left;
