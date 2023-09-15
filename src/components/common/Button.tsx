@@ -15,6 +15,7 @@ const Button = ({ type, onClick, children, ...props }: ButtonProps) => {
 				borderRadius: '8px',
 				fontSize: '16px',
 				fontWeight: '600',
+				color: 'var(--text-color)',
 			}}
 			onClick={onClick}
 			{...props}>
