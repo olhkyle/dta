@@ -3,3 +3,4 @@
  */
 
 export { default as getWorkersLoader } from './getWorkersLoader';
+export { default as getWorkersDetailLoader } from './getWorkersDetailLoader';
