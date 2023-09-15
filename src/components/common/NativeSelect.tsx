@@ -55,7 +55,7 @@ Select.Field = forwardRef(
 				error={error!}
 				width={width}
 				{...props}>
-				<option value="">---선 택--- </option>
+				<option value="">--- 선 택 --- </option>
 				<option value="개인">개 인</option>
 				<option value="사업자">사업자</option>
 			</SelectField>
@@ -90,6 +90,7 @@ const SelectField = styled.select<{ width: number; error: string }>`
 	}
 
 	option {
+		padding: 1rem;
 		cursor: pointer;
 	}
 
