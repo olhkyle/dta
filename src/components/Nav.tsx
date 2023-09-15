@@ -67,8 +67,8 @@ const Container = styled.nav`
 	margin: 0 auto;
 	padding: 0 1rem;
 	height: 80px;
-	border-bottom: 1px solid;
-	backdrop-filter: blur(4px);
+	border-bottom: 1px solid var(--text-color);
+	backdrop-filter: blur(8px);
 	z-index: 9999;
 
 	@media screen and (min-width: 640px) {
