@@ -9,7 +9,7 @@ import { Layout } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import routes from './constants/routes';
-import { getWorkersLoader } from './loaders';
+import { getWorkersLoader, getWorkersDetailLoader } from './loaders';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -36,6 +36,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: routes.DETAILS,
+				loader: getWorkersDetailLoader(queryClient),
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Details />} />,
 			},
 			{
