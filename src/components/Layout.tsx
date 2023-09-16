@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { Outlet } from 'react-router-dom';
-import { Footer, Main, Nav, ScrollToTopButton } from '.';
+import { Footer, Main, Nav, ScrollToTopButton, Modal } from '.';
 import { ToastContainer } from 'react-toastify';
 
 const Layout = () => {
@@ -13,6 +13,7 @@ const Layout = () => {
 			<Footer />
 			<ScrollToTopButton topPosToShow={300} />
 			<StyledToastContainer position="bottom-center" autoClose={1500} closeOnClick={true} pauseOnHover={false} limit={1} />
+			<Modal />
 		</>
 	);
 };

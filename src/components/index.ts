@@ -9,3 +9,4 @@ export { default as Main } from '../components/Main';
 export { default as Footer } from '../components/Footer';
 export { default as ScrollToTopButton } from '../components/ScrollToTopButton';
 export { default as RouteError } from '../components/RouteError';
+export { default as Portal } from '../components/Portal';
