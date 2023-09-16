@@ -62,6 +62,7 @@ const Select = ({ data, value: current, setValue, unit, width }: SelectProps) =>
 
 const Container = styled.div<{ width: number }>`
 	position: relative;
+	z-index: 10;
 `;
 
 const Trigger = styled.button<{ width: number }>`
