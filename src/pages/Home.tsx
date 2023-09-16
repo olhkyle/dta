@@ -96,7 +96,7 @@ const Table = styled.table`
 	}
 
 	tr {
-		padding: 0.5rem 0;
+		padding: 1rem 0;
 	}
 
 	thead > tr {
@@ -105,11 +105,6 @@ const Table = styled.table`
 
 	tbody > tr {
 		border-bottom: 1px solid var(--outline-color);
-	}
-
-	tbody {
-		display: grid;
-		gap: 0.8rem;
 	}
 
 	th {

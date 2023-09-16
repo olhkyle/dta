@@ -145,7 +145,7 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tr {
-		padding: 0.5rem 0;
+		padding: 1rem 0;
 	}
 
 	thead > tr {
@@ -156,9 +156,9 @@ const Table = styled.table<{ searched: boolean }>`
 		border-bottom: 1px solid var(--outline-color);
 	}
 
-	tbody {
-		display: grid;
-		gap: 0.8rem;
+	tbody > tr:hover {
+		background-color: var(--option-hover-bg-color);
+		cursor: pointer;
 	}
 
 	th {
