@@ -5,7 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
 import { store } from './store/store';
 import { Details, Home, NotFound, Register, SignIn } from './pages';
-import { Layout, RootError } from './components';
+import { Layout, RouteError } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import routes from './constants/routes';
@@ -24,7 +24,7 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Layout />,
-		errorElement: <RootError />,
+		errorElement: <RouteError />,
 		children: [
 			{
 				index: true,
