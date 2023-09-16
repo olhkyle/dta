@@ -88,7 +88,6 @@ const Details = () => {
 										<HighlightText color="var(--text-color)" bgColor="var(--outline-color)">
 											{remittanceType}
 										</HighlightText>
-										{' - '}
 										{formatCurrencyUnit(Number(remittance))}
 									</td>
 								</tr>
@@ -202,6 +201,13 @@ const Table = styled.table<{ searched: boolean }>`
 		@media screen and (min-width: 640px) {
 			display: inline-block;
 		}
+	}
+
+	td[aria-label='remittance'] {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		margin: 0 auto;
 	}
 `;
 

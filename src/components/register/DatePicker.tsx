@@ -33,7 +33,7 @@ const DatePicker = ({ selectedDay, setSelectedDay }: DatePickerProps) => {
 					aria-label="calendar-selector"
 					readOnly
 				/>
-				<FaRegCalendarCheck size="20" color="var(--text-color)" />
+				<FaRegCalendarCheck size="20" color="var(--text-color)" onClick={toggleDayPicker} />
 			</CalendarSelectorContainer>
 			{isDatePickerActive && (
 				<StyledDayPicker
@@ -76,12 +76,12 @@ const FieldTitle = styled.label`
 
 const CalendarSelectorContainer = styled.div`
 	position: relative;
-	width: 300px;
+	width: 280px;
 
 	svg {
 		position: absolute;
 		right: 1rem;
-		top: 1.3rem;
+		top: 1.4rem;
 		cursor: pointer;
 	}
 `;
@@ -89,7 +89,7 @@ const CalendarSelectorContainer = styled.div`
 const CalendarSelector = styled.input<{ active: boolean }>`
 	margin-top: 0.5rem;
 	padding: 0.8rem 1.2rem;
-	width: 300px;
+	width: 280px;
 	font-size: 16px;
 	font-weight: 500;
 	color: var(--text-color);
