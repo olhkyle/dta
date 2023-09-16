@@ -14,8 +14,8 @@ const GlobalStyle = css`
 
 		--color-gray-50: #f7f7f7;
 		--color-gray-100: #f9fafb;
-		--color-gray-200: #f5f3f0;
-		--color-gray-300: #eff0ec;
+		--color-gray-200: #f0f1f5;
+		--color-gray-300: #ecedf0;
 		--color-gray-400: #e7e7e9;
 		--color-gray-500: #b8b8b8;
 		--color-gray-600: #4b4c53;
@@ -94,7 +94,7 @@ const GlobalStyle = css`
 		--outline-color: var(--color-gray-800);
 		--text-color: var(--color-white);
 		--bg-color: var(--color-dark);
-		--option-hover-bg-color: var(--color-gray-800);
+		--option-hover-bg-color: var(--color-gray-700);
 		--backdrop-blur-bg-color: rgb(0 0 0 / 0.3);
 		color: var(--color-white);
 		background-color: var(--color-dark);

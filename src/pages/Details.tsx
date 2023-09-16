@@ -25,7 +25,7 @@ const Details = () => {
 			<SearchInput value={inputValue} setValue={setInputValue} />
 			<SearchFilters>
 				<Flex justifyContent="space-between">
-					<Flex margin="1rem 0" gap="1rem">
+					<Flex margin="2rem 0 1rem" gap="1rem">
 						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentControl} />
 						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
 						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
@@ -111,7 +111,7 @@ const PrintButton = styled(Button)`
 	font-size: 15px;
 	padding: 0.6rem 1.5rem;
 	background-color: var(--color-green-50);
-	color: var(--bg-color);
+	color: var(--color-white);
 	border-radius: 9999px;
 
 	&:hover {
@@ -156,6 +156,8 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tbody > tr:hover {
+		border-top: 1px solid var(--color-green-50);
+		border-bottom: 1px solid var(--color-green-50);
 		background-color: var(--option-hover-bg-color);
 		cursor: pointer;
 	}
@@ -181,6 +183,15 @@ const Table = styled.table<{ searched: boolean }>`
 
 		@media screen and (min-width: 640px) {
 			display: inline-block;
+		}
+	}
+
+	th[aria-label='remittance'] {
+		span {
+			display: none;
+			@media screen and (min-width: 640px) {
+				display: inline-block;
+			}
 		}
 	}
 
