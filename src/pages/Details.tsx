@@ -49,14 +49,14 @@ const Details = () => {
 				<Table searched={workerName.length > 0}>
 					<thead>
 						<tr>
-							<th aria-label="index">번 호</th>
-							<th aria-label="workerName">성 명</th>
-							<th aria-label="registrationNumber">주민등록번호</th>
-							<th aria-label="workedDate">출력일</th>
-							<th aria-label="payment">
+							<th aria-label="tableHead-index">번 호</th>
+							<th aria-label="tableHead-workerName">성 명</th>
+							<th aria-label="tableHead-registrationNumber">주민등록번호</th>
+							<th aria-label="tableHead-workedDate">출력일</th>
+							<th aria-label="tableHead-payment">
 								지급액<span>(원)</span>
 							</th>
-							<th aria-label="remittance">
+							<th aria-label="tableHead-remittance">
 								송금내용<span>(유형 + 금액)</span>
 							</th>
 						</tr>
@@ -77,14 +77,14 @@ const Details = () => {
 								remittanceType,
 							}) => (
 								<tr key={id}>
-									<td aria-label="index">{isFirstIdxOfArr ? position + 1 : ''}</td>
-									<td aria-label="workerName">{workerName}</td>
-									<td aria-label="registrationNumber">{`${registrationNumberFront} - ${registrationNumberBack}`}</td>
-									<td aria-label="workedDate">
+									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
+									<td aria-label="tableBody-workerName">{workerName}</td>
+									<td aria-label="tableBody-registrationNumber">{`${registrationNumberFront} - ${registrationNumberBack}`}</td>
+									<td aria-label="tableBody-workedDate">
 										{workedDate.getMonth() + 1}/{workedDate.getDate()}
 									</td>
-									<td aria-label="payment">{formatCurrencyUnit(Number(payment))}</td>
-									<td aria-label="remittance">
+									<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
+									<td aria-label="tableBody-remittance">
 										<HighlightText color="var(--text-color)" bgColor="var(--outline-color)">
 											{remittanceType}
 										</HighlightText>
