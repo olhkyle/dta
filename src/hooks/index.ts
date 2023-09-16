@@ -5,3 +5,4 @@ export { default as useSetUser } from './useSetUser';
 export { default as useSideNavActive } from './useSideNavActive';
 export { default as useTheme } from './useTheme';
 export { default as useDebounce } from './useDebounce';
+export { default as useGoBack } from './useGoBack';

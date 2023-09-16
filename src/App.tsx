@@ -4,8 +4,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
 import { store } from './store/store';
-import { Details, Home, Register, SignIn } from './pages';
-import { Layout } from './components';
+import { Details, Home, NotFound, Register, SignIn } from './pages';
+import { Layout, RootError } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import routes from './constants/routes';
@@ -24,6 +24,7 @@ const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <Layout />,
+		errorElement: <RootError />,
 		children: [
 			{
 				index: true,
@@ -44,6 +45,10 @@ const router = createBrowserRouter([
 				element: <SignIn />,
 			},
 		],
+	},
+	{
+		path: '/*',
+		element: <NotFound />,
 	},
 ]);
 
