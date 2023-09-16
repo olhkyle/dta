@@ -9,6 +9,8 @@ import { Badge, CustomSelect, EmptyIndicator, Flex, Loading, SearchInput, Segmen
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 import controls from '../constants/sortControls';
+import { useAppSelector } from '../store/store';
+import { getUser } from '../store/userSlice';
 
 const Home = () => {
 	const [inputValue, setInputValue] = useState('');
@@ -16,6 +18,8 @@ const Home = () => {
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(monthOfToday);
 	const [currentPosition, setCurrentPosition] = useState(controls[0]);
+
+	const user = useAppSelector(getUser);
 
 	const { data, isLoading } = useQuery(getWorkersQuery({ inOrder: control[currentPosition], year, month, workerName }));
 
@@ -30,7 +34,7 @@ const Home = () => {
 				</Flex>
 				<Flex justifyContent="flex-end" margin="1rem 0">
 					<Badge label="총 합계" bgColor="var(--text-color)">
-						{formatCurrencyUnit(data?.sumOfPayment)}
+						{!!user ? formatCurrencyUnit(data?.sumOfPayment) : '💰💰💰'}
 					</Badge>
 				</Flex>
 			</SearchFilters>
@@ -42,14 +46,14 @@ const Home = () => {
 					<p>해당 일용직이 없습니다</p>
 					<BsTrash size="24" />
 				</EmptyIndicator>
-			) : (
+			) : !!user ? (
 				<Table>
 					<thead>
 						<tr>
-							<th>번 호</th>
-							<th>성 명</th>
-							<th>해당 월</th>
-							<th>
+							<th aria-label="tableHead-index">번 호</th>
+							<th aria-label="tableHead-workerName">성 명</th>
+							<th aria-label="tableHead-monthOfWorkedDate">해당 월</th>
+							<th aria-label="tableHead-sumOfPayment">
 								금 액<span>(원)</span>
 							</th>
 						</tr>
@@ -57,14 +61,16 @@ const Home = () => {
 					<tbody>
 						{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
 							<tr key={workerName}>
-								<td>{idx + 1}</td>
-								<td>{workerName}</td>
-								<td>{workedDate.getMonth() + 1}월</td>
-								<td>{formatCurrencyUnit(sumOfPayment)}</td>
+								<td aria-label="tableBody-index">{idx + 1}</td>
+								<td aria-label="tableBody-workerName">{workerName}</td>
+								<td aria-label="tableBody-monthOfWorkedDate">{workedDate.getMonth() + 1}월</td>
+								<td aria-label="tableBody-sumOfPayment">{formatCurrencyUnit(sumOfPayment)}</td>
 							</tr>
 						))}
 					</tbody>
 				</Table>
+			) : (
+				<EmptyIndicator>로그인 후 확인 가능합니다.</EmptyIndicator>
 			)}
 		</>
 	);
@@ -116,6 +122,7 @@ const Table = styled.table`
 	}
 
 	td {
+		position: relative;
 		font-size: 18px;
 	}
 `;

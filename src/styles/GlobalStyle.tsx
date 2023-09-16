@@ -80,6 +80,7 @@ const GlobalStyle = css`
 		--text-color: var(--color-dark);
 		--bg-color: var(--color-white);
 		--option-hover-bg-color: var(--color-gray-200);
+		--backdrop-blur-bg-color: rgb(255 255 255 / 0.3);
 		color: var(--color-dark);
 		background-color: var(--color-white);
 	}
@@ -94,6 +95,7 @@ const GlobalStyle = css`
 		--text-color: var(--color-white);
 		--bg-color: var(--color-dark);
 		--option-hover-bg-color: var(--color-gray-800);
+		--backdrop-blur-bg-color: rgb(0 0 0 / 0.3);
 		color: var(--color-white);
 		background-color: var(--color-dark);
 	}
