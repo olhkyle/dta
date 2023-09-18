@@ -8,7 +8,7 @@ interface QueryData {
 
 export type InOrder = 'asc' | 'desc';
 
-export interface workerQuery {
+export interface WorkerQuery {
 	inOrder: InOrder;
 	year: number;
 	month: number;
@@ -31,7 +31,7 @@ const checkExist = (workers: WorkerWithId[], targetName: string) => workers.find
 
 const staleTime = 3000;
 
-const getWorkersQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: workerQuery) => ({
+const getWorkersQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
 	queryKey: ['workers', inOrder, year, month, workerName],
 	queryFn: async () => {
 		const data = await getWorkers({ inOrder, year, month, workerName });

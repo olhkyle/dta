@@ -13,7 +13,7 @@ import {
 import { db } from './firebase';
 import { specifySnapshotIntoData } from './utils';
 import { Worker } from '../components/register/RegisterForm';
-import { InOrder, workerQuery } from '../queries/getWorkersQuery';
+import { InOrder, WorkerQuery } from '../queries/getWorkersQuery';
 
 export interface WorkerWithId extends Worker {
 	id: string;
@@ -24,7 +24,7 @@ const COLLECTION_NAME = 'people';
 const customizeQuery = (collectionRef: CollectionReference<DocumentData, DocumentData>, searchCondition: any, inOrder: InOrder) =>
 	query(collectionRef, searchCondition, orderBy('workedDate', inOrder));
 
-const getWorkers = async ({ inOrder, year, month, workerName }: workerQuery) => {
+const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
 
 	const q = (month: number) =>

@@ -1,9 +1,9 @@
 import { QueryClient } from '@tanstack/react-query';
 import { monthOfToday, yearOfToday } from '../constants/day';
 import { getWorkersDetailQuery } from '../queries';
-import { workerQuery } from '../queries/getWorkersQuery';
+import { WorkerQuery } from '../queries/getWorkersQuery';
 
-const workerQuery: workerQuery = {
+const workerQuery: WorkerQuery = {
 	inOrder: 'desc',
 	year: yearOfToday,
 	month: monthOfToday,

@@ -1,7 +1,32 @@
-import { DocumentData, QuerySnapshot } from 'firebase/firestore';
+import {
+	CollectionReference,
+	DocumentData,
+	Query,
+	QueryCompositeFilterConstraint,
+	QuerySnapshot,
+	getCountFromServer,
+	getDocs,
+	query,
+} from 'firebase/firestore';
 import { Worker } from '../components/register/RegisterForm';
 
-const paginationQuery = () => {};
+interface PaginationQuery {
+	collectionRef: CollectionReference<DocumentData, DocumentData>;
+	q: Query<DocumentData, DocumentData>;
+	limitSize: number;
+}
+
+const paginationQuery = async ({ collectionRef, q, limitSize }: PaginationQuery) => {
+	const data = await getDocs(q);
+
+	const snapshot = await getCountFromServer(query(collectionRef));
+
+	return {
+		data: specifySnapshotIntoData(data),
+		totalLength: snapshot.data().count,
+		nextPage: data.size === limitSize ? data.docs[data.docs.length - 1] : undefined,
+	};
+};
 
 const specifySnapshotIntoData = (snapshot: QuerySnapshot<DocumentData, DocumentData>) => {
 	return snapshot.docs.map(doc => {
