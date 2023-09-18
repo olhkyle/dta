@@ -14,6 +14,7 @@ const SearchInput = ({ value, setValue }: SearchInputProps) => {
 			<Input
 				type="text"
 				placeholder="이름을 입력해 주세요."
+				name="search-input"
 				value={value}
 				onChange={e => setValue(e.currentTarget.value)}
 				ref={node => node?.focus()}
@@ -54,7 +55,7 @@ const Input = styled.input`
 	padding: 1rem 1rem;
 	width: 300px;
 	font-size: 24px;
-	font-weight: 600;
+	font-weight: 900;
 	border: none;
 	color: var(--text-color);
 	outline: none;
