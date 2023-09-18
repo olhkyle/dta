@@ -1,7 +1,9 @@
 const routes = {
 	HOME: '/',
 	LOGIN: '/signin',
+	OVERVIEW: '/overview',
 	DETAILS: '/details',
+	WORKER: '/worker',
 	REGISTER: '/register',
 } as const;
 

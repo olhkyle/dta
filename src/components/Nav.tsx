@@ -38,10 +38,11 @@ const Nav = () => {
 		<>
 			<Container>
 				<Logo to={routes.HOME} onClick={close}>
-					<h1 className="underlined">Ttax</h1>
+					<h1 className="underlined">D_T.A</h1>
 				</Logo>
 				<NavLinkContainer>
-					<Flex justifyContent="space-between" gap="0.5rem">
+					<Flex justifyContent="space-between" gap="0.25rem">
+						<Overview to={routes.OVERVIEW}>명세 개요</Overview>
 						<Details to={routes.DETAILS}>월별 세부 명세</Details>
 						<Register to={routes.REGISTER}>일용직 등록</Register>
 						{username ? <UserProfile name={username} onLogout={handleLogout} /> : <Login to={routes.LOGIN}>로그인</Login>}
@@ -76,12 +77,12 @@ const Container = styled.nav`
 	}
 
 	@media screen and (min-width: 768px) {
-		grid-template-columns: 1fr 2fr;
+		grid-template-columns: 0.2fr 1fr;
 		width: 768px;
 	}
 
 	@media screen and (min-width: 1024px) {
-		grid-template-columns: 2fr 1.5fr;
+		grid-template-columns: 1fr 1fr;
 		width: 1024px;
 	}
 
@@ -107,9 +108,16 @@ const NavLinkContainer = styled.div`
 	justify-content: space-between;
 	align-items: center;
 	gap: 1rem;
+	margin: 0.4rem 0 0;
 
 	@media screen and (min-width: 768px) {
 		display: flex;
+	}
+`;
+
+const Overview = styled(NavLink)`
+	&:hover {
+		color: var(--btn-hover-color);
 	}
 `;
 

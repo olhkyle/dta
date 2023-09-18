@@ -1,14 +1,23 @@
 import styled from '@emotion/styled';
-import { Outlet } from 'react-router-dom';
-import { Footer, Main, Nav, ScrollToTopButton, Modal } from '.';
+import { Outlet, useLocation } from 'react-router-dom';
+import { Footer, Main, Nav, ScrollToTopButton, Modal, Loading } from '.';
 import { ToastContainer } from 'react-toastify';
+import { Suspense, useEffect } from 'react';
 
 const Layout = () => {
+	const { pathname } = useLocation();
+
+	useEffect(() => {
+		window.scrollTo({ top: 0 });
+	}, [pathname]);
+
 	return (
 		<>
 			<Nav />
 			<Main>
-				<Outlet />
+				<Suspense fallback={<Loading />}>
+					<Outlet />
+				</Suspense>
 			</Main>
 			<Footer />
 			<ScrollToTopButton topPosToShow={300} />

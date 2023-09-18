@@ -4,18 +4,18 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
 import { store } from './store/store';
-import { Details, Home, NotFound, Register, SignIn } from './pages';
+import { Details, Home, NotFound, OverView, Register, SignIn, Worker } from './pages';
 import { Layout, RouteError } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import routes from './constants/routes';
-import { getWorkersLoader, getWorkersDetailLoader } from './loaders';
+import { getWorkersDetailLoader, getWorkersLoader } from './loaders';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
 		queries: {
 			retry: 0,
-			// suspense: true,
+			suspense: true,
 		},
 	},
 });
@@ -28,7 +28,6 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				loader: getWorkersLoader(queryClient),
 				element: <Home />,
 			},
 			{
@@ -36,10 +35,16 @@ const router = createBrowserRouter([
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Register />} />,
 			},
 			{
+				path: routes.OVERVIEW,
+				loader: getWorkersLoader(queryClient),
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<OverView />} />,
+			},
+			{
 				path: routes.DETAILS,
 				loader: getWorkersDetailLoader(queryClient),
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Details />} />,
 			},
+
 			{
 				path: routes.LOGIN,
 				element: <SignIn />,

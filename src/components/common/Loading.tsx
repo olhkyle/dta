@@ -30,8 +30,8 @@ const Svg = styled.svg`
 	height: 60px;
 
 	@media screen and (min-width: 640px) {
-		width: 90px;
-		height: 90px;
+		width: 80px;
+		height: 80px;
 	}
 `;
 
