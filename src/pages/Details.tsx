@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { useQuery } from '@tanstack/react-query';
 import { BsTrash } from 'react-icons/bs';
@@ -9,6 +9,10 @@ import { Badge, Button, CustomSelect, EmptyIndicator, Flex, HighlightText, Loadi
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 import controls from '../constants/sortControls';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
+import { useAppDispatch } from '../store/store';
+import { open } from '../store/modalSlice';
+import { DetailModal } from '../components/detail';
+import { WorkerWithId } from '../service/workData';
 
 const Details = () => {
 	const [inputValue, setInputValue] = useState('');
@@ -18,7 +22,10 @@ const Details = () => {
 	const [month, setMonth] = useState(monthOfToday);
 	const [currentSort, setCurrentControl] = useState(controls[0]);
 
-	const { data, isLoading } = useQuery(getWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName }));
+	const { data } = useQuery(getWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName }));
+
+	const dispatch = useAppDispatch();
+	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true } }));
 
 	return (
 		<>
@@ -38,64 +45,80 @@ const Details = () => {
 					</Badge>
 				</Flex>
 			</SearchFilters>
-			{isLoading ? (
-				<Loading />
-			) : data?.workers.length === 0 ? (
-				<EmptyIndicator>
-					<p>해당 일용직이 없습니다</p>
-					<BsTrash size="24" />
-				</EmptyIndicator>
-			) : (
-				<Table searched={workerName.length > 0}>
-					<thead>
-						<tr>
-							<th aria-label="tableHead-index">번 호</th>
-							<th aria-label="tableHead-workerName">성 명</th>
-							<th aria-label="tableHead-registrationNumber">주민등록번호</th>
-							<th aria-label="tableHead-workedDate">출력일</th>
-							<th aria-label="tableHead-payment">
-								지급액<span>(원)</span>
-							</th>
-							<th aria-label="tableHead-remittance">
-								송금내용<span>(유형 + 금액)</span>
-							</th>
-						</tr>
-					</thead>
+			<Suspense fallback={<Loading />}>
+				{data?.workers.length === 0 ? (
+					<EmptyIndicator>
+						<p>해당 일용직이 없습니다</p>
+						<BsTrash size="24" />
+					</EmptyIndicator>
+				) : (
+					<Table searched={workerName.length > 0}>
+						<thead>
+							<tr>
+								<th aria-label="tableHead-index">#</th>
+								<th aria-label="tableHead-workerName">성 명</th>
+								<th aria-label="tableHead-registrationNumber">주민등록번호</th>
+								<th aria-label="tableHead-workedDate">출력일</th>
+								<th aria-label="tableHead-payment">
+									지급액<span>(원)</span>
+								</th>
+								<th aria-label="tableHead-remittance">
+									송금내용<span>(유형 + 금액)</span>
+								</th>
+							</tr>
+						</thead>
 
-					<tbody>
-						{data?.workers.map(
-							({
-								position,
-								isFirstIdxOfArr,
-								id,
-								workerName,
-								registrationNumberFront,
-								registrationNumberBack,
-								workedDate,
-								payment,
-								remittance,
-								remittanceType,
-							}) => (
-								<tr key={id}>
-									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
-									<td aria-label="tableBody-workerName">{workerName}</td>
-									<td aria-label="tableBody-registrationNumber">{`${registrationNumberFront} - ${registrationNumberBack}`}</td>
-									<td aria-label="tableBody-workedDate">
-										{workedDate.getMonth() + 1}/{workedDate.getDate()}
-									</td>
-									<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
-									<td aria-label="tableBody-remittance">
-										<HighlightText color="var(--text-color)" bgColor="var(--outline-color)">
-											{remittanceType}
-										</HighlightText>
-										{formatCurrencyUnit(Number(remittance))}
-									</td>
-								</tr>
-							),
-						)}
-					</tbody>
-				</Table>
-			)}
+						<tbody>
+							{data?.workers.map(
+								({
+									position,
+									isFirstIdxOfArr,
+									id,
+									workerName,
+									registrationNumberFront,
+									registrationNumberBack,
+									workedDate,
+									payment,
+									remittance,
+									remittanceType,
+									memo,
+								}) => (
+									<tr
+										key={id}
+										role="check"
+										onClick={() =>
+											openModal({
+												id,
+												workerName,
+												registrationNumberFront,
+												registrationNumberBack,
+												workedDate,
+												payment,
+												remittance,
+												remittanceType,
+												memo,
+											})
+										}>
+										<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
+										<td aria-label="tableBody-workerName">{workerName}</td>
+										<td aria-label="tableBody-registrationNumber">{`${registrationNumberFront} - ${registrationNumberBack}`}</td>
+										<td aria-label="tableBody-workedDate">
+											{workedDate.getMonth() + 1}/{workedDate.getDate()}
+										</td>
+										<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
+										<td aria-label="tableBody-remittance">
+											<HighlightText color="var(--text-color)" bgColor="var(--outline-color)">
+												{remittanceType}
+											</HighlightText>
+											{formatCurrencyUnit(Number(remittance))}
+										</td>
+									</tr>
+								),
+							)}
+						</tbody>
+					</Table>
+				)}
+			</Suspense>
 		</>
 	);
 };
@@ -152,7 +175,12 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tbody > tr {
+		border-top: 1px solid var(--outline-color);
 		border-bottom: 1px solid var(--outline-color);
+
+		&:nth-of-type(1) {
+			border-top-color: var(--bg-color);
+		}
 	}
 
 	tbody > tr:hover {
@@ -178,7 +206,7 @@ const Table = styled.table<{ searched: boolean }>`
 		}
 	}
 
-	th[aria-label='payment'] {
+	th[aria-label='tableHead-payment'] {
 		display: none;
 
 		@media screen and (min-width: 640px) {
@@ -186,7 +214,7 @@ const Table = styled.table<{ searched: boolean }>`
 		}
 	}
 
-	th[aria-label='remittance'] {
+	th[aria-label='tableHead-remittance'] {
 		span {
 			display: none;
 			@media screen and (min-width: 640px) {
@@ -196,29 +224,38 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	td {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
 		font-size: 18px;
 	}
 
-	td[aria-label='workerName'],
-	td[aria-label='payment'] {
+	td[aria-label='tableBody-workerName'],
+	td[aria-label='tableBody-payment'] {
 		font-weight: ${({ searched }) => (searched ? '900' : '400')};
 		color: ${({ searched }) => (searched ? 'var(--color-green-300)' : 'var(--text-color)')};
 		border-radius: 8px;
 	}
 
-	td[aria-label='payment'] {
+	td[aria-label='tableBody-payment'] {
 		display: none;
 
 		@media screen and (min-width: 640px) {
-			display: inline-block;
+			display: inline-flex;
 		}
 	}
 
-	td[aria-label='remittance'] {
+	td[aria-label='tableBody-remittance'] {
 		display: inline-flex;
+		flex-direction: column;
 		align-items: center;
-		gap: 0.4rem;
+		gap: 0.2rem;
 		margin: 0 auto;
+
+		@media screen and (min-width: 640px) {
+			flex-direction: row;
+			gap: 0.4rem;
+		}
 	}
 `;
 

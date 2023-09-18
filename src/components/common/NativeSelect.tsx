@@ -38,11 +38,12 @@ interface SelectFieldProps extends HTMLAttributes<HTMLSelectElement> {
 	id: string;
 	name: string;
 	error: string | undefined;
+	disabled?: boolean;
 	width: number;
 }
 
 Select.Field = forwardRef(
-	({ id, name, onChange, onBlur, error, width, ...props }: SelectFieldProps, ref: ForwardedRef<HTMLSelectElement>) => {
+	({ id, name, onChange, onBlur, error, disabled, width, ...props }: SelectFieldProps, ref: ForwardedRef<HTMLSelectElement>) => {
 		return (
 			<SelectField
 				id={id}
@@ -53,6 +54,8 @@ Select.Field = forwardRef(
 				onBlur={onBlur}
 				aria-invalid="false"
 				error={error!}
+				disabled={disabled ?? false}
+				aria-disabled={disabled}
 				width={width}
 				{...props}>
 				<option value="">--- 선 택 --- </option>
@@ -71,15 +74,16 @@ const BottomText = styled.p<{ isError: boolean }>`
 	font-weight: 400;
 `;
 
-const SelectField = styled.select<{ width: number; error: string }>`
+const SelectField = styled.select<{ width: number; error: string; disabled: boolean }>`
 	margin: 0;
 	padding: 0.75rem 1rem;
-	min-width: 250px;
+	width: 250px;
 	font-size: 16px;
 	line-height: 24px;
 	border: none;
 	border-radius: 8px;
-	color: var(--text-color);
+	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
+	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
 	outline: none;
 	cursor: pointer;
 

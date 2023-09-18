@@ -44,16 +44,29 @@ interface TextFieldProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> 
 	placeholder: string;
 	value?: string;
 	error: string | undefined;
+	disabled?: boolean;
 	width: number;
 }
 
-Input.TextField = forwardRef(({ type, name, placeholder, error, width, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
-	return (
-		<TextField type={type} name={name} placeholder={placeholder} ref={ref} error={error!} autoComplete="off" width={width} {...props} />
-	);
-});
+Input.TextField = forwardRef(
+	({ type, name, placeholder, error, disabled, width = 250, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
+		return (
+			<TextField
+				type={type}
+				name={name}
+				placeholder={placeholder}
+				ref={ref}
+				error={error!}
+				disabled={disabled}
+				autoComplete="off"
+				width={width}
+				{...props}
+			/>
+		);
+	},
+);
 
-Input.ControlledTextField = ({ type, name, placeholder, value, onChange, onBlur, error, width, ...props }: TextFieldProps) => {
+Input.ControlledTextField = ({ type, name, placeholder, value, onChange, onBlur, error, disabled, width, ...props }: TextFieldProps) => {
 	return (
 		<TextField
 			type={type}
@@ -63,6 +76,8 @@ Input.ControlledTextField = ({ type, name, placeholder, value, onChange, onBlur,
 			onChange={onChange}
 			onBlur={onBlur}
 			error={error!}
+			disabled={disabled}
+			aria-disabled={disabled}
 			autoComplete="off"
 			width={width}
 			{...props}
@@ -84,7 +99,7 @@ const BottomText = styled.p<{ isError: boolean }>`
 	font-weight: 400;
 `;
 
-const TextField = styled.input<{ width: number; error: string }>`
+const TextField = styled.input<{ width: number; error: string; disabled: boolean }>`
 	margin: 0;
 	padding: 0.75rem 1rem;
 	min-width: 250px;
@@ -92,9 +107,10 @@ const TextField = styled.input<{ width: number; error: string }>`
 	line-height: 24px;
 	border: none;
 	border-radius: 8px;
-	color: var(--text-color);
-	outline: none;
+	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
+	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
 	box-shadow: ${({ error }) => (error ? 'inset 0 0 0 1px var(--color-green-50)' : 'inset 0 0 0 1px var(--outline-color)')};
+	outline: none;
 
 	&:focus {
 		box-shadow: ${({ error }) => (error ? 'inset 0 0 0 2px var(--color-green-50)' : 'inset 0 0 0 1px var(--text-color)')};
