@@ -78,9 +78,10 @@ const GlobalStyle = css`
 		--btn-hover-bg-color: var(--color-gray-800);
 		--outline-color: var(--color-gray-400);
 		--text-color: var(--color-dark);
+		--disabled-text-color: var(--color-gray-600);
 		--bg-color: var(--color-white);
 		--option-hover-bg-color: var(--color-gray-200);
-		--backdrop-blur-bg-color: rgb(255 255 255 / 0.3);
+		--backdrop-blur-bg-color: rgb(0 0 0 / 0.15);
 		color: var(--color-dark);
 		background-color: var(--color-white);
 	}
@@ -93,9 +94,10 @@ const GlobalStyle = css`
 		--btn-hover-bg-color: var(--color-gray-200);
 		--outline-color: var(--color-gray-800);
 		--text-color: var(--color-white);
+		--disabled-text-color: var(--color-gray-300);
 		--bg-color: var(--color-dark);
 		--option-hover-bg-color: var(--color-gray-700);
-		--backdrop-blur-bg-color: rgb(0 0 0 / 0.3);
+		--backdrop-blur-bg-color: rgb(0 0 0/ 0.4);
 		color: var(--color-white);
 		background-color: var(--color-dark);
 	}
