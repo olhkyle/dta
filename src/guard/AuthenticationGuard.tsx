@@ -1,9 +1,10 @@
-import { ReactNode, useEffect, useState } from 'react';
+import { ReactNode, Suspense, useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { auth } from '../service/firebase';
 import { useSetUser } from '../hooks';
 import routes from '../constants/routes';
 import { Route } from '../constants/routes';
+import { Loading } from '../components';
 
 interface AuthenticationGuardProps {
 	redirectTo: Route<typeof routes>;
@@ -30,7 +31,7 @@ const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) 
 		return <Navigate to={redirectTo} />;
 	}
 
-	return !isLoggedIn ? null : username ? element : <Navigate to={redirectTo} />;
+	return !isLoggedIn ? null : username ? <Suspense fallback={<Loading />}>{element}</Suspense> : <Navigate to={redirectTo} />;
 };
 
 export default AuthenticationGuard;
