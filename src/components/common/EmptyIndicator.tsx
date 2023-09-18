@@ -20,6 +20,7 @@ const Container = styled.div`
 	font-size: 16px;
 	font-weight: 600;
 	text-align: center;
+	border: 2px solid var(--outline-color);
 	outline: 2px solid var(--text-color);
 	outline-offset: 4px;
 
