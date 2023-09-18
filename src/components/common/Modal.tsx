@@ -13,8 +13,7 @@ const Modal = () => {
 				<Container>
 					{modals.map(({ Component, props }, index) => {
 						const closeModal = () => dispatch(close({ Component }));
-						const handleSubmit = (onGoing: boolean) => props?.onSubmit(onGoing);
-						return <Component key={index} onClose={closeModal} onSubmit={handleSubmit} />;
+						return <Component key={index} isOpen={props?.isOpen} onClose={closeModal} data={props?.data} />;
 					})}
 				</Container>
 			)}
@@ -27,7 +26,6 @@ const Container = styled.div`
 	max-width: 100%;
 	min-width: 100%;
 	height: 100vh;
-	background-color: rgba(0, 0, 0, 0.2);
 	visibility: 'visible';
 	inset: 0px;
 	z-index: 9990;

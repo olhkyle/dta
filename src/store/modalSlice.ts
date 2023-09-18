@@ -1,11 +1,11 @@
 import { ElementType } from 'react';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
-import { RegisterSchema } from '../components/register/schema';
+import { WorkerWithId } from '../service/workData';
 
 interface ModalState {
 	Component: ElementType;
-	props?: { [key: string]: () => void } | { [key: string]: (onGoing: boolean) => (data: RegisterSchema) => Promise<void> };
+	props?: { data: WorkerWithId; isOpen: boolean };
 }
 
 const initialState: ModalState[] = [];
