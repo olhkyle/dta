@@ -36,7 +36,7 @@ const DatePicker = ({ selectedDay, setSelectedDay }: DatePickerProps) => {
 				<FaRegCalendarCheck size="20" color="var(--text-color)" onClick={toggleDayPicker} />
 			</CalendarSelectorContainer>
 			{isDatePickerActive && (
-				<StyledDayPicker
+				<SingleDayPicker
 					mode="single"
 					defaultMonth={new Date()}
 					showOutsideDays={true}
@@ -103,7 +103,7 @@ const CalendarSelector = styled.input<{ active: boolean }>`
 	}
 `;
 
-const StyledDayPicker = styled(DayPicker)`
+const SingleDayPicker = styled(DayPicker)`
 	.rdp-months {
 		width: 300px;
 	}
