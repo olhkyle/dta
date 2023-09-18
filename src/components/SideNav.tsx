@@ -18,6 +18,9 @@ const SideNav = ({ onLogout }: SideNavProps) => {
 	return (
 		<Container>
 			<Flex direction="column" justifyContent="space-between" gap="1rem">
+				<Overview to={routes.OVERVIEW} onClick={close}>
+					명세 개요
+				</Overview>
 				<Details to={routes.DETAILS} onClick={close}>
 					월별 세부 명세
 				</Details>
@@ -58,9 +61,18 @@ const Container = styled.div`
 		display: none;
 	}
 `;
+const Overview = styled(NavLink)`
+	margin-top: 1rem;
+	width: 100%;
+	font-size: 18px;
+	border-radius: 0;
+	border-bottom: 1px solid var(--color-gray-400);
+	&:hover {
+		color: var(--color-green-50);
+	}
+`;
 
 const Details = styled(NavLink)`
-	margin-top: 1rem;
 	width: 100%;
 	font-size: 18px;
 	border-radius: 0;
