@@ -6,3 +6,4 @@ export { default as useSideNavActive } from './useSideNavActive';
 export { default as useTheme } from './useTheme';
 export { default as useDebounce } from './useDebounce';
 export { default as useGoBack } from './useGoBack';
+export { default as useOverlayFixed } from './useOverlayFixed';
