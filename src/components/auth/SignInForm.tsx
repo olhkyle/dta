@@ -71,6 +71,8 @@ const SignInForm = () => {
 			<Text typo="p" color="var(--text-color)">
 				서비스 이용을 위해서 보안 상 로그인이 필요합니다.
 			</Text>
+
+			<Spacer size={400} />
 		</Form>
 	);
 };
