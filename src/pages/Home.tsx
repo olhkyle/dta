@@ -17,7 +17,7 @@ const Home = () => {
 						<Text typo="h5" color="var(--text-color)">
 							본 서비스는
 						</Text>
-						<Corporation typo="h4" color="var(--bg-color)">
+						<Corporation typo="h5" color="var(--bg-color)">
 							민하우징
 						</Corporation>
 					</Flex>
