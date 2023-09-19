@@ -44,7 +44,10 @@ const router = createBrowserRouter([
 				loader: getWorkersDetailLoader(queryClient),
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Details />} />,
 			},
-
+			{
+				path: '/worker/:id',
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Worker />} />,
+			},
 			{
 				path: routes.LOGIN,
 				element: <SignIn />,
