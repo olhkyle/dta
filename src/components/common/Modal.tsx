@@ -13,7 +13,11 @@ const Modal = () => {
 				<Container>
 					{modals.map(({ Component, props }, index) => {
 						const closeModal = () => dispatch(close({ Component }));
-						return <Component key={index} isOpen={props?.isOpen} onClose={closeModal} data={props?.data} />;
+
+						if (props) {
+							const { data, isOpen, refetch } = props;
+							return <Component key={index} data={data} isOpen={isOpen} refetch={refetch} onClose={closeModal} />;
+						}
 					})}
 				</Container>
 			)}
