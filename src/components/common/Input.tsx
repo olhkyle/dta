@@ -49,7 +49,7 @@ interface TextFieldProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> 
 }
 
 Input.TextField = forwardRef(
-	({ type, name, placeholder, error, disabled, width = 250, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
+	({ type, name, placeholder, error, disabled = false, width = 250, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
 		return (
 			<TextField
 				type={type}
@@ -66,7 +66,18 @@ Input.TextField = forwardRef(
 	},
 );
 
-Input.ControlledTextField = ({ type, name, placeholder, value, onChange, onBlur, error, disabled, width, ...props }: TextFieldProps) => {
+Input.ControlledTextField = ({
+	type,
+	name,
+	placeholder,
+	value,
+	onChange,
+	onBlur,
+	error,
+	disabled = false,
+	width,
+	...props
+}: TextFieldProps) => {
 	return (
 		<TextField
 			type={type}
