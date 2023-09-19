@@ -13,6 +13,7 @@ import { useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks/muta
 import { unformatCurrencyUnit } from '../../utils/currencyUnit';
 import { QueryRefetch } from '../../store/modalSlice';
 import sleep from '../../utils/sleep';
+import { useNavigate } from 'react-router-dom';
 
 interface DetailModalProps {
 	data: WorkerWithId;
@@ -63,6 +64,8 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 
 		setDisabled(updatedState);
 	};
+
+	const navigate = useNavigate();
 
 	useOverlayFixed(isOpen);
 
@@ -128,9 +131,19 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 							<MdClose size="24" color="var(--text-color)" />
 						</CloseModalButton>
 					</Flex>
-					<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
-						{isAllFieldsDisabled ? '수정취소' : '수정하기'}
-					</ModifyButton>
+					<Flex gap="1rem">
+						<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
+							{isAllFieldsDisabled ? '수정취소' : '수정하기'}
+						</ModifyButton>
+						<ViewWorkerDetailButton
+							type="button"
+							onClick={() => {
+								onClose();
+								navigate(`/worker/${worker.id}`);
+							}}>
+							일용직 상세보기
+						</ViewWorkerDetailButton>
+					</Flex>
 				</Header>
 				<Body>
 					<Form onSubmit={handleSubmit(onSubmit)}>
@@ -311,6 +324,17 @@ const ModifyButton = styled(Button)`
 
 	&:hover {
 		background-color: var(--color-green-200);
+	}
+`;
+
+const ViewWorkerDetailButton = styled(Button)`
+	margin-top: 1.5rem;
+	padding: 0.5rem 0.75rem;
+	color: var(--bg-color);
+	background-color: var(--color-orange-100);
+
+	&:hover {
+		background-color: var(--color-orange-200);
 	}
 `;
 
