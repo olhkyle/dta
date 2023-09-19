@@ -1,56 +1,58 @@
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Input, Text, Button, NativeSelect, Flex } from '../../components';
-import { RegisterSchema, registerSchema } from '../../components/register/schema';
+import { Input, Text, Button, NativeSelect, Flex, DatePicker, Loading } from '../../components';
+import { toast } from 'react-toastify';
+import { MdClose } from 'react-icons/md';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { RegisterSchema, registerSchema } from '../../components/register/schema';
 import { WorkerWithId } from '../../service/workData';
-import { useEffect, useState } from 'react';
-import { MdClose } from 'react-icons/md';
 import { useOverlayFixed } from '../../hooks';
-
-type Workers = { [key in keyof RegisterSchema]: WorkerWithId[key] };
+import { SubmitHandler } from '../register/RegisterForm';
+import { useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks/mutations';
+import { unformatCurrencyUnit } from '../../utils/currencyUnit';
+import { QueryRefetch } from '../../store/modalSlice';
+import sleep from '../../utils/sleep';
 
 interface DetailModalProps {
+	data: WorkerWithId;
 	isOpen: boolean;
+	refetch: QueryRefetch;
 	onClose: () => void;
-	data: Workers;
 }
 
 type DisabledState = {
 	[key: string]: boolean;
 };
 
-const DetailModal = ({ isOpen, onClose, data }: DetailModalProps) => {
+const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProps) => {
 	const {
 		register,
 		handleSubmit,
 		control,
 		formState: { errors },
 		setValue,
-		setFocus,
 	} = useForm<RegisterSchema>({
 		mode: 'onChange',
 		resolver: zodResolver(registerSchema),
 		shouldFocusError: true,
 	});
 
+	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
 	const [disabled, setDisabled] = useState<DisabledState>({
 		workerName: true,
 		registrationNumberFront: true,
 		registrationNumberBack: true,
+		workedDate: true,
 		payment: true,
 		remittanceType: true,
 		remittance: true,
 		memo: true,
 	});
 
-	useOverlayFixed(isOpen);
+	const [isDeleteProcessLoading, setDeleteProcessLoading] = useState(false);
 
-	useEffect(() => {
-		for (const [key, value] of Object.entries(data)) {
-			setValue(key as keyof Workers, value);
-		}
-	}, []);
+	const isAllFieldsDisabled: boolean = Object.values(disabled).every(item => item === false);
 
 	const toggleAllFieldsDisabled = () => {
 		const updatedState: DisabledState = {};
@@ -62,7 +64,57 @@ const DetailModal = ({ isOpen, onClose, data }: DetailModalProps) => {
 		setDisabled(updatedState);
 	};
 
-	const onSubmit = async () => {};
+	useOverlayFixed(isOpen);
+
+	useEffect(() => {
+		for (const [key, value] of Object.entries(worker)) {
+			if (
+				key === 'workerName' ||
+				key === 'registrationNumberFront' ||
+				key === 'registrationNumberBack' ||
+				key === 'payment' ||
+				key === 'remittance' ||
+				key === 'remittanceType' ||
+				key === 'memo'
+			) {
+				setValue(key, value);
+			}
+		}
+		setSelectedDay(worker.workedDate);
+	}, []);
+
+	const editMutate = useEditWorkerMutation(worker.id);
+	const removeMutate = useRemoveWorkerMutation(worker.id);
+
+	const handleRemoveWorkerButton = async (loading = true) => {
+		try {
+			if (loading) setDeleteProcessLoading(true);
+			await sleep(1000);
+			removeMutate({ id: worker.id });
+
+			onClose();
+			refetch();
+			toast.success('성공적으로 삭제 되었습니다.');
+		} catch (e) {
+			console.error(e);
+		} finally {
+			if (loading) setDeleteProcessLoading(false);
+		}
+	};
+
+	const onSubmit: SubmitHandler<RegisterSchema> = fields => {
+		editMutate({
+			id: worker.id,
+			workedDate: selectedDay,
+			...fields,
+			payment: unformatCurrencyUnit(fields.payment),
+			remittance: unformatCurrencyUnit(fields.remittance),
+		});
+
+		onClose();
+		refetch();
+		toast.success('성공적으로 수정되었습니다.');
+	};
 
 	return (
 		<>
@@ -77,7 +129,7 @@ const DetailModal = ({ isOpen, onClose, data }: DetailModalProps) => {
 						</CloseModalButton>
 					</Flex>
 					<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
-						수정하기
+						{isAllFieldsDisabled ? '수정취소' : '수정하기'}
 					</ModifyButton>
 				</Header>
 				<Body>
@@ -114,6 +166,9 @@ const DetailModal = ({ isOpen, onClose, data }: DetailModalProps) => {
 								/>
 							</Input>
 						</CustomFlex>
+
+						<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} disabled={disabled.workedDate} />
+
 						<Controller
 							name="payment"
 							control={control}
@@ -146,7 +201,7 @@ const DetailModal = ({ isOpen, onClose, data }: DetailModalProps) => {
 								{...register('remittanceType')}
 								error={errors?.remittanceType?.message}
 								disabled={disabled.remittanceType}
-								width={250}
+								width={280}
 							/>
 						</NativeSelect>
 
@@ -186,15 +241,16 @@ const DetailModal = ({ isOpen, onClose, data }: DetailModalProps) => {
 								width={520}
 							/>
 						</Input>
-						<UpdateButton type="submit" id="update" width={500} aria-label="update-button">
+						<UpdateButton type="submit" id="update" width={500} disabled={!isAllFieldsDisabled} aria-label="update-button">
 							수정완료
 						</UpdateButton>
 						<Flex direction="column" margin="5rem 0">
 							<Text color="var(--btn-hover-color)">
-								↳ 삭제하고 싶다면 하단의 <strong>삭제하기</strong>를 클릭해 주세요💡
+								↳ <strong>삭제</strong>하고 싶다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요💡
 							</Text>
-							<DeleteButton type="submit" id="delete" width={500} aria-label="delete-button">
+							<DeleteButton type="button" id="delete" width={500} aria-label="delete-button" onClick={handleRemoveWorkerButton}>
 								삭제하기
+								{isDeleteProcessLoading && <Loading size={25} margin="0" />}
 							</DeleteButton>
 						</Flex>
 					</Form>
@@ -303,6 +359,10 @@ const UpdateButton = styled(Button)<{ width: number }>`
 `;
 
 const DeleteButton = styled(Button)<{ width: number }>`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 0.4rem;
 	margin: 1rem auto;
 	width: 300px;
 	color: var(--text-color);

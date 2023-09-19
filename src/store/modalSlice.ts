@@ -2,10 +2,17 @@ import { ElementType } from 'react';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { WorkerWithId } from '../service/workData';
+import { UseQueryResult } from '@tanstack/react-query';
+
+export type QueryRefetch = (options?: { throwOnError: boolean; cancelRefetch: boolean }) => Promise<UseQueryResult>;
 
 interface ModalState {
 	Component: ElementType;
-	props?: { data: WorkerWithId; isOpen: boolean };
+	props?: {
+		data: WorkerWithId;
+		isOpen: boolean;
+		refetch: QueryRefetch;
+	};
 }
 
 const initialState: ModalState[] = [];

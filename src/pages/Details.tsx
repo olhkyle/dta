@@ -22,10 +22,10 @@ const Details = () => {
 	const [month, setMonth] = useState(monthOfToday);
 	const [currentSort, setCurrentControl] = useState(controls[0]);
 
-	const { data } = useQuery(getWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName }));
+	const { data, refetch } = useQuery(getWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName }));
 
 	const dispatch = useAppDispatch();
-	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true } }));
+	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
 	return (
 		<>
@@ -39,7 +39,7 @@ const Details = () => {
 					</Flex>
 					<PrintButton type="button">출력</PrintButton>
 				</Flex>
-				<Flex justifyContent="flex-end" margin="2rem 0">
+				<Flex justifyContent="flex-end" margin="2rem 0 3rem">
 					<Badge label="총 합계" bgColor="var(--text-color)">
 						{formatCurrencyUnit(data?.sumOfPayment)}
 					</Badge>

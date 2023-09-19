@@ -14,9 +14,9 @@ export interface Worker extends RegisterSchema {
 	workedDate: Date | any;
 }
 
-type SubmitHandler<T> = (data: T, event?: BaseSyntheticEvent) => void | Promise<void>;
+export type SubmitHandler<T> = (data: T, event?: BaseSyntheticEvent) => void | Promise<void>;
 
-type FormSubmitButtonId = 'register' | 'additionalRegister';
+export type FormSubmitButtonId = 'register' | 'additionalRegister';
 
 const RegisterForm = () => {
 	const {
