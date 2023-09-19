@@ -4,10 +4,13 @@ import {
 	addDoc,
 	and,
 	collection,
+	deleteDoc,
+	doc,
 	getCountFromServer,
 	getDocs,
 	orderBy,
 	query,
+	updateDoc,
 	where,
 } from 'firebase/firestore';
 import { db } from './firebase';
@@ -60,4 +63,13 @@ const addWorker = async (worker: Worker) => {
 	return workerRef.id;
 };
 
-export { getWorkers, addWorker };
+const editWorker = async ({ data }: { data: WorkerWithId }) => {
+	const { id, ...worker } = data;
+	await updateDoc(doc(db, COLLECTION_NAME, id), { ...worker });
+};
+
+const removeWorker = async ({ id }: { id: string }) => {
+	await deleteDoc(doc(db, COLLECTION_NAME, id));
+};
+
+export { getWorkers, addWorker, editWorker, removeWorker };
