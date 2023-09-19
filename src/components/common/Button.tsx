@@ -2,11 +2,12 @@ import { HTMLAttributes, ReactNode } from 'react';
 
 interface ButtonProps extends HTMLAttributes<HTMLButtonElement> {
 	type: 'button' | 'submit';
+	disabled?: boolean;
 	onClick?: () => void;
 	children?: ReactNode;
 }
 
-const Button = ({ type, onClick, children, ...props }: ButtonProps) => {
+const Button = ({ type, disabled = false, onClick, children, ...props }: ButtonProps) => {
 	return (
 		<button
 			type={type}
@@ -17,6 +18,7 @@ const Button = ({ type, onClick, children, ...props }: ButtonProps) => {
 				fontWeight: '600',
 				color: 'var(--text-color)',
 			}}
+			disabled={disabled}
 			onClick={onClick}
 			{...props}>
 			{children}
