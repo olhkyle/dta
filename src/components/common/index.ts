@@ -1,5 +1,6 @@
 export { default as Badge } from './Badge';
 export { default as Button } from './Button';
+export { default as Circle } from './Circle';
 export { default as CustomSelect } from './CustomSelect';
 export { default as EmptyIndicator } from './EmptyIndicator';
 export { default as Flex } from './Flex';
@@ -14,3 +15,4 @@ export { default as SearchInput } from './SearchInput';
 export { default as SegmentedControl } from './SegmentedControl';
 export { default as Text } from './Text';
 export { default as ThemeButton } from './ThemeButton';
+export { default as Wip } from './Wip';
