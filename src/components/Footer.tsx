@@ -7,8 +7,8 @@ const Footer = () => {
 	return (
 		<Container>
 			<Flex alignItems="flex-end" gap="0.5rem">
-				<Logo to={routes.HOME}>Ttax</Logo>
-				<CopyRight>© 2023 MinHousing</CopyRight>
+				<Logo to={routes.HOME}>D:T.A</Logo>
+				<CopyRight>© 2023 Min-Housing</CopyRight>
 			</Flex>
 			<MadeBy to={'https://olhkyle.me'}>Olhkyle.me</MadeBy>
 		</Container>

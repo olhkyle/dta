@@ -6,7 +6,7 @@ import routes from '../constants/routes';
 const Home = () => {
 	return (
 		<>
-			<Flex direction="column" justifyContent="center" gap="1rem" margin="10rem auto">
+			<Flex direction="column" justifyContent="center" gap="1rem" margin="8rem auto">
 				<Flex justifyContent="center" margin="2rem auto 6rem">
 					<Subtitle typo="h2" color="var(--text-color)">
 						Document Tax Administration
@@ -38,6 +38,11 @@ const Home = () => {
 const Subtitle = styled(Text)`
 	padding: 1rem;
 	text-align: center;
+	font-size: 36px;
+
+	@media screen and (min-width: 640px) {
+		font-size: 48px;
+	}
 `;
 
 const Navigation = styled(NavLink)`
