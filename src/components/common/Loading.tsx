@@ -1,10 +1,16 @@
 import styled from '@emotion/styled';
 import { Flex } from '.';
 
-const Loading = () => {
+interface LoadingProps {
+	size?: number;
+	margin?: string;
+}
+
+const Loading = ({ size = 80, margin = '5rem 0' }: LoadingProps) => {
 	return (
-		<Flex justifyContent="center" margin="5rem 0">
+		<Flex justifyContent="center" margin={margin}>
 			<Svg
+				size={size}
 				xmlns="http://www.w3.org/2000/svg"
 				xmlnsXlink="http://www.w3.org/1999/xlink"
 				css={{ margin: 'auto', background: 'none', display: 'block', shapeRendering: 'auto' }}
@@ -25,13 +31,13 @@ const Loading = () => {
 	);
 };
 
-const Svg = styled.svg`
+const Svg = styled.svg<{ size: number }>`
 	width: 60px;
 	height: 60px;
 
 	@media screen and (min-width: 640px) {
-		width: 80px;
-		height: 80px;
+		width: ${({ size }) => `${size}px`};
+		height: ${({ size }) => `${size}px`};
 	}
 `;
 
