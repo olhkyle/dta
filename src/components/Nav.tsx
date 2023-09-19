@@ -38,7 +38,7 @@ const Nav = () => {
 		<>
 			<Container>
 				<Logo to={routes.HOME} onClick={close}>
-					<h1 className="underlined">D_T.A</h1>
+					<h1 className="underlined">D:T.A</h1>
 				</Logo>
 				<NavLinkContainer>
 					<Flex justifyContent="space-between" gap="0.25rem">
