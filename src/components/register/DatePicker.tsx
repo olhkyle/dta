@@ -10,9 +10,10 @@ import { useClickOutside } from '../../hooks';
 interface DatePickerProps {
 	selectedDay: Date | undefined;
 	setSelectedDay: Dispatch<SetStateAction<Date | undefined>>;
+	disabled?: boolean;
 }
 
-const DatePicker = ({ selectedDay, setSelectedDay }: DatePickerProps) => {
+const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePickerProps) => {
 	const [isDatePickerActive, setIsDatePickerActive] = useState<boolean>(false);
 	const formattedDay: string = format(selectedDay ?? new Date(), 'yyyy-MM-dd');
 
@@ -30,10 +31,18 @@ const DatePicker = ({ selectedDay, setSelectedDay }: DatePickerProps) => {
 					value={formattedDay}
 					active={isDatePickerActive}
 					onFocus={toggleDayPicker}
+					disabled={disabled}
 					aria-label="calendar-selector"
 					readOnly
 				/>
-				<FaRegCalendarCheck size="20" color="var(--text-color)" onClick={toggleDayPicker} />
+				<FaRegCalendarCheck
+					size="20"
+					color="var(--text-color)"
+					onClick={() => {
+						if (disabled) return;
+						toggleDayPicker();
+					}}
+				/>
 			</CalendarSelectorContainer>
 			{isDatePickerActive && (
 				<SingleDayPicker
@@ -86,13 +95,15 @@ const CalendarSelectorContainer = styled.div`
 	}
 `;
 
-const CalendarSelector = styled.input<{ active: boolean }>`
+const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
 	margin-top: 0.5rem;
 	padding: 0.8rem 1.2rem;
 	width: 280px;
 	font-size: 16px;
 	font-weight: 500;
 	color: var(--text-color);
+	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
+	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
 	border-radius: 8px;
 	cursor: pointer;
 
