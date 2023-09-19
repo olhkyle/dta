@@ -1,7 +1,7 @@
 import { WorkerWithId, getWorkers } from '../service/workData';
 import { monthOfToday, yearOfToday } from '../constants/day';
 
-interface QueryData {
+export interface WorkersQueryData {
 	workers: WorkerWithId[];
 	totalLength: number;
 }
@@ -21,7 +21,7 @@ interface UniqueWorker extends WorkerWithId {
 
 export const control: Record<string, InOrder> = { '최신 순': 'desc', '오래된 순': 'asc' };
 
-const getSumOfPayment = (data: QueryData, targetName: string) =>
+const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
 	data?.workers
 		.filter(({ workerName }) => workerName === targetName)
 		.map(({ payment }) => +payment)
@@ -37,7 +37,7 @@ const getWorkersQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOf
 		const data = await getWorkers({ inOrder, year, month, workerName });
 		return data;
 	},
-	select: (data: QueryData) => ({
+	select: (data: WorkersQueryData) => ({
 		workers: data?.workers.reduce((uniqueWorkers, worker) => {
 			if (!checkExist(uniqueWorkers, worker.workerName)) {
 				uniqueWorkers.push({ ...worker, sumOfPayment: getSumOfPayment(data, worker.workerName) });
