@@ -47,3 +47,7 @@ and organize related WebApp.
 ### 03 진행상황 / Progress
 
 > ☑︎ 70% / 100%
+
+### 04 Tech Stacks
+
+`React` `TypeScript` `React-Query` `Redux-Toolkit` `Zod` `React-Hook-Form` `Emotion` `Firebase`
