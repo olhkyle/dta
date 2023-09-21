@@ -1,27 +1,27 @@
-# React + TypeScript + Vite
+# 🏢 D:T.A(Document Tax Administration)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### 프로젝트 배경
 
-Currently, two official plugins are available:
+**건설업**을 다루는 회사에서 현장의 일용직 대상으로 **임금 지급** 시 관련된 자료를 아직까지도 수기로 관리하고 있는 현상을 발견하였습니다.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+세금 계산 시 필요한 데이터를 선별하는 시간적 비용, 그리고 데이터를 관리자의 인적 비용이 불필요하게 낭비되고 있는 것을 인지하게 되었습니다.
 
-## Expanding the ESLint configuration
+불필요한 시간, 공간, 인적 낭비를 줄이기 위해, 데이터 관리자의 작업 효율성에 집중하여 관련된 웹/앱을 구성하기로 하였습니다.
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+<br/>
 
-- Configure the top-level `parserOptions` property like this:
+### 방향성
 
-```js
-   parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-   },
-```
+1. 회사 관련자만이 사용할 수 있는 사내 시스템으로 구성합니다.
+   - 개인정보가 담겨 있어 외부에서 회원가입이 불가능한 시스템이며, 관련자만이 로그인 가능하고, 보안과 관련된 강력한 규칙이 적용됩니다.
+2. 일별 작업한 일용직들에게 지급할 **개인정보, 작업 날짜, 지불 임금, 송금 내역, 작업 관련 내용** 등을 기술하여 DB에 저장합니다.
+3. **월별** 얼마나 많은 일용직이 일을 하였으며, 임금은 얼마나 지불 되었는지 등의 데이터를 기준으로 시각화 합니다.
+   - `d3.js` 또는 `chart.js`가 활용될 예정입니다.
+4. **세무**와 관련된 업무를 처리하기 위해, 기존에 엑셀 또는 한글에서 내보내기 하여 출력하던 인쇄물을 웹앱에서도 **출력**할 수 있도록 기능을
+   구성합니다.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+<br/>
+
+### 진행상황
+
+> ☑︎ 70% / 100%
