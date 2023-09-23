@@ -15,6 +15,7 @@ const HighlightText = ({ color, bgColor, children }: HighlightTextProps) => {
 				color,
 				borderRadius: '8px',
 				fontWeight: '600',
+				textAlign: 'center',
 			}}>
 			{children}
 		</span>
