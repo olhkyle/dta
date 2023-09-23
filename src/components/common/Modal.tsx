@@ -15,8 +15,7 @@ const Modal = () => {
 						const closeModal = () => dispatch(close({ Component }));
 
 						if (props) {
-							const { data, isOpen, refetch } = props;
-							return <Component key={index} data={data} isOpen={isOpen} refetch={refetch} onClose={closeModal} />;
+							return <Component key={index} onClose={closeModal} {...props} />;
 						}
 					})}
 				</Container>
