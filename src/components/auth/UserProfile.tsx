@@ -70,10 +70,4 @@ const ImgContainer = styled.span`
 	}
 `;
 
-// const LogoutButton = styled.button`
-// 	position: absolute;
-// 	bottom: -1rem;
-// 	left: 0;
-// `;
-
 export default UserProfile;
