@@ -5,19 +5,19 @@ const RouteError = () => {
 	const error = useRouteError();
 
 	if (isRouteErrorResponse(error)) {
-		return <Navigate to={routes.HOME} />;
+		return <Navigate to={routes.HOME} replace={true} />;
 	}
 
 	if (error) {
 		switch (error instanceof Error && error.name) {
 			case 'InvalidAuthError':
-				return <Navigate to={routes.LOGIN} />;
+				return <Navigate to={routes.LOGIN} replace={true} />;
 			case 'Error':
-				return <Navigate to={routes.HOME} />;
+				return <Navigate to={routes.HOME} replace={true} />;
 		}
 	}
 
-	return <Navigate to="/*" />;
+	return <Navigate to="/*" replace={true} />;
 };
 
 export default RouteError;
