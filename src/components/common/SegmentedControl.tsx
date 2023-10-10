@@ -1,10 +1,11 @@
+import { ControlKeys } from '@/constants/sortControls';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 
 interface SegmentedControlProps {
-	data: readonly string[];
+	data: ControlKeys[];
 	value: string;
-	setValue: Dispatch<SetStateAction<string>>;
+	setValue: Dispatch<SetStateAction<ControlKeys>>;
 }
 
 const SegmentedControl = ({ data, value: currentPosition, setValue }: SegmentedControlProps) => {

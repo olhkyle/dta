@@ -2,13 +2,14 @@ import { BaseSyntheticEvent, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, DatePicker, Flex, Input, NativeSelect, Spacer, Text } from '..';
+import { Button, DatePicker, Flex, HighlightText, Input, NativeSelect, Spacer, Text } from '..';
 import { RegisterSchema, registerSchema } from './schema';
 import { addWorker } from '../../service/workData';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { unformatCurrencyUnit } from '../../utils/currencyUnit';
 import routes from '../../constants/routes';
+import sleep from '../../utils/sleep';
 
 export interface Worker extends RegisterSchema {
 	workedDate: Date | any;
@@ -40,6 +41,8 @@ const RegisterForm = () => {
 		const buttonId = ((event?.nativeEvent as any).submitter as HTMLElement)?.id as FormSubmitButtonId;
 
 		try {
+			if (buttonId === 'additionalRegister') await sleep(500);
+
 			await addWorker({
 				...data,
 				workedDate: selectedDay ?? new Date(),
@@ -178,6 +181,11 @@ const RegisterForm = () => {
 					추가 등록
 				</AdditionalRegisterButton>
 			</CustomFlex>
+			<Flex justifyContent="center" margin="1rem 0">
+				<HighlightText color="var(--text-color)" bgColor="var(--outline-color)">
+					💡 추가 등록 시 성명, 주민등록번호, 출력일은 바로 이전에 작성한 내용이 유지됩니다.
+				</HighlightText>
+			</Flex>
 		</Form>
 	);
 };

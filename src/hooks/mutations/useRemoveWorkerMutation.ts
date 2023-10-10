@@ -26,9 +26,9 @@ const useRemoveWorkerMutation = (id: string) => {
 			toast.error(error as unknown as ToastContent<unknown>);
 			queryClient.setQueryData(queryKey, context?.prevWorkerData);
 		},
-		onSettled: () => {
-			queryClient.invalidateQueries({ queryKey });
-		},
+		// onSettled: () => {
+		// 	queryClient.invalidateQueries({ queryKey });
+		// },
 	});
 
 	return mutate;

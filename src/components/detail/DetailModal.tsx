@@ -18,8 +18,8 @@ import { useNavigate } from 'react-router-dom';
 interface DetailModalProps {
 	data: WorkerWithId;
 	isOpen: boolean;
-	refetch: QueryRefetch;
 	onClose: () => void;
+	refetch: QueryRefetch;
 }
 
 type DisabledState = {
@@ -58,7 +58,9 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 	const toggleAllFieldsDisabled = () => {
 		const updatedState: DisabledState = {};
 
-		for (const key in disabled) {
+		const disabledKeys = Object.keys(disabled);
+
+		for (const key of disabledKeys) {
 			updatedState[key] = !disabled[key];
 		}
 

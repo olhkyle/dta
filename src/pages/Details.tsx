@@ -1,18 +1,18 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
-import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { useDebounce } from '../hooks';
-import { getWorkersDetailQuery } from '../queries';
-import { control } from '../queries/getWorkersQuery';
+import { useGetWorkersDetailQuery } from '../hooks/queries';
 import { Badge, Button, CustomSelect, EmptyIndicator, Flex, HighlightText, Loading, SearchInput, SegmentedControl } from '../components';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
-import controls from '../constants/sortControls';
+import { control, controls } from '../constants/sortControls';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { useAppDispatch } from '../store/store';
 import { open } from '../store/modalSlice';
 import { DetailModal } from '../components/detail';
 import { WorkerWithId } from '../service/workData';
+import routes from '../constants/routes';
 
 const Details = () => {
 	const [inputValue, setInputValue] = useState('');
@@ -22,7 +22,9 @@ const Details = () => {
 	const [month, setMonth] = useState(monthOfToday);
 	const [currentSort, setCurrentControl] = useState(controls[0]);
 
-	const { data, refetch } = useQuery(getWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName }));
+	const navigate = useNavigate();
+
+	const { data, refetch } = useGetWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName });
 
 	const dispatch = useAppDispatch();
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
@@ -37,9 +39,11 @@ const Details = () => {
 						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
 						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
 					</Flex>
-					<PrintButton type="button">출력</PrintButton>
+					<PrintButton type="button" onClick={() => navigate(routes.PRINT, { state: { year, month } })}>
+						출력
+					</PrintButton>
 				</Flex>
-				<Flex justifyContent="flex-end" margin="2rem 0 3rem">
+				<Flex justifyContent="flex-end" margin="3rem 0">
 					<Badge label="총 합계" bgColor="var(--text-color)">
 						{formatCurrencyUnit(data?.sumOfPayment)}
 					</Badge>
@@ -131,8 +135,9 @@ const SearchFilters = styled.div`
 
 const PrintButton = styled(Button)`
 	display: none;
-	font-size: 15px;
+	margin: 2rem 0 1rem;
 	padding: 0.6rem 1.5rem;
+	font-size: 15px;
 	background-color: var(--color-green-50);
 	color: var(--color-white);
 	border-radius: 9999px;

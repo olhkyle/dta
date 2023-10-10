@@ -5,7 +5,7 @@ import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
 import { ko } from 'date-fns/locale';
-import { useClickOutside } from '../../hooks';
+import { useClickOutside, useId } from '../../hooks';
 
 interface DatePickerProps {
 	selectedDay: Date | undefined;
@@ -15,6 +15,8 @@ interface DatePickerProps {
 
 const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePickerProps) => {
 	const [isDatePickerActive, setIsDatePickerActive] = useState<boolean>(false);
+	const generatedId = useId('calendar-selector');
+
 	const formattedDay: string = format(selectedDay ?? new Date(), 'yyyy-MM-dd');
 
 	const toggleDayPicker = () => setIsDatePickerActive(!isDatePickerActive);
@@ -29,6 +31,7 @@ const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePicke
 				<CalendarSelector
 					type="text"
 					value={formattedDay}
+					id={generatedId}
 					active={isDatePickerActive}
 					onFocus={toggleDayPicker}
 					disabled={disabled}
@@ -77,7 +80,7 @@ const Container = styled.div`
 	width: 100%;
 `;
 
-const FieldTitle = styled.label`
+const FieldTitle = styled.div`
 	padding: 4px 0;
 	font-size: 18px;
 	font-weight: 500;

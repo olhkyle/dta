@@ -16,16 +16,13 @@ import {
 import { db } from './firebase';
 import { specifySnapshotIntoData } from './utils';
 import { Worker } from '../components/register/RegisterForm';
-import { InOrder, WorkerQuery } from '../queries/getWorkersQuery';
+import { WorkerQuery } from '../queries/getWorkersQuery';
 
 export interface WorkerWithId extends Worker {
 	id: string;
 }
 
 const COLLECTION_NAME = 'people';
-
-const customizeQuery = (collectionRef: CollectionReference<DocumentData, DocumentData>, searchCondition: any, inOrder: InOrder) =>
-	query(collectionRef, searchCondition, orderBy('workedDate', inOrder));
 
 const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
@@ -40,9 +37,7 @@ const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => 
 			orderBy('workedDate', inOrder),
 		);
 
-	const dataSnapshot = await getDocs(q(month));
-
-	const countSnapshot = await getCountFromServer(query(collectionRef));
+	const [dataSnapshot, countSnapshot] = await Promise.all([getDocs(q(month)), getCountFromServer(query(collectionRef))]);
 
 	const workers =
 		workerName !== ''

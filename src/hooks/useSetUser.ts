@@ -6,6 +6,7 @@ const useSetUser = () => {
 	const dispatch = useAppDispatch();
 	const setCurrentUser = (userData: UserState) => dispatch(setUser(userData));
 	const setLogoutUser = () => dispatch(logoutUser());
+
 	const userData = useSelector(({ user }) => user);
 
 	return { ...userData, setCurrentUser, setLogoutUser };

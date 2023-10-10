@@ -1,23 +1,21 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
-import { useQuery } from '@tanstack/react-query';
-import { BsTrash } from 'react-icons/bs';
-import { getWorkersQuery } from '../queries';
-import { control } from '../queries/getWorkersQuery';
 import { useDebounce } from '../hooks';
 import { Badge, CustomSelect, EmptyIndicator, Flex, Loading, SearchInput, SegmentedControl } from '../components';
+import { useGetWorkersQuery } from '../hooks/queries';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
-import controls from '../constants/sortControls';
+import { control, controls } from '../constants/sortControls';
 
 const OverView = () => {
 	const [inputValue, setInputValue] = useState('');
 	const workerName = useDebounce(inputValue, 500);
+
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(monthOfToday);
 	const [currentPosition, setCurrentPosition] = useState(controls[0]);
 
-	const { data } = useQuery(getWorkersQuery({ inOrder: control[currentPosition], year, month, workerName }));
+	const data = useGetWorkersQuery({ inOrder: control[currentPosition], year, month, workerName });
 
 	return (
 		<>
@@ -115,7 +113,6 @@ const Table = styled.table`
 
 	td {
 		position: relative;
-		font-size: 18px;
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;

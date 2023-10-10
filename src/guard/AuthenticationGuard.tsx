@@ -1,10 +1,10 @@
 import { ReactNode, Suspense, useEffect, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 import { auth } from '../service/firebase';
 import { useSetUser } from '../hooks';
 import routes from '../constants/routes';
 import { Route } from '../constants/routes';
-import { Loading } from '../components';
+import { Loading, Skeleton } from '../components';
 
 interface AuthenticationGuardProps {
 	redirectTo: Route<typeof routes>;
@@ -14,6 +14,7 @@ interface AuthenticationGuardProps {
 const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) => {
 	const { name: username, setLogoutUser } = useSetUser();
 	const [isLoggedIn, setIsLoggedIn] = useState(false);
+	const { pathname } = useLocation();
 
 	useEffect(() => {
 		auth.onAuthStateChanged(user => {
@@ -31,7 +32,11 @@ const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) 
 		return <Navigate to={redirectTo} />;
 	}
 
-	return !isLoggedIn ? null : username ? <Suspense fallback={<Loading />}>{element}</Suspense> : <Navigate to={redirectTo} />;
+	return !isLoggedIn ? null : username ? (
+		<Suspense fallback={pathname === routes.PRINT ? <Loading /> : <Skeleton />}>{element}</Suspense>
+	) : (
+		<Navigate to={redirectTo} />
+	);
 };
 
 export default AuthenticationGuard;

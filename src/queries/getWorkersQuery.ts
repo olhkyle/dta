@@ -1,15 +1,14 @@
 import { WorkerWithId, getWorkers } from '../service/workData';
 import { monthOfToday, yearOfToday } from '../constants/day';
+import { ControlValues } from '../constants/sortControls';
 
 export interface WorkersQueryData {
 	workers: WorkerWithId[];
 	totalLength: number;
 }
 
-export type InOrder = 'asc' | 'desc';
-
 export interface WorkerQuery {
-	inOrder: InOrder;
+	inOrder: ControlValues;
 	year: number;
 	month: number;
 	workerName: string;
@@ -18,8 +17,6 @@ export interface WorkerQuery {
 interface UniqueWorker extends WorkerWithId {
 	sumOfPayment: number | undefined;
 }
-
-export const control: Record<string, InOrder> = { '최신 순': 'desc', '오래된 순': 'asc' };
 
 const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
 	data?.workers

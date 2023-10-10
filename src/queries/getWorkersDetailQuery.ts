@@ -1,6 +1,6 @@
 import { monthOfToday, yearOfToday } from '../constants/day';
 import { WorkerWithId, getWorkers } from '../service/workData';
-import { workerQuery } from './getWorkersQuery';
+import { WorkerQuery } from './getWorkersQuery';
 
 const staleTime = 3000;
 
@@ -23,7 +23,7 @@ const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
 		)
 		.sort((prev, curr) => prev.workerName.toLowerCase().localeCompare(curr.workerName.toLowerCase()) && prev.position - curr.position);
 
-const getWorkersDetailQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: workerQuery) => ({
+const getWorkersDetailQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
 	queryKey: ['workersDetail', inOrder, year, month, workerName],
 	queryFn: async () => {
 		const data = await getWorkers({ inOrder, year, month, workerName });

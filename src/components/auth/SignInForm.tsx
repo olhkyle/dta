@@ -29,7 +29,7 @@ const SignInForm = () => {
 
 			setCurrentUser({ ...userData });
 			toast.success('성공적으로 로그인 되었습니다');
-			navigate(routes.HOME);
+			navigate(routes.HOME, { replace: true });
 		} catch (e) {
 			reset();
 			toast.error('이메일 또는 비밀번호가 틀립니다');

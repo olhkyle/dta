@@ -77,11 +77,13 @@ const GlobalStyle = css`
 		--btn-hover-color: var(--color-gray-700);
 		--btn-hover-bg-color: var(--color-gray-800);
 		--outline-color: var(--color-gray-400);
+		--table-border-color: var(--color-gray-600);
 		--text-color: var(--color-dark);
 		--disabled-text-color: var(--color-gray-600);
 		--bg-color: var(--color-white);
 		--option-hover-bg-color: var(--color-gray-200);
 		--backdrop-blur-bg-color: rgb(0 0 0 / 0.15);
+		--linear-gradient: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
 		color: var(--color-dark);
 		background-color: var(--color-white);
 	}
@@ -93,11 +95,13 @@ const GlobalStyle = css`
 		--btn-hover-color: var(--color-gray-200);
 		--btn-hover-bg-color: var(--color-gray-200);
 		--outline-color: var(--color-gray-800);
+		--table-border-color: var(--color-gray-600);
 		--text-color: var(--color-white);
 		--disabled-text-color: var(--color-gray-300);
 		--bg-color: var(--color-dark);
 		--option-hover-bg-color: var(--color-gray-700);
 		--backdrop-blur-bg-color: rgb(0 0 0/ 0.4);
+		--linear-gradient: linear-gradient(to right, #3a3d4a, #4b4c53, #3a3d4a);
 		color: var(--color-white);
 		background-color: var(--color-dark);
 	}
@@ -208,6 +212,53 @@ const GlobalStyle = css`
 		.active.underlined:after {
 			opacity: 1;
 		}
+	}
+
+	.skeleton-loading {
+		position: relative;
+		overflow: hidden;
+
+		@keyframes loading {
+			0% {
+				transform: translateX(0);
+			}
+			50%,
+			100% {
+				transform: translateX(460px);
+			}
+		}
+
+		&::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 45px;
+			height: 100%;
+			background: var(--linear-gradient);
+			animation: loading 2s infinite linear;
+		}
+	}
+
+	.report {
+		break-after: page;
+	}
+
+	.report + .report {
+		/* margin-top: 40px; */
+	}
+
+	@media print {
+		margin: 0;
+		padding: 0;
+		.report + .report {
+			margin-top: 0;
+		}
+	}
+
+	@page {
+		size: A4;
+		margin: 20mm;
 	}
 `;
 
