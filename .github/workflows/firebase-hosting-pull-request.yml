@@ -10,7 +10,7 @@ jobs:
     permissions:
       checks: write
       contents: read
-      pull-requests: write    
+      pull-requests: write
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -35,13 +35,13 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
           VITE_FIREBASE_MSG_SENDER_ID: ${{ secrets.VITE_FIREBASE_MSG_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
-      
+
       - name: install dependencies and build
         run: pnpm install --frozen-lockfile && pnpm run build
 
       - name: deploy to firebase
       - uses: FirebaseExtended/action-hosting-deploy@v0
-          with:
-            repoToken: '${{ secrets.GITHUB_TOKEN }}'
-            firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONSTRUCTION_TTAX_D7E7D }}'
-            projectId: construction-ttax-d7e7d
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_CONSTRUCTION_TTAX_D7E7D }}'
+          projectId: construction-ttax-d7e7d
