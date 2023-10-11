@@ -17,7 +17,6 @@ const Print = () => {
 	const goBack = useGoBack();
 
 	const query = { inOrder: control['오래된 순'], year, month, workerName: '' };
-
 	const workersData = useGetWorkersQuery(query);
 	const { data: workersDetail } = useGetWorkersDetailQuery(query);
 
