@@ -19,8 +19,11 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
-        width:
+        with:
           version: 8
+
+      - name: install dependencies and build
+        run: pnpm install --frozen-lockfile && pnpm run build
 
       - name: Generate Environment Variables File
         run: |
@@ -37,9 +40,6 @@ jobs:
           VITE_FIREBASE_STORAGE_BUCKET: ${{ secrets.VITE_FIREBASE_STORAGE_BUCKET }}
           VITE_FIREBASE_MSG_SENDER_ID: ${{ secrets.VITE_FIREBASE_MSG_SENDER_ID }}
           VITE_FIREBASE_APP_ID: ${{ secrets.VITE_FIREBASE_APP_ID }}
-
-      - name: install dependencies and build
-        run: pnpm install --frozen-lockfile && pnpm run build
 
       - name: deploy to firebase
         uses: FirebaseExtended/action-hosting-deploy@v0
