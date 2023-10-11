@@ -158,8 +158,8 @@ const GlobalStyle = css`
 
 	select {
 		appearance: none;
-		/* -moz-appearance: none; */
-		/* -webkit-appearance: none; */
+		-moz-appearance: none;
+		-webkit-appearance: none;
 	}
 
 	::-moz-selection {
