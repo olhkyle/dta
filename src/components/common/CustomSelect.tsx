@@ -101,6 +101,12 @@ const Options = styled.ul`
 	border-radius: var(--radius);
 	background-color: var(--bg-color);
 	overflow-y: scroll;
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+
+	::-webkit-scrollbar {
+		display: none;
+	}
 `;
 
 const Option = styled.li<{ isCurrent: boolean }>`

@@ -350,6 +350,13 @@ const Body = styled.div`
 	height: 500px;
 	overflow: scroll;
 
+	-ms-overflow-style: none; /* IE and Edge */
+	scrollbar-width: none; /* Firefox */
+
+	::-webkit-scrollbar {
+		display: none;
+	}
+
 	@media screen and (min-width: 520px) {
 		height: 600px;
 	}
