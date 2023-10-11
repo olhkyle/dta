@@ -1,18 +1,4 @@
-import {
-	CollectionReference,
-	DocumentData,
-	addDoc,
-	and,
-	collection,
-	deleteDoc,
-	doc,
-	getCountFromServer,
-	getDocs,
-	orderBy,
-	query,
-	updateDoc,
-	where,
-} from 'firebase/firestore';
+import { addDoc, and, collection, deleteDoc, doc, getCountFromServer, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
 import { db } from './firebase';
 import { specifySnapshotIntoData } from './utils';
 import { Worker } from '../components/register/RegisterForm';

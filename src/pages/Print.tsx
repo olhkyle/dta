@@ -88,7 +88,6 @@ const Print = () => {
 								payment,
 								remittance,
 								remittanceType,
-								memo,
 							}) => (
 								<tr key={id} role="check" onClick={() => {}}>
 									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>

@@ -1,9 +1,8 @@
 import styled from '@emotion/styled';
-import { useParams } from 'react-router-dom';
-import { EmptyIndicator, Input, Text, Wip } from '../components';
+import { Text, Wip } from '../components';
 
 const Worker = () => {
-	const { id } = useParams();
+	// const { id } = useParams();
 
 	// TODO: 이름 / 일별 금액 / 일한 횟수 / 총 합계
 

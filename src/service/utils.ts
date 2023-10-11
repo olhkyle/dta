@@ -1,13 +1,4 @@
-import {
-	CollectionReference,
-	DocumentData,
-	Query,
-	QueryCompositeFilterConstraint,
-	QuerySnapshot,
-	getCountFromServer,
-	getDocs,
-	query,
-} from 'firebase/firestore';
+import { CollectionReference, DocumentData, Query, QuerySnapshot, getCountFromServer, getDocs, query } from 'firebase/firestore';
 import { Worker } from '../components/register/RegisterForm';
 
 interface PaginationQuery {

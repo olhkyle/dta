@@ -1,4 +1,4 @@
-import { ControlKeys } from '@/constants/sortControls';
+import { ControlKeys } from '../../constants/sortControls';
 import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
 

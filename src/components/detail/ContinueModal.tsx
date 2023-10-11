@@ -2,11 +2,10 @@ import styled from '@emotion/styled';
 import { Button, Text } from '..';
 
 interface ContinueModalProps {
-	isOpen: boolean;
 	onClose: () => void;
 }
 
-const ContinueModal = ({ isOpen, onClose }: ContinueModalProps) => {
+const ContinueModal = ({ onClose }: ContinueModalProps) => {
 	return (
 		<Container>
 			<Header>
