@@ -33,13 +33,13 @@ const Print = () => {
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="1rem">
-					<HighlightText color="var(--bg-color)" bgColor="var(--text-color)">{`${year}월 ${month}월`}</HighlightText>
+					<HighlightText color="white" bgColor="black">{`${year}월 ${month}월`}</HighlightText>
 
 					<ReactToPrint trigger={() => <PrintButton type="button">출력하기</PrintButton>} content={() => printRef.current} />
 				</Flex>
 			</Flex>
 			<Data ref={printRef}>
-				<OverviewTable className="report">
+				<OverviewTable className="report page-break">
 					<thead>
 						<tr aria-label="tableHead-title">
 							<th>{`${year}년 ${month}월 일용직 근로소득 명세서 (민하우징)`}</th>
@@ -60,10 +60,22 @@ const Print = () => {
 								<td aria-label="tableBody-sumOfPayment">{formatCurrencyUnit(sumOfPayment)}</td>
 							</tr>
 						))}
+						<tr key="blank">
+							<td aria-label="tableBody-blank" />
+							<td aria-label="tableBody-blank" />
+							<td aria-label="tableBody-blank" />
+							<td aria-label="tableBody-blank" />
+						</tr>
+						<tr key="sum">
+							<td aria-label="tableBody-blank" />
+							<td aria-label="tableBody-blank" />
+							<td aria-label="tableBody-sum-title">합 계</td>
+							<td aria-label="tableBody-total-sumOfPayment">{formatCurrencyUnit(workersData?.sumOfPayment)}</td>
+						</tr>
 					</tbody>
 				</OverviewTable>
 
-				<DetailTable className="report">
+				<DetailTable className="report page-break">
 					<thead>
 						<tr>
 							<th aria-label="tableHead-index">번 호</th>
@@ -74,7 +86,6 @@ const Print = () => {
 							<th aria-label="tableHead-remittance">송금내용</th>
 						</tr>
 					</thead>
-
 					<tbody>
 						{workersDetail?.workers.map(
 							({
@@ -91,8 +102,10 @@ const Print = () => {
 							}) => (
 								<tr key={id} role="check" onClick={() => {}}>
 									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
-									<td aria-label="tableBody-workerName">{workerName}</td>
-									<td aria-label="tableBody-registrationNumber">{`${registrationNumberFront} - ${registrationNumberBack}`}</td>
+									<td aria-label="tableBody-workerName">{isFirstIdxOfArr ? workerName : ''}</td>
+									<td aria-label="tableBody-registrationNumber">
+										{isFirstIdxOfArr ? `${registrationNumberFront} - ${registrationNumberBack}` : ''}
+									</td>
 									<td aria-label="tableBody-workedDate">
 										{workedDate.getMonth() + 1}/{workedDate.getDate()}
 									</td>
@@ -130,12 +143,19 @@ const Data = styled.div`
 const OverviewTable = styled.table`
 	display: flex;
 	flex-direction: column;
-	border: 1px solid var(--table-border-color);
+	border: 1px solid #3a3d4a;
+	border-collapse: collapse;
 
 	thead > tr,
 	tbody > tr {
 		display: grid;
-		grid-template-columns: 0.4fr 1.5fr 1.5fr 3fr;
+		grid-template-columns: 0.5fr 2fr 1.5fr 3fr;
+	}
+
+	thead {
+		border-top: 1px solid #3a3d4a;
+		border-left: 1px solid #3a3d4a;
+		border-right: 1px solid #3a3d4a;
 	}
 
 	thead > tr[aria-label='tableHead-title'] {
@@ -152,12 +172,18 @@ const OverviewTable = styled.table`
 
 	thead > tr {
 		padding: 0.2rem 0;
-		border-bottom: 1px solid var(--table-border-color);
+		border-bottom: 1px solid #3a3d4a;
+	}
+
+	tbody {
+		border-left: 1px solid #3a3d4a;
+		border-right: 1px solid #3a3d4a;
+		border-bottom: 1px solid #3a3d4a;
 	}
 
 	tbody > tr {
 		height: 30px;
-		border-bottom: 1px solid var(--table-border-color);
+		border-bottom: 1px solid #3a3d4a;
 
 		&:last-child {
 			border-bottom: none;
@@ -166,7 +192,7 @@ const OverviewTable = styled.table`
 
 	th,
 	td {
-		border-left: 1px solid var(--table-border-color);
+		border-left: 1px solid #3a3d4a;
 
 		&:first-of-type {
 			border-left: none;
@@ -190,26 +216,38 @@ const DetailTable = styled.table`
 	display: flex;
 	flex-direction: column;
 	margin-top: 1rem;
-	border: 1px solid var(--table-border-color);
+	border: 1px solid #3a3d4a;
+	border-collapse: collapse;
 
 	thead > tr,
 	tbody > tr {
 		display: grid;
-		/* grid-template-columns: 0.75fr 1.5fr 2.5fr 1.5fr 3fr; */
-		grid-template-columns: 0.4fr 1fr 1.5fr 1fr repeat(2, 1.5fr);
+		grid-template-columns: 0.5fr 1fr 1.5fr 1fr repeat(2, 1.5fr);
 		@media screen and (min-width: 640px) {
 			/* grid-template-columns: 0.3fr repeat(5, minmax(180px, 1fr)); */
 		}
 	}
 
+	thead {
+		border-top: 1px solid #3a3d4a;
+		border-left: 1px solid #3a3d4a;
+		border-right: 1px solid #3a3d4a;
+	}
+
 	thead > tr {
 		padding: 0.2rem 0;
-		border-bottom: 1px solid var(--table-border-color);
+		border-bottom: 1px solid #3a3d4a;
+	}
+
+	tbody {
+		border-left: 1px solid #3a3d4a;
+		border-right: 1px solid #3a3d4a;
+		border-bottom: 1px solid #3a3d4a;
 	}
 
 	tbody > tr {
 		height: 30px;
-		border-bottom: 1px solid var(--table-border-color);
+		border-bottom: 1px solid #3a3d4a;
 
 		&:last-child {
 			border-bottom: none;
@@ -218,7 +256,7 @@ const DetailTable = styled.table`
 
 	th,
 	td {
-		border-left: 1px solid var(--table-border-color);
+		border-left: 1px solid #3a3d4a;
 
 		&:first-of-type {
 			border-left: none;
@@ -245,18 +283,18 @@ const GoBackButton = styled(Button)`
 	gap: 0.5rem;
 	font-weight: 700;
 	color: var(--text-color);
-	background-color: var(--outline-color);
+	background-color: #e7e7e9;
 	border-radius: 9999px;
 
 	&:hover {
-		outline: 2px solid var(--color-gray-700);
+		outline: 2px solid #3a3d4a;
 		outline-offset: 2px;
 	}
 `;
 
 const PrintButton = styled(Button)`
 	font-weight: 700;
-	color: var(--bg-color);
+	color: #fff;
 	background-color: var(--color-green-50);
 	border-radius: 9999px;
 

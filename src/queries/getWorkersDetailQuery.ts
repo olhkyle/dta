@@ -1,6 +1,6 @@
 import { monthOfToday, yearOfToday } from '../constants/day';
 import { WorkerWithId, getWorkers } from '../service/workData';
-import { WorkerQuery } from './getWorkersQuery';
+import { WorkerQuery, WorkersQueryData } from './getWorkersQuery';
 
 const staleTime = 3000;
 
@@ -29,7 +29,7 @@ const getWorkersDetailQuery = ({ inOrder = 'desc', year = yearOfToday, month = m
 		const data = await getWorkers({ inOrder, year, month, workerName });
 		return data;
 	},
-	select: (data: { workers: WorkerWithId[]; totalLength: number }) => ({
+	select: (data: WorkersQueryData) => ({
 		workers: sortByNameAndWorkedDate(data?.workers),
 		totalLength: data?.totalLength,
 		sumOfPayment: data?.workers.reduce((acc, worker) => (acc += +worker.payment), 0),

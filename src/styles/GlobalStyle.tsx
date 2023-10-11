@@ -244,21 +244,23 @@ const GlobalStyle = css`
 		break-after: page;
 	}
 
-	.report + .report {
-		/* margin-top: 40px; */
-	}
-
 	@media print {
 		margin: 0;
 		padding: 0;
+
 		.report + .report {
 			margin-top: 0;
+		}
+
+		.page-break {
+			page-break-inside: avoid;
+			page-break-after: auto;
 		}
 	}
 
 	@page {
 		size: A4;
-		margin: 20mm;
+		margin: 15mm 20mm;
 	}
 `;
 
