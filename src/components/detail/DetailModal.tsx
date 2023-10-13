@@ -304,6 +304,7 @@ const Container = styled.div`
 	left: 50%;
 	padding: 2rem;
 	width: 100vw;
+	height: 100vh;
 	border-radius: 8px;
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
