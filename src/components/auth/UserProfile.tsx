@@ -47,6 +47,12 @@ const Container = styled.div`
 		opacity: 0;
 		transition: opacity 0.3s ease-in-out 0.15s, visibility 0.3s ease-in-out 0.15s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s,
 			-webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s;
+
+		&:hover {
+			border-color: var(--text-color);
+			font-weight: 600;
+			transition: all 0.3s ease-in-out 0.15s;
+		}
 	}
 
 	&:hover button {
