@@ -281,11 +281,11 @@ const Table = styled.table<{ searched: boolean }>`
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		width: 65%;
-		height: 100%;
+		padding: 0.25rem 0.5rem;
+		/* height: 100%; */
 		font-size: 13px;
 		backdrop-filter: blur(4px);
-		color: var(--text-color);
+		color: var(--color-gray-600);
 		background-color: var(--color-gray-400);
 		border: 1px solid var(--outline-color);
 		border-radius: 12px;

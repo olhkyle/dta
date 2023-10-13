@@ -102,6 +102,11 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 	const removeMutate = useRemoveWorkerMutation(worker.id);
 
 	const handleRemoveWorkerButton = async (loading = true) => {
+		if (!isAdmin) {
+			toast.warn('Delete Feature is Admin Only');
+			return;
+		}
+
 		try {
 			if (loading) setDeleteProcessLoading(true);
 			await sleep(1000);
@@ -283,7 +288,7 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 						</UpdateButton>
 						<Flex direction="column" margin="5rem 0">
 							<Text color="var(--btn-hover-color)">
-								↳ <strong>삭제</strong>하고 싶다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요💡
+								<strong>삭제</strong>하고 싶다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요💡
 							</Text>
 							<DeleteButton type="button" id="delete" width={500} aria-label="delete-button" onClick={handleRemoveWorkerButton}>
 								삭제하기
@@ -304,7 +309,7 @@ const Container = styled.div`
 	left: 50%;
 	padding: 2rem;
 	width: 100vw;
-	height: 100vh;
+	/* height: 100vh; */
 	border-radius: 8px;
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
@@ -314,6 +319,7 @@ const Container = styled.div`
 
 	@media screen and (min-width: 640px) {
 		width: 500px;
+		height: 78vh;
 	}
 
 	@media screen and (min-width: 720px) {
