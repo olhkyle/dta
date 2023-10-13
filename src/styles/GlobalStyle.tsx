@@ -201,6 +201,10 @@ const GlobalStyle = css`
 		transform: scaleX(1);
 	}
 
+	.clip-path-button {
+		clip-path: polygon(0 0, 100% 0, 100% 70%, 88% 100%, 0 100%);
+	}
+
 	@media (prefers-reduced-motion) {
 		.underlined:after {
 			opacity: 0;
