@@ -73,27 +73,18 @@ const Container = styled.nav`
 	gap: 1rem;
 	margin: 0 auto;
 	padding: 0 1rem;
+	max-width: 1280px;
 	height: 80px;
 	border-bottom: 1px solid var(--text-color);
 	backdrop-filter: blur(8px);
 	z-index: 9900;
 
-	@media screen and (min-width: 640px) {
-		width: 640px;
-	}
-
 	@media screen and (min-width: 768px) {
-		grid-template-columns: 0.2fr 1fr;
-		width: 768px;
-	}
-
-	@media screen and (min-width: 1024px) {
-		grid-template-columns: 1fr 1fr;
-		width: 1024px;
+		grid-template-columns: 1fr 3fr;
 	}
 
 	@media screen and (min-width: 1280px) {
-		width: 1280px;
+		grid-template-columns: 1fr 1fr;
 	}
 `;
 
@@ -124,18 +115,21 @@ const NavLinkContainer = styled.div`
 const Overview = styled(NavLink)`
 	&:hover {
 		color: var(--btn-hover-color);
+		transition: all 0.3s ease-in-out 0.15s;
 	}
 `;
 
 const Details = styled(NavLink)`
 	&:hover {
 		color: var(--btn-hover-color);
+		transition: all 0.3s ease-in-out 0.15s;
 	}
 `;
 
 const Register = styled(NavLink)`
 	&:hover {
 		color: var(--btn-hover-color);
+		transition: all 0.3s ease-in-out 0.15s;
 	}
 `;
 
@@ -146,6 +140,7 @@ const Login = styled(NavLink)`
 
 	&:hover {
 		background-color: var(--btn-hover-bg-color);
+		transition: all 0.3s ease-in-out 0.15s;
 	}
 `;
 
@@ -154,6 +149,7 @@ const NavToggleButton = styled.button`
 	align-items: center;
 	margin-left: auto;
 	margin-right: 1rem;
+
 	@media screen and (min-width: 768px) {
 		display: none;
 	}
