@@ -7,9 +7,10 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
 	children: ReactElement;
 	bottomText?: string;
 	rightText?: string;
+	width?: number;
 }
 
-const Input = ({ label, children, bottomText, rightText, ...props }: InputProps) => {
+const Input = ({ label, children, bottomText, rightText, width = 250, ...props }: InputProps) => {
 	const child = Children.only(children);
 	const generatedId = useId('input');
 	const id = child.props.id ?? generatedId;
@@ -33,7 +34,11 @@ const Input = ({ label, children, bottomText, rightText, ...props }: InputProps)
 				{cloneElement(child, { id, ...child.props })}
 				{rightText !== null ? <RightText>{rightText}</RightText> : null}
 			</div>
-			{bottomText !== null ? <BottomText isError={isError}>{bottomText}</BottomText> : null}
+			{bottomText !== null ? (
+				<BottomText isError={isError} width={width}>
+					{bottomText}
+				</BottomText>
+			) : null}
 		</div>
 	);
 };
@@ -102,12 +107,17 @@ const RightText = styled.span`
 	font-weight: 600;
 `;
 
-const BottomText = styled.p<{ isError: boolean }>`
+const BottomText = styled.p<{ isError: boolean; width: number }>`
 	display: inline-block;
-	margin-top: 4px;
+	margin: 4px 0 0 0;
+	width: 250px;
 	color: ${({ isError }) => (isError ? 'var(--color-green-300)' : 'var(--color-gray-400)')};
 	font-size: 14px;
 	font-weight: 400;
+
+	@media screen and (min-width: 640px) {
+		width: ${({ width }) => `${width}px`};
+	}
 `;
 
 const TextField = styled.input<{ width: number; error: string; disabled: boolean }>`
