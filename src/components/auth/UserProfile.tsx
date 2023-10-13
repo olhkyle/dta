@@ -30,7 +30,7 @@ const Container = styled.div`
 	margin-left: 0.5rem;
 	padding: var(--btn-sm-padding);
 	border-radius: 9999px;
-	background-color: var(--color-green-50);
+	background-color: var(--color-green-300);
 	cursor: pointer;
 
 	button {
