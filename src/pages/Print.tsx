@@ -8,6 +8,8 @@ import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import { useRef } from 'react';
 import ReactToPrint from 'react-to-print';
+import { useAppSelector } from '../store/store';
+import { getIsAdmin } from '../store/userSlice';
 
 const Print = () => {
 	const {
@@ -15,14 +17,13 @@ const Print = () => {
 	} = useLocation();
 
 	const goBack = useGoBack();
+	const isAdmin = useAppSelector(getIsAdmin);
 
 	const query = { inOrder: control['오래된 순'], year, month, workerName: '' };
 	const workersData = useGetWorkersQuery(query);
 	const { data: workersDetail } = useGetWorkersDetailQuery(query);
 
 	const printRef = useRef(null);
-
-	//TODO: border 문제 해결 필요 - print
 
 	return (
 		<Container>
@@ -34,7 +35,14 @@ const Print = () => {
 				<Flex gap="1rem">
 					<HighlightText color="white" bgColor="black">{`${year}월 ${month}월`}</HighlightText>
 
-					<ReactToPrint trigger={() => <PrintButton type="button">출력하기</PrintButton>} content={() => printRef.current} />
+					<ReactToPrint
+						trigger={() => (
+							<PrintButton type="button" disabled={!isAdmin}>
+								{isAdmin ? '출력하기' : 'Admin Only'}
+							</PrintButton>
+						)}
+						content={() => printRef.current}
+					/>
 				</Flex>
 			</Flex>
 			<Data ref={printRef}>
@@ -103,7 +111,15 @@ const Print = () => {
 									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
 									<td aria-label="tableBody-workerName">{isFirstIdxOfArr ? workerName : ''}</td>
 									<td aria-label="tableBody-registrationNumber">
-										{isFirstIdxOfArr ? `${registrationNumberFront} - ${registrationNumberBack}` : ''}
+										{isAdmin ? (
+											isFirstIdxOfArr ? (
+												`${registrationNumberFront} - ${registrationNumberBack}`
+											) : (
+												''
+											)
+										) : (
+											<span aria-label="isNotAdmin">Classified</span>
+										)}
 									</td>
 									<td aria-label="tableBody-workedDate">
 										{workedDate.getMonth() + 1}/{workedDate.getDate()}
@@ -291,14 +307,14 @@ const GoBackButton = styled(Button)`
 	}
 `;
 
-const PrintButton = styled(Button)`
+const PrintButton = styled(Button)<{ disabled: boolean }>`
 	font-weight: 700;
 	color: #fff;
-	background-color: var(--color-green-50);
-	border-radius: 9999px;
+	background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-50)')};
+	border-radius: ${({ disabled }) => (disabled ? '8px' : '9999px')};
 
 	&:hover {
-		background-color: var(--color-green-200);
+		background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-200)')};
 	}
 `;
 

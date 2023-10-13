@@ -2,15 +2,18 @@ import styled from '@emotion/styled';
 
 interface UserProfileProps {
 	name: string;
+	isAdmin: boolean;
 	onLogout: () => void;
 }
 
-const UserProfile = ({ name, onLogout }: UserProfileProps) => {
+const UserProfile = ({ name, isAdmin, onLogout }: UserProfileProps) => {
 	return (
 		<Container>
-			<ImgContainer>
-				<img src="./profile.png" alt="profile" />
-			</ImgContainer>
+			{isAdmin && (
+				<ImgContainer>
+					<img src="./profile.png" alt="profile" />
+				</ImgContainer>
+			)}
 			<Name>{name}</Name>
 			<button type="button" onClick={onLogout}>
 				로그아웃

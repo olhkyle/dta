@@ -14,6 +14,8 @@ import { unformatCurrencyUnit } from '../../utils/currencyUnit';
 import { QueryRefetch } from '../../store/modalSlice';
 import sleep from '../../utils/sleep';
 import { useNavigate } from 'react-router-dom';
+import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 
 interface DetailModalProps {
 	data: WorkerWithId;
@@ -53,9 +55,17 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 
 	const [isDeleteProcessLoading, setDeleteProcessLoading] = useState(false);
 
+	const isAdmin = useAppSelector(getIsAdmin);
+
 	const isAllFieldsDisabled: boolean = Object.values(disabled).every(item => item === false);
 
 	const toggleAllFieldsDisabled = () => {
+		if (!isAdmin) {
+			toast.warn('Update Feature is Admin Only');
+			console.log('here');
+			return;
+		}
+
 		const updatedState: DisabledState = {};
 
 		const disabledKeys = Object.keys(disabled);
@@ -160,26 +170,38 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 							/>
 						</Input>
 						<CustomFlex alignItems="flex-start" gap="0.5rem">
-							<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
-								<Input.TextField
-									type="text"
-									placeholder="주민등록번호 앞 6자리"
-									{...register('registrationNumberFront')}
-									error={errors?.registrationNumberFront?.message}
-									disabled={disabled.registrationNumberFront}
-									width={250}
-								/>
-							</Input>
-							<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
-								<Input.TextField
-									type="text"
-									placeholder="주민등록번호 뒤 7자리"
-									{...register('registrationNumberBack')}
-									error={errors?.registrationNumberBack?.message}
-									disabled={disabled.registrationNumberBack}
-									width={250}
-								/>
-							</Input>
+							{isAdmin ? (
+								<>
+									<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
+										<Input.TextField
+											type="text"
+											placeholder="주민등록번호 앞 6자리"
+											{...register('registrationNumberFront')}
+											error={errors?.registrationNumberFront?.message}
+											disabled={disabled.registrationNumberFront}
+											width={250}
+										/>
+									</Input>
+									<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
+										<Input.TextField
+											type="text"
+											placeholder="주민등록번호 뒤 7자리"
+											{...register('registrationNumberBack')}
+											error={errors?.registrationNumberBack?.message}
+											disabled={disabled.registrationNumberBack}
+											width={250}
+										/>
+									</Input>
+								</>
+							) : (
+								<Flex direction="column" alignItems="flex-start" gap="0.5rem">
+									<div css={{ fontSize: '18px', fontWeight: '500' }}>주민등록번호</div>
+									<CustomFlex gap="1rem">
+										<Confidential width={250}>Classified</Confidential>
+										<Confidential width={250}>Classified</Confidential>
+									</CustomFlex>
+								</Flex>
+							)}
 						</CustomFlex>
 
 						<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} disabled={disabled.workedDate} />
@@ -281,7 +303,7 @@ const Container = styled.div`
 	top: 50%;
 	left: 50%;
 	padding: 2rem;
-	width: 400px;
+	width: 100vw;
 	border-radius: 8px;
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
@@ -371,8 +393,27 @@ const Form = styled.form`
 
 const CustomFlex = styled(Flex)`
 	flex-direction: column;
+
 	@media screen and (min-width: 640px) {
 		flex-direction: row;
+	}
+`;
+
+const Confidential = styled.div<{ width: number }>`
+	margin: 0;
+	padding: 0.75rem 1rem;
+	min-width: 250px;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 24px;
+	border: none;
+	border-radius: 8px;
+	background-color: var(--outline-color);
+	backdrop-filter: blur(4px);
+	color: var(--color-gray-500);
+
+	@media screen and (min-width: 640px) {
+		width: ${({ width }) => `${width}px`};
 	}
 `;
 

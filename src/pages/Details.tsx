@@ -2,13 +2,15 @@ import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
+import { toast } from 'react-toastify';
 import { useDebounce } from '../hooks';
 import { useGetWorkersDetailQuery } from '../hooks/queries';
 import { Badge, Button, CustomSelect, EmptyIndicator, Flex, HighlightText, Loading, SearchInput, SegmentedControl } from '../components';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 import { control, controls } from '../constants/sortControls';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
-import { useAppDispatch } from '../store/store';
+import { useAppDispatch, useAppSelector } from '../store/store';
+import { getIsAdmin } from '../store/userSlice';
 import { open } from '../store/modalSlice';
 import { DetailModal } from '../components/detail';
 import { WorkerWithId } from '../service/workData';
@@ -27,6 +29,7 @@ const Details = () => {
 	const { data, refetch } = useGetWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName });
 
 	const dispatch = useAppDispatch();
+	const isAdmin = useAppSelector(getIsAdmin);
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
 	return (
@@ -39,7 +42,16 @@ const Details = () => {
 						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
 						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
 					</Flex>
-					<PrintButton type="button" onClick={() => navigate(routes.PRINT, { state: { year, month } })}>
+					<PrintButton
+						type="button"
+						onClick={() => {
+							if (data?.workers.length === 0) {
+								toast.warn('해당 월의 출력 대상자가 없습니다.');
+								return;
+							}
+
+							navigate(routes.PRINT, { state: { year, month } });
+						}}>
 						출력
 					</PrintButton>
 				</Flex>
@@ -105,7 +117,9 @@ const Details = () => {
 										}>
 										<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
 										<td aria-label="tableBody-workerName">{workerName}</td>
-										<td aria-label="tableBody-registrationNumber">{`${registrationNumberFront} - ${registrationNumberBack}`}</td>
+										<td aria-label="tableBody-registrationNumber">
+											{isAdmin ? `${registrationNumberFront} - ${registrationNumberBack}` : <span aria-label="isNotAdmin">Classified</span>}
+										</td>
 										<td aria-label="tableBody-workedDate">
 											{workedDate.getMonth() + 1}/{workedDate.getDate()}
 										</td>
@@ -261,6 +275,20 @@ const Table = styled.table<{ searched: boolean }>`
 			flex-direction: row;
 			gap: 0.4rem;
 		}
+	}
+
+	td[aria-label='tableBody-registrationNumber'] > span {
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
+		width: 65%;
+		height: 100%;
+		font-size: 13px;
+		backdrop-filter: blur(4px);
+		color: var(--text-color);
+		background-color: var(--color-gray-400);
+		border: 1px solid var(--outline-color);
+		border-radius: 12px;
 	}
 `;
 

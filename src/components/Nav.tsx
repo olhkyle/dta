@@ -6,10 +6,11 @@ import routes from '../constants/routes';
 import { Flex, NavLink, ThemeButton } from './common';
 import { SideNav } from '.';
 import { useAppSelector } from '../store/store';
-import { getUser } from '../store/userSlice';
+import { getIsAdmin, getUser } from '../store/userSlice';
 import { logOut } from '../service/auth';
 import { UserProfile } from './auth';
 import { useSetUser, useSideNavActive } from '../hooks';
+import { useEffect } from 'react';
 
 const Nav = () => {
 	const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Nav = () => {
 		actions: { toggle, close },
 	} = useSideNavActive();
 	const username = useAppSelector(getUser);
+	const isAdmin = useAppSelector(getIsAdmin);
 	const { setLogoutUser } = useSetUser();
 
 	const handleLogout = async () => {
@@ -34,6 +36,10 @@ const Nav = () => {
 		}
 	};
 
+	useEffect(() => {
+		window.scrollTo({ top: 0 });
+	}, [active]);
+
 	return (
 		<>
 			<Container>
@@ -45,7 +51,7 @@ const Nav = () => {
 						<Overview to={routes.OVERVIEW}>명세 개요</Overview>
 						<Details to={routes.DETAILS}>월별 세부 명세</Details>
 						<Register to={routes.REGISTER}>일용직 등록</Register>
-						{username ? <UserProfile name={username} onLogout={handleLogout} /> : <Login to={routes.LOGIN}>로그인</Login>}
+						{username ? <UserProfile name={username} isAdmin={isAdmin} onLogout={handleLogout} /> : <Login to={routes.LOGIN}>로그인</Login>}
 					</Flex>
 					<ThemeButton />
 				</NavLinkContainer>

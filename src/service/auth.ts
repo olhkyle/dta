@@ -18,8 +18,8 @@ const signIn = async ({ email, password }: SignIn) => {
 	const userData = userSnapShot.data();
 
 	if (userData) {
-		const { lastName, firstName } = userData;
-		return { name: lastName + firstName, email } as const;
+		const { lastName, firstName, isAdmin } = userData;
+		return { name: lastName + firstName, email, isAdmin } as const;
 	}
 };
 
