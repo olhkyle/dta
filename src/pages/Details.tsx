@@ -73,7 +73,7 @@ const Details = () => {
 							<tr>
 								<th aria-label="tableHead-index">#</th>
 								<th aria-label="tableHead-workerName">성 명</th>
-								<th aria-label="tableHead-registrationNumber">주민등록번호</th>
+								<th aria-label="tableHead-registrationNumber">주민번호</th>
 								<th aria-label="tableHead-workedDate">출력일</th>
 								<th aria-label="tableHead-payment">
 									지급액<span>(원)</span>
