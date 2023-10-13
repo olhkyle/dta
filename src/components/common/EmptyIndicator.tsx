@@ -15,8 +15,8 @@ const Container = styled.div`
 	align-items: center;
 	gap: 0.5rem;
 	margin: 5rem auto;
-	padding: 2rem;
-	width: 60vw;
+	padding: 4rem 2rem;
+	width: 65vw;
 	font-size: 16px;
 	font-weight: 600;
 	text-align: center;
@@ -24,7 +24,7 @@ const Container = styled.div`
 	outline-offset: 4px;
 
 	@media screen and (min-width: 640px) {
-		font-size: 21px;
+		font-size: 20px;
 	}
 `;
 

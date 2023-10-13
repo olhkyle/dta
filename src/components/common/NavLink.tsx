@@ -18,7 +18,7 @@ const NavLink = ({ to, children, onClick, ...props }: NavLinkProps) => {
 
 const StyledLink = styled(Link)`
 	padding: var(--btn-md-padding);
-	font-size: 17px;
+	font-size: 15px;
 	font-weight: 600;
 	line-height: 1;
 	border-radius: 9999px;
@@ -30,6 +30,7 @@ const StyledLink = styled(Link)`
 
 	@media screen and (min-width: 768px) {
 		padding: var(--btn-md-padding);
+		font-size: 17px;
 	}
 `;
 

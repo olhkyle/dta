@@ -81,7 +81,7 @@ const Table = styled.table`
 	display: flex;
 	flex-direction: column;
 	gap: 0.8rem;
-	margin-top: 2rem;
+	margin: 2rem auto 6rem;
 	width: 100%;
 	text-align: center;
 
