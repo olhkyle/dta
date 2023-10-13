@@ -17,7 +17,6 @@ const SearchInput = ({ value, setValue }: SearchInputProps) => {
 				name="search-input"
 				value={value}
 				onChange={e => setValue(e.currentTarget.value)}
-				ref={node => node?.focus()}
 			/>
 			{value.length > 0 && (
 				<RefreshButton type="button" onClick={() => setValue('')}>
