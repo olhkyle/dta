@@ -8,7 +8,7 @@ const NotFound = () => {
 	return (
 		<>
 			<Flex direction="column" margin="10rem auto">
-				<Text typo="h4" color="var(--text-color)">
+				<Text typo="h5" color="var(--text-color)">
 					서비스에 문제가 발생하였습니다 🚀
 				</Text>
 				<CustomFlex direction="column" margin="2rem">

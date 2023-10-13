@@ -16,8 +16,8 @@ const RouteError = () => {
 				return <Navigate to={routes.HOME} replace={true} />;
 		}
 	}
-
-	return <Navigate to="/" replace={true} />;
+	console.log(error);
+	return <Navigate to="/*" replace={true} />;
 };
 
 export default RouteError;

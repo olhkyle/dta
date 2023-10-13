@@ -31,7 +31,7 @@ const Details = () => {
 	const dispatch = useAppDispatch();
 	const isAdmin = useAppSelector(getIsAdmin);
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
-
+	console.log(data?.workers.map(item => item.workedDate));
 	return (
 		<>
 			<SearchInput value={inputValue} setValue={setInputValue} />
@@ -121,7 +121,7 @@ const Details = () => {
 											{isAdmin ? `${registrationNumberFront} - ${registrationNumberBack}` : <span aria-label="isNotAdmin">Classified</span>}
 										</td>
 										<td aria-label="tableBody-workedDate">
-											{new Date(workedDate).getMonth() + 1}/{new Date(workedDate).getDate()}
+											{workedDate.getMonth() + 1}/{workedDate.getDate()}
 										</td>
 										<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
 										<td aria-label="tableBody-remittance">
