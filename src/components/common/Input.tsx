@@ -133,6 +133,7 @@ const TextField = styled.input<{ width: number; error: string; disabled: boolean
 	box-shadow: ${({ error }) => (error ? 'inset 0 0 0 1px var(--color-green-50)' : 'inset 0 0 0 1px var(--outline-color)')};
 	outline: none;
 	cursor: pointer;
+	-webkit-appearance: none;
 
 	&:focus {
 		box-shadow: ${({ error }) => (error ? 'inset 0 0 0 2px var(--color-green-50)' : 'inset 0 0 0 1px var(--text-color)')};
