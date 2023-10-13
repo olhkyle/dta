@@ -32,6 +32,8 @@ const Details = () => {
 	const isAdmin = useAppSelector(getIsAdmin);
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 	console.log(data?.workers.map(item => item.workedDate));
+	console.log(data?.workers.map(item => typeof item.workedDate));
+	console.log(month);
 	return (
 		<>
 			<SearchInput value={inputValue} setValue={setInputValue} />
