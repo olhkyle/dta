@@ -2,14 +2,14 @@ import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { SigninSchema, signInSchema } from './schema';
 import { Button, Flex, Input, Spacer, Text } from '..';
 import { signIn } from '../../service/auth';
 import { useSetUser } from '../../hooks';
 import { useNavigate } from 'react-router-dom';
 import routes from '../../constants/routes';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 const SignInForm = () => {
 	const {
@@ -31,7 +31,9 @@ const SignInForm = () => {
 			toast.success('성공적으로 로그인 되었습니다');
 			navigate(routes.HOME, { replace: true });
 		} catch (e) {
+			setFocus('email');
 			reset();
+
 			toast.error('이메일 또는 비밀번호가 틀립니다');
 			console.error(e);
 		}
@@ -54,7 +56,7 @@ const SignInForm = () => {
 					/>
 				</Input>
 
-				<Input label="비밀번호" bottomText={errors?.password?.message}>
+				<Input label="비밀번호" bottomText={errors?.password?.message} width={500}>
 					<Input.TextField
 						type="password"
 						placeholder="비밀번호를 입력해 주세요."
@@ -71,8 +73,7 @@ const SignInForm = () => {
 			<Text typo="p" color="var(--text-color)">
 				서비스 이용을 위해서 보안 상 로그인이 필요합니다.
 			</Text>
-
-			<Spacer size={400} />
+			<Spacer size={300} />
 		</Form>
 	);
 };
@@ -87,7 +88,7 @@ const Form = styled.form`
 
 const LoginButton = styled(Button)<{ width: number }>`
 	margin-top: 1.5rem;
-	width: 340px;
+	min-width: 250px;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
 
