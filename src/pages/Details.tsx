@@ -121,7 +121,7 @@ const Details = () => {
 											{isAdmin ? `${registrationNumberFront} - ${registrationNumberBack}` : <span aria-label="isNotAdmin">Classified</span>}
 										</td>
 										<td aria-label="tableBody-workedDate">
-											{workedDate.getMonth() + 1}/{workedDate.getDate()}
+											{new Date(workedDate).getMonth() + 1}/{new Date(workedDate).getDate()}
 										</td>
 										<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
 										<td aria-label="tableBody-remittance">
@@ -171,7 +171,7 @@ const Table = styled.table<{ searched: boolean }>`
 	display: flex;
 	flex-direction: column;
 	gap: 0.8rem;
-	margin-top: 2rem;
+	margin: 2rem auto 6rem;
 	width: 100%;
 	text-align: center;
 
@@ -282,7 +282,6 @@ const Table = styled.table<{ searched: boolean }>`
 		justify-content: center;
 		align-items: center;
 		padding: 0.25rem 0.5rem;
-		/* height: 100%; */
 		font-size: 13px;
 		backdrop-filter: blur(4px);
 		color: var(--color-gray-600);
