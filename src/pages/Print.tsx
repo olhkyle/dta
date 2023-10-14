@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
-import { Button, Flex, HighlightText } from '../components';
+import { Button, Flex, HighlightText, Text } from '../components';
 import { useGoBack } from '../hooks';
 import { useGetWorkersDetailQuery, useGetWorkersQuery } from '../hooks/queries';
 import { control } from '../constants/sortControls';
@@ -31,11 +31,12 @@ const Print = () => {
 	const workersDetailForPrint =
 		(workersDetail?.workers.length ?? 0) <= DIVISOR
 			? [workersDetail?.workers.slice()]
-			: workersDetail?.workers.reduce((acc, _, idx) => {
-					if (idx % DIVISOR === 0 && idx !== 0) {
-						acc.push(workersDetail?.workers.slice(idx - DIVISOR, idx));
+			: workersDetail?.workers.reduce((acc, currEl, idx) => {
+					if (idx % DIVISOR === 0) {
+						acc.push([]);
 					}
 
+					acc[acc.length - 1].push(currEl);
 					return acc;
 			  }, [] as ReturnType<typeof sortByNameAndWorkedDate>[]);
 
@@ -43,7 +44,7 @@ const Print = () => {
 		<Container>
 			<Flex justifyContent="space-between" margin="0 0 2rem 0">
 				<GoBackButton type="button" onClick={goBack}>
-					<BsArrowLeftCircle size="24" color="var(--text-color)" />
+					<BsArrowLeftCircle size="24" color="var(--color-gray-600)" />
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="1rem">
@@ -58,6 +59,13 @@ const Print = () => {
 						content={() => printRef.current}
 					/>
 				</Flex>
+			</Flex>
+			<Flex gap="0.5rem" margin="1rem 0.5rem">
+				총
+				<Text typo="h4" color="var(--text-color)">
+					{(workersDetailForPrint?.length ?? 0) + 1}
+				</Text>
+				페이지
 			</Flex>
 			<Data ref={printRef}>
 				<OverviewTable className="report page-break">
@@ -82,8 +90,8 @@ const Print = () => {
 							</tr>
 						))}
 						<tr key="blank">
-							{Array.from({ length: 4 }, () => (
-								<td aria-label="tableBody-blank" />
+							{Array.from({ length: 4 }, (_, idx) => (
+								<td key={idx} aria-label="tableBody-blank" />
 							))}
 						</tr>
 						<tr key="sum">
@@ -147,17 +155,18 @@ const Print = () => {
 							)}
 							{idx === workersDetailForPrint.length - 1 && (
 								<>
-									<tr key="blank">
-										{Array.from({ length: 6 }, () => (
-											<td aria-label="tableBody-blank" />
+									<tr aria-label="blank">
+										{Array.from({ length: 6 }, (_, idx) => (
+											<td key={idx} aria-label="tableBody-blank" />
 										))}
 									</tr>
-									<tr key="sum">
-										{Array.from({ length: 4 }, () => (
-											<td aria-label="tableBody-blank" />
+									<tr aria-label="sum">
+										{Array.from({ length: 3 }, (_, idx) => (
+											<td key={idx} aria-label="tableBody-blank" />
 										))}
 										<td aria-label="tableBody-sum-title">합 계</td>
 										<td aria-label="tableBody-total-sumOfPayment">{formatCurrencyUnit(workersDetail?.sumOfPayment)}</td>
+										<td aria-label="tableBody-blank" />
 									</tr>
 								</>
 							)}
@@ -217,7 +226,7 @@ const OverviewTable = styled.table`
 	}
 
 	thead > tr {
-		padding: 0.2rem 0;
+		padding: 0.3rem 0;
 		border-bottom: 1px solid #3a3d4a;
 	}
 
@@ -228,7 +237,7 @@ const OverviewTable = styled.table`
 	}
 
 	tbody > tr {
-		height: 30px;
+		height: 32px;
 		border-bottom: 1px solid #3a3d4a;
 
 		&:last-child {
@@ -273,7 +282,7 @@ const DetailTable = styled.table`
 	thead > tr,
 	tbody > tr {
 		display: grid;
-		grid-template-columns: 0.5fr 1fr 1.5fr 1fr repeat(2, 1.5fr);
+		grid-template-columns: 0.5fr 1fr 1.5fr 1fr 1.5fr 2fr;
 	}
 
 	thead {
@@ -283,7 +292,7 @@ const DetailTable = styled.table`
 	}
 
 	thead > tr {
-		padding: 0.2rem 0;
+		padding: 0.3rem 0;
 		border-bottom: 1px solid #3a3d4a;
 	}
 
@@ -294,7 +303,7 @@ const DetailTable = styled.table`
 	}
 
 	tbody > tr {
-		height: 30px;
+		height: 32px;
 		border-bottom: 1px solid #3a3d4a;
 
 		&:last-child {
@@ -335,7 +344,7 @@ const GoBackButton = styled(Button)`
 	align-items: center;
 	gap: 0.5rem;
 	font-weight: 700;
-	color: var(--text-color);
+	color: var(--color-gray-600);
 	background-color: #e7e7e9;
 	border-radius: 9999px;
 

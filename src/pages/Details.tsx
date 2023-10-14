@@ -1,6 +1,6 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { useDebounce } from '../hooks';
@@ -20,11 +20,12 @@ const Details = () => {
 	const [inputValue, setInputValue] = useState('');
 	const workerName = useDebounce(inputValue, 500);
 
-	const [year, setYear] = useState(yearOfToday);
-	const [month, setMonth] = useState(monthOfToday);
-	const [currentSort, setCurrentControl] = useState(controls[0]);
-
+	const { state } = useLocation();
 	const navigate = useNavigate();
+
+	const [year, setYear] = useState(yearOfToday);
+	const [month, setMonth] = useState(state ? state?.month + 1 : monthOfToday);
+	const [currentSort, setCurrentControl] = useState(controls[0]);
 
 	const { data, refetch } = useGetWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName });
 
@@ -52,7 +53,7 @@ const Details = () => {
 
 							navigate(routes.PRINT, { state: { year, month } });
 						}}>
-						출력
+						인 쇄
 					</PrintButton>
 				</Flex>
 				<Flex justifyContent="flex-end" margin="3rem 0">
