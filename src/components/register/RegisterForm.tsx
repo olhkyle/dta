@@ -1,12 +1,12 @@
 import { BaseSyntheticEvent, useState } from 'react';
 import styled from '@emotion/styled';
 import { Controller, useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { Button, DatePicker, Flex, HighlightText, Input, NativeSelect, Spacer, Text } from '..';
-import { RegisterSchema, registerSchema } from './schema';
-import { addWorker } from '../../service/workData';
 import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
+import { Button, DatePicker, Flex, HighlightText, Input, Loading, NativeSelect, Spacer, Text } from '..';
+import { RegisterSchema, registerSchema } from './schema';
+import { addWorker, getSpecificWorker } from '../../service/workData';
 import { unformatCurrencyUnit } from '../../utils/currencyUnit';
 import routes from '../../constants/routes';
 import sleep from '../../utils/sleep';
@@ -26,12 +26,41 @@ const RegisterForm = () => {
 		formState: { errors },
 		setFocus,
 		setValue,
+		getValues,
 		control,
 	} = useForm<RegisterSchema>({ mode: 'onChange', resolver: zodResolver(registerSchema), shouldFocusError: true });
 
 	const navigate = useNavigate();
 
 	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
+	const [isFetching, setIsFetching] = useState<boolean>(false);
+
+	const findSpecificWorker = async () => {
+		try {
+			if (getValues('workerName').length === 0) {
+				toast.warn('일용직 이름을 입력해 주세요.');
+				return;
+			}
+
+			if (!isFetching) {
+				setIsFetching(true);
+			}
+
+			await sleep(500);
+			const { registrationNumberFront, registrationNumberBack } = await getSpecificWorker({
+				workerName: getValues('workerName'),
+			});
+
+			setValue('registrationNumberFront', registrationNumberFront);
+			setValue('registrationNumberBack', registrationNumberBack);
+
+			toast.success('성공적으로 정보를 찾았습니다.');
+		} catch {
+			toast.error('해당 일용직 이름이 없습니다.');
+		} finally {
+			setIsFetching(false);
+		}
+	};
 
 	const onSubmit: SubmitHandler<RegisterSchema> = async (data, event) => {
 		if (event) {
@@ -51,7 +80,7 @@ const RegisterForm = () => {
 			});
 
 			if (buttonId === 'register') {
-				navigate(routes.DETAILS);
+				navigate(routes.DETAILS, { state: { month: selectedDay?.getMonth() } });
 			}
 
 			if (buttonId === 'additionalRegister') {
@@ -77,7 +106,17 @@ const RegisterForm = () => {
 				일용직 등록
 			</Text>
 			<Spacer size={8} />
-			<Input label="성 명" bottomText={errors?.workerName?.message}>
+			<Input
+				label={
+					<LabelFlex>
+						성 명
+						<CheckExistButton type="button" onClick={findSpecificWorker}>
+							{isFetching && <Loading type="sm" size={20} />}
+							대상 찾기
+						</CheckExistButton>
+					</LabelFlex>
+				}
+				bottomText={errors?.workerName?.message}>
 				<Input.TextField type="text" placeholder="이 름" {...register('workerName')} error={errors?.workerName?.message} width={280} />
 			</Input>
 			<CustomFlex alignItems="flex-start" gap="0.5rem">
@@ -195,8 +234,28 @@ const Form = styled.form`
 	padding-bottom: 5rem;
 `;
 
+const LabelFlex = styled(Flex)`
+	gap: 8rem;
+
+	@media screen and (min-width: 640px) {
+		gap: 10.5rem;
+	}
+`;
+
+const CheckExistButton = styled.button`
+	display: inline-flex;
+	gap: 0.1rem;
+	align-items: center;
+	padding: 0.3rem 0.6rem;
+	border-radius: 8px;
+	color: var(--color-white);
+	background-color: var(--color-orange-100);
+	font-weight: 500;
+`;
+
 const CustomFlex = styled(Flex)`
 	flex-direction: column;
+
 	@media screen and (min-width: 640px) {
 		flex-direction: row;
 	}

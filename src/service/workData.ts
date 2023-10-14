@@ -36,6 +36,14 @@ const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => 
 	};
 };
 
+const getSpecificWorker = async ({ workerName }: { workerName: string }) => {
+	const collectionRef = collection(db, COLLECTION_NAME);
+	const q = query(collectionRef, where('workerName', '==', workerName));
+	const dataSnapshot = await getDocs(q);
+
+	return specifySnapshotIntoData(dataSnapshot)[0];
+};
+
 const addWorker = async (worker: Worker) => {
 	const workerRef = await addDoc(collection(db, COLLECTION_NAME), {
 		...worker,
@@ -53,4 +61,4 @@ const removeWorker = async ({ id }: { id: string }) => {
 	await deleteDoc(doc(db, COLLECTION_NAME, id));
 };
 
-export { getWorkers, addWorker, editWorker, removeWorker };
+export { getWorkers, getSpecificWorker, addWorker, editWorker, removeWorker };
