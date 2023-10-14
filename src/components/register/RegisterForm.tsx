@@ -10,6 +10,8 @@ import { addWorker, getSpecificWorker } from '../../service/workData';
 import { unformatCurrencyUnit } from '../../utils/currencyUnit';
 import routes from '../../constants/routes';
 import sleep from '../../utils/sleep';
+import { getIsAdmin } from '../../store/userSlice';
+import { useAppSelector } from '../../store/store';
 
 export interface Worker extends RegisterSchema {
 	workedDate: Date | any;
@@ -31,12 +33,18 @@ const RegisterForm = () => {
 	} = useForm<RegisterSchema>({ mode: 'onChange', resolver: zodResolver(registerSchema), shouldFocusError: true });
 
 	const navigate = useNavigate();
+	const isAdmin = useAppSelector(getIsAdmin);
 
 	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
 	const [isFetching, setIsFetching] = useState<boolean>(false);
 
 	const findSpecificWorker = async () => {
 		try {
+			if (!isAdmin) {
+				toast.warn('This Feature is Admin Only');
+				return;
+			}
+
 			if (getValues('workerName').length === 0) {
 				toast.warn('일용직 이름을 입력해 주세요.');
 				return;
