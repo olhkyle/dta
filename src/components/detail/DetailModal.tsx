@@ -309,7 +309,6 @@ const Container = styled.div`
 	left: 50%;
 	padding: 2rem;
 	width: 100vw;
-	/* height: 100vh; */
 	border-radius: 8px;
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
@@ -319,7 +318,6 @@ const Container = styled.div`
 
 	@media screen and (min-width: 640px) {
 		width: 500px;
-		height: 78vh;
 	}
 
 	@media screen and (min-width: 720px) {
