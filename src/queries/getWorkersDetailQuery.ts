@@ -2,9 +2,11 @@ import { monthOfToday, yearOfToday } from '../constants/day';
 import { WorkerWithId, getWorkers } from '../service/workData';
 import { WorkerQuery, WorkersQueryData } from './getWorkersQuery';
 
+export type WorkersDetail = ReturnType<typeof sortByNameAndWorkedDate>;
+
 const staleTime = 3000;
 
-export const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
+const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
 	Object.values(
 		workers.reduce((acc, worker) => {
 			const { workerName } = worker;

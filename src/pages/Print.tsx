@@ -10,9 +10,10 @@ import { useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
-import { sortByNameAndWorkedDate } from '../queries/getWorkersDetailQuery';
+import { WorkersDetail } from '../queries/getWorkersDetailQuery';
 
-const DIVISOR = 30;
+const OVERVIEW_DIVISOR = 31;
+const DETAIL_DIVISOR = 30;
 
 const Print = () => {
 	const {
@@ -23,28 +24,37 @@ const Print = () => {
 	const isAdmin = useAppSelector(getIsAdmin);
 
 	const query = { inOrder: control['오래된 순'], year, month, workerName: '' };
-	const workersData = useGetWorkersQuery(query);
+	const workersOverview = useGetWorkersQuery(query);
 	const { data: workersDetail } = useGetWorkersDetailQuery(query);
 
 	const printRef = useRef(null);
 
-	const workersDetailForPrint =
-		(workersDetail?.workers.length ?? 0) <= DIVISOR
-			? [workersDetail?.workers.slice()]
-			: workersDetail?.workers.reduce((acc, currEl, idx) => {
-					if (idx % DIVISOR === 0) {
-						acc.push([]);
-					}
+	const workersOverviewForPrint =
+		(workersOverview?.workers.length ?? 0) <= OVERVIEW_DIVISOR
+			? [workersOverview?.workers.slice()]
+			: workersOverview?.workers.reduce((acc, currEl, idx) => {
+					if (idx % OVERVIEW_DIVISOR === 0) acc.push([]);
 
 					acc[acc.length - 1].push(currEl);
 					return acc;
-			  }, [] as ReturnType<typeof sortByNameAndWorkedDate>[]);
+			  }, [] as (typeof workersOverview.workers)[]);
 
+	const workersDetailForPrint =
+		(workersDetail?.workers.length ?? 0) <= DETAIL_DIVISOR
+			? [workersDetail?.workers.slice()]
+			: workersDetail?.workers.reduce((acc, currEl, idx) => {
+					if (idx % DETAIL_DIVISOR === 0) acc.push([]);
+
+					acc[acc.length - 1].push(currEl);
+					return acc;
+			  }, [] as WorkersDetail[]);
+
+	console.log(workersOverviewForPrint);
 	return (
 		<Container>
 			<Flex justifyContent="space-between" margin="0 0 2rem 0">
 				<GoBackButton type="button" onClick={goBack}>
-					<BsArrowLeftCircle size="24" color="var(--color-gray-600)" />
+					<BsArrowLeftCircle size="24" color="var(--color-gray-700)" />
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="1rem">
@@ -68,40 +78,42 @@ const Print = () => {
 				페이지
 			</Flex>
 			<Data ref={printRef}>
-				<OverviewTable className="report page-break">
-					<thead>
-						<tr aria-label="tableHead-title">
-							<th>{`${year}년 ${month}월 일용직 근로소득 명세서 (민하우징)`}</th>
-						</tr>
-						<tr>
-							<th aria-label="tableHead-index">번 호</th>
-							<th aria-label="tableHead-workerName">성 명</th>
-							<th aria-label="tableHead-monthOfWorkedDate">해당 월</th>
-							<th aria-label="tableHead-sumOfPayment">금 액</th>
-						</tr>
-					</thead>
-					<tbody>
-						{workersData?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
-							<tr key={workerName}>
-								<td aria-label="tableBody-index">{idx + 1}</td>
-								<td aria-label="tableBody-workerName">{workerName}</td>
-								<td aria-label="tableBody-monthOfWorkedDate">{workedDate.getMonth() + 1}월</td>
-								<td aria-label="tableBody-sumOfPayment">{formatCurrencyUnit(sumOfPayment)}</td>
+				{workersOverviewForPrint?.map((workerOverviewForPrint, idx) => (
+					<OverviewTable key={`overviewTable-${idx}`} className="report page-break">
+						<thead>
+							<tr aria-label="tableHead-title">
+								<th>{`${year}년 ${month}월 일용직 근로소득 명세서 (민하우징)`}</th>
 							</tr>
-						))}
-						<tr key="blank">
-							{Array.from({ length: 4 }, (_, idx) => (
-								<td key={idx} aria-label="tableBody-blank" />
+							<tr>
+								<th aria-label="tableHead-index">번 호</th>
+								<th aria-label="tableHead-workerName">성 명</th>
+								<th aria-label="tableHead-monthOfWorkedDate">해당 월</th>
+								<th aria-label="tableHead-sumOfPayment">금 액</th>
+							</tr>
+						</thead>
+						<tbody>
+							{workerOverviewForPrint?.map(({ workerName, workedDate, sumOfPayment }, idx) => (
+								<tr key={workerName}>
+									<td aria-label="tableBody-index">{idx + 1}</td>
+									<td aria-label="tableBody-workerName">{workerName}</td>
+									<td aria-label="tableBody-monthOfWorkedDate">{workedDate.getMonth() + 1}월</td>
+									<td aria-label="tableBody-sumOfPayment">{formatCurrencyUnit(sumOfPayment)}</td>
+								</tr>
 							))}
-						</tr>
-						<tr key="sum">
-							<td aria-label="tableBody-blank" />
-							<td aria-label="tableBody-blank" />
-							<td aria-label="tableBody-sum-title">합 계</td>
-							<td aria-label="tableBody-total-sumOfPayment">{formatCurrencyUnit(workersData?.sumOfPayment)}</td>
-						</tr>
-					</tbody>
-				</OverviewTable>
+							<tr key="blank">
+								{Array.from({ length: 4 }, (_, idx) => (
+									<td key={idx} aria-label="tableBody-blank" />
+								))}
+							</tr>
+							<tr key="sum">
+								<td aria-label="tableBody-blank" />
+								<td aria-label="tableBody-blank" />
+								<td aria-label="tableBody-sum-title">합 계</td>
+								<td aria-label="tableBody-total-sumOfPayment">{formatCurrencyUnit(workersOverview?.sumOfPayment)}</td>
+							</tr>
+						</tbody>
+					</OverviewTable>
+				))}
 
 				{workersDetailForPrint?.map((workerDetailForPrint, idx) => (
 					<DetailTable key={`detailTable-${idx}`} className="report page-break">
@@ -237,7 +249,7 @@ const OverviewTable = styled.table`
 	}
 
 	tbody > tr {
-		height: 32px;
+		height: 28px;
 		border-bottom: 1px solid #3a3d4a;
 
 		&:last-child {
