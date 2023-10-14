@@ -10,6 +10,9 @@ import { useRef } from 'react';
 import ReactToPrint from 'react-to-print';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
+import { sortByNameAndWorkedDate } from '../queries/getWorkersDetailQuery';
+
+const DIVISOR = 30;
 
 const Print = () => {
 	const {
@@ -24,6 +27,17 @@ const Print = () => {
 	const { data: workersDetail } = useGetWorkersDetailQuery(query);
 
 	const printRef = useRef(null);
+
+	const workersDetailForPrint =
+		(workersDetail?.workers.length ?? 0) <= DIVISOR
+			? [workersDetail?.workers.slice()]
+			: workersDetail?.workers.reduce((acc, _, idx) => {
+					if (idx % DIVISOR === 0 && idx !== 0) {
+						acc.push(workersDetail?.workers.slice(idx - DIVISOR, idx));
+					}
+
+					return acc;
+			  }, [] as ReturnType<typeof sortByNameAndWorkedDate>[]);
 
 	return (
 		<Container>
@@ -68,10 +82,9 @@ const Print = () => {
 							</tr>
 						))}
 						<tr key="blank">
-							<td aria-label="tableBody-blank" />
-							<td aria-label="tableBody-blank" />
-							<td aria-label="tableBody-blank" />
-							<td aria-label="tableBody-blank" />
+							{Array.from({ length: 4 }, () => (
+								<td aria-label="tableBody-blank" />
+							))}
 						</tr>
 						<tr key="sum">
 							<td aria-label="tableBody-blank" />
@@ -82,57 +95,75 @@ const Print = () => {
 					</tbody>
 				</OverviewTable>
 
-				<DetailTable className="report page-break">
-					<thead>
-						<tr>
-							<th aria-label="tableHead-index">번 호</th>
-							<th aria-label="tableHead-workerName">성 명</th>
-							<th aria-label="tableHead-registrationNumber">주민등록번호</th>
-							<th aria-label="tableHead-workedDate">출력일</th>
-							<th aria-label="tableHead-payment">지급액</th>
-							<th aria-label="tableHead-remittance">송금내용</th>
-						</tr>
-					</thead>
-					<tbody>
-						{workersDetail?.workers.map(
-							({
-								position,
-								isFirstIdxOfArr,
-								id,
-								workerName,
-								registrationNumberFront,
-								registrationNumberBack,
-								workedDate,
-								payment,
-								remittance,
-								remittanceType,
-							}) => (
-								<tr key={id} role="check" onClick={() => {}}>
-									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
-									<td aria-label="tableBody-workerName">{isFirstIdxOfArr ? workerName : ''}</td>
-									<td aria-label="tableBody-registrationNumber">
-										{isAdmin ? (
-											isFirstIdxOfArr ? (
-												`${registrationNumberFront} - ${registrationNumberBack}`
+				{workersDetailForPrint?.map((workerDetailForPrint, idx) => (
+					<DetailTable key={`detailTable-${idx}`} className="report page-break">
+						<thead>
+							<tr>
+								<th aria-label="tableHead-index">번 호</th>
+								<th aria-label="tableHead-workerName">성 명</th>
+								<th aria-label="tableHead-registrationNumber">주민등록번호</th>
+								<th aria-label="tableHead-workedDate">출력일</th>
+								<th aria-label="tableHead-payment">지급액</th>
+								<th aria-label="tableHead-remittance">송금내용</th>
+							</tr>
+						</thead>
+						<tbody>
+							{workerDetailForPrint?.map(
+								({
+									position,
+									isFirstIdxOfArr,
+									id,
+									workerName,
+									registrationNumberFront,
+									registrationNumberBack,
+									workedDate,
+									payment,
+									remittance,
+									remittanceType,
+								}) => (
+									<tr key={id} role="check" onClick={() => {}}>
+										<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
+										<td aria-label="tableBody-workerName">{isFirstIdxOfArr ? workerName : ''}</td>
+										<td aria-label="tableBody-registrationNumber">
+											{isAdmin ? (
+												isFirstIdxOfArr ? (
+													`${registrationNumberFront} - ${registrationNumberBack}`
+												) : (
+													''
+												)
 											) : (
-												''
-											)
-										) : (
-											<span aria-label="isNotAdmin">Classified</span>
-										)}
-									</td>
-									<td aria-label="tableBody-workedDate">
-										{workedDate.getMonth() + 1}/{workedDate.getDate()}
-									</td>
-									<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
-									<td aria-label="tableBody-remittance">
-										{remittanceType}: {formatCurrencyUnit(Number(remittance))}
-									</td>
-								</tr>
-							),
-						)}
-					</tbody>
-				</DetailTable>
+												<span aria-label="isNotAdmin">Classified</span>
+											)}
+										</td>
+										<td aria-label="tableBody-workedDate">
+											{workedDate.getMonth() + 1}/{workedDate.getDate()}
+										</td>
+										<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
+										<td aria-label="tableBody-remittance">
+											{remittanceType}: {formatCurrencyUnit(Number(remittance))}
+										</td>
+									</tr>
+								),
+							)}
+							{idx === workersDetailForPrint.length - 1 && (
+								<>
+									<tr key="blank">
+										{Array.from({ length: 6 }, () => (
+											<td aria-label="tableBody-blank" />
+										))}
+									</tr>
+									<tr key="sum">
+										{Array.from({ length: 4 }, () => (
+											<td aria-label="tableBody-blank" />
+										))}
+										<td aria-label="tableBody-sum-title">합 계</td>
+										<td aria-label="tableBody-total-sumOfPayment">{formatCurrencyUnit(workersDetail?.sumOfPayment)}</td>
+									</tr>
+								</>
+							)}
+						</tbody>
+					</DetailTable>
+				))}
 			</Data>
 		</Container>
 	);
@@ -225,6 +256,11 @@ const OverviewTable = styled.table`
 		align-items: center;
 		font-size: 13.3px;
 	}
+
+	td[aria-label='tableBody-sum-title'],
+	td[aria-label='tableBody-total-sumOfPayment'] {
+		font-weight: 600;
+	}
 `;
 
 const DetailTable = styled.table`
@@ -238,9 +274,6 @@ const DetailTable = styled.table`
 	tbody > tr {
 		display: grid;
 		grid-template-columns: 0.5fr 1fr 1.5fr 1fr repeat(2, 1.5fr);
-		@media screen and (min-width: 640px) {
-			/* grid-template-columns: 0.3fr repeat(5, minmax(180px, 1fr)); */
-		}
 	}
 
 	thead {
@@ -288,6 +321,11 @@ const DetailTable = styled.table`
 		justify-content: center;
 		align-items: center;
 		font-size: 13.3px;
+	}
+
+	td[aria-label='tableBody-sum-title'],
+	td[aria-label='tableBody-total-sumOfPayment'] {
+		font-weight: 600;
 	}
 `;
 

@@ -4,7 +4,7 @@ import { WorkerQuery, WorkersQueryData } from './getWorkersQuery';
 
 const staleTime = 3000;
 
-const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
+export const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
 	Object.values(
 		workers.reduce((acc, worker) => {
 			const { workerName } = worker;
