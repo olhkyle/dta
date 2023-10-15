@@ -1,14 +1,5 @@
 import { QueryClient } from '@tanstack/react-query';
-import { monthOfToday, yearOfToday } from '../constants/day';
-import { getWorkersDetailQuery } from '../queries';
-import { WorkerQuery } from '../queries/getWorkersQuery';
-
-const workerQuery: WorkerQuery = {
-	inOrder: 'desc',
-	year: yearOfToday,
-	month: monthOfToday,
-	workerName: '',
-};
+import { getWorkersDetailQuery, workerQuery } from '../queries';
 
 const getWorkersDetailLoader = (queryClient: QueryClient) => async () => {
 	const query = getWorkersDetailQuery(workerQuery);

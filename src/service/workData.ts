@@ -2,7 +2,7 @@ import { addDoc, and, collection, deleteDoc, doc, getCountFromServer, getDocs, o
 import { db } from './firebase';
 import { specifySnapshotIntoData } from './utils';
 import { Worker } from '../components/register/RegisterForm';
-import { WorkerQuery } from '../queries/getWorkersQuery';
+import { WorkerQuery } from '../queries/workerQuery';
 
 export interface WorkerWithId extends Worker {
 	id: string;

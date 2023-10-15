@@ -1,6 +1,6 @@
 import { monthOfToday, yearOfToday } from '../constants/day';
 import { WorkerWithId, getWorkers } from '../service/workData';
-import { WorkerQuery, WorkersQueryData } from './getWorkersQuery';
+import { WorkerQuery, WorkersQueryData } from './workerQuery';
 
 export type WorkersDetail = ReturnType<typeof sortByNameAndWorkedDate>;
 
