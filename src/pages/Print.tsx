@@ -62,10 +62,6 @@ const Container = styled.div`
 	}
 `;
 
-const Data = styled.div`
-	border-color: var(--color-dark);
-`;
-
 const GoBackButton = styled(Button)`
 	display: inline-flex;
 	justify-content: center;
@@ -91,6 +87,10 @@ const PrintButton = styled(Button)<{ disabled: boolean }>`
 	&:hover {
 		background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-200)')};
 	}
+`;
+
+const Data = styled.div`
+	border-color: var(--color-dark);
 `;
 
 export default Print;

@@ -7,7 +7,7 @@ interface LoadingProps {
 	margin?: string;
 }
 
-const Loading = ({ type = 'lg', size = 80, margin = '5rem 0' }: LoadingProps) => {
+const Loading = ({ type = 'lg', size = 70, margin = '5rem 0' }: LoadingProps) => {
 	return (
 		<>
 			{type === 'sm' ? (
