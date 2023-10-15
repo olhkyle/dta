@@ -1,4 +1,4 @@
-import { WorkersQueryData } from '../queries/getWorkersQuery';
+import { WorkersQueryData } from '../queries/workerQuery';
 import { WorkerWithId } from '../service/workData';
 
 /**
@@ -6,14 +6,16 @@ import { WorkerWithId } from '../service/workData';
  * -> { workers: WorkersQueryData, totalLength: number }
  */
 
-const edit = (oldData: WorkersQueryData, data: WorkerWithId) => ({
+const edit = (data: WorkerWithId) => (oldData: WorkersQueryData) => ({
 	...oldData,
 	workers: oldData.workers.map(worker => (worker.id === data.id ? { ...worker, ...data } : worker)),
 });
 
-const remove = (oldData: WorkersQueryData, { id }: { id: string }) => ({
-	...oldData,
-	workers: oldData.workers.filter(worker => worker.id !== id),
-});
+const remove =
+	({ id }: { id: string }) =>
+	(oldData: WorkersQueryData) => ({
+		...oldData,
+		workers: oldData.workers.filter(worker => worker.id !== id),
+	});
 
 export { edit, remove };

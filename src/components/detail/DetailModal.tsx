@@ -28,7 +28,7 @@ type DisabledState = {
 	[key: string]: boolean;
 };
 
-const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProps) => {
+const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProps) => {
 	const {
 		register,
 		handleSubmit,
@@ -62,7 +62,6 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 	const toggleAllFieldsDisabled = () => {
 		if (!isAdmin) {
 			toast.warn('Update Feature is Admin Only');
-			console.log('here');
 			return;
 		}
 
@@ -112,8 +111,8 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 			await sleep(1000);
 			removeMutate({ id: worker.id });
 
-			onClose();
 			refetch();
+			onClose();
 			toast.success('성공적으로 삭제 되었습니다.');
 		} catch (e) {
 			console.error(e);
@@ -131,8 +130,9 @@ const DetailModal = ({ isOpen, refetch, onClose, data: worker }: DetailModalProp
 			remittance: unformatCurrencyUnit(fields.remittance),
 		});
 
-		onClose();
+		// TODO: refetch 짝수번째에 되지 않는 간헐적 문제
 		refetch();
+		onClose();
 		toast.success('성공적으로 수정되었습니다.');
 	};
 
