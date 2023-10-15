@@ -1,6 +1,7 @@
 export * from './common';
 export * from './auth';
 export * from './register';
+export * from './print';
 
 export { default as Layout } from '../components/Layout';
 export { default as Nav } from '../components/Nav';
