@@ -1,7 +1,6 @@
 import styled from '@emotion/styled';
 import { useGetWorkersDetailQuery } from '../../hooks/queries';
-import { WorkersDetail } from '../../queries/getWorkersDetailQuery';
-import { WorkerQuery } from '../../queries/workerQuery';
+import { WorkerQuery, WorkersDetailBySort } from '../../queries/workerQuery';
 import { getIsAdmin } from '../../store/userSlice';
 import { useAppSelector } from '../../store/store';
 import { formatCurrencyUnit } from '../../utils/currencyUnit';
@@ -24,7 +23,7 @@ const Detail = ({ query }: DetailProps) => {
 
 					acc[acc.length - 1].push(currEl);
 					return acc;
-			  }, [] as WorkersDetail[]);
+			  }, [] as WorkersDetailBySort[]);
 
 	return (
 		<>
