@@ -1,21 +1,39 @@
-import { CollectionReference, DocumentData, Query, QuerySnapshot, getCountFromServer, getDocs, query } from 'firebase/firestore';
+import {
+	CollectionReference,
+	DocumentData,
+	QueryCompositeFilterConstraint,
+	QueryOrderByConstraint,
+	QuerySnapshot,
+	getCountFromServer,
+	getDocs,
+	limit,
+	query,
+	startAfter,
+} from 'firebase/firestore';
 import { Worker } from '../components/register/RegisterForm';
 
 interface PaginationQuery {
 	collectionRef: CollectionReference<DocumentData, DocumentData>;
-	q: Query<DocumentData, DocumentData>;
-	limitSize: number;
+	pageParam: number;
+	searchCondition: QueryCompositeFilterConstraint;
+	orderCondition: QueryOrderByConstraint;
+	limitSizePerPage: number;
 }
 
-const paginationQuery = async ({ collectionRef, q, limitSize }: PaginationQuery) => {
-	const data = await getDocs(q);
+export type ReturnTypeOfPaginationQuery = Awaited<ReturnType<typeof paginationQuery>>;
 
+const paginationQuery = async ({ collectionRef, pageParam, searchCondition, orderCondition, limitSizePerPage }: PaginationQuery) => {
+	const q = pageParam
+		? query(collectionRef, searchCondition, orderCondition, startAfter(pageParam), limit(limitSizePerPage))
+		: query(collectionRef, searchCondition, orderCondition, limit(limitSizePerPage));
+
+	const data = await getDocs(q);
 	const snapshot = await getCountFromServer(query(collectionRef));
 
 	return {
 		data: specifySnapshotIntoData(data),
 		totalLength: snapshot.data().count,
-		nextPage: data.size === limitSize ? data.docs[data.docs.length - 1] : undefined,
+		nextPage: data.size === limitSizePerPage ? data.docs[data.docs.length - 1] : undefined,
 	};
 };
 
@@ -32,6 +50,5 @@ const specifySnapshotIntoData = (snapshot: QuerySnapshot<DocumentData, DocumentD
 };
 
 const formattedWorkedDate = (data: Worker) => data?.workedDate?.toDate();
-// const formattedUpdatedAt = data => data?.updatedAt?.toDate();
 
 export { paginationQuery, specifySnapshotIntoData, formattedWorkedDate };

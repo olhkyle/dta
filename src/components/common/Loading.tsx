@@ -72,8 +72,8 @@ const Loading = ({ type = 'lg', size = 80, margin = '5rem 0' }: LoadingProps) =>
 };
 
 const Svg = styled.svg<{ type: string; size: number }>`
-	width: ${({ type }) => (type === 'sm' ? '20px' : '60px')};
-	height: ${({ type }) => (type === 'sm' ? '20px' : '60px')};
+	width: ${({ type }) => (type === 'sm' ? '25px' : '60px')};
+	height: ${({ type }) => (type === 'sm' ? '25px' : '60px')};
 
 	@media screen and (min-width: 640px) {
 		width: ${({ size }) => `${size}px`};

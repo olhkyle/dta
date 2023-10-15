@@ -41,16 +41,8 @@ const Print = () => {
 					/>
 				</Flex>
 			</Flex>
-			{/* <Flex gap="0.5rem" margin="1rem 0.5rem">
-				총
-				<Text typo="h4" color="var(--text-color)">
-					{(workersDetailForPrint?.length ?? 0) + 1}
-				</Text>
-				페이지
-			</Flex> */}
 			<Data ref={printRef}>
 				<Overview query={query} />
-
 				<Detail query={query} />
 			</Data>
 		</Container>

@@ -3,8 +3,8 @@ import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { toast } from 'react-toastify';
-import { useDebounce } from '../hooks';
-import { useGetWorkersDetailQuery } from '../hooks/queries';
+import { useDebounce, useInfiniteScroll, useGetWorkersDetailInfiniteQuery } from '../hooks';
+import { sortByNameAndWorkedDate } from '../queries/workerQuery';
 import { Badge, Button, CustomSelect, EmptyIndicator, Flex, HighlightText, Loading, SearchInput, SegmentedControl } from '../components';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 import { control, controls } from '../constants/sortControls';
@@ -23,15 +23,25 @@ const Details = () => {
 	const { state } = useLocation();
 	const navigate = useNavigate();
 
+	const dispatch = useAppDispatch();
+	const isAdmin = useAppSelector(getIsAdmin);
+
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(state ? state?.month + 1 : monthOfToday);
 	const [currentSort, setCurrentControl] = useState(controls[0]);
 
-	const { data, refetch } = useGetWorkersDetailQuery({ inOrder: control[currentSort], year, month, workerName });
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useGetWorkersDetailInfiniteQuery({
+		inOrder: control[currentSort],
+		year,
+		month,
+		workerName,
+	});
 
-	const dispatch = useAppDispatch();
-	const isAdmin = useAppSelector(getIsAdmin);
+	const ref = useInfiniteScroll(fetchNextPage);
+
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
+
+	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? []);
 
 	return (
 		<>
@@ -46,7 +56,7 @@ const Details = () => {
 					<PrintButton
 						type="button"
 						onClick={() => {
-							if (data?.workers.length === 0) {
+							if (workers?.length === 0) {
 								toast.warn('해당 월의 출력 대상자가 없습니다.');
 								return;
 							}
@@ -56,17 +66,17 @@ const Details = () => {
 						인 쇄
 					</PrintButton>
 				</Flex>
-				<Flex justifyContent="flex-end" margin="3rem 0">
+				<Flex justifyContent="flex-end" margin="3rem 0 2rem">
 					<Badge label="총 합계" bgColor="var(--text-color)">
-						{formatCurrencyUnit(data?.sumOfPayment)}
+						{formatCurrencyUnit(data?.pages[0].totalPayment)}
 					</Badge>
 				</Flex>
 			</SearchFilters>
 			<Suspense fallback={<Loading />}>
-				{data?.workers.length === 0 ? (
+				{workers?.length === 0 ? (
 					<EmptyIndicator>
 						<p>해당 일용직이 없습니다</p>
-						<BsTrash size="24" />
+						<BsTrash size="21" />
 					</EmptyIndicator>
 				) : (
 					<Table searched={workerName.length > 0}>
@@ -86,7 +96,7 @@ const Details = () => {
 						</thead>
 
 						<tbody>
-							{data?.workers.map(
+							{workers.map(
 								({
 									position,
 									isFirstIdxOfArr,
@@ -138,6 +148,7 @@ const Details = () => {
 					</Table>
 				)}
 			</Suspense>
+			<div ref={ref}>{hasNextPage && isFetchingNextPage && <Loading type="sm" size={40} />}</div>
 		</>
 	);
 };
@@ -153,12 +164,15 @@ const PrintButton = styled(Button)`
 	margin: 2rem 0 1rem;
 	padding: 0.6rem 1.5rem;
 	font-size: 15px;
-	background-color: var(--color-green-50);
+	background-color: var(--color-green-300);
 	color: var(--color-white);
-	border-radius: 9999px;
+	outline-offset: 1px;
+	border-radius: 12px;
+	transition: all 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		background-color: var(--color-green-200);
+		outline: 3px solid var(--outline-color);
 	}
 
 	@media screen and (min-width: 640px) {

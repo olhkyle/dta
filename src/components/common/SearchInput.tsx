@@ -34,7 +34,7 @@ const Container = styled(Flex)`
 	position: relative;
 	margin-left: auto;
 	margin-right: auto;
-	width: 340px;
+	width: 330px;
 	border-bottom: 5px solid var(--outline-color);
 
 	&:focus-within {

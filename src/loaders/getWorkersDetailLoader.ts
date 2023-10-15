@@ -1,10 +1,11 @@
 import { QueryClient } from '@tanstack/react-query';
-import { getWorkersDetailQuery, workerQuery } from '../queries';
+import { workerQuery } from '../queries/workerQuery';
+import getPaginationQuery from '../queries/getWorkersDetailByPageQuery';
 
 const getWorkersDetailLoader = (queryClient: QueryClient) => async () => {
-	const query = getWorkersDetailQuery(workerQuery);
+	const query = getPaginationQuery(workerQuery);
 
-	return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchQuery(query));
+	return queryClient.getQueryData(query.queryKey) ?? (await queryClient.fetchInfiniteQuery(query));
 };
 
 export default getWorkersDetailLoader;

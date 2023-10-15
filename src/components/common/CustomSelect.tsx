@@ -70,8 +70,8 @@ const Trigger = styled.button<{ width: number }>`
 	justify-content: center;
 	align-items: center;
 	gap: 0.2rem;
-	padding: 0.6rem 0.75rem;
-	font-size: 15px;
+	padding: 0.5rem 0.65rem;
+	font-size: 14px;
 	font-weight: 600;
 	line-height: 1.2;
 	border: 1px solid var(--outline-color);
@@ -86,7 +86,7 @@ const Trigger = styled.button<{ width: number }>`
 	@media screen and (min-width: 640px) {
 		gap: 0.4rem;
 		padding: 0.75rem 1.4rem;
-		font-size: 17px;
+		font-size: 16px;
 	}
 
 	@media screen and (min-width: 720px) {

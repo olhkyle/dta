@@ -1,6 +1,6 @@
 import { QueryClient } from '@tanstack/react-query';
-import getWorkersQuery from '../queries/getWorkersQuery';
-import { workerQuery } from '../queries';
+import { getWorkersQuery } from '../queries';
+import { workerQuery } from '../queries/workerQuery';
 
 const getWorkersLoader = (queryClient: QueryClient) => async () => {
 	const query = getWorkersQuery(workerQuery);

@@ -11,12 +11,13 @@ const EmptyIndicator = ({ children }: EmptyIndicatorProps) => {
 
 const Container = styled.div`
 	display: flex;
+	flex-direction: column;
 	justify-content: center;
 	align-items: center;
 	gap: 0.5rem;
 	margin: 5rem auto;
 	padding: 4rem 2rem;
-	width: 65vw;
+	width: 80vw;
 	font-size: 16px;
 	font-weight: 600;
 	text-align: center;
@@ -24,6 +25,8 @@ const Container = styled.div`
 	outline-offset: 4px;
 
 	@media screen and (min-width: 640px) {
+		flex-direction: row;
+		width: 65vw;
 		font-size: 20px;
 	}
 `;

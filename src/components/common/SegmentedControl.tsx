@@ -35,7 +35,7 @@ const Container = styled.ul`
 `;
 
 const Control = styled.li<{ active: boolean }>`
-	padding: 0.2rem 0.4rem;
+	padding: 0.2rem 0.35rem;
 	border-radius: var(--radius);
 	font-size: 14px;
 	font-weight: 500;
