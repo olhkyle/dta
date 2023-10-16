@@ -109,6 +109,7 @@ const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
 	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
 	border-radius: 8px;
 	cursor: pointer;
+	-webkit-appearance: none;
 
 	box-shadow: ${({ active }) => (active ? 'inset 0 0 0 1px var(--text-color)' : 'inset 0 0 0 1px var(--outline-color)')};
 
