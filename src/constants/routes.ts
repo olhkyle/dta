@@ -3,7 +3,8 @@ const routes = {
 	LOGIN: '/signin',
 	OVERVIEW: '/overview',
 	DETAILS: '/details',
-	WORKER: '/worker',
+	SEARCH_WORKERS: '/search',
+	WORKER: '/worker/:workerName',
 	REGISTER: '/register',
 	PRINT: '/print',
 } as const;
