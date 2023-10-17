@@ -17,16 +17,19 @@ const SideNav = ({ onLogout }: SideNavProps) => {
 
 	return (
 		<Container>
-			<Flex direction="column" justifyContent="space-between" gap="1rem">
-				<Overview to={routes.OVERVIEW} onClick={close}>
-					명세 개요
-				</Overview>
-				<Details to={routes.DETAILS} onClick={close}>
-					월별 세부 명세
-				</Details>
-				<Register to={routes.REGISTER} onClick={close}>
+			<Flex direction="column" justifyContent="space-between" gap="1rem" margin="1rem 0">
+				<Navigation to={routes.OVERVIEW} onClick={close}>
+					명세 월별 개요
+				</Navigation>
+				<Navigation to={routes.DETAILS} onClick={close}>
+					명세 월별 상세
+				</Navigation>
+				<Navigation to={routes.SEARCH_WORKERS} onClick={close}>
+					일용직 검색
+				</Navigation>
+				<Navigation to={routes.REGISTER} onClick={close}>
 					일용직 등록
-				</Register>
+				</Navigation>
 				{username ? (
 					<LogoutButton
 						type="button"
@@ -61,34 +64,17 @@ const Container = styled.div`
 		display: none;
 	}
 `;
-const Overview = styled(NavLink)`
-	margin-top: 1rem;
-	width: 100%;
-	font-size: 18px;
-	border-radius: 0;
-	border-bottom: 1px solid var(--color-gray-400);
-	&:hover {
-		color: var(--color-green-50);
-	}
-`;
 
-const Details = styled(NavLink)`
+const Navigation = styled(NavLink)`
 	width: 100%;
 	font-size: 18px;
 	border-radius: 0;
 	border-bottom: 1px solid var(--color-gray-400);
-	&:hover {
-		color: var(--color-green-50);
-	}
-`;
+	transition: all 0.1s ease-in-out 0.05s;
 
-const Register = styled(NavLink)`
-	width: 100%;
-	font-size: 18px;
-	border-radius: 0;
-	border-bottom: 1px solid var(--color-gray-400);
 	&:hover {
-		color: var(--color-green-50);
+		color: var(--color-green-300);
+		border-bottom: 1px solid var(--color-green-300);
 	}
 `;
 
@@ -115,7 +101,7 @@ const LogoutButton = styled(Button)`
 	color: var(--text-color);
 
 	&:hover {
-		color: var(--color-green-50);
+		color: var(--color-green-300);
 	}
 
 	@media screen and (min-width: 640px) {

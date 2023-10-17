@@ -17,19 +17,19 @@ const NavLink = ({ to, children, onClick, ...props }: NavLinkProps) => {
 };
 
 const StyledLink = styled(Link)`
-	padding: var(--btn-md-padding);
+	padding: var(--btn-sm-padding);
 	font-size: 15px;
 	font-weight: 600;
 	line-height: 1;
 	border-radius: 9999px;
 	text-align: center;
+	word-break: keep-all;
 
-	@media screen and (min-width: 640px) {
-		padding: var(--btn-lg-padding);
+	@media screen and (min-width: 920px) {
+		padding: var(--btn-md-padding);
 	}
 
-	@media screen and (min-width: 768px) {
-		padding: var(--btn-md-padding);
+	@media screen and (min-width: 1024px) {
 		font-size: 17px;
 	}
 `;
