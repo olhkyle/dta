@@ -10,7 +10,7 @@ const Home = () => {
 				Document Tax Administration
 			</Subtitle>
 			<Image3D>
-				<img src="/3d.png" alt="3d image" />
+				<img src={'/3d_low.png'} alt="3d image" placeholder="blur" />
 			</Image3D>
 
 			<Description gap="1rem">
@@ -75,7 +75,13 @@ const Image3D = styled.div`
 	width: 300px;
 
 	@media screen and (min-width: 768px) {
-		width: 450px;
+		width: 400px;
+	}
+
+	div {
+		width: 100%;
+		height: 100%;
+		background-color: var(--outline-color);
 	}
 
 	img {
