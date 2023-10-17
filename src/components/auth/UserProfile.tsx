@@ -61,21 +61,29 @@ const Container = styled.div`
 `;
 
 const Name = styled.span`
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: 700;
 	color: var(--color-white);
+
+	@media screen and (min-width: 1024px) {
+		font-size: 17px;
+	}
 `;
 
 const ImgContainer = styled.span`
-	display: inline-flex;
+	display: none;
 	justify-content: center;
 	align-items: center;
-	width: 28px;
-	height: 28px;
+	width: 24px;
+	height: 24px;
 
 	img {
 		width: 100%;
 		height: 100%;
+	}
+
+	@media screen and (min-width: 800px) {
+		display: inline-flex;
 	}
 `;
 

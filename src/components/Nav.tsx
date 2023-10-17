@@ -42,15 +42,16 @@ const Nav = () => {
 
 	return (
 		<>
-			<Container>
+			<Container isAdmin={isAdmin}>
 				<Logo to={routes.HOME} onClick={close}>
 					<h1 className="underlined">D:T.A</h1>
 				</Logo>
 				<NavLinkContainer>
 					<Flex justifyContent="space-between" gap="0.25rem">
-						<Overview to={routes.OVERVIEW}>명세 개요</Overview>
-						<Details to={routes.DETAILS}>월별 세부 명세</Details>
-						<Register to={routes.REGISTER}>일용직 등록</Register>
+						<Navigation to={routes.OVERVIEW}>명세 개요</Navigation>
+						<Navigation to={routes.DETAILS}>월별 세부 명세</Navigation>
+						{isAdmin && <Navigation to={routes.SEARCH_WORKERS}>일용직 검색</Navigation>}
+						<Navigation to={routes.REGISTER}>일용직 등록</Navigation>
 						{username ? <UserProfile name={username} isAdmin={isAdmin} onLogout={handleLogout} /> : <Login to={routes.LOGIN}>로그인</Login>}
 					</Flex>
 					<ThemeButton />
@@ -65,7 +66,7 @@ const Nav = () => {
 	);
 };
 
-const Container = styled.nav`
+const Container = styled.nav<{ isAdmin: boolean }>`
 	position: sticky;
 	top: 0;
 	display: grid;
@@ -80,11 +81,15 @@ const Container = styled.nav`
 	z-index: 9900;
 
 	@media screen and (min-width: 768px) {
-		grid-template-columns: 1fr 3fr;
+		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 4.5fr' : '1fr 2.5fr')};
+	}
+
+	@media screen and (min-width: 1024px) {
+		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 3fr' : '1fr 1.5fr')};
 	}
 
 	@media screen and (min-width: 1280px) {
-		grid-template-columns: 1fr 1fr;
+		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 1.5fr' : '1fr 1fr')};
 	}
 `;
 
@@ -112,21 +117,7 @@ const NavLinkContainer = styled.div`
 	}
 `;
 
-const Overview = styled(NavLink)`
-	&:hover {
-		color: var(--btn-hover-color);
-		transition: all 0.3s ease-in-out 0.15s;
-	}
-`;
-
-const Details = styled(NavLink)`
-	&:hover {
-		color: var(--btn-hover-color);
-		transition: all 0.3s ease-in-out 0.15s;
-	}
-`;
-
-const Register = styled(NavLink)`
+const Navigation = styled(NavLink)`
 	&:hover {
 		color: var(--btn-hover-color);
 		transition: all 0.3s ease-in-out 0.15s;

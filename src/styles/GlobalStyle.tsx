@@ -68,6 +68,8 @@ const GlobalStyle = css`
 		vertical-align: baseline;
 		font-family: 'DM Mono', monospace;
 		font-family: 'Noto Sans KR', sans-serif;
+		word-break: keep-all;
+		-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 	}
 
 	body[data-theme='light'] {

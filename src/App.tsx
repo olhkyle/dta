@@ -4,7 +4,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
 import { store } from './store/store';
-import { Details, Home, NotFound, OverView, Print, Register, SignIn, Worker } from './pages';
+import { Details, Home, NotFound, OverView, Print, Register, Search, SignIn, Worker } from './pages';
 import { Layout, RouteError } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
@@ -45,7 +45,11 @@ const router = createBrowserRouter([
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Details />} />,
 			},
 			{
-				path: '/worker/:id',
+				path: routes.SEARCH_WORKERS,
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Search />} />,
+			},
+			{
+				path: routes.WORKER,
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Worker />} />,
 			},
 			{

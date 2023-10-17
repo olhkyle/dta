@@ -18,6 +18,7 @@ const Footer = () => {
 const Container = styled.footer`
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 	margin: 0 auto;
 	padding: 2rem 1rem;
 
@@ -41,20 +42,38 @@ const Container = styled.footer`
 	}
 `;
 const Logo = styled(Link)`
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 700;
+
+	&:hover {
+		color: var(--color-green-50);
+	}
+
+	@media screen and (min-width: 640px) {
+		font-size: 18px;
+	}
 `;
 
 const CopyRight = styled.span`
+	font-size: 14px;
 	font-weight: 600;
+
+	@media screen and (min-width: 640px) {
+		font-size: 16px;
+	}
 `;
 
 const MadeBy = styled(Link)`
+	font-size: 14px;
 	font-weight: 600;
 	color: var(--color-gray-500);
 
 	&:hover {
 		color: var(--color-green-50);
+	}
+
+	@media screen and (min-width: 640px) {
+		font-size: 16px;
 	}
 `;
 

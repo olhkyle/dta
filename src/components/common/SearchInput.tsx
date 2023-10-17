@@ -2,13 +2,19 @@ import styled from '@emotion/styled';
 import { Button, Flex } from '.';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
+import { useRef } from 'react';
 
 interface SearchInputProps {
 	value: string;
 	setValue: (value: string) => void;
+	clearValue?: () => void;
+	onKeyDown?: (e: React.SyntheticEvent) => void;
+	onSearchButtonClick?: () => Promise<void>;
 }
 
-const SearchInput = ({ value, setValue }: SearchInputProps) => {
+const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonClick }: SearchInputProps) => {
+	const ref = useRef(null);
+
 	return (
 		<Container justifyContent="center" gap="1rem" margin="3rem 0" role="search">
 			<Input
@@ -16,14 +22,27 @@ const SearchInput = ({ value, setValue }: SearchInputProps) => {
 				placeholder="이름을 입력해 주세요."
 				name="search-input"
 				value={value}
+				ref={ref}
 				onChange={e => setValue(e.currentTarget.value)}
+				onKeyDown={onKeyDown}
 			/>
 			{value.length > 0 && (
-				<RefreshButton type="button" onClick={() => setValue('')}>
+				<RefreshButton
+					type="button"
+					onClick={
+						clearValue ??
+						(() => {
+							if (ref.current) {
+								(ref.current as HTMLInputElement).focus();
+							}
+
+							setValue('');
+						})
+					}>
 					<MdClose />
 				</RefreshButton>
 			)}
-			<SearchButton type="button">
+			<SearchButton type="button" onClick={onSearchButtonClick}>
 				<HiOutlineSearch color="var(--text-color)" />
 			</SearchButton>
 		</Container>
