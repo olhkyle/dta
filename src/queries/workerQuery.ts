@@ -1,11 +1,18 @@
 import { monthOfToday, yearOfToday } from '../constants/day';
 import { ControlValues } from '../constants/sortControls';
-import { WorkerWithId } from '../service/workData';
+import { WorkerWithId, getWorkersDetailByPage } from '../service/workData';
+
+type Pagination<T> = {
+	paginationData: T[];
+	totalPayment: number;
+};
 
 interface WorkersQueryData {
 	workers: WorkerWithId[];
 	totalLength: number;
 }
+
+type WorkersQueryPaginationData = ReturnType<typeof getWorkersDetailByPage>;
 
 interface WorkerQuery {
 	inOrder: ControlValues;
@@ -46,5 +53,5 @@ const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
 		)
 		.sort((prev, curr) => prev.workerName.toLowerCase().localeCompare(curr.workerName.toLowerCase()) && prev.position - curr.position);
 
-export type { WorkersQueryData, WorkerQuery, WorkersPaginationQuery, WorkersDetailBySort };
+export type { Pagination, WorkersQueryData, WorkersQueryPaginationData, WorkerQuery, WorkersPaginationQuery, WorkersDetailBySort };
 export { workerQuery, sortByNameAndWorkedDate };

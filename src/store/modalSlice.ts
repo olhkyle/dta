@@ -1,8 +1,8 @@
 import { ElementType } from 'react';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { UseQueryResult } from '@tanstack/react-query';
 import { RootState } from './store';
 import { WorkerWithId } from '../service/workData';
-import { UseQueryResult } from '@tanstack/react-query';
 
 export type QueryRefetch = (options?: { throwOnError: boolean; cancelRefetch: boolean }) => Promise<UseQueryResult>;
 

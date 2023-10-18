@@ -1,15 +1,13 @@
-import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { Outlet, useLocation } from 'react-router-dom';
-import { Footer, Main, Nav, ScrollToTopButton, Modal } from '.';
 import { ToastContainer } from 'react-toastify';
+import { Footer, Main, Nav, ScrollToTopButton, Modal } from '.';
+import { useScrollTopEffect } from '../hooks';
 
 const Layout = () => {
 	const { pathname } = useLocation();
 
-	useEffect(() => {
-		window.scrollTo({ top: 0 });
-	}, [pathname]);
+	useScrollTopEffect(pathname);
 
 	return (
 		<>

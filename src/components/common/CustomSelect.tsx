@@ -1,8 +1,8 @@
 import { Dispatch, SetStateAction, useState } from 'react';
-import { useClickOutside, useId } from '../../hooks';
 import styled from '@emotion/styled';
 import { BiSolidDownArrow } from 'react-icons/bi';
 import { BsCheck } from 'react-icons/bs';
+import { useClickOutside, useId } from '../../hooks';
 
 interface SelectProps {
 	data: readonly number[];

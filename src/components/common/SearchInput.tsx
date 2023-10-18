@@ -1,8 +1,8 @@
+import { useRef } from 'react';
 import styled from '@emotion/styled';
-import { Button, Flex } from '.';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
-import { useRef } from 'react';
+import { Button, Flex } from '.';
 
 interface SearchInputProps {
 	value: string;
@@ -21,24 +21,22 @@ const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonCli
 				type="text"
 				placeholder="이름을 입력해 주세요."
 				name="search-input"
-				value={value}
 				ref={ref}
+				value={value}
 				onChange={e => setValue(e.currentTarget.value)}
 				onKeyDown={onKeyDown}
+				autoComplete="off"
 			/>
 			{value.length > 0 && (
 				<RefreshButton
 					type="button"
-					onClick={
-						clearValue ??
-						(() => {
-							if (ref.current) {
-								(ref.current as HTMLInputElement).focus();
-							}
+					onClick={() => {
+						clearValue ? clearValue() : setValue('');
 
-							setValue('');
-						})
-					}>
+						if (ref.current) {
+							(ref.current as HTMLInputElement).focus();
+						}
+					}}>
 					<MdClose />
 				</RefreshButton>
 			)}

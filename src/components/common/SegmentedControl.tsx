@@ -1,6 +1,6 @@
-import { ControlKeys } from '../../constants/sortControls';
-import styled from '@emotion/styled';
 import { Dispatch, SetStateAction } from 'react';
+import styled from '@emotion/styled';
+import { ControlKeys } from '../../constants/sortControls';
 
 interface SegmentedControlProps {
 	data: ControlKeys[];

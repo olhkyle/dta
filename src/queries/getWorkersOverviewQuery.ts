@@ -24,7 +24,7 @@ const checkExist = (workers: WorkerWithId[], targetName: string) => workers.find
 
 const staleTime = 3000;
 
-const getWorkersQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
+const getWorkersOverviewQuery = ({ inOrder = 'asc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
 	queryKey: ['workersOverview', inOrder, year, month, workerName],
 	queryFn: async () => {
 		const data = await getWorkers({ inOrder, year, month, workerName });
@@ -37,4 +37,4 @@ const getWorkersQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOf
 	staleTime,
 });
 
-export default getWorkersQuery;
+export default getWorkersOverviewQuery;

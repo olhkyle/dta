@@ -4,7 +4,7 @@ import { WorkerQuery, WorkersQueryData, sortByNameAndWorkedDate } from './worker
 
 const staleTime = 3000;
 
-const getWorkersDetailQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
+const getWorkersDetailQuery = ({ inOrder = 'asc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
 	queryKey: ['workersDetail', inOrder, year, month, workerName],
 	queryFn: async () => {
 		const data = await getWorkers({ inOrder, year, month, workerName });

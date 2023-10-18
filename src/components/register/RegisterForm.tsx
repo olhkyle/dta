@@ -1,23 +1,21 @@
-import { BaseSyntheticEvent, useState } from 'react';
+import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import { Button, DatePicker, Flex, HighlightText, Input, Loading, NativeSelect, Spacer, Text } from '..';
-import { RegisterSchema, registerSchema } from './schema';
 import { addWorker, getSpecificWorker } from '../../service/workData';
-import { unformatCurrencyUnit } from '../../utils/currencyUnit';
-import routes from '../../constants/routes';
-import sleep from '../../utils/sleep';
-import { getIsAdmin } from '../../store/userSlice';
 import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
+import { RegisterSchema, SubmitHandler, registerSchema } from './schema';
+import routes from '../../constants/routes';
+import { unformatCurrencyUnit } from '../../utils/currencyUnit';
+import sleep from '../../utils/sleep';
 
 export interface Worker extends RegisterSchema {
 	workedDate: Date | any;
 }
-
-export type SubmitHandler<T> = (data: T, event?: BaseSyntheticEvent) => void | Promise<void>;
 
 export type FormSubmitButtonId = 'register' | 'additionalRegister';
 
@@ -243,7 +241,7 @@ const Form = styled.form`
 `;
 
 const LabelFlex = styled(Flex)`
-	gap: 8rem;
+	gap: 9rem;
 
 	@media screen and (min-width: 640px) {
 		gap: 10.5rem;

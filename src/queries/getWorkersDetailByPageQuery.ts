@@ -1,12 +1,11 @@
 import { monthOfToday, yearOfToday } from '../constants/day';
 import { ReturnTypeOfPaginationQuery } from '../service/utils';
 import { getWorkersDetailByPage } from '../service/workData';
-
 import { WorkerQuery } from './workerQuery';
 
 const staleTime = 3000;
 
-const getWorkersDetailByPageQuery = ({ inOrder = 'desc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
+const getWorkersDetailByPageQuery = ({ inOrder = 'asc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
 	queryKey: ['workersDetailByPage', inOrder, year, month, workerName],
 	queryFn: async ({ pageParam = 0 }) => {
 		const data = await getWorkersDetailByPage({ inOrder, year, month, workerName, pageParam });

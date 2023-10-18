@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Portal } from '..';
-import { close, getModals } from '../../store/modalSlice';
 import { useAppDispatch, useAppSelector } from '../../store/store';
+import { close, getModals } from '../../store/modalSlice';
 
 const Modal = () => {
 	const modals = useAppSelector(getModals);

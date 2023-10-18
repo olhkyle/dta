@@ -8,8 +8,8 @@ import { Details, Home, NotFound, OverView, Print, Register, Search, SignIn, Wor
 import { Layout, RouteError } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
+import { getWorkersDetailLoader, getWorkersOverviewLoader } from './loaders';
 import routes from './constants/routes';
-import { getWorkersDetailLoader, getWorkersLoader } from './loaders';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -36,7 +36,7 @@ const router = createBrowserRouter([
 			},
 			{
 				path: routes.OVERVIEW,
-				loader: getWorkersLoader(queryClient),
+				loader: getWorkersOverviewLoader(queryClient),
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<OverView />} />,
 			},
 			{

@@ -1,6 +1,9 @@
+import { BaseSyntheticEvent } from 'react';
 import { z } from 'zod';
 
 export type RegisterSchema = z.infer<typeof registerSchema>;
+
+export type SubmitHandler<T> = (data: T, event?: BaseSyntheticEvent) => void | Promise<void>;
 
 export const registerSchema = z.object({
 	workerName: z

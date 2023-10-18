@@ -2,7 +2,7 @@ import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { useDebounce } from '../hooks';
 import { Badge, CustomSelect, EmptyIndicator, Flex, Loading, SearchInput, SegmentedControl } from '../components';
-import { useGetWorkersQuery } from '../hooks/queries';
+import { useGetWorkersOverviewQuery } from '../hooks/queries';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 import { control, controls } from '../constants/sortControls';
@@ -13,16 +13,16 @@ const OverView = () => {
 
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(monthOfToday);
-	const [currentPosition, setCurrentPosition] = useState(controls[0]);
+	const [currentSort, setCurrentSort] = useState(controls[0]);
 
-	const data = useGetWorkersQuery({ inOrder: control[currentPosition], year, month, workerName });
+	const data = useGetWorkersOverviewQuery({ inOrder: control[currentSort], year, month, workerName });
 
 	return (
 		<>
 			<SearchInput value={inputValue} setValue={setInputValue} />
 			<SearchFilters>
 				<Flex margin="2rem 0" gap="1rem">
-					<SegmentedControl data={controls} value={currentPosition} setValue={setCurrentPosition} />
+					<SegmentedControl data={controls} value={currentSort} setValue={setCurrentSort} />
 					<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
 					<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
 				</Flex>

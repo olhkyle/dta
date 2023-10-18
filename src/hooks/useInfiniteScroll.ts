@@ -15,6 +15,9 @@ const useInfinityScroll = (
 		});
 
 		observer.observe(ref.current as Element);
+		return () => {
+			observer.disconnect();
+		};
 	}, []);
 
 	return ref;

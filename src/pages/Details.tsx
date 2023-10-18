@@ -5,16 +5,26 @@ import { BsTrash } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { useDebounce, useInfiniteScroll, useGetWorkersDetailInfiniteQuery } from '../hooks';
 import { sortByNameAndWorkedDate } from '../queries/workerQuery';
-import { Badge, Button, CustomSelect, EmptyIndicator, Flex, HighlightText, Loading, SearchInput, SegmentedControl } from '../components';
-import { monthOfToday, months, yearOfToday, years } from '../constants/day';
-import { control, controls } from '../constants/sortControls';
-import { formatCurrencyUnit } from '../utils/currencyUnit';
+import {
+	Badge,
+	Button,
+	CustomSelect,
+	EmptyIndicator,
+	Flex,
+	HighlightText,
+	Loading,
+	SearchInput,
+	SegmentedControl,
+	DetailModal,
+} from '../components';
+import routes from '../constants/routes';
+import { WorkerWithId } from '../service/workData';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { open } from '../store/modalSlice';
-import { DetailModal } from '../components/detail';
-import { WorkerWithId } from '../service/workData';
-import routes from '../constants/routes';
+import { formatCurrencyUnit } from '../utils/currencyUnit';
+import { control, controls } from '../constants/sortControls';
+import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 
 const Details = () => {
 	const [inputValue, setInputValue] = useState('');
@@ -38,10 +48,8 @@ const Details = () => {
 	});
 
 	const ref = useInfiniteScroll(fetchNextPage);
-
-	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
-
 	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? []);
+	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
 	return (
 		<>

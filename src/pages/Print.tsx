@@ -3,9 +3,9 @@ import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import ReactToPrint from 'react-to-print';
+import { Button, Detail, Flex, HighlightText, Overview } from '../components';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
-import { Button, Detail, Flex, HighlightText, Overview } from '../components';
 import { useGoBack } from '../hooks';
 import { control } from '../constants/sortControls';
 
@@ -16,10 +16,9 @@ const Print = () => {
 
 	const goBack = useGoBack();
 	const isAdmin = useAppSelector(getIsAdmin);
+	const printRef = useRef(null);
 
 	const query = { inOrder: control['오래된 순'], year, month, workerName: '' };
-
-	const printRef = useRef(null);
 
 	return (
 		<Container>

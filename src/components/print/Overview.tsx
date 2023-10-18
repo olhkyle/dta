@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useGetWorkersQuery } from '../../hooks/queries';
+import { useGetWorkersOverviewQuery } from '../../hooks/queries';
 import { WorkerQuery } from '../../queries/workerQuery';
 import { useLocation } from 'react-router-dom';
 import { formatCurrencyUnit } from '../../utils/currencyUnit';
@@ -15,7 +15,7 @@ const Overview = ({ query }: OverviewProps) => {
 		state: { year, month },
 	} = useLocation();
 
-	const workersOverview = useGetWorkersQuery(query);
+	const workersOverview = useGetWorkersOverviewQuery(query);
 
 	const workersOverviewForPrint =
 		(workersOverview?.workers.length ?? 0) <= OVERVIEW_DIVISOR

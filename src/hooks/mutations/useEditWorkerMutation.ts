@@ -1,6 +1,6 @@
 import { useGenericMutation } from '.';
-import { edit } from '../../constants/mutateWorker';
 import { WorkerWithId, editWorker } from '../../service/workData';
+import { edit } from '../../constants/mutateWorker';
 
 const useEditWorkerMutation = (id: string) => {
 	const queryKey = ['workersDetail', id];

@@ -1,6 +1,6 @@
 import { useGenericMutation } from '.';
-import { remove } from '../../constants/mutateWorker';
 import { removeWorker } from '../../service/workData';
+import { remove } from '../../constants/mutateWorker';
 
 const useRemoveWorkerMutation = (id: string) => {
 	const queryKey = ['workersDetail', id];

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
 import { useGetWorkersDetailQuery } from '../../hooks/queries';
 import { WorkerQuery, WorkersDetailBySort } from '../../queries/workerQuery';
-import { getIsAdmin } from '../../store/userSlice';
 import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 import { formatCurrencyUnit } from '../../utils/currencyUnit';
 
 interface DetailProps {

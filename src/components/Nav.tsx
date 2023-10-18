@@ -2,15 +2,12 @@ import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
 import { RiMenuFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
-import routes from '../constants/routes';
-import { Flex, NavLink, ThemeButton } from './common';
-import { SideNav } from '.';
+import { useScrollTopEffect, useSetUser, useSideNavActive } from '../hooks';
+import { Flex, NavLink, ThemeButton, SideNav, UserProfile } from '.';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin, getUser } from '../store/userSlice';
 import { logOut } from '../service/auth';
-import { UserProfile } from './auth';
-import { useSetUser, useSideNavActive } from '../hooks';
-import { useEffect } from 'react';
+import routes from '../constants/routes';
 
 const Nav = () => {
 	const navigate = useNavigate();
@@ -19,6 +16,7 @@ const Nav = () => {
 		active,
 		actions: { toggle, close },
 	} = useSideNavActive();
+
 	const username = useAppSelector(getUser);
 	const isAdmin = useAppSelector(getIsAdmin);
 	const { setLogoutUser } = useSetUser();
@@ -36,9 +34,7 @@ const Nav = () => {
 		}
 	};
 
-	useEffect(() => {
-		window.scrollTo({ top: 0 });
-	}, [active]);
+	useScrollTopEffect(active);
 
 	return (
 		<>
@@ -48,8 +44,8 @@ const Nav = () => {
 				</Logo>
 				<NavLinkContainer>
 					<Flex justifyContent="space-between" gap="0.25rem">
-						<Navigation to={routes.OVERVIEW}>명세 개요</Navigation>
-						<Navigation to={routes.DETAILS}>월별 세부 명세</Navigation>
+						<Navigation to={routes.OVERVIEW}>월별 개요</Navigation>
+						<Navigation to={routes.DETAILS}>월별 상세</Navigation>
 						{isAdmin && <Navigation to={routes.SEARCH_WORKERS}>일용직 검색</Navigation>}
 						<Navigation to={routes.REGISTER}>일용직 등록</Navigation>
 						{username ? <UserProfile name={username} isAdmin={isAdmin} onLogout={handleLogout} /> : <Login to={routes.LOGIN}>로그인</Login>}

@@ -1,14 +1,14 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { SigninSchema, signInSchema } from './schema';
-import { Button, Flex, Input, Spacer, Text } from '..';
 import { signIn } from '../../service/auth';
 import { useSetUser } from '../../hooks';
-import { useNavigate } from 'react-router-dom';
+import { Button, Flex, Input, Spacer, Text } from '..';
 import routes from '../../constants/routes';
 
 const SignInForm = () => {
@@ -20,8 +20,8 @@ const SignInForm = () => {
 		setFocus,
 	} = useForm<SigninSchema>({ resolver: zodResolver(signInSchema), shouldFocusError: true });
 
-	const { setCurrentUser } = useSetUser();
 	const navigate = useNavigate();
+	const { setCurrentUser } = useSetUser();
 
 	const onSubmit = async (data: SigninSchema) => {
 		try {

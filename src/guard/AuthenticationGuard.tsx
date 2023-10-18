@@ -1,10 +1,10 @@
 import { ReactNode, Suspense, useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { auth } from '../service/firebase';
+import { Loading, Skeleton } from '../components';
 import { useSetUser } from '../hooks';
 import routes from '../constants/routes';
 import { Route } from '../constants/routes';
-import { Loading, Skeleton } from '../components';
 
 interface AuthenticationGuardProps {
 	redirectTo: Route<typeof routes>;

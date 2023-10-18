@@ -1,21 +1,19 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Input, Text, Button, NativeSelect, Flex, DatePicker, Loading } from '../../components';
-import { toast } from 'react-toastify';
 import { MdClose } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { RegisterSchema, registerSchema } from '../../components/register/schema';
+import { toast } from 'react-toastify';
+import { Input, Text, Button, NativeSelect, Flex, DatePicker, Loading } from '../../components';
+import { RegisterSchema, registerSchema, SubmitHandler } from '../../components/register/schema';
 import { WorkerWithId } from '../../service/workData';
-import { useOverlayFixed } from '../../hooks';
-import { SubmitHandler } from '../register/RegisterForm';
-import { useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks/mutations';
-import { unformatCurrencyUnit } from '../../utils/currencyUnit';
-import { QueryRefetch } from '../../store/modalSlice';
-import sleep from '../../utils/sleep';
-import { useNavigate } from 'react-router-dom';
+import { useOverlayFixed, useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks';
 import { useAppSelector } from '../../store/store';
+import { QueryRefetch } from '../../store/modalSlice';
 import { getIsAdmin } from '../../store/userSlice';
+import { unformatCurrencyUnit } from '../../utils/currencyUnit';
+import sleep from '../../utils/sleep';
 
 interface DetailModalProps {
 	data: WorkerWithId;
@@ -54,29 +52,8 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 	});
 
 	const [isDeleteProcessLoading, setDeleteProcessLoading] = useState(false);
-
-	const isAdmin = useAppSelector(getIsAdmin);
-
-	const isAllFieldsDisabled: boolean = Object.values(disabled).every(item => item === false);
-
-	const toggleAllFieldsDisabled = () => {
-		if (!isAdmin) {
-			toast.warn('Update Feature is Admin Only');
-			return;
-		}
-
-		const updatedState: DisabledState = {};
-
-		const disabledKeys = Object.keys(disabled);
-
-		for (const key of disabledKeys) {
-			updatedState[key] = !disabled[key];
-		}
-
-		setDisabled(updatedState);
-	};
-
 	const navigate = useNavigate();
+	const isAdmin = useAppSelector(getIsAdmin);
 
 	useOverlayFixed(isOpen);
 
@@ -99,6 +76,25 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 
 	const editMutate = useEditWorkerMutation(worker.id);
 	const removeMutate = useRemoveWorkerMutation(worker.id);
+
+	const isAllFieldsDisabled: boolean = Object.values(disabled).every(item => item === false);
+
+	const toggleAllFieldsDisabled = () => {
+		if (!isAdmin) {
+			toast.warn('Update Feature is Admin Only');
+			return;
+		}
+
+		const updatedState: DisabledState = {};
+
+		const disabledKeys = Object.keys(disabled);
+
+		for (const key of disabledKeys) {
+			updatedState[key] = !disabled[key];
+		}
+
+		setDisabled(updatedState);
+	};
 
 	const handleRemoveWorkerButton = async (loading = true) => {
 		if (!isAdmin) {

@@ -1,5 +1,5 @@
-import { deActivate, setIsActive } from '../store/sideNavSlice';
 import { useAppDispatch, useAppSelector } from '../store/store';
+import { deActivate, setIsActive } from '../store/sideNavSlice';
 
 const useSideNavActive = () => {
 	const dispatch = useAppDispatch();

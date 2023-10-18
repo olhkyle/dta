@@ -3,7 +3,7 @@ interface CircleProps {
 	bgColor: string;
 }
 
-const Circle = ({ bgColor, size }: CircleProps) => {
+const Circle = ({ size, bgColor }: CircleProps) => {
 	return <div css={{ width: `${size}px`, height: `${size}px`, backgroundColor: bgColor, borderRadius: '9999px' }} />;
 };
 
