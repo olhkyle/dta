@@ -5,7 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
 import { store } from './store/store';
 import { Details, NotFound, OverView, Print, Register, SignIn } from './pages';
-import { Layout, ErrorBoundary, Loading } from './components';
+import { Layout, ErrorBoundary } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import { getWorkersDetailLoader, getWorkersOverviewLoader } from './loaders';
@@ -74,7 +74,7 @@ const App = () => {
 		<QueryClientProvider client={queryClient}>
 			<ReduxProvider store={store}>
 				<Global styles={GlobalStyle} />
-				<RouterProvider router={router} fallbackElement={<Loading margin="0" />} />
+				<RouterProvider router={router} />
 				<ReactQueryDevtools initialIsOpen={false} />
 			</ReduxProvider>
 		</QueryClientProvider>
