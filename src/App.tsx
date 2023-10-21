@@ -4,13 +4,12 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
 import { store } from './store/store';
-import { Details, NotFound, OverView, Print, Register, SignIn } from './pages';
+import { Details, Home, NotFound, OverView, Print, Register, Search, SignIn, Worker } from './pages';
 import { Layout, ErrorBoundary } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import { getWorkersDetailLoader, getWorkersOverviewLoader } from './loaders';
 import routes from './constants/routes';
-import loadLazy from './utils/loadLazy';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -29,7 +28,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: loadLazy('Home'),
+				element: <Home />,
 			},
 			{
 				path: routes.REGISTER,
@@ -47,11 +46,11 @@ const router = createBrowserRouter([
 			},
 			{
 				path: routes.SEARCH_WORKERS,
-				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Search')} />,
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Search />} />,
 			},
 			{
 				path: routes.WORKER,
-				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Worker')} />,
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={<Worker />} />,
 			},
 			{
 				path: routes.LOGIN,
