@@ -5,7 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
 import { store } from './store/store';
 import { Details, Home, NotFound, OverView, Print, Register, Search, SignIn, Worker } from './pages';
-import { Layout, RouteError } from './components';
+import { Layout, ErrorBoundary } from './components';
 import GlobalStyle from './styles/GlobalStyle';
 import AuthenticationGuard from './guard/AuthenticationGuard';
 import { getWorkersDetailLoader, getWorkersOverviewLoader } from './loaders';
@@ -22,9 +22,9 @@ const queryClient = new QueryClient({
 
 const router = createBrowserRouter([
 	{
-		path: '/',
+		path: routes.HOME,
 		element: <Layout />,
-		errorElement: <RouteError />,
+		errorElement: <ErrorBoundary />,
 		children: [
 			{
 				index: true,

@@ -4,7 +4,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { BsTrash } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { useDebounce, useInfiniteScroll, useGetWorkersDetailInfiniteQuery } from '../hooks';
-import { sortByNameAndWorkedDate } from '../queries/workerQuery';
 import {
 	Badge,
 	Button,
@@ -18,7 +17,7 @@ import {
 	DetailModal,
 } from '../components';
 import routes from '../constants/routes';
-import { WorkerWithId } from '../service/workData';
+import { WorkerWithId, sortByNameAndWorkedDate } from '../service/workData';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { open } from '../store/modalSlice';
@@ -48,6 +47,7 @@ const Details = () => {
 	});
 
 	const ref = useInfiniteScroll(fetchNextPage);
+
 	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? []);
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
