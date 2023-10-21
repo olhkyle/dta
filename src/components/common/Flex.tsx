@@ -8,6 +8,7 @@ interface FlexProps extends HTMLAttributes<HTMLDivElement> {
 	margin?: string;
 	padding?: string;
 	width?: number;
+	height?: number;
 }
 
 const Flex = ({
@@ -18,6 +19,7 @@ const Flex = ({
 	margin = '0px',
 	padding = '0px',
 	width,
+	height,
 	...props
 }: FlexProps) => {
 	return (
@@ -31,6 +33,7 @@ const Flex = ({
 				padding,
 				gap,
 				width: `${width}%`,
+				height: `${height}vh`,
 			}}
 			{...props}
 		/>

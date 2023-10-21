@@ -15,7 +15,12 @@ const LoadingSvg = ({ type = 'lg', size = 70 }: LoadingSvgProps) => (
 		size={size}
 		xmlns="http://www.w3.org/2000/svg"
 		xmlnsXlink="http://www.w3.org/1999/xlink"
-		css={{ margin: 'auto', background: 'none', display: 'block', shapeRendering: 'auto' }}
+		css={{
+			margin: 'auto',
+			background: 'none',
+			display: 'block',
+			shapeRendering: 'auto',
+		}}
 		viewBox="0 0 100 100"
 		preserveAspectRatio="xMidYMid">
 		<circle cx="50" cy="50" fill="none" stroke="#46df8e" strokeWidth="7" r="35" strokeDasharray="164.93361431346415 56.97787143782138">
@@ -37,7 +42,7 @@ const Loading = ({ type = 'lg', size = 70, margin = '5rem 0' }: LoadingProps) =>
 			{type === 'sm' ? (
 				<LoadingSvg type={type} size={size} />
 			) : (
-				<Flex justifyContent="center" alignItems="center" margin={margin}>
+				<Flex justifyContent="center" alignItems="center" margin={margin} width={100} height={100}>
 					<LoadingSvg type={type} size={size} />
 				</Flex>
 			)}

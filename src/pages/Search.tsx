@@ -48,7 +48,7 @@ const Search = () => {
 	};
 
 	return (
-		<div>
+		<>
 			<SearchInput
 				value={workerName}
 				setValue={setWorkerName}
@@ -82,7 +82,7 @@ const Search = () => {
 				isDataFetched={isDataFetched}
 				isInputClean={isInputClean}
 			/>
-		</div>
+		</>
 	);
 };
 
