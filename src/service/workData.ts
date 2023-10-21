@@ -1,15 +1,56 @@
-import { addDoc, and, collection, deleteDoc, doc, getCountFromServer, getDocs, orderBy, query, updateDoc, where } from 'firebase/firestore';
+import { collection, query, where, doc, and, orderBy, getCountFromServer, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebase';
 import { paginationQuery, specifySnapshotIntoData } from './utils';
 import { Worker } from '../components/register/RegisterForm';
-import { WorkerQuery, WorkersPaginationQuery } from '../queries/workerQuery';
+import { WorkerQuery, WorkersPaginationQuery, WorkersQueryData } from '../queries/workerQuery';
 
 export interface WorkerWithId extends Worker {
 	id: string;
 }
 
+interface UniqueWorker extends WorkerWithId {
+	sumOfPayment: number | undefined;
+}
+
+type WorkersDetailBySort = ReturnType<typeof sortByNameAndWorkedDate>;
+
 const COLLECTION_NAME = 'people';
 const LIMIT_SIZE_PER_PAGE = 20;
+
+const addSumOfPaymentForEachWorker = (data: WorkersQueryData) =>
+	data.workers.reduce((uniqueWorkers, worker) => {
+		if (!checkExist(uniqueWorkers, worker.workerName)) {
+			uniqueWorkers.push({ ...worker, sumOfPayment: getSumOfPayment(data, worker.workerName) });
+		}
+		return uniqueWorkers;
+	}, [] as UniqueWorker[]);
+
+const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
+	data?.workers
+		.filter(({ workerName }) => workerName === targetName)
+		.map(({ payment }) => +payment)
+		.reduce((prev, curr) => prev + curr, 0);
+
+const checkExist = (workers: WorkerWithId[], targetName: string) => workers.find(({ workerName }) => workerName === targetName);
+
+const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
+	Object.values(
+		workers.reduce((acc, worker) => {
+			const { workerName } = worker;
+			if (!acc[workerName]) {
+				acc[workerName] = [];
+			}
+
+			acc[workerName].push(worker);
+			return acc;
+		}, {} as { [key: string]: WorkerWithId[] }),
+	)
+		.flatMap((groupedWorkers, pos) =>
+			groupedWorkers
+				.sort((prev, curr) => prev.workedDate - curr.workedDate)
+				.map((worker, idx) => ({ ...worker, position: pos, isFirstIdxOfArr: idx === 0 })),
+		)
+		.sort((prev, curr) => prev.workerName.toLowerCase().localeCompare(curr.workerName.toLowerCase()) && prev.position - curr.position);
 
 const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pageParam }: WorkersPaginationQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
@@ -49,7 +90,7 @@ const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pagePa
 const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
 
-	const qByMonth = (month: number) =>
+	const queryByMonth = (month: number) =>
 		query(
 			collectionRef,
 			and(
@@ -59,7 +100,7 @@ const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => 
 			orderBy('workedDate', inOrder),
 		);
 
-	const [dataSnapshot, countSnapshot] = await Promise.all([getDocs(qByMonth(month)), getCountFromServer(query(collectionRef))]);
+	const [dataSnapshot, countSnapshot] = await Promise.all([getDocs(queryByMonth(month)), getCountFromServer(query(collectionRef))]);
 
 	const workers =
 		workerName !== ''
@@ -69,6 +110,25 @@ const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => 
 	return {
 		workers,
 		totalLength: countSnapshot.data().count,
+	};
+};
+
+const getWorkersOverview = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
+	const data = await getWorkers({ inOrder, year, month, workerName });
+
+	return {
+		workers: addSumOfPaymentForEachWorker(data),
+		sumOfPayment: data?.workers.reduce((acc, worker) => (acc += +worker.payment), 0),
+	};
+};
+
+const getWorkersDetail = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
+	const data = await getWorkers({ inOrder, year, month, workerName });
+
+	return {
+		workers: sortByNameAndWorkedDate(data?.workers),
+		totalLength: data?.totalLength,
+		sumOfPayment: data?.workers.reduce((acc, worker) => (acc += +worker.payment), 0),
 	};
 };
 
@@ -97,4 +157,15 @@ const removeWorker = async ({ id }: { id: string }) => {
 	await deleteDoc(doc(db, COLLECTION_NAME, id));
 };
 
-export { getWorkersDetailByPage, getWorkers, getSpecificWorker, addWorker, editWorker, removeWorker };
+export type { WorkersDetailBySort };
+export {
+	getWorkersDetailByPage,
+	getWorkers,
+	getWorkersOverview,
+	getWorkersDetail,
+	getSpecificWorker,
+	addWorker,
+	editWorker,
+	removeWorker,
+	sortByNameAndWorkedDate,
+};
