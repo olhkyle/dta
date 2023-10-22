@@ -42,7 +42,7 @@ const Loading = ({ type = 'lg', size = 70, margin = '5rem 0' }: LoadingProps) =>
 			{type === 'sm' ? (
 				<LoadingSvg type={type} size={size} />
 			) : (
-				<Flex justifyContent="center" alignItems="center" margin={margin} width={100} height={100}>
+				<Flex justifyContent="center" alignItems="center" margin={margin} width={100}>
 					<LoadingSvg type={type} size={size} />
 				</Flex>
 			)}
