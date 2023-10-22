@@ -14,6 +14,8 @@ const RouteError = () => {
 				return <Navigate to={routes.LOGIN} replace={true} />;
 			case 'Error':
 				return <Navigate to={routes.HOME} replace={true} />;
+			default:
+				return <Navigate to={routes.LOGIN} replace={true} />;
 		}
 	}
 
