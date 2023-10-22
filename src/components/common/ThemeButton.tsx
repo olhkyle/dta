@@ -6,7 +6,7 @@ const ThemeButton = () => {
 	const [, toggleTheme] = useTheme();
 
 	return (
-		<Container onClick={toggleTheme}>
+		<Container onClick={toggleTheme} aria-label="theme-toggle-button">
 			<Switch />
 			<BtnText>
 				<BtnTextIcon>

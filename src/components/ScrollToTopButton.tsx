@@ -12,7 +12,7 @@ const ScrollToTopButton = ({ topPosToShow = 500 }: ScrollToTopButtonProps) => {
 	return (
 		<>
 			{yOffset >= topPosToShow && (
-				<Container type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+				<Container type="button" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} aria-label="scroll-top-button">
 					<RxArrowUp size="24" color="var(--text-color)" />
 				</Container>
 			)}

@@ -70,7 +70,8 @@ const Details = () => {
 							}
 
 							navigate(routes.PRINT, { state: { year, month } });
-						}}>
+						}}
+						aria-label="print-button">
 						인 쇄
 					</PrintButton>
 				</Flex>

@@ -26,6 +26,7 @@ const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonCli
 				onChange={e => setValue(e.currentTarget.value)}
 				onKeyDown={onKeyDown}
 				autoComplete="off"
+				aria-label="search-worker-input"
 			/>
 			{value.length > 0 && (
 				<RefreshButton

@@ -39,7 +39,7 @@ const Nav = () => {
 	return (
 		<>
 			<Container isAdmin={isAdmin}>
-				<Logo to={routes.HOME} onClick={close}>
+				<Logo to={routes.HOME} onClick={close} aria-label="logo">
 					<h1 className="underlined">D:T.A</h1>
 				</Logo>
 				<NavLinkContainer>
