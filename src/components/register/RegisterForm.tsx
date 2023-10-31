@@ -74,6 +74,11 @@ const RegisterForm = () => {
 			event.preventDefault();
 		}
 
+		if (!isAdmin) {
+			toast.warn('This Feature is Admin Only');
+			return;
+		}
+
 		const buttonId = ((event?.nativeEvent as any).submitter as HTMLElement)?.id as FormSubmitButtonId;
 
 		try {
@@ -104,7 +109,6 @@ const RegisterForm = () => {
 			toast.success('성공적으로 등록되었습니다.');
 		} catch (e) {
 			console.error(e);
-			console.log('here');
 			toast.error('등록에 문제가 발생하였습니다.');
 		}
 	};
