@@ -47,7 +47,7 @@ and organize related WebApp.
 ### 03 테스트 계정 / Test Account
 
 > email : test1234@test.com
-> 
+>
 > password : test@#$1234
 
 <br/>
@@ -60,4 +60,4 @@ and organize related WebApp.
 
 ### 05 Tech Stacks
 
-`React` `TypeScript` `React-Query` `Redux-Toolkit` `Zod` `React-Hook-Form` `Emotion` `Storybook` `d3.js` `Firebase`
+`React` `TypeScript` `React-Query` `Redux-Toolkit` `Zod` `React-Hook-Form` `Emotion` `Jest` `d3.js` `Firebase`
