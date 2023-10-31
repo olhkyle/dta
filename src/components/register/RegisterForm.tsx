@@ -15,6 +15,7 @@ import sleep from '../../utils/sleep';
 
 export interface Worker extends RegisterSchema {
 	workedDate: Date | any;
+	createdAt?: Date | any;
 }
 
 export type FormSubmitButtonId = 'register' | 'additionalRegister';
@@ -33,7 +34,7 @@ const RegisterForm = () => {
 	const navigate = useNavigate();
 	const isAdmin = useAppSelector(getIsAdmin);
 
-	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
+	const [selectedDay, setSelectedDay] = useState<Date | undefined>(new Date());
 	const [isFetching, setIsFetching] = useState<boolean>(false);
 
 	const findSpecificWorker = async () => {
@@ -83,6 +84,7 @@ const RegisterForm = () => {
 				workedDate: selectedDay ?? new Date(),
 				payment: unformatCurrencyUnit(data.payment),
 				remittance: unformatCurrencyUnit(data.remittance),
+				createdAt: new Date(),
 			});
 
 			if (buttonId === 'register') {
@@ -102,6 +104,7 @@ const RegisterForm = () => {
 			toast.success('성공적으로 등록되었습니다.');
 		} catch (e) {
 			console.error(e);
+			console.log('here');
 			toast.error('등록에 문제가 발생하였습니다.');
 		}
 	};

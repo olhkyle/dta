@@ -17,15 +17,23 @@ interface PaginationQuery {
 	pageParam: number;
 	searchCondition: QueryCompositeFilterConstraint;
 	orderCondition: QueryOrderByConstraint;
+	createdAtCondition: QueryOrderByConstraint;
 	limitSizePerPage: number;
 }
 
 export type ReturnTypeOfPaginationQuery = Awaited<ReturnType<typeof paginationQuery>>;
 
-const paginationQuery = async ({ collectionRef, pageParam, searchCondition, orderCondition, limitSizePerPage }: PaginationQuery) => {
+const paginationQuery = async ({
+	collectionRef,
+	pageParam,
+	searchCondition,
+	orderCondition,
+	createdAtCondition,
+	limitSizePerPage,
+}: PaginationQuery) => {
 	const q = pageParam
-		? query(collectionRef, searchCondition, orderCondition, startAfter(pageParam), limit(limitSizePerPage))
-		: query(collectionRef, searchCondition, orderCondition, limit(limitSizePerPage));
+		? query(collectionRef, searchCondition, orderCondition, createdAtCondition, startAfter(pageParam), limit(limitSizePerPage))
+		: query(collectionRef, searchCondition, orderCondition, createdAtCondition, limit(limitSizePerPage));
 
 	const data = await getDocs(q);
 	const snapshot = await getCountFromServer(query(collectionRef));
@@ -45,10 +53,12 @@ const specifySnapshotIntoData = (snapshot: QuerySnapshot<DocumentData, DocumentD
 			...specifiedData,
 			id: doc.id,
 			workedDate: formattedWorkedDate(specifiedData),
+			createdAt: formattedCreatedAt(specifiedData),
 		};
 	});
 };
 
 const formattedWorkedDate = (data: Worker) => data?.workedDate?.toDate();
+const formattedCreatedAt = (data: Worker) => data?.createdAt?.toDate();
 
 export { paginationQuery, specifySnapshotIntoData, formattedWorkedDate };

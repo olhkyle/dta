@@ -48,7 +48,7 @@ const Details = () => {
 
 	const ref = useInfiniteScroll(fetchNextPage);
 
-	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? []);
+	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], control[currentSort]);
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
 	return (

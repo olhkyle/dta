@@ -17,13 +17,15 @@ type WorkersDetailBySort = ReturnType<typeof sortByNameAndWorkedDate>;
 const COLLECTION_NAME = 'people';
 const LIMIT_SIZE_PER_PAGE = 20;
 
-const addSumOfPaymentForEachWorker = (data: WorkersQueryData) =>
-	data.workers.reduce((uniqueWorkers, worker) => {
-		if (!checkExist(uniqueWorkers, worker.workerName)) {
-			uniqueWorkers.push({ ...worker, sumOfPayment: getSumOfPayment(data, worker.workerName) });
-		}
-		return uniqueWorkers;
-	}, [] as UniqueWorker[]);
+const addSumOfPaymentForEachWorker = (data: WorkersQueryData, inOrder = 'asc') =>
+	data.workers
+		.reduce((uniqueWorkers, worker) => {
+			if (!checkExist(uniqueWorkers, worker.workerName)) {
+				uniqueWorkers.push({ ...worker, sumOfPayment: getSumOfPayment(data, worker.workerName) });
+			}
+			return uniqueWorkers;
+		}, [] as UniqueWorker[])
+		.sort((prev, curr) => (inOrder === 'asc' ? prev.createdAt - curr.createdAt : curr.createdAt - prev.createdAt));
 
 const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
 	data?.workers
@@ -33,9 +35,13 @@ const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
 
 const checkExist = (workers: WorkerWithId[], targetName: string) => workers.find(({ workerName }) => workerName === targetName);
 
-const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
-	Object.values(
-		workers.reduce((acc, worker) => {
+const sortByNameAndWorkedDate = (workers: WorkerWithId[], inOrder = 'asc') => {
+	const workersSortedByCreatedAt = workers.sort((prev, curr) =>
+		inOrder === 'asc' ? prev.createdAt - curr.createdAt : curr.createdAt - prev.createdAt,
+	);
+
+	return Object.values(
+		workersSortedByCreatedAt.reduce((acc, worker) => {
 			const { workerName } = worker;
 			if (!acc[workerName]) {
 				acc[workerName] = [];
@@ -44,13 +50,12 @@ const sortByNameAndWorkedDate = (workers: WorkerWithId[]) =>
 			acc[workerName].push(worker);
 			return acc;
 		}, {} as { [key: string]: WorkerWithId[] }),
-	)
-		.flatMap((groupedWorkers, pos) =>
-			groupedWorkers
-				.sort((prev, curr) => prev.workedDate - curr.workedDate)
-				.map((worker, idx) => ({ ...worker, position: pos, isFirstIdxOfArr: idx === 0 })),
-		)
-		.sort((prev, curr) => prev.workerName.toLowerCase().localeCompare(curr.workerName.toLowerCase()) && prev.position - curr.position);
+	).flatMap((groupedWorkers, pos) =>
+		groupedWorkers
+			.sort((prev, curr) => (inOrder === 'asc' ? prev.workedDate - curr.workedDate : curr.workedDate - prev.workedDate))
+			.map((worker, idx) => ({ ...worker, position: pos, isFirstIdxOfArr: idx === 0 })),
+	);
+};
 
 const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pageParam }: WorkersPaginationQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
@@ -62,8 +67,9 @@ const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pagePa
 		);
 
 	const orderCondition = orderBy('workedDate', inOrder);
+	const createdAtCondition = orderBy('createdAt', inOrder);
 
-	const q = query(collectionRef, searchConditionByMonth(month), orderCondition);
+	const q = query(collectionRef, searchConditionByMonth(month), orderCondition, createdAtCondition);
 
 	const [paginationData, dataSnapshot] = await Promise.all([
 		paginationQuery({
@@ -71,6 +77,7 @@ const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pagePa
 			pageParam,
 			searchCondition: searchConditionByMonth(month),
 			orderCondition,
+			createdAtCondition,
 			limitSizePerPage: LIMIT_SIZE_PER_PAGE,
 		}),
 		getDocs(q),
@@ -117,7 +124,7 @@ const getWorkersOverview = async ({ inOrder, year, month, workerName }: WorkerQu
 	const data = await getWorkers({ inOrder, year, month, workerName });
 
 	return {
-		workers: addSumOfPaymentForEachWorker(data),
+		workers: addSumOfPaymentForEachWorker(data, inOrder),
 		sumOfPayment: data?.workers.reduce((acc, worker) => (acc += +worker.payment), 0),
 	};
 };
@@ -126,7 +133,7 @@ const getWorkersDetail = async ({ inOrder, year, month, workerName }: WorkerQuer
 	const data = await getWorkers({ inOrder, year, month, workerName });
 
 	return {
-		workers: sortByNameAndWorkedDate(data?.workers),
+		workers: sortByNameAndWorkedDate(data?.workers, inOrder),
 		totalLength: data?.totalLength,
 		sumOfPayment: data?.workers.reduce((acc, worker) => (acc += +worker.payment), 0),
 	};
