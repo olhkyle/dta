@@ -12,10 +12,10 @@ const RouteError = () => {
 		switch (error instanceof Error && error.name) {
 			case 'InvalidAuthError':
 				return <Navigate to={routes.LOGIN} replace={true} />;
-			case 'Error':
-				return <Navigate to={routes.HOME} replace={true} />;
-			default:
+			case 'FirebaseError':
 				return <Navigate to={routes.LOGIN} replace={true} />;
+			default:
+				return <Navigate to={routes.HOME} replace={true} />;
 		}
 	}
 
