@@ -83,7 +83,7 @@ const Image3D = styled.div`
 	width: 270px;
 
 	@media screen and (min-width: 768px) {
-		width: 360px;
+		width: 330px;
 	}
 
 	div {
