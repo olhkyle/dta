@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Flex, Loading } from '.';
+import { Flex, Loading } from '../common';
 
 const Skeleton = () => {
 	return (

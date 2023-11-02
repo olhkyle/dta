@@ -4,6 +4,7 @@ export * from './detail';
 export * from './print';
 export * from './register';
 export * from './search';
+export * from './skeleton';
 
 export { default as Footer } from '../components/Footer';
 export { default as Layout } from '../components/Layout';
