@@ -9,6 +9,10 @@ export default defineConfig({
 			output: {
 				manualChunks(id: string) {
 					// Reducing the vendor chunk size
+					if (id.includes('babel')) {
+						return '@babel';
+					}
+
 					if (id.includes('tslib')) {
 						return '@tslib';
 					}
