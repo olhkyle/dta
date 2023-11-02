@@ -2,14 +2,14 @@ import styled from '@emotion/styled';
 import { Flex } from '.';
 
 interface LoadingProps {
-	type?: 'sm' | 'lg';
+	type?: 'sm' | 'md' | 'lg';
 	size?: number;
 	margin?: string;
 }
 
 type LoadingSvgProps = Omit<LoadingProps, 'margin'>;
 
-const LoadingSvg = ({ type = 'lg', size = 70 }: LoadingSvgProps) => (
+const LoadingSvg = ({ type = 'md', size = 70 }: LoadingSvgProps) => (
 	<Svg
 		type={type}
 		size={size}
@@ -36,11 +36,15 @@ const LoadingSvg = ({ type = 'lg', size = 70 }: LoadingSvgProps) => (
 	</Svg>
 );
 
-const Loading = ({ type = 'lg', size = 70, margin = '5rem 0' }: LoadingProps) => {
+const Loading = ({ type = 'md', size = 70, margin = '5rem 0' }: LoadingProps) => {
 	return (
 		<>
 			{type === 'sm' ? (
 				<LoadingSvg type={type} size={size} />
+			) : type === 'lg' ? (
+				<Flex margin="0 auto" width={100} height={100}>
+					<LoadingSvg type={type} size={size} />
+				</Flex>
 			) : (
 				<Flex justifyContent="center" alignItems="center" margin={margin}>
 					<LoadingSvg type={type} size={size} />

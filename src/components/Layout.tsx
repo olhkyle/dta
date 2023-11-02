@@ -1,7 +1,8 @@
+import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Footer, Main, Nav, ScrollToTopButton, Modal } from '.';
+import { Footer, Main, Nav, ScrollToTopButton, Modal, Loading } from '.';
 import { useScrollTopEffect } from '../hooks';
 
 const Layout = () => {
@@ -13,7 +14,9 @@ const Layout = () => {
 		<>
 			<Nav />
 			<Main>
-				<Outlet />
+				<Suspense fallback={<Loading type="lg" />}>
+					<Outlet />
+				</Suspense>
 			</Main>
 			<Footer />
 			<ScrollToTopButton topPosToShow={300} />

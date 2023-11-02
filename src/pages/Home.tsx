@@ -14,6 +14,7 @@ const Home = () => {
 				Document Tax Administration
 			</Subtitle>
 			<Image3D>
+				<source srcSet={'/3d_low.webp'} type="image/webp" />
 				<img src={'/3d_low.png'} alt="3d image" placeholder="blur" />
 			</Image3D>
 
@@ -75,7 +76,7 @@ const Subtitle = styled(Text)`
 	}
 `;
 
-const Image3D = styled.div`
+const Image3D = styled.picture`
 	display: flex;
 	justify-content: center;
 	align-items: center;

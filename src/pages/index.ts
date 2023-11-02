@@ -1,9 +1,0 @@
-export { default as Home } from './Home';
-export { default as Register } from './Register';
-export { default as OverView } from './OverView';
-export { default as Details } from './Details';
-export { default as Worker } from './Worker';
-export { default as SignIn } from './SignIn';
-export { default as Search } from './Search';
-export { default as Print } from './Print';
-export { default as NotFound } from './NotFound';
