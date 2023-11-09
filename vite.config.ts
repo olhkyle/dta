@@ -32,6 +32,10 @@ export default defineConfig({
 					if (id.includes('redux-thunk')) {
 						return '@redux-thunk';
 					}
+
+					if (id.includes('framer-motion')) {
+						return '@framer-motion';
+					}
 				},
 			},
 		},
