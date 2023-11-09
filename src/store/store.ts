@@ -1,5 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { themeReducer, sideNavReducer, userReducer, ModalReducer } from '.';
+import { themeReducer, sideNavReducer, userReducer, modalReducer } from '.';
 import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
 
 export const store = configureStore({
@@ -7,7 +7,7 @@ export const store = configureStore({
 		theme: themeReducer,
 		sideNav: sideNavReducer,
 		user: userReducer,
-		modal: ModalReducer,
+		modal: modalReducer,
 	},
 	middleware: getDefaultMiddleware =>
 		getDefaultMiddleware({
