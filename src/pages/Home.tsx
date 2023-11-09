@@ -14,8 +14,8 @@ const Home = () => {
 				Document Tax Administration
 			</Subtitle>
 			<Image3D>
-				<source srcSet={'/3d_low.webp'} type="image/webp" />
-				<img src={'/3d_low.png'} alt="3d image" placeholder="blur" />
+				<source srcSet={'/3d_low.webp'} type="image/webp" media={'(min-width: 1024px)'} />
+				<img src={'/3d_low.png'} sizes="(max-width: 768px) 270px, 330px" alt="3d image" placeholder="blur" />
 			</Image3D>
 
 			{!isAdmin && (
