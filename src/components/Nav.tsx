@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { useNavigate } from 'react-router-dom';
-import { RiMenuFill } from 'react-icons/ri';
+import { RiCloseFill, RiMenuFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 import { useScrollTopEffect, useSetUser, useSideNavActive } from '../hooks';
 import { Flex, NavLink, ThemeButton, SideNav, UserProfile } from '.';
@@ -53,7 +53,7 @@ const Nav = () => {
 					<ThemeButton />
 				</NavLinkContainer>
 				<NavToggleButton onClick={toggle}>
-					<RiMenuFill size="32" color="var(--text-color)" />
+					{active ? <RiCloseFill size="35" color="var(--text-color)" /> : <RiMenuFill size="32" color="var(--text-color)" />}
 				</NavToggleButton>
 			</Container>
 			{active && <SideNav onLogout={handleLogout} />}
