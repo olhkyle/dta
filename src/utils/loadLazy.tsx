@@ -3,11 +3,7 @@ import { lazy } from 'react';
 const loadLazy = (path: string) => {
 	const Component = lazy(() => import(`../pages/${path}.tsx`));
 
-	return (
-		// <Suspense fallback={<Loading />}>
-		<Component />
-		// </Suspense>
-	);
+	return <Component />;
 };
 
 export default loadLazy;
