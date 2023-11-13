@@ -21,7 +21,7 @@ const StyledLink = styled(Link)`
 	font-size: 15px;
 	font-weight: 600;
 	line-height: 1;
-	border-radius: 9999px;
+	border-radius: var(--radius);
 	text-align: center;
 	word-break: keep-all;
 

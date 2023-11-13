@@ -127,7 +127,7 @@ const TextField = styled.input<{ width: number; error: string; disabled: boolean
 	font-size: 16px;
 	line-height: 24px;
 	border: none;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
 	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
 	box-shadow: ${({ error }) => (error ? 'inset 0 0 0 1px var(--color-green-50)' : 'inset 0 0 0 1px var(--outline-color)')};

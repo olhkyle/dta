@@ -107,7 +107,7 @@ const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
 	color: var(--text-color);
 	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
 	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
-	border-radius: 8px;
+	border-radius: var(--radius);
 	cursor: pointer;
 	-webkit-appearance: none;
 
@@ -150,7 +150,7 @@ const DayDescription = styled.div`
 		font-weight: 600;
 		color: var(--color-white);
 		background-color: var(--color-green-300);
-		border-radius: 8px;
+		border-radius: var(--radius);
 	}
 `;
 

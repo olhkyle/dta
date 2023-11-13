@@ -104,7 +104,7 @@ const Description = styled(Flex)`
 	padding: 2rem 1.5rem;
 	color: var(--bg-color);
 	border: 1px solid var(--text-color);
-	border-radius: 8px;
+	border-radius: var(--radius);
 	outline: 3px solid var(--outline-color);
 	outline-offset: 2px;
 

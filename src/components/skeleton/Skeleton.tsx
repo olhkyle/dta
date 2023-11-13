@@ -46,7 +46,7 @@ const Input = styled.div`
 	width: 300px;
 	height: 60px;
 	border: none;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	background-color: var(--outline-color);
 	outline: none;
 	overflow: hidden;

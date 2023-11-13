@@ -120,7 +120,7 @@ const SearchButton = styled(Button)`
 	display: inline-flex;
 	align-items: center;
 	padding: 0.5rem 1rem;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	font-size: 27px;
 
 	@media screen and (min-width: 640px) {

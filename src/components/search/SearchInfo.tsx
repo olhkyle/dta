@@ -64,7 +64,7 @@ const CustomFlex = styled(Flex)`
 	padding: 1rem;
 	width: 330px;
 	border: 1px solid var(--outline-color);
-	border-radius: 8px;
+	border-radius: var(--radius);
 
 	@media screen and (min-width: 640px) {
 		width: 400px;
@@ -83,7 +83,7 @@ const SearchResult = styled.div<{ isDataFetched: boolean; isInputClean: boolean 
 	color: ${({ isDataFetched }) => (isDataFetched ? 'var(--text-color)' : 'var(--color-gray-600)')};
 	border: ${({ isDataFetched, isInputClean }) =>
 		isInputClean ? '1px dashed var(--text-color)' : isDataFetched ? '1px solid var(--text-color)' : '1px dashed var(--text-color)'};
-	border-radius: 8px;
+	border-radius: var(--radius);
 	outline: ${({ isDataFetched, isInputClean }) =>
 		isInputClean ? '1px solid var(--outline-color)' : isDataFetched ? '1px solid var(--color-green-50)' : 'none'};
 	outline-offset: 2px;
@@ -104,7 +104,7 @@ const NoResult = styled.div`
 	width: 100%;
 	font-size: 16px;
 	border: 1px solid var(--outline-color);
-	border-radius: 8px;
+	border-radius: var(--radius);
 `;
 
 const RecentSearchList = styled.ul`

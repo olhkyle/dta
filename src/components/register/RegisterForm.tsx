@@ -260,7 +260,7 @@ const CheckExistButton = styled.button`
 	gap: 0.1rem;
 	align-items: center;
 	padding: 0.3rem 0.6rem;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	color: var(--color-white);
 	background-color: var(--color-orange-100);
 	font-weight: 500;

@@ -81,7 +81,7 @@ const SelectField = styled.select<{ width: number; error: string; disabled: bool
 	font-size: 16px;
 	line-height: 24px;
 	border: none;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
 	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
 	outline: none;

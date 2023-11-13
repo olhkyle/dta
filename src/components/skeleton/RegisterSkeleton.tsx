@@ -38,7 +38,7 @@ const SkeletonText = styled.div`
 	width: 300px;
 	height: 50px;
 	border: none;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	background-color: var(--outline-color);
 
 	@media screen and (min-width: 640px) {
@@ -55,7 +55,7 @@ const SkeletonInput = styled.div`
 		width: 300px;
 		height: 60px;
 		border: none;
-		border-radius: 8px;
+		border-radius: var(--radius);
 		background-color: var(--outline-color);
 
 		@media screen and (min-width: 640px) {
