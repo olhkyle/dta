@@ -1,4 +1,4 @@
-# 🏢 D:T.A(Document Tax Administration)
+# 🏢 D\*T.A(Document Tax Administration)
 
 ### 01 프로젝트 배경 / Background
 
@@ -42,6 +42,8 @@ and organize related WebApp.
    each day's work and store them in the DB.
 3. Visualize **per month** based on data such as how many day laborers worked, how much wages were paid, etc.
    - `chart.js` is utilized.
+   - In the Monthly Overview, and within the route for Laborer Detailed View, you can view charts based on the relevant data for each
+     Laborer.
 4. To handle **Taxation** related tasks, configure the function so that the printout that was previously exported from Excel or Hangul can
    be **printed** from the web app. configure the function.
 
