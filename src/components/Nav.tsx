@@ -40,7 +40,7 @@ const Nav = () => {
 		<>
 			<Container isAdmin={isAdmin}>
 				<Logo to={routes.HOME} onClick={close} aria-label="logo">
-					<h1 className="underlined">D:T.A</h1>
+					<h1 className="underlined">D*T.A</h1>
 				</Logo>
 				<NavLinkContainer>
 					<Flex justifyContent="space-between" gap="0.25rem">
@@ -77,7 +77,7 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 	z-index: 9900;
 
 	@media screen and (min-width: 768px) {
-		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 4.5fr' : '1fr 2.5fr')};
+		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 4fr' : '1fr 2.5fr')};
 	}
 
 	@media screen and (min-width: 1024px) {
@@ -93,10 +93,10 @@ const Logo = styled(NavLink)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	width: 100px;
+	width: 90px;
 
 	h1 {
-		font-size: 36px;
+		font-size: 28px;
 		font-weight: 900;
 	}
 `;
@@ -116,6 +116,7 @@ const NavLinkContainer = styled.div`
 const Navigation = styled(NavLink)`
 	&:hover {
 		color: var(--btn-hover-color);
+		background-color: var(--option-hover-bg-color);
 		transition: all 0.3s ease-in-out 0.15s;
 	}
 `;
