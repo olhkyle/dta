@@ -1,11 +1,15 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
-import { useDebounce } from '../hooks';
-import { Badge, CustomSelect, EmptyIndicator, Flex, Loading, SearchInput, SegmentedControl } from '../components';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { useDebounce, useMediaQuery, useTheme } from '../hooks';
+import { Badge, CustomSelect, EmptyIndicator, Flex, HighlightText, Loading, SearchInput, SegmentedControl } from '../components';
 import { useGetWorkersOverviewQuery } from '../hooks/queries';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
-import { control, controls } from '../constants/sortControls';
+import { ControlKeys, control, controls } from '../constants/sortControls';
+
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const OverView = () => {
 	const [inputValue, setInputValue] = useState('');
@@ -13,31 +17,84 @@ const OverView = () => {
 
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(monthOfToday);
-	const [currentSort, setCurrentSort] = useState(controls[0]);
+	const [currentSort, setCurrentSort] = useState('오래된 순');
+	const [currentDisplayType, setCurrentDisplayType] = useState('목록');
 
-	const data = useGetWorkersOverviewQuery({ inOrder: control[currentSort], year, month, workerName });
+	const [theme] = useTheme();
+	const isTabletScreenSize = useMediaQuery('(max-width: 768px');
+	const isMobileScreenSize = useMediaQuery('(max-width: 480px');
+
+	const data = useGetWorkersOverviewQuery({ inOrder: control[currentSort as ControlKeys], year, month, workerName });
+
+	const chartOptions = {
+		responsive: true,
+		spanGaps: true,
+		plugins: {
+			legend: {
+				display: false,
+				labels: {
+					font: {
+						family: "'Noto Sans KR', 'serif'",
+						lineHeight: 1,
+					},
+				},
+			},
+			title: {
+				display: true,
+				text: `${month}월 일용직 [원 / ₩]`,
+			},
+		},
+	};
+
+	const chartData = {
+		labels: data?.workers.map(worker => worker.workerName),
+		datasets: [
+			{
+				type: 'bar' as const,
+				label: `-`,
+				barPercentage: 0.75,
+				data: data?.workers.map(worker => worker.sumOfPayment),
+				backgroundColor: theme === 'dark' ? 'rgb(255,255,255)' : 'rgb(0,0,0)',
+				borderColor: theme === 'dark' ? 'rgba(240, 240, 240, 0.4)' : 'rgba(240, 240, 240, 0.196)',
+				borderWidth: 1,
+				borderRadius: 3,
+				datalabels: {
+					anchor: 'start' as const,
+					align: 'end' as const,
+					font: {
+						weight: 'bold' as const,
+						size: 20,
+					},
+				},
+			},
+		],
+	};
 
 	return (
 		<>
 			<SearchInput value={inputValue} setValue={setInputValue} />
-			<SearchFilters>
-				<Flex margin="2rem 0" gap="1rem">
-					<SegmentedControl data={controls} value={currentSort} setValue={setCurrentSort} />
-					<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
-					<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
-				</Flex>
-				<Flex justifyContent="flex-end" margin="1rem 0">
-					<Badge label="총 합계" bgColor="var(--text-color)">
-						{formatCurrencyUnit(data?.sumOfPayment)}
-					</Badge>
-				</Flex>
-			</SearchFilters>
+			<CustomFlex margin="2rem 0" gap="1rem">
+				<SegmentedControl data={['목록', '차트']} value={currentDisplayType} setValue={setCurrentDisplayType} />
+				<SearchFilters>
+					<Flex gap="1rem">
+						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentSort} />
+						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
+						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
+					</Flex>
+					<Flex justifyContent="flex-end" margin="1rem 0">
+						<Badge label="총 합계" bgColor="var(--text-color)">
+							{formatCurrencyUnit(data?.sumOfPayment)}
+						</Badge>
+					</Flex>
+				</SearchFilters>
+			</CustomFlex>
+
 			<Suspense fallback={<Loading />}>
 				{data?.workers.length === 0 ? (
 					<EmptyIndicator>
 						<p>해당 일용직이 없습니다 🗑️</p>
 					</EmptyIndicator>
-				) : (
+				) : currentDisplayType === '목록' ? (
 					<Table>
 						<thead>
 							<tr>
@@ -60,16 +117,36 @@ const OverView = () => {
 							))}
 						</tbody>
 					</Table>
+				) : (
+					<Flex margin="3rem 0 0" direction="column">
+						<Bar data={chartData} options={chartOptions} />
+						<Flex justifyContent="flex-end" margin="2rem 0">
+							{isTabletScreenSize && (
+								<HighlightText color="var(--bg-color)" bgColor="var(--text-color)" fontSize={isMobileScreenSize ? '13px' : '16px'}>
+									💡 현재 화면 사이즈에서는 차트의 정확한 데이터를 파악하기 어렵습니다
+								</HighlightText>
+							)}
+						</Flex>
+					</Flex>
 				)}
 			</Suspense>
 		</>
 	);
 };
 
+const CustomFlex = styled(Flex)`
+	@media screen and (max-width: 1024px) {
+		flex-direction: column;
+		align-items: flex-start;
+	}
+`;
+
 const SearchFilters = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	gap: 1rem;
+	width: 100%;
 
 	@media screen and (min-width: 640px) {
 		flex-direction: row;

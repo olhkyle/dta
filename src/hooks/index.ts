@@ -12,3 +12,4 @@ export { default as useDebounce } from './useDebounce';
 export { default as useGoBack } from './useGoBack';
 export { default as useOverlayFixed } from './useOverlayFixed';
 export { default as useInfiniteScroll } from './useInfiniteScroll';
+export { default as useMediaQuery } from './useMediaQuery';

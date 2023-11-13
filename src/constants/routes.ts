@@ -4,7 +4,7 @@ const routes = {
 	OVERVIEW: '/overview',
 	DETAILS: '/details',
 	SEARCH_WORKERS: '/search',
-	WORKER: '/worker/:workerName',
+	WORKER: '/worker/:id',
 	REGISTER: '/register',
 	PRINT: '/print',
 } as const;

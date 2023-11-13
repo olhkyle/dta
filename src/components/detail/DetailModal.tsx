@@ -152,7 +152,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 							type="button"
 							onClick={() => {
 								onClose();
-								navigate(`/worker/${worker.id}`);
+								navigate(`/worker/${worker.id}`, { state: { worker } });
 							}}>
 							일용직 상세보기
 						</ViewWorkerDetailButton>
@@ -305,16 +305,16 @@ const Container = styled.div`
 	left: 50%;
 	padding: 2rem;
 	width: 100vw;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
 	border: 1px solid var(--outline-color);
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 	z-index: 9999;
 
-	@media screen and (min-width: 640px) {
+	/* @media screen and (min-width: 640px) {
 		width: 500px;
-	}
+	} */
 
 	@media screen and (min-width: 720px) {
 		width: 600px;
@@ -408,7 +408,7 @@ const Confidential = styled.div<{ width: number }>`
 	font-weight: 500;
 	line-height: 24px;
 	border: none;
-	border-radius: 8px;
+	border-radius: var(--radius);
 	background-color: var(--outline-color);
 	backdrop-filter: blur(4px);
 	color: var(--color-gray-500);
