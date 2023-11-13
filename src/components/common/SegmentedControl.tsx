@@ -1,19 +1,32 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, ReactNode, SetStateAction } from 'react';
 import styled from '@emotion/styled';
-import { ControlKeys } from '../../constants/sortControls';
+import { RiLineChartFill } from 'react-icons/ri';
+import { RxTable } from 'react-icons/rx';
+import { useMediaQuery } from '../../hooks';
 
 interface SegmentedControlProps {
-	data: ControlKeys[];
-	value: string;
-	setValue: Dispatch<SetStateAction<ControlKeys>>;
+	data: string[];
+	value: string | ReactNode;
+	setValue: Dispatch<SetStateAction<string>>;
 }
 
 const SegmentedControl = ({ data, value: currentPosition, setValue }: SegmentedControlProps) => {
+	const isTabletScreenSize = useMediaQuery('(max-width: 768px');
+
+	const dataDisplayType = (item: string) =>
+		item === '목록' ? (
+			<RxTable size={isTabletScreenSize ? '24' : '27'} />
+		) : item === '차트' ? (
+			<RiLineChartFill size={isTabletScreenSize ? '24' : '27'} />
+		) : (
+			item
+		);
+
 	return (
 		<Container>
 			{data.map(item => (
 				<Control key={item} active={item === currentPosition} onClick={() => setValue(item)}>
-					{item}
+					{dataDisplayType(item)}
 				</Control>
 			))}
 		</Container>
@@ -35,6 +48,9 @@ const Container = styled.ul`
 `;
 
 const Control = styled.li<{ active: boolean }>`
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
 	padding: 0.2rem 0.35rem;
 	border-radius: var(--radius);
 	font-size: 14px;
@@ -48,7 +64,7 @@ const Control = styled.li<{ active: boolean }>`
 		font-size: 16px;
 	}
 
-	@media screen and (min-width: 720px) {
+	@media screen and (min-width: 750px) {
 		padding: 0.35rem 0.5rem;
 		font-size: 18px;
 	}

@@ -22,7 +22,7 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { open } from '../store/modalSlice';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
-import { control, controls } from '../constants/sortControls';
+import { ControlKeys, control, controls } from '../constants/sortControls';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 
 const Details = () => {
@@ -37,10 +37,10 @@ const Details = () => {
 
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(state ? state?.month + 1 : monthOfToday);
-	const [currentSort, setCurrentControl] = useState(controls[0]);
+	const [currentSort, setCurrentControl] = useState('오래된 순');
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useGetWorkersDetailInfiniteQuery({
-		inOrder: control[currentSort],
+		inOrder: control[currentSort as ControlKeys],
 		year,
 		month,
 		workerName,
@@ -48,7 +48,10 @@ const Details = () => {
 
 	const ref = useInfiniteScroll(fetchNextPage);
 
-	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], control[currentSort]);
+	const workers = sortByNameAndWorkedDate(
+		data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [],
+		control[currentSort as ControlKeys],
+	);
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
 	return (

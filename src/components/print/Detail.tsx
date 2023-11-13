@@ -54,7 +54,7 @@ const Detail = ({ query }: DetailProps) => {
 								remittance,
 								remittanceType,
 							}) => (
-								<tr key={id} role="check" onClick={() => {}}>
+								<tr key={id} role="check">
 									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
 									<td aria-label="tableBody-workerName">{isFirstIdxOfArr ? workerName : ''}</td>
 									<td aria-label="tableBody-registrationNumber">
