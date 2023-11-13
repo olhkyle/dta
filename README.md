@@ -24,10 +24,12 @@ and organize related WebApp.
 1. 회사 관련자만이 사용할 수 있는 사내 시스템으로 구성합니다.
    - 개인정보가 담겨 있어 외부에서 회원가입이 불가능한 시스템이며, 관련자만이 로그인 가능하고, 보안과 관련된 강력한 규칙이 적용됩니다.
 2. 일별 작업한 일용직들에게 지급할 **개인정보, 작업 날짜, 지불 임금, 송금 내역, 작업 관련 내용** 등을 기술하여 DB에 저장합니다.
-3. **월별** 얼마나 많은 일용직이 일을 하였으며, 임금은 얼마나 지불 되었는지 등의 데이터를 기준으로 시각화 합니다.
-   - `d3.js` 또는 `chart.js`가 활용될 예정입니다.
-4. **세무**와 관련된 업무를 처리하기 위해, 기존에 엑셀 또는 한글에서 내보내기 하여 출력하던 인쇄물을 웹앱에서도 **출력**할 수 있도록 기능을
-   구성합니다.
+3. **월별** 기준으로 얼마나 많은 일용직이 일을 하였으며, 임금은 얼마나 지불 되었는지, 그리고 개별 일용직 대상으로 해당 달에 얼마나 일했는 지
+   등의 데이터를 기준으로 시각화 합니다.
+   - `chart.js`가 활용 됩니다.
+   - **월별 개요** 그리고 월별 상세 내 각 일용직 별 **일용직 상세 보기** 라우트 내부에서 관련 데이터를 활용한 차트를 확인할 수 있습니다.
+4. **세무**와 관련된 업무를 처리하기 위해, 기존 엑셀 / 한글에서 내보내기 하여 출력하던 인쇄물을 웹앱에서도 **출력**할 수 있도록 기능을 구성
+   합니다.
 
 <br/>
 
@@ -39,7 +41,7 @@ and organize related WebApp.
 2. Describe the **personal information, date of work, wages paid, remittance details, work-related contents** to be paid to the laborers for
    each day's work and store them in the DB.
 3. Visualize **per month** based on data such as how many day laborers worked, how much wages were paid, etc.
-   - `d3.js` or `chart.js` will be utilized.
+   - `chart.js` is utilized.
 4. To handle **Taxation** related tasks, configure the function so that the printout that was previously exported from Excel or Hangul can
    be **printed** from the web app. configure the function.
 
