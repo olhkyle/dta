@@ -118,6 +118,7 @@ const Name = styled.div`
 	border-radius: 8px;
 	outline: 1px solid var(--color-green-50);
 	outline-offset: 2px;
+	cursor: pointer;
 `;
 
 const LogoutButton = styled(Button)`

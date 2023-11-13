@@ -89,7 +89,7 @@ const Trigger = styled.button<{ width: number }>`
 		font-size: 16px;
 	}
 
-	@media screen and (min-width: 720px) {
+	@media screen and (min-width: 750px) {
 		font-size: 19px;
 	}
 `;
