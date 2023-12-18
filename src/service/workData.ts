@@ -60,22 +60,19 @@ const sortByNameAndWorkedDate = (workers: WorkerWithId[], inOrder = 'asc') => {
 const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pageParam }: WorkersPaginationQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
 
-	const searchConditionByMonth = (month: number) =>
-		and(
-			where('workedDate', '<', month === 12 ? new Date(`${year + 1}-${month - 11}`) : new Date(`${year}-${month + 1}`)),
-			where('workedDate', '>=', new Date(`${year}-${month}`)),
-		);
+	const searchConditionByMonth = (year: number, month: number) =>
+		and(where('workedDate', '<', new Date(year, month, 1)), where('workedDate', '>=', new Date(year, month - 1, 1)));
 
 	const orderCondition = orderBy('workedDate', inOrder);
 	const createdAtCondition = orderBy('createdAt', inOrder);
 
-	const q = query(collectionRef, searchConditionByMonth(month), orderCondition, createdAtCondition);
+	const q = query(collectionRef, searchConditionByMonth(year, month), orderCondition, createdAtCondition);
 
 	const [paginationData, dataSnapshot] = await Promise.all([
 		paginationQuery({
 			collectionRef,
 			pageParam,
-			searchCondition: searchConditionByMonth(month),
+			searchCondition: searchConditionByMonth(year, month),
 			orderCondition,
 			createdAtCondition,
 			limitSizePerPage: LIMIT_SIZE_PER_PAGE,
@@ -97,17 +94,14 @@ const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pagePa
 const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
 
-	const queryByMonth = (month: number) =>
+	const queryByMonth = (year: number, month: number) =>
 		query(
 			collectionRef,
-			and(
-				where('workedDate', '<', month === 12 ? new Date(`${year + 1}-${month - 11}`) : new Date(`${year}-${month + 1}`)),
-				where('workedDate', '>=', new Date(`${year}-${month}`)),
-			),
+			and(where('workedDate', '<', new Date(year, month, 1)), where('workedDate', '>=', new Date(year, month - 1, 1))),
 			orderBy('workedDate', inOrder),
 		);
 
-	const [dataSnapshot, countSnapshot] = await Promise.all([getDocs(queryByMonth(month)), getCountFromServer(query(collectionRef))]);
+	const [dataSnapshot, countSnapshot] = await Promise.all([getDocs(queryByMonth(year, month)), getCountFromServer(query(collectionRef))]);
 
 	const workers =
 		workerName !== ''
