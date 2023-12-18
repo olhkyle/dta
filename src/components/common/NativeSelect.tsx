@@ -58,9 +58,8 @@ Select.Field = forwardRef(
 				aria-disabled={disabled}
 				width={width}
 				{...props}>
-				<option value="">--- 선 택 --- </option>
-				<option value="개인">개 인</option>
 				<option value="사업자">사업자</option>
+				<option value="개인">개 인</option>
 			</SelectField>
 		);
 	},
