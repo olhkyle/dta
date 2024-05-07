@@ -59,7 +59,7 @@ and organize related WebApp.
 
 ### 04 진행상황 / Progress
 
-> ☑︎ 75% / 100%
+> ☑︎ 100% / 100%
 
 <br/>
 
