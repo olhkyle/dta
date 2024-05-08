@@ -7,8 +7,10 @@ const Footer = () => {
 	return (
 		<Container>
 			<Flex alignItems="flex-end" gap="0.5rem">
-				<Logo to={routes.HOME}>D:T.A</Logo>
-				<CopyRight>© 2023 Min-Housing</CopyRight>
+				<Logo to={routes.HOME}>
+					<img src="./dta.png" alt="logo" />
+				</Logo>
+				<CopyRight>© TEKTZIMMER</CopyRight>
 			</Flex>
 			<MadeBy to={'https://olhkyle.me'}>Olhkyle.me</MadeBy>
 		</Container>
@@ -42,11 +44,13 @@ const Container = styled.footer`
 	}
 `;
 const Logo = styled(Link)`
-	font-size: 16px;
-	font-weight: 700;
+	width: 24px;
+	height: 24px;
 
-	&:hover {
-		color: var(--color-green-50);
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 
 	@media screen and (min-width: 640px) {
@@ -55,7 +59,7 @@ const Logo = styled(Link)`
 `;
 
 const CopyRight = styled.span`
-	font-size: 14px;
+	font-size: 13px;
 	font-weight: 600;
 
 	@media screen and (min-width: 640px) {

@@ -23,7 +23,6 @@ const Input = ({ label, children, bottomText, rightText, width = 250, ...props }
 				css={{
 					display: `${label ? 'inline-block' : 'none'}`,
 					padding: '4px 0',
-					fontSize: 'var(--text-label)',
 					fontWeight: '500',
 					lineHeight: 1.6,
 					color: 'var(--text-color)',
@@ -124,6 +123,7 @@ const TextField = styled.input<{ width: number; error: string; disabled: boolean
 	margin: 0;
 	padding: 0.75rem 1rem;
 	min-width: 250px;
+	width: 280px;
 	font-size: 16px;
 	line-height: 24px;
 	border: none;
