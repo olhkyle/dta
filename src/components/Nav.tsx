@@ -40,7 +40,9 @@ const Nav = () => {
 		<>
 			<Container isAdmin={isAdmin}>
 				<Logo to={routes.HOME} onClick={close} aria-label="logo">
-					<h1 className="underlined">D*T.A</h1>
+					<h1 className="underlined">
+						<img src="./dta.png" alt="logo" />
+					</h1>
 				</Logo>
 				<NavLinkContainer>
 					<Flex justifyContent="space-between" gap="0.25rem">
@@ -65,8 +67,10 @@ const Nav = () => {
 const Container = styled.nav<{ isAdmin: boolean }>`
 	position: sticky;
 	top: 0;
-	display: grid;
-	grid-template-columns: 4fr 1fr;
+	/* display: grid;
+	grid-template-columns: 4fr 1fr; */
+	display: flex;
+	justify-content: space-between;
 	gap: 1rem;
 	margin: 0 auto;
 	padding: 0 1rem;
@@ -76,7 +80,7 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 	backdrop-filter: blur(8px);
 	z-index: 9900;
 
-	@media screen and (min-width: 768px) {
+	/* @media screen and (min-width: 768px) {
 		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 4fr' : '1fr 2.5fr')};
 	}
 
@@ -86,18 +90,23 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 
 	@media screen and (min-width: 1280px) {
 		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 1.5fr' : '1fr 1fr')};
-	}
+	} */
 `;
 
 const Logo = styled(NavLink)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	width: 90px;
 
 	h1 {
-		font-size: 28px;
-		font-weight: 900;
+		width: 45px;
+		height: 45px;
+
+		img {
+			display: block;
+			width: 100%;
+			height: 100%;
+		}
 	}
 `;
 
@@ -105,7 +114,7 @@ const NavLinkContainer = styled.div`
 	display: none;
 	justify-content: space-between;
 	align-items: center;
-	gap: 1rem;
+	gap: 3rem;
 	margin: 0.4rem 0 0;
 
 	@media screen and (min-width: 768px) {

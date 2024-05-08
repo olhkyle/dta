@@ -12,16 +12,17 @@ const GlobalStyle = css`
 		--color-black: #191a20;
 		--color-white: #fff;
 
-		--color-gray-50: #f7f7f7;
+		--color-gray-50: #f3f4f4;
 		--color-gray-100: #f9fafb;
 		--color-gray-200: #f0f1f5;
 		--color-gray-300: #ecedf0;
-		--color-gray-400: #e7e7e9;
+		--color-gray-400: #ededed;
 		--color-gray-500: #b8b8b8;
 		--color-gray-600: #4b4c53;
-		--color-gray-700: #3a3d4a;
+		--color-gray-700: #757575;
 		--color-gray-800: #2e3039;
 		--color-gray-900: #1f2028;
+		--color-transparent-bgColor-hover: #b1bac41f;
 
 		--color-green-10: #46df8e60;
 		--color-green-50: #46df8e;

@@ -4,6 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Footer, Main, Nav, ScrollToTopButton, Modal, Loading } from '.';
 import { useScrollTopEffect } from '../hooks';
+import routes from '../constants/routes';
 
 const Layout = () => {
 	const { pathname } = useLocation();
@@ -18,7 +19,7 @@ const Layout = () => {
 					<Outlet />
 				</Suspense>
 			</Main>
-			<Footer />
+			{pathname !== routes.LOGIN && <Footer />}
 			<ScrollToTopButton topPosToShow={300} />
 			<StyledToastContainer position="bottom-center" autoClose={1500} closeOnClick={true} pauseOnHover={false} limit={1} />
 			<Modal />

@@ -1,6 +1,7 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { IoPrintSharp } from 'react-icons/io5';
 import { BsTrash } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { useDebounce, useInfiniteScroll, useGetWorkersDetailInfiniteQuery } from '../hooks';
@@ -75,7 +76,7 @@ const Details = () => {
 							navigate(routes.PRINT, { state: { year, month } });
 						}}
 						aria-label="print-button">
-						인 쇄
+						<IoPrintSharp size={24} />
 					</PrintButton>
 				</Flex>
 				<Flex justifyContent="flex-end" margin="3rem 0 2rem">
@@ -176,7 +177,7 @@ const PrintButton = styled(Button)`
 	margin: 2rem 0 1rem;
 	padding: 0.6rem 1.5rem;
 	font-size: 15px;
-	background-color: var(--color-green-300);
+	background: linear-gradient(0.25turn, #a1ffcd, #0e7b6c);
 	color: var(--color-white);
 	outline-offset: 1px;
 	border-radius: 12px;
@@ -184,11 +185,12 @@ const PrintButton = styled(Button)`
 
 	&:hover {
 		background-color: var(--color-green-200);
-		outline: 3px solid var(--outline-color);
 	}
 
 	@media screen and (min-width: 640px) {
-		display: inline-block;
+		display: inline-flex;
+		justify-content: center;
+		align-items: center;
 		padding: 0.6rem 2rem;
 		font-size: 21px;
 	}

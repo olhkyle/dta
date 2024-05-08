@@ -29,7 +29,7 @@ const Container = styled.div`
 	gap: 0.4rem;
 	margin-left: 0.5rem;
 	padding: var(--btn-sm-padding);
-	border-radius: 9999px;
+	border-radius: var(--radius);
 	background-color: var(--color-green-300);
 	cursor: pointer;
 
@@ -42,7 +42,7 @@ const Container = styled.div`
 		width: 100%;
 		color: var(--text-color);
 		border: 1px solid var(--color-gray-500);
-		border-radius: 8px;
+		border-radius: var(--radius);
 		background-color: var(--bg-color);
 		opacity: 0;
 		transition: opacity 0.3s ease-in-out 0.15s, visibility 0.3s ease-in-out 0.15s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s,

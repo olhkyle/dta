@@ -20,7 +20,7 @@ const StyledLink = styled(Link)`
 	padding: var(--btn-sm-padding);
 	font-size: 15px;
 	font-weight: 600;
-	line-height: 1;
+	line-height: 1.25;
 	border-radius: var(--radius);
 	text-align: center;
 	word-break: keep-all;
@@ -30,7 +30,7 @@ const StyledLink = styled(Link)`
 	}
 
 	@media screen and (min-width: 1024px) {
-		font-size: 17px;
+		font-size: 16px;
 	}
 `;
 
