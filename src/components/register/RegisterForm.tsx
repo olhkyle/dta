@@ -82,13 +82,12 @@ const RegisterForm = () => {
 		const buttonId = ((event?.nativeEvent as any).submitter as HTMLElement)?.id as FormSubmitButtonId;
 
 		try {
+			console.log(data);
 			if (buttonId === 'additionalRegister') await sleep(500);
-
 			await addWorker({
 				...data,
 				workedDate: selectedDay ?? new Date(),
 				payment: unformatCurrencyUnit(data.payment),
-				remittance: unformatCurrencyUnit(data.remittance),
 				createdAt: new Date(),
 			});
 
@@ -100,9 +99,11 @@ const RegisterForm = () => {
 				setValue('workerName', data.workerName);
 				setValue('registrationNumberFront', data.registrationNumberFront);
 				setValue('registrationNumberBack', data.registrationNumberBack);
+				setValue('workspace', '');
+				setValue('businessNumber', '');
 				setValue('payment', '', { shouldValidate: true });
-				setValue('remittance', '', { shouldValidate: true });
 				setValue('memo', '');
+
 				setFocus('payment');
 			}
 
@@ -130,70 +131,65 @@ const RegisterForm = () => {
 					</LabelFlex>
 				}
 				bottomText={errors?.workerName?.message}>
-				<Input.TextField type="text" placeholder="이 름" {...register('workerName')} error={errors?.workerName?.message} width={280} />
+				<Input.TextField type="text" placeholder="이 름" {...register('workerName')} error={errors?.workerName?.message} width={270} />
 			</Input>
-			<CustomFlex alignItems="flex-start" gap="0.5rem">
+			<CustomFlex alignItems="flex-start" gap="1rem">
 				<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
 					<Input.TextField
 						type="text"
-						placeholder="주민등록번호 앞 6자리"
+						placeholder="000000"
 						{...register('registrationNumberFront')}
 						error={errors?.registrationNumberFront?.message}
-						width={280}
+						width={270}
 					/>
 				</Input>
 				<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
 					<Input.TextField
 						type="text"
-						placeholder="주민등록번호 뒤 7자리"
+						placeholder="0000000"
 						{...register('registrationNumberBack')}
 						error={errors?.registrationNumberBack?.message}
-						width={280}
+						width={270}
 					/>
 				</Input>
 			</CustomFlex>
 
 			<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
 
-			<Controller
-				name="payment"
-				control={control}
-				render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
-					<Input label="지급 금액" bottomText={error?.message} rightText="원">
-						<Input.ControlledTextField
-							type="text"
-							placeholder="지급 금액"
-							name={name}
-							value={
-								value
-									? value
-											.toString()
-											.replace(/,/gi, '')
-											.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-									: ''
-							}
-							onChange={onChange}
-							onBlur={onBlur}
-							error={error?.message}
-							width={280}
-						/>
-					</Input>
-				)}
-			/>
-
 			<CustomFlex alignItems="flex-start" gap="1rem">
+				<Input label="근로 지역" bottomText={errors?.workspace?.message}>
+					<Input.TextField
+						type="text"
+						placeholder="작업 공간 이름"
+						{...register('workspace')}
+						error={errors?.workspace?.message}
+						width={270}
+					/>
+				</Input>
+				<Input label="사업개시번호" bottomText={errors?.businessNumber?.message}>
+					<Input.TextField
+						type="text"
+						placeholder="000-00-00000-0"
+						{...register('businessNumber')}
+						error={errors?.businessNumber?.message}
+						width={270}
+					/>
+				</Input>
+			</CustomFlex>
+
+			<CustomFlex alignItems="flex-start" gap="1.5rem">
 				<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
-					<NativeSelect.Field id="송금 유형" {...register('remittanceType')} error={errors?.remittanceType?.message} width={280} />
+					<NativeSelect.Field id="송금 유형" {...register('remittanceType')} error={errors?.remittanceType?.message} width={270} />
 				</NativeSelect>
 
 				<Controller
-					name="remittance"
+					name="payment"
 					control={control}
 					render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
-						<Input label="송금 금액" bottomText={error?.message} rightText="원">
+						<Input label="지급 금액" bottomText={error?.message} rightText="원">
 							<Input.ControlledTextField
 								type="text"
-								placeholder="송금 금액"
+								placeholder="1,000"
 								name={name}
 								value={
 									value
@@ -206,7 +202,7 @@ const RegisterForm = () => {
 								onChange={onChange}
 								onBlur={onBlur}
 								error={error?.message}
-								width={280}
+								width={270}
 							/>
 						</Input>
 					)}
@@ -225,7 +221,7 @@ const RegisterForm = () => {
 				<RegisterButton type="submit" id="register" width={400} aria-label="register-button">
 					등록하기
 				</RegisterButton>
-				<AdditionalRegisterButton type="submit" id="additionalRegister" width={180} aria-label="additional-register-button">
+				<AdditionalRegisterButton type="submit" id="additionalRegister" width={150} aria-label="additional-register-button">
 					추가 등록
 				</AdditionalRegisterButton>
 			</CustomFlex>
@@ -243,16 +239,11 @@ const Form = styled.form`
 	flex-direction: column;
 	gap: 1.5rem;
 	margin: 0 auto;
-	padding-top: 5rem;
-	padding-bottom: 5rem;
+	padding: 5rem 0;
 `;
 
 const LabelFlex = styled(Flex)`
-	gap: 9rem;
-
-	@media screen and (min-width: 640px) {
-		gap: 10.5rem;
-	}
+	gap: 11rem;
 `;
 
 const CheckExistButton = styled.button`
@@ -264,6 +255,10 @@ const CheckExistButton = styled.button`
 	color: var(--color-white);
 	background-color: var(--color-orange-100);
 	font-weight: 500;
+
+	&:hover {
+		background-color: var(--color-orange-200);
+	}
 `;
 
 const CustomFlex = styled(Flex)`
@@ -275,7 +270,8 @@ const CustomFlex = styled(Flex)`
 `;
 
 const RegisterButton = styled(Button)<{ width: number }>`
-	width: 300px;
+	min-width: 300px;
+	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
 
@@ -289,7 +285,8 @@ const RegisterButton = styled(Button)<{ width: number }>`
 `;
 
 const AdditionalRegisterButton = styled(Button)<{ width: number }>`
-	width: 300px;
+	min-width: 200px;
+	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--color-green-50);
 

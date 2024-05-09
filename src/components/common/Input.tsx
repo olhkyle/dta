@@ -53,7 +53,7 @@ interface TextFieldProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> 
 }
 
 Input.TextField = forwardRef(
-	({ type, name, placeholder, error, disabled = false, width = 250, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
+	({ type, name, placeholder, error, disabled = false, width = 270, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
 		return (
 			<TextField
 				type={type}
@@ -122,8 +122,7 @@ const BottomText = styled.p<{ isError: boolean; width: number }>`
 const TextField = styled.input<{ width: number; error: string; disabled: boolean }>`
 	margin: 0;
 	padding: 0.75rem 1rem;
-	min-width: 250px;
-	width: 280px;
+	min-width: 270px;
 	font-size: 16px;
 	line-height: 24px;
 	border: none;

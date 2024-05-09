@@ -82,7 +82,7 @@ const Container = styled.div`
 
 const FieldTitle = styled.div`
 	padding: 4px 0;
-	font-size: 18px;
+	font-size: 16px;
 	font-weight: 500;
 `;
 

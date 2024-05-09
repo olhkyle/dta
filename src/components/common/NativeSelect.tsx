@@ -21,7 +21,6 @@ const Select = ({ label, bottomText, children }: SelectProps) => {
 				css={{
 					display: `${label ? 'inline-block' : 'none'}`,
 					padding: '4px 0',
-					fontSize: 'var(--text-label)',
 					fontWeight: '500',
 					lineHeight: 1.6,
 					color: 'var(--text-color)',

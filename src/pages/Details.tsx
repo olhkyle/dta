@@ -2,21 +2,10 @@ import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoPrintSharp } from 'react-icons/io5';
-import { BsTrash } from 'react-icons/bs';
+import { BsBoxSeam } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { useDebounce, useInfiniteScroll, useGetWorkersDetailInfiniteQuery } from '../hooks';
-import {
-	Badge,
-	Button,
-	CustomSelect,
-	EmptyIndicator,
-	Flex,
-	HighlightText,
-	Loading,
-	SearchInput,
-	SegmentedControl,
-	DetailModal,
-} from '../components';
+import { Badge, Button, CustomSelect, EmptyIndicator, Flex, Loading, SearchInput, SegmentedControl, DetailModal } from '../components';
 import routes from '../constants/routes';
 import { WorkerWithId, sortByNameAndWorkedDate } from '../service/workData';
 import { useAppDispatch, useAppSelector } from '../store/store';
@@ -53,6 +42,7 @@ const Details = () => {
 		data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [],
 		control[currentSort as ControlKeys],
 	);
+
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
 	return (
@@ -88,8 +78,8 @@ const Details = () => {
 			<Suspense fallback={<Loading />}>
 				{workers?.length === 0 ? (
 					<EmptyIndicator>
-						<p>해당 일용직이 없습니다</p>
-						<BsTrash size="21" />
+						<BsBoxSeam size={60} color="var(--color-gray-500)" />
+						<p>해당 월에는 작업한 일용직이 없습니다</p>
 					</EmptyIndicator>
 				) : (
 					<Table searched={workerName.length > 0}>
@@ -102,9 +92,11 @@ const Details = () => {
 								<th aria-label="tableHead-payment">
 									지급액<span>(원)</span>
 								</th>
-								<th aria-label="tableHead-remittance">
+								{/* <th aria-label="tableHead-remittance">
 									송금내용<span>(유형 + 금액)</span>
-								</th>
+								</th> */}
+								<th aria-label="tableHead-workspace">근로지역</th>
+								<th aria-label="tableHead-businessNumber">사업개시번호</th>
 							</tr>
 						</thead>
 
@@ -118,9 +110,10 @@ const Details = () => {
 									registrationNumberFront,
 									registrationNumberBack,
 									workedDate,
-									payment,
-									remittance,
+									workspace,
+									businessNumber,
 									remittanceType,
+									payment,
 									memo,
 								}) => (
 									<tr
@@ -133,9 +126,10 @@ const Details = () => {
 												registrationNumberFront,
 												registrationNumberBack,
 												workedDate,
-												payment,
-												remittance,
+												workspace,
+												businessNumber,
 												remittanceType,
+												payment,
 												memo,
 											})
 										}>
@@ -148,12 +142,9 @@ const Details = () => {
 											{workedDate.getMonth() + 1}/{workedDate.getDate()}
 										</td>
 										<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
-										<td aria-label="tableBody-remittance">
-											<HighlightText color="var(--text-color)" bgColor="var(--outline-color)">
-												{remittanceType}
-											</HighlightText>
-											{formatCurrencyUnit(Number(remittance))}
-										</td>
+
+										<td aria-label="tableBody-workspace">{workspace ?? '해당 없음'}</td>
+										<td aria-label="tableBody-businessNumber">{businessNumber ?? '해당 없음'}</td>
 									</tr>
 								),
 							)}
@@ -207,10 +198,10 @@ const Table = styled.table<{ searched: boolean }>`
 	thead > tr,
 	tbody > tr {
 		display: grid;
-		grid-template-columns: 0.75fr 1.5fr 2.5fr 1.5fr 3fr;
+		grid-template-columns: 0.5fr 1.5fr 1fr 2fr 3fr;
 
 		@media screen and (min-width: 640px) {
-			grid-template-columns: 0.75fr 1.5fr 2.5fr 1.5fr 2fr 3fr;
+			grid-template-columns: 0.75fr 1.5fr 2.5fr 1fr 1.5fr 1.5fr 2fr;
 		}
 	}
 
@@ -239,18 +230,18 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	th {
-		font-size: 18px;
+		font-size: 16px;
 
 		span {
-			font-size: 16px;
+			font-size: 14px;
 		}
 
 		@media screen and (min-width: 640px) {
-			font-size: 18px;
+			font-size: 16px;
 		}
 
 		@media screen and (min-width: 720px) {
-			font-size: 20px;
+			font-size: 18px;
 		}
 	}
 
@@ -262,12 +253,11 @@ const Table = styled.table<{ searched: boolean }>`
 		}
 	}
 
-	th[aria-label='tableHead-remittance'] {
-		span {
-			display: none;
-			@media screen and (min-width: 640px) {
-				display: inline-block;
-			}
+	th[aria-label='tableHead-registrationNumber'] {
+		display: none;
+
+		@media screen and (min-width: 640px) {
+			display: inline-block;
 		}
 	}
 
@@ -275,7 +265,15 @@ const Table = styled.table<{ searched: boolean }>`
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 18px;
+		font-size: 14px;
+
+		@media screen and (min-width: 520px) {
+			font-size: 16px;
+		}
+
+		@media screen and (min-width: 640px) {
+			font-size: 16px;
+		}
 	}
 
 	td[aria-label='tableBody-workerName'],
@@ -293,16 +291,11 @@ const Table = styled.table<{ searched: boolean }>`
 		}
 	}
 
-	td[aria-label='tableBody-remittance'] {
-		display: inline-flex;
-		flex-direction: column;
-		align-items: center;
-		gap: 0.2rem;
-		margin: 0 auto;
+	td[aria-label='tableBody-registrationNumber'] {
+		display: none;
 
 		@media screen and (min-width: 640px) {
-			flex-direction: row;
-			gap: 0.4rem;
+			display: inline-flex;
 		}
 	}
 

@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import { Bar } from 'react-chartjs-2';
-import { BsArrowLeftCircle } from 'react-icons/bs';
+import { BsArrowLeft } from 'react-icons/bs';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
-import { Button, Circle, Flex, HighlightText, Text } from '../components';
+import { Circle, Flex, HighlightText, Text } from '../components';
 import { useGetWorkersDetailQuery, useGoBack, useMediaQuery, useTheme } from '../hooks';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 
@@ -50,7 +50,7 @@ const Worker = () => {
 				type: 'bar' as const,
 				label: `${workerName}`,
 				barPercentage: isTabletScreen ? 0.6 : 0.4,
-				data: data?.workers.map(worker => worker.remittance),
+				data: data?.workers.map(worker => worker.payment),
 				backgroundColor: theme === 'dark' ? 'rgb(255,255,255)' : 'rgb(0,0,0)',
 				borderColor: theme === 'dark' ? 'rgba(240, 240, 240, 0.4)' : 'rgba(240, 240, 240, 0.196)',
 				borderWidth: 1,
@@ -70,8 +70,7 @@ const Worker = () => {
 	return (
 		<Container>
 			<GoBackButton type="button" onClick={goBack}>
-				<BsArrowLeftCircle size="24" color="var(--text-color)" />
-				월별 상세 목록으로 돌아가기
+				<BsArrowLeft size="24" color="var(--bg-color)" />
 			</GoBackButton>
 
 			<ProfileContainer>
@@ -139,13 +138,13 @@ const ProfileContainer = styled.div`
 	}
 `;
 
-const GoBackButton = styled(Button)`
+const GoBackButton = styled.button`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	gap: 0.5rem;
+	padding: 0.3rem 0.5rem;
 	font-weight: 700;
-	color: var(--text-color);
+	background-color: var(--btn-hover-color);
 	border-radius: var(--radius);
 	transition: all 0.3s ease-in-out 0.15s;
 

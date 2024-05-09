@@ -45,6 +45,7 @@ const Container = styled.div`
 		border-radius: var(--radius);
 		background-color: var(--bg-color);
 		opacity: 0;
+		visibility: hidden;
 		transition: opacity 0.3s ease-in-out 0.15s, visibility 0.3s ease-in-out 0.15s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s,
 			-webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s;
 
@@ -57,6 +58,7 @@ const Container = styled.div`
 
 	&:hover button {
 		opacity: 1;
+		visibility: visible;
 	}
 `;
 
