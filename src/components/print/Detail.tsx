@@ -37,7 +37,8 @@ const Detail = ({ query }: DetailProps) => {
 							<th aria-label="tableHead-registrationNumber">주민등록번호</th>
 							<th aria-label="tableHead-workedDate">출력일</th>
 							<th aria-label="tableHead-payment">지급액</th>
-							<th aria-label="tableHead-remittance">송금내용</th>
+							<th aria-label="tableHead-workspace">근로지역</th>
+							<th aria-label="tableHead-businessNumber">사업개시번호</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -50,9 +51,9 @@ const Detail = ({ query }: DetailProps) => {
 								registrationNumberFront,
 								registrationNumberBack,
 								workedDate,
+								workspace,
+								businessNumber,
 								payment,
-								remittance,
-								remittanceType,
 							}) => (
 								<tr key={id} role="check">
 									<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
@@ -72,9 +73,8 @@ const Detail = ({ query }: DetailProps) => {
 										{workedDate.getMonth() + 1}/{workedDate.getDate()}
 									</td>
 									<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
-									<td aria-label="tableBody-remittance">
-										{remittanceType}: {formatCurrencyUnit(Number(remittance))}
-									</td>
+									<td aria-label="tableBody-workspace">{workspace}</td>
+									<td aria-label="tableBody-businessNumber">{businessNumber}</td>
 								</tr>
 							),
 						)}
@@ -112,7 +112,7 @@ const DetailTable = styled.table`
 	thead > tr,
 	tbody > tr {
 		display: grid;
-		grid-template-columns: 0.5fr 1fr 1.5fr 1fr 1.5fr 2fr;
+		grid-template-columns: 0.75fr 1.25fr 2fr 1fr 1.5fr 1.8fr 2fr;
 	}
 
 	thead {

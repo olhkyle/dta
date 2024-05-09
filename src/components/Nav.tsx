@@ -67,30 +67,20 @@ const Nav = () => {
 const Container = styled.nav<{ isAdmin: boolean }>`
 	position: sticky;
 	top: 0;
-	/* display: grid;
-	grid-template-columns: 4fr 1fr; */
 	display: flex;
 	justify-content: space-between;
 	gap: 1rem;
 	margin: 0 auto;
-	padding: 0 1rem;
+
 	max-width: 1280px;
 	height: 80px;
 	border-bottom: 1px solid var(--text-color);
 	backdrop-filter: blur(8px);
 	z-index: 9900;
 
-	/* @media screen and (min-width: 768px) {
-		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 4fr' : '1fr 2.5fr')};
+	@media screen and (min-width: 640px) {
+		padding: 0 1rem;
 	}
-
-	@media screen and (min-width: 1024px) {
-		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 3fr' : '1fr 1.5fr')};
-	}
-
-	@media screen and (min-width: 1280px) {
-		grid-template-columns: ${({ isAdmin }) => (isAdmin ? '1fr 1.5fr' : '1fr 1fr')};
-	} */
 `;
 
 const Logo = styled(NavLink)`

@@ -24,12 +24,12 @@ const SideNav = ({ onLogout }: SideNavProps) => {
 
 	return (
 		<Container>
-			<Flex direction="column" justifyContent="space-between" gap="1rem" margin="1rem 0">
+			<Flex direction="column" justifyContent="space-between">
 				<Navigation to={routes.OVERVIEW} onClick={close}>
-					명세 월별 개요
+					월별 개요 명세
 				</Navigation>
 				<Navigation to={routes.DETAILS} onClick={close}>
-					명세 월별 상세
+					월별 상세 명세
 				</Navigation>
 				{isAdmin && (
 					<Navigation to={routes.SEARCH_WORKERS} onClick={close}>
@@ -86,14 +86,17 @@ const Container = styled.div`
 `;
 
 const Navigation = styled(NavLink)`
+	padding: 1rem 0;
 	width: 100%;
 	font-size: 18px;
 	border-radius: 0;
+	border-top: 1px solid #fff;
 	border-bottom: 1px solid var(--color-gray-400);
 	transition: all 0.1s ease-in-out 0.05s;
 
 	&:hover {
 		color: var(--color-green-300);
+		border-top: 1px solid var(--color-green-300);
 		border-bottom: 1px solid var(--color-green-300);
 	}
 `;
@@ -113,7 +116,11 @@ const Login = styled(NavLink)`
 
 const Name = styled.div`
 	position: relative;
+	display: inline-flex;
+	justify-content: center;
+	align-items: center;
 	padding: var(--btn-sm-padding);
+	width: 120px;
 	border: 1px solid var(--outline-color);
 	border-radius: 8px;
 	outline: 1px solid var(--color-green-50);

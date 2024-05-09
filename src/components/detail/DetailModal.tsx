@@ -45,9 +45,10 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 		registrationNumberFront: true,
 		registrationNumberBack: true,
 		workedDate: true,
-		payment: true,
+		workspace: true,
+		businessNumber: true,
 		remittanceType: true,
-		remittance: true,
+		payment: true,
 		memo: true,
 	});
 
@@ -63,9 +64,10 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 				key === 'workerName' ||
 				key === 'registrationNumberFront' ||
 				key === 'registrationNumberBack' ||
-				key === 'payment' ||
-				key === 'remittance' ||
+				key === 'workspace' ||
+				key === 'businessNumber' ||
 				key === 'remittanceType' ||
+				key === 'payment' ||
 				key === 'memo'
 			) {
 				setValue(key, value);
@@ -123,7 +125,6 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 			workedDate: selectedDay,
 			...fields,
 			payment: unformatCurrencyUnit(fields.payment),
-			remittance: unformatCurrencyUnit(fields.remittance),
 		});
 
 		// TODO: refetch 짝수번째에 되지 않는 간헐적 문제
@@ -167,10 +168,10 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 								{...register('workerName')}
 								error={errors?.workerName?.message}
 								disabled={disabled.workerName}
-								width={250}
+								width={270}
 							/>
 						</Input>
-						<CustomFlex alignItems="flex-start" gap="0.5rem">
+						<CustomFlex alignItems="flex-start" gap="1rem">
 							{isAdmin ? (
 								<>
 									<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
@@ -180,7 +181,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 											{...register('registrationNumberFront')}
 											error={errors?.registrationNumberFront?.message}
 											disabled={disabled.registrationNumberFront}
-											width={250}
+											width={270}
 										/>
 									</Input>
 									<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
@@ -190,7 +191,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 											{...register('registrationNumberBack')}
 											error={errors?.registrationNumberBack?.message}
 											disabled={disabled.registrationNumberBack}
-											width={250}
+											width={270}
 										/>
 									</Input>
 								</>
@@ -198,8 +199,8 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 								<Flex direction="column" alignItems="flex-start" gap="0.5rem">
 									<div css={{ fontSize: '18px', fontWeight: '500' }}>주민등록번호</div>
 									<CustomFlex gap="1rem">
-										<Confidential width={250}>Classified</Confidential>
-										<Confidential width={250}>Classified</Confidential>
+										<Confidential width={270}>Classified</Confidential>
+										<Confidential width={270}>Classified</Confidential>
 									</CustomFlex>
 								</Flex>
 							)}
@@ -207,68 +208,66 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 
 						<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} disabled={disabled.workedDate} />
 
-						<Controller
-							name="payment"
-							control={control}
-							render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
-								<Input label="지급 금액" bottomText={error?.message} rightText="원">
-									<Input.ControlledTextField
-										type="text"
-										placeholder="지급 금액"
-										name={name}
-										value={
-											value
-												? value
-														.toString()
-														.replace(/,/gi, '')
-														.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-												: ''
-										}
-										onChange={onChange}
-										onBlur={onBlur}
-										error={error?.message}
-										disabled={disabled.payment}
-										width={250}
-									/>
-								</Input>
-							)}
-						/>
-						<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
-							<NativeSelect.Field
-								id="송금 유형"
-								{...register('remittanceType')}
-								error={errors?.remittanceType?.message}
-								disabled={disabled.remittanceType}
-								width={280}
-							/>
-						</NativeSelect>
+						<CustomFlex alignItems="flex-start" gap="1rem">
+							<Input label="근로 지역" bottomText={errors?.workspace?.message}>
+								<Input.TextField
+									type="text"
+									placeholder="작업 공간 이름"
+									{...register('workspace')}
+									error={errors?.workspace?.message}
+									disabled={disabled.workspace}
+									width={270}
+								/>
+							</Input>
+							<Input label="사업개시번호" bottomText={errors?.businessNumber?.message}>
+								<Input.TextField
+									type="text"
+									placeholder="000-00-00000-0"
+									{...register('businessNumber')}
+									error={errors?.businessNumber?.message}
+									disabled={disabled.businessNumber}
+									width={270}
+								/>
+							</Input>
+						</CustomFlex>
 
-						<Controller
-							name="remittance"
-							control={control}
-							render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
-								<Input label="송금 금액" bottomText={error?.message} rightText="원">
-									<Input.ControlledTextField
-										type="text"
-										placeholder="송금 금액"
-										name={name}
-										value={
-											value
-												? value
-														.toString()
-														.replace(/,/gi, '')
-														.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-												: ''
-										}
-										onChange={onChange}
-										onBlur={onBlur}
-										error={error?.message}
-										disabled={disabled.remittance}
-										width={250}
-									/>
-								</Input>
-							)}
-						/>
+						<CustomFlex alignItems="flex-start" gap="1.5rem">
+							<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
+								<NativeSelect.Field
+									id="송금 유형"
+									{...register('remittanceType')}
+									error={errors?.remittanceType?.message}
+									disabled={disabled.remittanceType}
+									width={270}
+								/>
+							</NativeSelect>
+							<Controller
+								name="payment"
+								control={control}
+								render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
+									<Input label="지급 금액" bottomText={error?.message} rightText="원">
+										<Input.ControlledTextField
+											type="text"
+											placeholder="지급 금액"
+											name={name}
+											value={
+												value
+													? value
+															.toString()
+															.replace(/,/gi, '')
+															.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+													: ''
+											}
+											onChange={onChange}
+											onBlur={onBlur}
+											error={error?.message}
+											disabled={disabled.payment}
+											width={270}
+										/>
+									</Input>
+								)}
+							/>
+						</CustomFlex>
 						<Input label="메모/기타" bottomText={errors?.memo?.message}>
 							<Input.TextField
 								type="text"
@@ -276,17 +275,19 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 								{...register('memo')}
 								error={errors?.memo?.message}
 								disabled={disabled.memo}
-								width={520}
+								width={600}
 							/>
 						</Input>
-						<UpdateButton type="submit" id="update" width={500} disabled={!isAllFieldsDisabled} aria-label="update-button">
-							수정완료
-						</UpdateButton>
+						{Object.values(disabled).every(val => val === false) && (
+							<UpdateButton type="submit" id="update" width={600} disabled={!isAllFieldsDisabled} aria-label="update-button">
+								수정완료
+							</UpdateButton>
+						)}
 						<Flex direction="column" margin="5rem 0">
 							<Text color="var(--btn-hover-color)">
-								<strong>삭제</strong>하고 싶다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요💡
+								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
 							</Text>
-							<DeleteButton type="button" id="delete" width={500} aria-label="delete-button" onClick={handleRemoveWorkerButton}>
+							<DeleteButton type="button" id="delete" width={600} aria-label="delete-button" onClick={handleRemoveWorkerButton}>
 								삭제하기
 								{isDeleteProcessLoading && <Loading size={25} margin="0" />}
 							</DeleteButton>
@@ -303,8 +304,9 @@ const Container = styled.div`
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	padding: 2rem;
+	padding: 2rem 1rem;
 	width: 100vw;
+	height: 90vh;
 	border-radius: var(--radius);
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
@@ -312,12 +314,9 @@ const Container = styled.div`
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 	z-index: 9999;
 
-	/* @media screen and (min-width: 640px) {
-		width: 500px;
-	} */
-
 	@media screen and (min-width: 720px) {
-		width: 600px;
+		width: 720px;
+		padding: 2rem;
 	}
 `;
 
@@ -368,9 +367,11 @@ const Body = styled.div`
 	justify-content: center;
 	gap: 4rem;
 	margin: 1rem 0 1rem;
-	padding: 1rem 0;
+	padding: 1rem;
 	width: 100%;
-	height: 500px;
+	height: calc(100% - 18vh);
+	border: 1px solid #e1e1e1;
+	border-radius: var(--radius);
 	overflow: scroll;
 
 	-ms-overflow-style: none; /* IE and Edge */
@@ -382,6 +383,10 @@ const Body = styled.div`
 
 	@media screen and (min-width: 520px) {
 		height: 600px;
+	}
+
+	@media screen and (min-width: 520px) {
+		height: 660px;
 	}
 `;
 
@@ -420,7 +425,8 @@ const Confidential = styled.div<{ width: number }>`
 
 const UpdateButton = styled(Button)<{ width: number }>`
 	margin: 1rem auto 0;
-	width: 300px;
+	min-width: 300px;
+	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
 
@@ -439,7 +445,8 @@ const DeleteButton = styled(Button)<{ width: number }>`
 	align-items: center;
 	gap: 0.4rem;
 	margin: 1rem auto;
-	width: 300px;
+	min-width: 300px;
+	width: 100%;
 	color: var(--text-color);
 	border: 1px solid var(--text-color);
 

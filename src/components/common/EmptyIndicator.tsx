@@ -17,16 +17,20 @@ const Container = styled.div`
 	gap: 0.5rem;
 	margin: 5rem auto;
 	padding: 4rem 2rem;
-	width: 80vw;
 	font-size: 16px;
 	font-weight: 600;
 	text-align: center;
-	outline: 2px solid var(--text-color);
-	outline-offset: 4px;
+	border-radius: var(--radius);
+	outline: 2px solid var(--color-gray-300);
+
+	p {
+		margin-top: 1rem;
+		font-size: 15px;
+		color: var(--color-gray-500);
+	}
 
 	@media screen and (min-width: 640px) {
-		flex-direction: row;
-		width: 65vw;
+		/* width: 65vw; */
 		font-size: 20px;
 	}
 `;

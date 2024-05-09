@@ -8,6 +8,7 @@ import { useGetWorkersOverviewQuery } from '../hooks/queries';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 import { ControlKeys, control, controls } from '../constants/sortControls';
+import { BsBoxSeam } from 'react-icons/bs';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -92,7 +93,8 @@ const OverView = () => {
 			<Suspense fallback={<Loading />}>
 				{data?.workers.length === 0 ? (
 					<EmptyIndicator>
-						<p>해당 일용직이 없습니다 🗑️</p>
+						<BsBoxSeam size={60} color="var(--color-gray-500)" />
+						<p>해당 월에는 작업한 일용직이 없습니다</p>
 					</EmptyIndicator>
 				) : currentDisplayType === '목록' ? (
 					<Table>
@@ -181,10 +183,14 @@ const Table = styled.table`
 	}
 
 	th {
-		font-size: 20px;
+		font-size: 16px;
 
 		span {
 			font-size: 16px;
+		}
+
+		@media screen and (min-width: 720px) {
+			font-size: 18px;
 		}
 	}
 
@@ -193,7 +199,7 @@ const Table = styled.table`
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 18px;
+		font-size: 16px;
 	}
 `;
 
