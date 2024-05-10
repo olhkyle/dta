@@ -23,8 +23,8 @@ const Container = styled.footer`
 	align-items: center;
 	margin: 0 auto;
 	padding: 2rem 1rem;
-
 	border-top: 1px solid var(--outline-color);
+
 	@media screen and (min-width: 640px) {
 		width: 640px;
 	}
@@ -43,6 +43,7 @@ const Container = styled.footer`
 		width: 1280px;
 	}
 `;
+
 const Logo = styled(Link)`
 	width: 24px;
 	height: 24px;

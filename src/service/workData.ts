@@ -25,7 +25,7 @@ const addSumOfPaymentForEachWorker = (data: WorkersQueryData, inOrder = 'asc') =
 			}
 			return uniqueWorkers;
 		}, [] as UniqueWorker[])
-		.sort((prev, curr) => (inOrder === 'asc' ? prev.createdAt - curr.createdAt : curr.createdAt - prev.createdAt));
+		.sort((prev, curr) => (inOrder === 'asc' ? prev?.createdAt - curr?.createdAt : curr.createdAt - prev.createdAt));
 
 const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
 	data?.workers

@@ -8,6 +8,7 @@ const useOverlayFixed = (isOpen: boolean) => {
             top: -${window.scrollY}px;
             overflow-y: scroll;
             width: 100%;`;
+
 			return () => {
 				const scrollY = document.body.style.top;
 				document.body.style.cssText = '';

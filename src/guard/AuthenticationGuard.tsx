@@ -18,7 +18,7 @@ const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) 
 
 	const fallbackComponent =
 		pathname === routes.PRINT || pathname === routes.WORKER ? (
-			<Loading type="lg" />
+			<Loading type="md" />
 		) : pathname === routes.REGISTER ? (
 			<RegisterSkeleton />
 		) : (

@@ -41,13 +41,13 @@ const SearchInfo = ({ registrationNumber, recentSearchList, isError, isFetching,
 				<RecentSearchList>
 					{recentSearchList.length === 0
 						? '검색 내역이 없습니다 ☕️'
-						: recentSearchList.map(item => (
-								<li key={item.workerName + item.registrationNumber}>
+						: recentSearchList.map(({ workerName, registrationNumber }) => (
+								<li key={workerName + registrationNumber}>
 									<Flex gap="1rem">
 										<Circle size={14} bgColor={'var(--color-green-50)'} />
-										<span>{item.workerName}</span>
+										<span>{workerName}</span>
 									</Flex>
-									<span>{item.registrationNumber}</span>
+									<span>{registrationNumber}</span>
 								</li>
 						  ))}
 				</RecentSearchList>
