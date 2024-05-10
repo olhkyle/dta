@@ -65,4 +65,4 @@ and organize related WebApp.
 
 ### 05 Tech Stacks
 
-`React` `TypeScript` `React-Query` `Redux-Toolkit` `Zod` `React-Hook-Form` `Emotion` `Jest` `d3.js` `Firebase`
+`React` `TypeScript` `React-Query` `Redux-Toolkit` `Zod` `React-Hook-Form` `Emotion` `Jest` `Chart.js` `Firebase`
