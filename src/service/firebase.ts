@@ -18,6 +18,8 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 if (typeof window !== 'undefined') {
+	// self.FIREBASE_APPCHECK_DEBUG_TOKEN = true;
+
 	initializeAppCheck(app, {
 		provider: new ReCaptchaV3Provider(import.meta.env.VITE_FIREBASE_RECAPTCHA_SITE_KEY),
 		isTokenAutoRefreshEnabled: true,
