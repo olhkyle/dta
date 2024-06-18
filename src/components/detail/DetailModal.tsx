@@ -22,9 +22,7 @@ interface DetailModalProps {
 	refetch: QueryRefetch;
 }
 
-type DisabledState = {
-	[key: string]: boolean;
-};
+type DisabledState = Record<string, boolean>;
 
 const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProps) => {
 	const {

@@ -1,4 +1,4 @@
-const formatCurrencyUnit = (value: number | undefined) => {
+const formatCurrencyUnit = (value?: number) => {
 	return value
 		?.toString()
 		.replace(/,/gi, '')

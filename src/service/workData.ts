@@ -9,7 +9,7 @@ export interface WorkerWithId extends Worker {
 }
 
 interface UniqueWorker extends WorkerWithId {
-	sumOfPayment: number | undefined;
+	sumOfPayment?: number;
 }
 
 type WorkersDetailBySort = ReturnType<typeof sortByNameAndWorkedDate>;

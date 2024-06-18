@@ -6,7 +6,7 @@ import { useMediaQuery } from '../../hooks';
 
 interface SegmentedControlProps {
 	data: string[];
-	value: string | ReactNode;
+	value: ReactNode;
 	setValue: Dispatch<SetStateAction<string>>;
 }
 
