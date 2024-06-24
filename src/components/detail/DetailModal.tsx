@@ -367,7 +367,7 @@ const Body = styled.div`
 	margin: 1rem 0 1rem;
 	padding: 1rem;
 	width: 100%;
-	height: calc(100% - 18vh);
+	height: calc(100% - 15dvh);
 	border: 1px solid #e1e1e1;
 	border-radius: var(--radius);
 	overflow: scroll;
@@ -377,14 +377,6 @@ const Body = styled.div`
 
 	::-webkit-scrollbar {
 		display: none;
-	}
-
-	@media screen and (min-width: 520px) {
-		height: 600px;
-	}
-
-	@media screen and (min-width: 520px) {
-		height: 660px;
 	}
 `;
 
@@ -445,13 +437,13 @@ const DeleteButton = styled(Button)<{ width: number }>`
 	margin: 1rem auto;
 	min-width: 300px;
 	width: 100%;
-	color: var(--text-color);
+	color: var(--bg-color);
 	border: 1px solid var(--text-color);
+	background-color: var(--btn-hover-color);
+	transition: all 0.1s ease-in-out;
 
 	&:hover {
-		border-color: var(--bg-color);
-		outline: 2px solid var(--color-orange-100);
-		outline-offset: 2px;
+		background-color: var(--btn-hover-bg-color);
 	}
 
 	@media screen and (min-width: 640px) {
