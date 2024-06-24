@@ -9,7 +9,7 @@ interface LoadingProps {
 
 type LoadingSvgProps = Omit<LoadingProps, 'margin'>;
 
-const LoadingSvg = ({ type = 'md', size = 70 }: LoadingSvgProps) => (
+const LoadingSvg = ({ type = 'md', size = 50 }: LoadingSvgProps) => (
 	<Svg
 		type={type}
 		size={size}
@@ -36,7 +36,7 @@ const LoadingSvg = ({ type = 'md', size = 70 }: LoadingSvgProps) => (
 	</Svg>
 );
 
-const Loading = ({ type = 'md', size = 70, margin = '5rem 0' }: LoadingProps) => {
+const Loading = ({ type = 'md', size = 50, margin = '5rem 0' }: LoadingProps) => {
 	return (
 		<>
 			{type === 'sm' ? (
