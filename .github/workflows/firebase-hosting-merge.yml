@@ -23,7 +23,7 @@ jobs:
           version: 8
 
       - name: install dependencies and build
-        run: pnpm install --frozen-lockfile && pnpm run build
+        run: pnpm run build
 
       - name: Generate Environment Variables File
         run: |
