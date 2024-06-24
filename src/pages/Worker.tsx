@@ -70,7 +70,7 @@ const Worker = () => {
 	return (
 		<Container>
 			<GoBackButton type="button" onClick={goBack}>
-				<BsArrowLeft size="24" color="var(--bg-color)" />
+				<BsArrowLeft size="24" color="var(--text-color)" />
 			</GoBackButton>
 
 			<ProfileContainer>
@@ -142,9 +142,11 @@ const GoBackButton = styled.button`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.3rem 0.5rem;
+	padding: 0.3rem;
 	font-weight: 700;
-	background-color: var(--btn-hover-color);
+	background-color: var(--outline-color);
+	outline: 1px solid var(--table-border-color);
+	outline-offset: 2px;
 	border-radius: var(--radius);
 	transition: all 0.3s ease-in-out 0.15s;
 
