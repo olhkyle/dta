@@ -19,12 +19,12 @@ const Detail = ({ query }: DetailProps) => {
 	const workersDetailForPrint =
 		(workersDetail?.workers.length ?? 0) <= DETAIL_DIVISOR
 			? [workersDetail?.workers.slice()]
-			: workersDetail?.workers.reduce((acc, currEl, idx) => {
+			: workersDetail?.workers.reduce<WorkersDetailBySort[]>((acc, currEl, idx) => {
 					if (idx % DETAIL_DIVISOR === 0) acc.push([]);
 
 					acc[acc.length - 1].push(currEl);
 					return acc;
-			  }, [] as WorkersDetailBySort[]);
+			  }, []);
 
 	return (
 		<>

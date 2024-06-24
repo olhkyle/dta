@@ -11,6 +11,7 @@ import {
 	startAfter,
 } from 'firebase/firestore';
 import { Worker } from '../components/register/RegisterForm';
+import { WorkerWithId } from '../service/workData';
 
 interface PaginationQuery {
 	collectionRef: CollectionReference<DocumentData, DocumentData>;
@@ -21,7 +22,8 @@ interface PaginationQuery {
 	limitSizePerPage: number;
 }
 
-export type ReturnTypeOfPaginationQuery = Awaited<ReturnType<typeof paginationQuery>>;
+type ReturnTypeOfPaginationQuery = Awaited<ReturnType<typeof paginationQuery>>;
+type SortOption = 'asc' | 'desc';
 
 const paginationQuery = async ({
 	collectionRef,
@@ -60,5 +62,12 @@ const specifySnapshotIntoData = (snapshot: QuerySnapshot<DocumentData, DocumentD
 
 const formattedWorkedDate = (data: Worker) => data?.workedDate?.toDate();
 const formattedCreatedAt = (data: Worker) => data?.createdAt?.toDate();
+
+const sortWorkerData = <T extends WorkerWithId>(data: T[], inOrder: SortOption) => {
+	return data?.sort((prev, curr) => (inOrder === 'asc' ? prev?.createdAt - curr?.createdAt : curr?.createdAt - prev?.createdAt));
+};
+
+export type { ReturnTypeOfPaginationQuery, SortOption };
+export default sortWorkerData;
 
 export { paginationQuery, specifySnapshotIntoData, formattedWorkedDate };

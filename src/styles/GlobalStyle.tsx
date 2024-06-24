@@ -18,8 +18,8 @@ const GlobalStyle = css`
 		--color-gray-300: #ecedf0;
 		--color-gray-400: #ededed;
 		--color-gray-500: #b8b8b8;
-		--color-gray-600: #4b4c53;
-		--color-gray-700: #757575;
+		--color-gray-600: #757575;
+		--color-gray-700: #4b4c53;
 		--color-gray-800: #2e3039;
 		--color-gray-900: #1f2028;
 		--color-transparent-bgColor-hover: #b1bac41f;
@@ -77,8 +77,8 @@ const GlobalStyle = css`
 		--position-left: 2px;
 		--btn-text-color: var(--color-white);
 		--btn-bg-color: var(--color-dark);
-		--btn-hover-color: var(--color-gray-700);
-		--btn-hover-bg-color: var(--color-gray-800);
+		--btn-hover-color: var(--color-gray-800);
+		--btn-hover-bg-color: var(--color-gray-700);
 		--outline-color: var(--color-gray-400);
 		--table-border-color: var(--color-gray-600);
 		--text-color: var(--color-dark);
@@ -96,7 +96,7 @@ const GlobalStyle = css`
 		--btn-text-color: var(--color-dark);
 		--btn-bg-color: var(--color-white);
 		--btn-hover-color: var(--color-gray-200);
-		--btn-hover-bg-color: var(--color-gray-200);
+		--btn-hover-bg-color: var(--color-gray-100);
 		--outline-color: var(--color-gray-800);
 		--table-border-color: var(--color-gray-600);
 		--text-color: var(--color-white);

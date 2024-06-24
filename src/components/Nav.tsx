@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { RiCloseFill, RiMenuFill } from 'react-icons/ri';
 import { toast } from 'react-toastify';
 import { useScrollTopEffect, useSetUser, useSideNavActive } from '../hooks';
@@ -83,10 +83,11 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 	}
 `;
 
-const Logo = styled(NavLink)`
+const Logo = styled(Link)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
+	padding: 1rem;
 
 	h1 {
 		width: 45px;
@@ -97,6 +98,10 @@ const Logo = styled(NavLink)`
 			width: 100%;
 			height: 100%;
 		}
+	}
+
+	@media screen and (min-width: 640px) {
+		padding: 0;
 	}
 `;
 

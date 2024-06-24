@@ -1,6 +1,6 @@
 import { WorkerWithId } from '../service/workData';
 import { monthOfToday, yearOfToday } from '../constants/day';
-import { ControlValues } from '../constants/sortControls';
+import { SortOption } from '../constants/sortControls';
 
 type Pagination<T> = {
 	paginationData: T[];
@@ -13,7 +13,7 @@ interface WorkersQueryData {
 }
 
 interface WorkerQuery {
-	inOrder: ControlValues;
+	inOrder: SortOption;
 	year: number;
 	month: number;
 	workerName: string;

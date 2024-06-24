@@ -82,10 +82,10 @@ const SearchResult = styled.div<{ isDataFetched: boolean; isInputClean: boolean 
 	font-size: 14px;
 	color: ${({ isDataFetched }) => (isDataFetched ? 'var(--text-color)' : 'var(--color-gray-600)')};
 	border: ${({ isDataFetched, isInputClean }) =>
-		isInputClean ? '1px dashed var(--text-color)' : isDataFetched ? '1px solid var(--text-color)' : '1px dashed var(--text-color)'};
+		isInputClean ? '1px solid var(--outline-color)' : isDataFetched ? '1px solid var(--color-green-50)' : 'none'};
 	border-radius: var(--radius);
 	outline: ${({ isDataFetched, isInputClean }) =>
-		isInputClean ? '1px solid var(--outline-color)' : isDataFetched ? '1px solid var(--color-green-50)' : 'none'};
+		isInputClean ? '1px dashed var(--text-color)' : isDataFetched ? '1px solid var(--text-color)' : '1px dashed var(--text-color)'};
 	outline-offset: 2px;
 
 	@media screen and (min-width: 640px) {
