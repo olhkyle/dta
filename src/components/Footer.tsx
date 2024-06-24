@@ -10,9 +10,9 @@ const Footer = () => {
 				<Logo to={routes.HOME}>
 					<img src="./dta.png" alt="logo" />
 				</Logo>
-				<CopyRight>© TEKTZIMMER</CopyRight>
+				<CopyRight>© TEKT</CopyRight>
 			</Flex>
-			<MadeBy to={'https://olhkyle.me'}>Olhkyle.me</MadeBy>
+			<MadeBy to={'https://lazykyle.me'}>lazykyle.me</MadeBy>
 		</Container>
 	);
 };
