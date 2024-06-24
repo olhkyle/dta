@@ -1,9 +1,8 @@
-const control = { '오래된 순': 'asc', '최신 순': 'desc' } as const;
+type SortOption = keyof typeof control;
+type SortValue = (typeof control)[SortOption];
 
-type ControlKeys = keyof typeof control;
-type ControlValues = (typeof control)[ControlKeys];
+const control = { asc: '오래된 순', desc: '최신 순' } as const;
+const controls: Array<SortOption> = ['asc', 'desc'];
 
-const controls: ControlKeys[] = ['오래된 순', '최신 순'];
-
-export type { ControlKeys, ControlValues };
+export type { SortOption, SortValue };
 export { control, controls };
