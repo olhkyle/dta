@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { open } from '../store/modalSlice';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
-import { ControlKeys, control, controls } from '../constants/sortControls';
+import { SortOption, controls } from '../constants/sortControls';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 
 const Details = () => {
@@ -27,10 +27,10 @@ const Details = () => {
 
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(state ? state?.month + 1 : monthOfToday);
-	const [currentSort, setCurrentControl] = useState('오래된 순');
+	const [currentSort, setCurrentControl] = useState<SortOption>('asc');
 
 	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useGetWorkersDetailInfiniteQuery({
-		inOrder: control[currentSort as ControlKeys],
+		inOrder: currentSort,
 		year,
 		month,
 		workerName,
@@ -38,10 +38,7 @@ const Details = () => {
 
 	const ref = useInfiniteScroll(fetchNextPage);
 
-	const workers = sortByNameAndWorkedDate(
-		data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [],
-		control[currentSort as ControlKeys],
-	);
+	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
 
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
@@ -168,7 +165,7 @@ const PrintButton = styled(Button)`
 	margin: 2rem 0 1rem;
 	padding: 0.6rem 1.5rem;
 	font-size: 15px;
-	background: linear-gradient(0.25turn, #a1ffcd, #0e7b6c);
+	background: linear-gradient(0.45turn, #e1e1e1, #56ffa5);
 	color: var(--color-white);
 	outline-offset: 1px;
 	border-radius: 12px;
@@ -216,6 +213,7 @@ const Table = styled.table<{ searched: boolean }>`
 	tbody > tr {
 		border-top: 1px solid var(--outline-color);
 		border-bottom: 1px solid var(--outline-color);
+		transition: all 0.15s ease-out;
 
 		&:nth-of-type(1) {
 			border-top-color: var(--bg-color);

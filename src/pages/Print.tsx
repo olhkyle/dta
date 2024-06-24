@@ -7,7 +7,7 @@ import { Button, Detail, Flex, HighlightText, Overview } from '../components';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { useGoBack } from '../hooks';
-import { control } from '../constants/sortControls';
+import { controls } from '../constants/sortControls';
 
 const Print = () => {
 	const {
@@ -18,7 +18,7 @@ const Print = () => {
 	const isAdmin = useAppSelector(getIsAdmin);
 	const printRef = useRef(null);
 
-	const query = { inOrder: control['오래된 순'], year, month, workerName: '' };
+	const query = { inOrder: controls[0], year, month, workerName: '' };
 
 	return (
 		<Container>
@@ -67,9 +67,12 @@ const GoBackButton = styled(Button)`
 	align-items: center;
 	gap: 0.5rem;
 	font-weight: 700;
-	color: var(--color-gray-600);
+	font-size: 15px;
+	color: var(--color-gray-800);
 	background-color: #e7e7e9;
+	outline: 1px solid var(--color-white);
 	border-radius: 9999px;
+	transition: all 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		outline: 2px solid #3a3d4a;
@@ -82,6 +85,7 @@ const PrintButton = styled(Button)<{ disabled: boolean }>`
 	color: #fff;
 	background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-50)')};
 	border-radius: ${({ disabled }) => (disabled ? '8px' : '9999px')};
+	transition: all 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-200)')};
