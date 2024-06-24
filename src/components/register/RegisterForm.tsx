@@ -82,8 +82,8 @@ const RegisterForm = () => {
 		const buttonId = ((event?.nativeEvent as any).submitter as HTMLElement)?.id as FormSubmitButtonId;
 
 		try {
-			console.log(data);
 			if (buttonId === 'additionalRegister') await sleep(500);
+
 			await addWorker({
 				...data,
 				workedDate: selectedDay ?? new Date(),
@@ -243,7 +243,12 @@ const Form = styled.form`
 `;
 
 const LabelFlex = styled(Flex)`
-	gap: 11rem;
+	gap: 10.5rem;
+	min-width: 270px;
+
+	@media screen and (min-width: 640px) {
+		width: ${({ width }) => `${width}px`};
+	}
 `;
 
 const CheckExistButton = styled.button`
