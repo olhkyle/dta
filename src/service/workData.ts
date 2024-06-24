@@ -1,6 +1,6 @@
 import { collection, query, where, doc, and, orderBy, getCountFromServer, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebase';
-import { paginationQuery, specifySnapshotIntoData } from './utils';
+import { SortOption, paginationQuery, specifySnapshotIntoData } from './utils';
 import { Worker } from '../components/register/RegisterForm';
 import { WorkerQuery, WorkersPaginationQuery, WorkersQueryData } from '../queries/workerQuery';
 
@@ -17,15 +17,20 @@ type WorkersDetailBySort = ReturnType<typeof sortByNameAndWorkedDate>;
 const COLLECTION_NAME = 'people';
 const LIMIT_SIZE_PER_PAGE = 20;
 
-const addSumOfPaymentForEachWorker = (data: WorkersQueryData, inOrder = 'asc') =>
-	data.workers
-		.reduce((uniqueWorkers, worker) => {
+const sortWorkerData = <T extends WorkerWithId>(data: T[], inOrder: SortOption) => {
+	return data?.sort((prev, curr) => (inOrder === 'asc' ? prev?.createdAt - curr?.createdAt : curr?.createdAt - prev?.createdAt));
+};
+
+const addSumOfPaymentForEachWorker = (data: WorkersQueryData, inOrder: SortOption = 'asc') =>
+	sortWorkerData(
+		data.workers.reduce<UniqueWorker[]>((uniqueWorkers, worker) => {
 			if (!checkExist(uniqueWorkers, worker.workerName)) {
 				uniqueWorkers.push({ ...worker, sumOfPayment: getSumOfPayment(data, worker.workerName) });
 			}
 			return uniqueWorkers;
-		}, [] as UniqueWorker[])
-		.sort((prev, curr) => (inOrder === 'asc' ? prev?.createdAt - curr?.createdAt : curr.createdAt - prev.createdAt));
+		}, []),
+		inOrder,
+	);
 
 const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
 	data?.workers
@@ -35,13 +40,9 @@ const getSumOfPayment = (data: WorkersQueryData, targetName: string) =>
 
 const checkExist = (workers: WorkerWithId[], targetName: string) => workers.find(({ workerName }) => workerName === targetName);
 
-const sortByNameAndWorkedDate = (workers: WorkerWithId[], inOrder = 'asc') => {
-	const workersSortedByCreatedAt = workers.sort((prev, curr) =>
-		inOrder === 'asc' ? prev.createdAt - curr.createdAt : curr.createdAt - prev.createdAt,
-	);
-
+const sortByNameAndWorkedDate = (workers: WorkerWithId[], inOrder: SortOption = 'asc') => {
 	return Object.values(
-		workersSortedByCreatedAt.reduce((acc, worker) => {
+		sortWorkerData(workers, inOrder).reduce<{ [key: string]: WorkerWithId[] }>((acc, worker) => {
 			const { workerName } = worker;
 			if (!acc[workerName]) {
 				acc[workerName] = [];
@@ -49,11 +50,9 @@ const sortByNameAndWorkedDate = (workers: WorkerWithId[], inOrder = 'asc') => {
 
 			acc[workerName].push(worker);
 			return acc;
-		}, {} as { [key: string]: WorkerWithId[] }),
+		}, {}),
 	).flatMap((groupedWorkers, pos) =>
-		groupedWorkers
-			.sort((prev, curr) => (inOrder === 'asc' ? prev.workedDate - curr.workedDate : curr.workedDate - prev.workedDate))
-			.map((worker, idx) => ({ ...worker, position: pos, isFirstIdxOfArr: idx === 0 })),
+		sortWorkerData(groupedWorkers, inOrder).map((worker, idx) => ({ ...worker, position: pos, isFirstIdxOfArr: idx === 0 })),
 	);
 };
 
