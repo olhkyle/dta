@@ -9,13 +9,6 @@ export default defineConfig({
 			output: {
 				manualChunks(id: string) {
 					// Reducing the vendor chunk size
-					if (id.includes('babel')) {
-						return '@babel';
-					}
-
-					if (id.includes('tslib')) {
-						return '@tslib';
-					}
 					// creating a chunk to react routes deps. Reducing the vendor chunk size
 					if (id.includes('react-router-dom') || id.includes('@remix-run') || id.includes('react-router')) {
 						return '@react-router';
@@ -25,16 +18,12 @@ export default defineConfig({
 						return '@firebase';
 					}
 
-					if (id.includes('clsx')) {
-						return '@clsx';
+					if (id.includes('lodash')) {
+						return '@lodash';
 					}
 
-					if (id.includes('redux-thunk')) {
-						return '@redux-thunk';
-					}
-
-					if (id.includes('framer-motion')) {
-						return '@framer-motion';
+					if (id.includes('zod')) {
+						return '@zod';
 					}
 				},
 			},
