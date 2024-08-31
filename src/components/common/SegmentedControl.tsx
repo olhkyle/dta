@@ -4,22 +4,24 @@ import { RiLineChartFill } from 'react-icons/ri';
 import { RxTable } from 'react-icons/rx';
 import { useMediaQuery } from '../../hooks';
 
-interface SegmentedControlProps {
-	data: string[];
+interface SegmentedControlProps<T extends string> {
+	data: T[];
 	value: ReactNode;
-	setValue: Dispatch<SetStateAction<string>>;
+	setValue: Dispatch<SetStateAction<T>>;
 }
 
-const SegmentedControl = ({ data, value: currentPosition, setValue }: SegmentedControlProps) => {
+const SegmentedControl = <T extends string>({ data, value: currentPosition, setValue }: SegmentedControlProps<T>) => {
 	const isTabletScreenSize = useMediaQuery('(max-width: 768px');
 
-	const dataDisplayType = (item: string) =>
+	const dataDisplayType = (item: T) =>
 		item === '목록' ? (
 			<RxTable size={isTabletScreenSize ? '24' : '27'} />
 		) : item === '차트' ? (
 			<RiLineChartFill size={isTabletScreenSize ? '24' : '27'} />
+		) : item === 'asc' ? (
+			'오래된 순'
 		) : (
-			item
+			'최신 순'
 		);
 
 	return (

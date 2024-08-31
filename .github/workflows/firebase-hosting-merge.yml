@@ -20,7 +20,7 @@ jobs:
       - name: Setup pnpm
         uses: pnpm/action-setup@v2
         with:
-          version: 8
+          version: 9
 
       - name: install dependencies and build
         run: pnpm install --frozen-lockfile && pnpm run build

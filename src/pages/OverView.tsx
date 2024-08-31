@@ -7,7 +7,7 @@ import { Badge, CustomSelect, EmptyIndicator, Flex, HighlightText, Loading, Sear
 import { useGetWorkersOverviewQuery } from '../hooks/queries';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
-import { ControlKeys, control, controls } from '../constants/sortControls';
+import { SortOption, controls } from '../constants/sortControls';
 import { BsBoxSeam } from 'react-icons/bs';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -18,14 +18,14 @@ const OverView = () => {
 
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(monthOfToday);
-	const [currentSort, setCurrentSort] = useState('오래된 순');
-	const [currentDisplayType, setCurrentDisplayType] = useState('목록');
+	const [currentSort, setCurrentSort] = useState<SortOption>('asc');
+	const [currentDisplayType, setCurrentDisplayType] = useState<'목록' | '차트'>('목록');
 
 	const [theme] = useTheme();
 	const isTabletScreenSize = useMediaQuery('(max-width: 768px');
 	const isMobileScreenSize = useMediaQuery('(max-width: 480px');
 
-	const data = useGetWorkersOverviewQuery({ inOrder: control[currentSort as ControlKeys], year, month, workerName });
+	const data = useGetWorkersOverviewQuery({ inOrder: currentSort, year, month, workerName });
 
 	const chartOptions = {
 		responsive: true,

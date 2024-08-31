@@ -20,21 +20,23 @@ const Overview = ({ query }: OverviewProps) => {
 	const workersOverviewForPrint =
 		(workersOverview?.workers.length ?? 0) <= OVERVIEW_DIVISOR
 			? [workersOverview?.workers.slice()]
-			: workersOverview?.workers.reduce((acc, currEl, idx) => {
+			: workersOverview?.workers.reduce<(typeof workersOverview.workers)[]>((acc, currEl, idx) => {
 					if (idx % OVERVIEW_DIVISOR === 0) acc.push([]);
 
 					acc[acc.length - 1].push(currEl);
 					return acc;
-			  }, [] as (typeof workersOverview.workers)[]);
-
+			  }, []);
+	console.log(workersOverviewForPrint);
 	return (
 		<>
-			{workersOverviewForPrint?.map((workerOverviewForPrint, idx) => (
-				<OverviewTable key={`overviewTable-${idx}`} className="report page-break">
+			{workersOverviewForPrint?.map((workerOverviewForPrint, arrIdx) => (
+				<OverviewTable key={`overviewTable-${arrIdx}`} className="report page-break">
 					<thead>
-						<tr aria-label="tableHead-title">
-							<th>{`${year}년 ${month}월 일용직 근로소득 명세서 (민하우징)`}</th>
-						</tr>
+						{arrIdx === 0 && (
+							<tr aria-label="tableHead-title">
+								<th>{`${year}년 ${month}월 일용직 근로소득 명세서 (민하우징)`}</th>
+							</tr>
+						)}
 						<tr>
 							<th aria-label="tableHead-index">번 호</th>
 							<th aria-label="tableHead-workerName">성 명</th>
@@ -43,9 +45,9 @@ const Overview = ({ query }: OverviewProps) => {
 						</tr>
 					</thead>
 					<tbody>
-						{workerOverviewForPrint?.map(({ workerName, workedDate, sumOfPayment }, idx) => (
+						{workerOverviewForPrint?.map(({ workerName, workedDate, sumOfPayment }, dataIdx) => (
 							<tr key={workerName}>
-								<td aria-label="tableBody-index">{idx + 1}</td>
+								<td aria-label="tableBody-index">{arrIdx === 0 ? dataIdx + 1 : dataIdx + 1 + OVERVIEW_DIVISOR}</td>
 								<td aria-label="tableBody-workerName">{workerName}</td>
 								<td aria-label="tableBody-monthOfWorkedDate">{workedDate.getMonth() + 1}월</td>
 								<td aria-label="tableBody-sumOfPayment">{formatCurrencyUnit(sumOfPayment)}</td>
@@ -56,12 +58,14 @@ const Overview = ({ query }: OverviewProps) => {
 								<td key={idx} aria-label="tableBody-blank" />
 							))}
 						</tr>
-						<tr key="sum">
-							<td aria-label="tableBody-blank" />
-							<td aria-label="tableBody-blank" />
-							<td aria-label="tableBody-sum-title">합 계</td>
-							<td aria-label="tableBody-total-sumOfPayment">{formatCurrencyUnit(workersOverview?.sumOfPayment)}</td>
-						</tr>
+						{arrIdx === workersOverviewForPrint.length - 1 && (
+							<tr key="sum">
+								<td aria-label="tableBody-blank" />
+								<td aria-label="tableBody-blank" />
+								<td aria-label="tableBody-sum-title">합 계</td>
+								<td aria-label="tableBody-total-sumOfPayment">{formatCurrencyUnit(workersOverview?.sumOfPayment)}</td>
+							</tr>
+						)}
 					</tbody>
 				</OverviewTable>
 			))}
@@ -72,6 +76,7 @@ const Overview = ({ query }: OverviewProps) => {
 const OverviewTable = styled.table`
 	display: flex;
 	flex-direction: column;
+	margin-top: 1rem;
 	border: 1px solid #3a3d4a;
 	border-collapse: collapse;
 
