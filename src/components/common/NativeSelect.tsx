@@ -47,7 +47,6 @@ Select.Field = forwardRef(
 			<SelectField
 				id={id}
 				name={name}
-				placeholder="선택해 주세요"
 				ref={ref}
 				onChange={onChange}
 				onBlur={onBlur}
