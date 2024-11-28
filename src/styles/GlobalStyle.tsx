@@ -8,20 +8,31 @@ const GlobalStyle = css`
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 		-webkit-text-size-adjust: 100%;
+		text-size-adjust: 100%;
 
 		--color-black: #191a20;
 		--color-white: #fff;
 
-		--color-gray-50: #f3f4f4;
-		--color-gray-100: #f9fafb;
-		--color-gray-200: #f0f1f5;
-		--color-gray-300: #ecedf0;
-		--color-gray-400: #ededed;
-		--color-gray-500: #b8b8b8;
-		--color-gray-600: #757575;
-		--color-gray-700: #4b4c53;
-		--color-gray-800: #2e3039;
-		--color-gray-900: #1f2028;
+		--color-gray-50: #f9fafb;
+		--color-gray-100: #f2f4f6;
+		--color-gray-200: #e5e8eb;
+		--color-gray-300: #d1d6db;
+		--color-gray-400: #b0b8c1;
+		--color-gray-500: #8b95a1;
+		--color-gray-600: #6b7684;
+		--color-gray-700: #4e5968;
+		--color-gray-800: #333d4b;
+		--color-gray-900: #191f28;
+		--color-gray-opacity-50: rgba(0, 23, 51, 0.02);
+		--color-gray-opacity-100: rgba(2, 32, 71, 0.05);
+		--color-gray-opacity-200: rgba(0, 27, 55, 0.1);
+		--color-gray-opacity-300: rgba(0, 29, 58, 0.18);
+		--color-gray-opacity-400: rgba(0, 25, 54, 0.31);
+		--color-gray-opacity-500: rgba(3, 24, 50, 0.46);
+		--color-gray-opacity-600: rgba(0, 19, 43, 0.58);
+		--color-gray-opacity-700: rgba(3, 18, 40, 0.7);
+		--color-gray-opacity-800: rgba(0, 12, 30, 0.8);
+		--color-gray-opacity-900: rgba(2, 9, 19, 0.91);
 		--color-transparent-bgColor-hover: #b1bac41f;
 
 		--color-green-10: #46df8e60;
@@ -49,16 +60,43 @@ const GlobalStyle = css`
 
 		--radius: 0.5rem;
 
+		--nav-height: 80px;
+		--footer-height: 60px;
+
 		--btn-sm-padding: 8px 16px;
 		--btn-md-padding: 12px 20px;
 		--btn-lg-padding: 16px 24px;
 		--btn-font-size: 16px;
 
-		--text-label: 18px;
+		--line-height-base: 1.5;
+		--fz-2xl: 96px;
+		--fz-xl: 72px;
+		--fz-h1: 56px;
+		--fz-h2: 48px;
+		--fz-h3: 36px;
+		--fz-h4: 32px;
+		--fz-h5: 24px;
+		--fz-h6: 20px;
+		--fz-h7: 17px;
+		--fz-p: 15px;
+		--fz-sm: 13px;
+		--fz-xs: 11px;
+
+		--fw-regular: 400;
+		--fw-medium: 500;
+		--fw-semibold: 600;
+		--fw-bold: 700;
+		--fw-black: 900;
+
+		/* z-index */
+		--nav-index: 50;
+		--overlay-index: 999;
+		--modal-index: 9990;
+		--toast-index: 9999;
 
 		--toastify-color-success: var(--color-green-50);
 		--toastify-color-error: var(--color-red);
-		--toastify-font-family: 'Noto Sans KR';
+		--toastify-font-family: 'Pretendard';
 	}
 
 	* {
@@ -67,24 +105,37 @@ const GlobalStyle = css`
 		padding: 0;
 		border: 0;
 		vertical-align: baseline;
-		font-family: 'DM Mono', monospace;
-		font-family: 'Noto Sans KR', sans-serif;
+		font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, 'Helvetica Neue', 'Mona-Sans',
+			'Segoe UI', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Malgun Gothic', 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol',
+			sans-serif;
 		word-break: keep-all;
 		-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	}
+
+	html {
+		width: 100%;
+		height: 100%;
+	}
+
+	body {
+		width: 100%;
+		height: 100%;
+		font-size: var(--fz-p);
+		line-height: var(--line-height-base);
 	}
 
 	body[data-theme='light'] {
 		--position-left: 2px;
 		--btn-text-color: var(--color-white);
 		--btn-bg-color: var(--color-dark);
-		--btn-hover-color: var(--color-gray-800);
-		--btn-hover-bg-color: var(--color-gray-700);
-		--outline-color: var(--color-gray-400);
+		--btn-hover-color: var(--color-gray-700);
+		--btn-hover-bg-color: var(--color-gray-900);
+		--outline-color: var(--color-gray-100);
 		--table-border-color: var(--color-gray-600);
 		--text-color: var(--color-dark);
 		--disabled-text-color: var(--color-gray-600);
 		--bg-color: var(--color-white);
-		--option-hover-bg-color: var(--color-gray-200);
+		--option-hover-bg-color: var(--color-gray-opacity-100);
 		--backdrop-blur-bg-color: rgb(0 0 0 / 0.15);
 		--linear-gradient: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
 		color: var(--color-dark);

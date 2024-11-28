@@ -1,10 +1,9 @@
-import { ReactNode, Suspense, useEffect, useState } from 'react';
+import { ReactNode, Suspense } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { auth } from '../service/firebase';
 import { Loading, RegisterSkeleton, Skeleton } from '../components';
-import { useSetUser } from '../hooks';
 import routes from '../constants/routes';
 import { Route } from '../constants/routes';
+import useAuthQuery from '../hooks/useAuthQuery';
 
 interface AuthenticationGuardProps {
 	redirectTo: Route<typeof routes>;
@@ -12,9 +11,8 @@ interface AuthenticationGuardProps {
 }
 
 const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) => {
-	const { name: username, setLogoutUser } = useSetUser();
-	const [isLoggedIn, setIsLoggedIn] = useState(false);
 	const { pathname } = useLocation();
+	const { data, isLoading, error } = useAuthQuery();
 
 	const fallbackComponent =
 		pathname === routes.PRINT || pathname === routes.WORKER ? (
@@ -25,23 +23,15 @@ const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) 
 			<Skeleton />
 		);
 
-	useEffect(() => {
-		auth.onAuthStateChanged(user => {
-			if (!user) {
-				setIsLoggedIn(false);
-				setLogoutUser();
-				return;
-			}
+	if (isLoading) {
+		return <>{fallbackComponent}</>;
+	}
 
-			setIsLoggedIn(true);
-		});
-	}, []);
-
-	if (!username) {
+	if (!data) {
 		return <Navigate to={redirectTo} />;
 	}
 
-	return !isLoggedIn ? null : username ? <Suspense fallback={fallbackComponent}>{element}</Suspense> : <Navigate to={redirectTo} />;
+	return error === null ? <Suspense fallback={fallbackComponent}>{element}</Suspense> : <Navigate to={redirectTo} />;
 };
 
 export default AuthenticationGuard;

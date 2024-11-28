@@ -74,15 +74,15 @@ const OverView = () => {
 	return (
 		<>
 			<SearchInput value={inputValue} setValue={setInputValue} />
-			<CustomFlex margin="2rem 0" gap="1rem">
+			<CustomFlex margin="32px 0" gap="1rem" height="100%">
 				<SegmentedControl data={['목록', '차트']} value={currentDisplayType} setValue={setCurrentDisplayType} />
-				<SearchFilters>
-					<Flex gap="1rem">
+				<SearchFilters gap="16px" width="100%">
+					<Flex gap="1rem" alignItems="center">
 						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentSort} />
 						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
 						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
 					</Flex>
-					<Flex justifyContent="flex-end" margin="1rem 0">
+					<Flex justifyContent="flex-end" margin="16px 0">
 						<Badge label="총 합계" bgColor="var(--text-color)">
 							{formatCurrencyUnit(data?.sumOfPayment)}
 						</Badge>
@@ -143,12 +143,11 @@ const CustomFlex = styled(Flex)`
 	}
 `;
 
-const SearchFilters = styled.div`
+const SearchFilters = styled(Flex)`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
 	gap: 1rem;
-	width: 100%;
 
 	@media screen and (min-width: 640px) {
 		flex-direction: row;

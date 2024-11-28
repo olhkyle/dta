@@ -3,7 +3,7 @@ import { Portal } from '..';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { close, getModals } from '../../store/modalSlice';
 
-const Modal = () => {
+const ModalContainer = () => {
 	const modals = useAppSelector(getModals);
 	const dispatch = useAppDispatch();
 
@@ -34,4 +34,4 @@ const Container = styled.div`
 	z-index: 9990;
 `;
 
-export default Modal;
+export default ModalContainer;

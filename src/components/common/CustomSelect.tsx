@@ -77,10 +77,11 @@ const Trigger = styled.button<{ width: number }>`
 	border: 1px solid var(--outline-color);
 	border-radius: var(--radius);
 	color: var(--text-color);
+	transition: outline 0.15s ease-out;
 
 	&:hover {
-		outline: 2px solid var(--text-color);
-		outline-offset: 2px;
+		outline: 1px solid var(--color-gray-400);
+		outline-offset: 1px;
 	}
 
 	@media screen and (min-width: 640px) {

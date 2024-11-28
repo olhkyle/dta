@@ -12,24 +12,9 @@ const Main = ({ children }: MainProps) => {
 const Container = styled.main`
 	margin: 0 auto;
 	padding: 0 1rem 5rem 1rem;
-
-	@media screen and (min-width: 640px) {
-		width: 640px;
-	}
-
-	@media screen and (min-width: 768px) {
-		grid-template-columns: 1fr 2fr;
-		width: 768px;
-	}
-
-	@media screen and (min-width: 1024px) {
-		grid-template-columns: 2fr 1.5fr;
-		width: 1024px;
-	}
-
-	@media screen and (min-width: 1280px) {
-		width: 1280px;
-	}
+	max-width: 1280px;
+	width: 100%;
+	min-height: calc(100dvh - var(--nav-height) - var(--footer-height));
 `;
 
 export default Main;

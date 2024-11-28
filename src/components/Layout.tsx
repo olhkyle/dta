@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Footer, Main, Nav, ScrollToTopButton, Modal, Loading } from '.';
+import { Footer, Main, Nav, ScrollToTopButton, ModalContainer, Loading } from '.';
 import { useScrollTopEffect } from '../hooks';
 import routes from '../constants/routes';
 
@@ -22,7 +22,7 @@ const Layout = () => {
 			{pathname !== routes.LOGIN && <Footer />}
 			<ScrollToTopButton topPosToShow={300} />
 			<StyledToastContainer position="bottom-center" autoClose={1500} closeOnClick={true} pauseOnHover={false} limit={1} />
-			<Modal />
+			<ModalContainer />
 		</>
 	);
 };

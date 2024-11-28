@@ -1,49 +1,62 @@
 import { HTMLAttributes } from 'react';
 
 interface TextProps extends HTMLAttributes<HTMLDivElement> {
-	typo?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p';
+	typo?: 'mega' | 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'h7' | 'p' | 'sm' | 'xs';
 	color: string;
 }
 
 const TYPO_VARIANTS = {
 	mega: {
-		fontSize: '80px',
+		fontSize: 'var(--fz-2xl)',
 		lineHeight: '5.25rem',
-		fontWeight: 900,
+		fontWeight: 'var(--fw-black)',
 	},
 	h1: {
-		fontSize: '56px',
+		fontSize: 'var(--fz-h1)',
 		lineHeight: '3.875rem',
-		fontWeight: 900,
+		fontWeight: 'var(--fw-black)',
 	},
 	h2: {
-		fontSize: '48px',
+		fontSize: 'var(--fz-h2)',
 		lineHeight: '3rem',
-		fontWeight: 800,
+		fontWeight: 'var(--fw-bold)',
 	},
 	h3: {
-		fontSize: '36px',
+		fontSize: 'var(--fz-h3)',
 		lineHeight: '2.25rem',
-		fontWeight: 700,
+		fontWeight: 'var(--fw-bold)',
 	},
 	h4: {
-		fontSize: '27px',
+		fontSize: 'var(--fz-h4)',
 		lineHeight: '2.25rem',
-		fontWeight: 700,
+		fontWeight: 'var(--fw-bold)',
 	},
 	h5: {
-		fontSize: '21px',
+		fontSize: 'var(--fz-h5)',
 		lineHeight: '2rem',
-		fontWeight: 700,
+		fontWeight: 'var(--fw-bold)',
 	},
 	h6: {
-		fontSize: '16px',
+		fontSize: 'var(--fz-h6)',
 		lineHeight: '1.25rem',
-		fontWeight: 600,
+		fontWeight: 'var(--fw-semibold)',
+	},
+	h7: {
+		fontSize: 'var(--fz-h7)',
+		lineHeight: '1.25rem',
+		fontWeight: 'var(--fw-medium)',
 	},
 	p: {
-		fontSize: '15px',
-		fontWeight: 400,
+		fontSize: 'var(-fz-p)',
+		fontWeight: 'var(--fw-regular)',
+	},
+	sm: {
+		fontSize: 'var(--fz-sm)',
+		fontWeight: 'var(--fw-regular)',
+	},
+	xs: {
+		fontSize: 'var(--fz-xs)',
+		fontWeight: 'var(--fw-regular)',
 	},
 };
 

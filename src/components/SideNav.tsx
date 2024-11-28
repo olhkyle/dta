@@ -1,18 +1,19 @@
-import { useState } from 'react';
+import { ReactNode, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Flex, NavLink, Text, ThemeButton } from '.';
-import { useAppSelector } from '../store/store';
-import { getIsAdmin, getUser } from '../store/userSlice';
-import { useClickOutside, useSideNavActive } from '../hooks';
+import { useClickOutside, useSetUser, useSideNavActive } from '../hooks';
 import routes from '../constants/routes';
 
 interface SideNavProps {
+	isLoading: boolean;
+	Loading: () => ReactNode;
 	onLogout: () => void;
 }
 
-const SideNav = ({ onLogout }: SideNavProps) => {
-	const username = useAppSelector(getUser);
-	const isAdmin = useAppSelector(getIsAdmin);
+const SideNav = ({ isLoading, Loading, onLogout }: SideNavProps) => {
+	const {
+		userData: { isAdmin, name },
+	} = useSetUser();
 
 	const [isProfileClicked, setIsProfileClicked] = useState<boolean>(false);
 
@@ -25,30 +26,36 @@ const SideNav = ({ onLogout }: SideNavProps) => {
 	return (
 		<Container>
 			<Flex direction="column" justifyContent="space-between">
-				<Navigation to={routes.OVERVIEW} onClick={close}>
-					월별 개요 명세
-				</Navigation>
-				<Navigation to={routes.DETAILS} onClick={close}>
-					월별 상세 명세
-				</Navigation>
+				{isAdmin && (
+					<Navigation to={routes.OVERVIEW} onClick={close}>
+						월별 개요 명세
+					</Navigation>
+				)}
+				{isAdmin && (
+					<Navigation to={routes.DETAILS} onClick={close}>
+						월별 상세 명세
+					</Navigation>
+				)}
 				{isAdmin && (
 					<Navigation to={routes.SEARCH_WORKERS} onClick={close}>
 						일용직 검색
 					</Navigation>
 				)}
-				<Navigation to={routes.REGISTER} onClick={close}>
-					일용직 등록
-				</Navigation>
+				{isAdmin && (
+					<Navigation to={routes.REGISTER} onClick={close}>
+						일용직 등록
+					</Navigation>
+				)}
 			</Flex>
-			<Flex justifyContent="space-between" margin="2rem 0" padding="0 1.5rem">
-				{username ? (
+			<Flex justifyContent="space-between" margin="18px 0" padding="0 24px">
+				{name ? (
 					<Name
 						ref={ref}
 						onClick={() => {
 							setIsProfileClicked(!isProfileClicked);
 						}}>
-						<Text typo="h6" color="var(--text-color)">
-							👨‍🚀 {username}
+						<Text typo="h7" color="var(--text-color)">
+							👨‍🚀 {name}
 						</Text>
 						{isProfileClicked && (
 							<LogoutButton
@@ -57,7 +64,7 @@ const SideNav = ({ onLogout }: SideNavProps) => {
 									onLogout();
 									close();
 								}}>
-								로그아웃
+								{isLoading ? Loading() : '로그아웃'}
 							</LogoutButton>
 						)}
 					</Name>
@@ -78,6 +85,8 @@ const Container = styled.div`
 	left: 0;
 	width: 100%;
 	background-color: var(--bg-color);
+	border-top: 1px solid var(--color-gray-opacity-200);
+	border-bottom: 1px solid var(--color-gray-opacity-200);
 	z-index: 999;
 
 	@media screen and (min-width: 768px) {
@@ -91,7 +100,7 @@ const Navigation = styled(NavLink)`
 	font-size: 18px;
 	border-radius: 0;
 	border-top: 1px solid #fff;
-	border-bottom: 1px solid var(--color-gray-400);
+	border-bottom: 1px solid var(--color-gray-opacity-200);
 	transition: all 0.1s ease-in-out 0.05s;
 
 	&:hover {
@@ -102,10 +111,9 @@ const Navigation = styled(NavLink)`
 `;
 
 const Login = styled(NavLink)`
-	font-size: 18px;
+	font-size: var(--fz-p);
 	border: 1px solid var(--outline-color);
 	border-radius: 8px;
-
 	outline-offset: 2px;
 
 	&:hover {
@@ -133,8 +141,9 @@ const LogoutButton = styled(Button)`
 	bottom: -50px;
 	left: -5px;
 	padding: var(--btn-md-padding);
-	width: 120px;
-	font-size: 14px;
+	width: 100%;
+	min-width: 120px;
+	font-size: var(--fz-sm);
 	font-weight: 500;
 	line-height: 1;
 	color: var(--text-color);

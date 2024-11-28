@@ -1,39 +1,35 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
+import { User } from 'firebase/auth';
 
-export interface UserState {
+export interface UserState extends Partial<User> {
 	name: string;
-	email: string;
+	nickname: string;
 	isAdmin: boolean;
 }
 
 const KEY = 'user';
 
-const initialState: UserState =
-	JSON.parse(localStorage.getItem(KEY) || '{}') ??
-	({
-		name: '',
-		email: '',
-		isAdmin: false,
-	} as const);
+const initialState: UserState = {
+	name: '',
+	nickname: 'test-id',
+	isAdmin: false,
+};
 
 export const userSlice = createSlice({
-	name: 'user',
+	name: KEY,
 	initialState,
 	reducers: {
 		setUser: (state: UserState, action: PayloadAction<UserState>) => {
-			const { name, email, isAdmin } = action.payload;
-			localStorage.setItem(KEY, JSON.stringify(action.payload));
+			const { name, nickname, isAdmin } = action.payload;
 
 			state.name = name;
-			state.email = email;
+			state.nickname = nickname;
 			state.isAdmin = isAdmin;
 		},
 		logoutUser: (state: UserState) => {
-			localStorage.removeItem(KEY);
-
 			state.name = '';
-			state.email = '';
+			state.nickname = '';
 			state.isAdmin = false;
 		},
 	},

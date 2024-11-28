@@ -63,7 +63,7 @@ const Details = () => {
 							navigate(routes.PRINT, { state: { year, month } });
 						}}
 						aria-label="print-button">
-						<IoPrintSharp size={24} />
+						<IoPrintSharp size={24} color="var(--color-green-400)" />
 					</PrintButton>
 				</Flex>
 				<Flex justifyContent="flex-end" margin="3rem 0 2rem">
@@ -89,9 +89,6 @@ const Details = () => {
 								<th aria-label="tableHead-payment">
 									지급액<span>(원)</span>
 								</th>
-								{/* <th aria-label="tableHead-remittance">
-									송금내용<span>(유형 + 금액)</span>
-								</th> */}
 								<th aria-label="tableHead-workspace">근로지역</th>
 								<th aria-label="tableHead-businessNumber">사업개시번호</th>
 							</tr>
@@ -141,7 +138,9 @@ const Details = () => {
 										<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
 
 										<td aria-label="tableBody-workspace">{workspace ?? '해당 없음'}</td>
-										<td aria-label="tableBody-businessNumber">{businessNumber ?? '해당 없음'}</td>
+										<td aria-label="tableBody-businessNumber">
+											{isAdmin ? businessNumber ?? '해당 없음' : <span aria-label="isNotAdmin">Classified</span>}
+										</td>
 									</tr>
 								),
 							)}
@@ -165,7 +164,7 @@ const PrintButton = styled(Button)`
 	margin: 2rem 0 1rem;
 	padding: 0.6rem 1.5rem;
 	font-size: 15px;
-	background: linear-gradient(0.45turn, #e1e1e1, #56ffa5);
+	background: linear-gradient(0.45turn, #e1e1e1, var(--color-green-50));
 	color: var(--color-white);
 	outline-offset: 1px;
 	border-radius: 12px;

@@ -1,12 +1,15 @@
 import styled from '@emotion/styled';
+import { ReactNode } from 'react';
 
 interface UserProfileProps {
 	name: string;
 	isAdmin: boolean;
+	isLoading: boolean;
+	Loading: () => ReactNode;
 	onLogout: () => void;
 }
 
-const UserProfile = ({ name, isAdmin, onLogout }: UserProfileProps) => {
+const UserProfile = ({ name, isAdmin, isLoading, Loading, onLogout }: UserProfileProps) => {
 	return (
 		<Container>
 			{isAdmin && (
@@ -16,7 +19,7 @@ const UserProfile = ({ name, isAdmin, onLogout }: UserProfileProps) => {
 			)}
 			<Name>{name}</Name>
 			<button type="button" onClick={onLogout}>
-				로그아웃
+				{isLoading ? Loading() : '로그아웃'}
 			</button>
 		</Container>
 	);
@@ -27,7 +30,7 @@ const Container = styled.div`
 	display: flex;
 	align-items: center;
 	gap: 0.4rem;
-	margin-left: 0.5rem;
+	margin-left: 32px;
 	padding: var(--btn-sm-padding);
 	border-radius: var(--radius);
 	background-color: var(--color-green-300);

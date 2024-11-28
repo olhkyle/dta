@@ -59,6 +59,7 @@ const router = createBrowserRouter([
 			},
 		],
 	},
+
 	{
 		path: routes.PRINT,
 		element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Print')} />,

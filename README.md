@@ -49,20 +49,12 @@ and organize related WebApp.
 
 <br/>
 
-### 03 테스트 계정 / Test Account
-
-> email : test1234@test.com
->
-> password : test@#$1234
-
-<br/>
-
-### 04 진행상황 / Progress
+### 03 진행상황 / Progress
 
 > ☑︎ 90% / 100%
 
 <br/>
 
-### 05 Tech Stacks
+### 04 Tech Stacks
 
-`React` `TypeScript` `React-Query` `Redux-Toolkit` `Zod` `React-Hook-Form` `Emotion` `Jest` `Chart.js` `Firebase`
+`React` `TypeScript` `React-Query` `Redux-Toolkit` `Zod` `React-Hook-Form` `Emotion` `Chart.js` `Firebase`

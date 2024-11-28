@@ -9,22 +9,24 @@ interface SignIn {
 
 const COLLECTION_NAME = 'user';
 
-const signIn = async ({ email, password }: SignIn) => {
-	await signInWithEmailAndPassword(auth, email, password);
-
+const getSignedUserData = async (email: string) => {
 	const userDocRef = doc(db, COLLECTION_NAME, email);
 	const userSnapShot = await getDoc(userDocRef);
 
-	const userData = userSnapShot.data();
+	const userData = userSnapShot.data() as { lastName: string; firstName: string; isAdmin: boolean };
 
-	if (userData) {
-		const { lastName, firstName, isAdmin } = userData;
-		return { name: lastName + firstName, email, isAdmin } as const;
-	}
+	return { nickname: userData?.lastName + userData?.firstName, email, isAdmin: userData?.isAdmin };
+};
+
+const signIn = async ({ email, password }: SignIn) => {
+	const { user } = await signInWithEmailAndPassword(auth, email, password);
+	const data = await getSignedUserData(email);
+
+	return { ...data, name: user?.displayName ?? data.nickname };
 };
 
 const logOut = async () => {
 	await signOut(auth);
 };
 
-export { signIn, logOut };
+export { getSignedUserData, signIn, logOut };

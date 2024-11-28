@@ -10,7 +10,7 @@ const Footer = () => {
 				<Logo to={routes.HOME}>
 					<img src="./dta.png" alt="logo" />
 				</Logo>
-				<CopyRight>© TEKT</CopyRight>
+				<CopyRight>© radial</CopyRight>
 			</Flex>
 			<MadeBy to={'https://lazykyle.me'}>lazykyle.me</MadeBy>
 		</Container>
@@ -22,26 +22,11 @@ const Container = styled.footer`
 	justify-content: space-between;
 	align-items: center;
 	margin: 0 auto;
-	padding: 2rem 1rem;
+	padding: 0 16px;
+	width: 100%;
+	max-width: 1280px;
+	min-height: var(--footer-height);
 	border-top: 1px solid var(--outline-color);
-
-	@media screen and (min-width: 640px) {
-		width: 640px;
-	}
-
-	@media screen and (min-width: 768px) {
-		grid-template-columns: 1fr 2fr;
-		width: 768px;
-	}
-
-	@media screen and (min-width: 1024px) {
-		grid-template-columns: 2fr 1.5fr;
-		width: 1024px;
-	}
-
-	@media screen and (min-width: 1280px) {
-		width: 1280px;
-	}
 `;
 
 const Logo = styled(Link)`
