@@ -8,8 +8,8 @@ const useAuthQuery = () => {
 	const { setCurrentUser, setLogoutUser } = useSetUser();
 
 	const { data, isFetched, isLoading, error, refetch } = useQuery<User | null, Error>({
-		queryKey: ['auth'],
-		queryFn: async () => {
+		queryKey: ['auth'], // queryKey는 배열로 설정
+		queryFn: async (): Promise<User | null> => {
 			return new Promise<User | null>((resolve, reject) => {
 				const unsubscribe = auth.onAuthStateChanged(
 					async user => {
@@ -45,13 +45,12 @@ const useAuthQuery = () => {
 						setLogoutUser();
 					},
 				);
-				// 언마운트 시 구독 해제를 위한 클린업 함수 반환
 				return unsubscribe;
 			});
 		},
-		staleTime: 1000, // 인증 상태는 자주 변경되지 않으므로
-		gcTime: 1000 * 2,
-		enabled: true, // 초기 로드 시 자동 실행
+		staleTime: 1000,
+		cacheTime: 2000,
+		enabled: true,
 	});
 
 	return { data, isFetched, isLoading, error, refetch };
