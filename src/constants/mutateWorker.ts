@@ -13,9 +13,11 @@ const edit = (data: WorkerWithId) => (oldData: WorkersQueryData) => ({
 
 const remove =
 	({ id }: { id: string }) =>
-	(oldData: WorkersQueryData) => ({
-		...oldData,
-		workers: oldData.workers.filter(worker => worker.id !== id),
-	});
+	(oldData: WorkersQueryData) => {
+		return {
+			...oldData,
+			workers: oldData.workers.filter(worker => worker.id !== id),
+		};
+	};
 
 export { edit, remove };
