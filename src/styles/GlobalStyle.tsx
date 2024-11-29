@@ -78,7 +78,9 @@ const GlobalStyle = css`
 		--fz-h5: 24px;
 		--fz-h6: 20px;
 		--fz-h7: 17px;
+		--fz-rp: 16px;
 		--fz-p: 15px;
+		--fz-m: 14px;
 		--fz-sm: 13px;
 		--fz-xs: 11px;
 
@@ -90,6 +92,7 @@ const GlobalStyle = css`
 
 		/* z-index */
 		--nav-index: 50;
+		--sideNav-index: 999;
 		--overlay-index: 999;
 		--modal-index: 9990;
 		--toast-index: 9999;
@@ -136,6 +139,7 @@ const GlobalStyle = css`
 		--disabled-text-color: var(--color-gray-600);
 		--bg-color: var(--color-white);
 		--option-hover-bg-color: var(--color-gray-opacity-100);
+		--skeleton-bg-color: var(--color-gray-opacity-50);
 		--backdrop-blur-bg-color: rgb(0 0 0 / 0.15);
 		--linear-gradient: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
 		color: var(--color-dark);
@@ -154,6 +158,7 @@ const GlobalStyle = css`
 		--disabled-text-color: var(--color-gray-300);
 		--bg-color: var(--color-dark);
 		--option-hover-bg-color: var(--color-gray-700);
+		--skeleton-bg-color: var(--color-gray-opacity-800);
 		--backdrop-blur-bg-color: rgb(0 0 0/ 0.4);
 		--linear-gradient: linear-gradient(to right, #3a3d4a, #4b4c53, #3a3d4a);
 		color: var(--color-white);

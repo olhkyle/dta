@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Circle, Flex, Loading, Text } from '..';
+import { Circle, Flex, SmallLoading, Text } from '..';
 import { RecentSearch } from '../../pages/Search';
 
 interface SearchInfoProps {
@@ -13,7 +13,7 @@ interface SearchInfoProps {
 
 const SearchInfo = ({ registrationNumber, recentSearchList, isError, isFetching, isDataFetched, isInputClean }: SearchInfoProps) => {
 	return (
-		<Infos direction="column" margin="1rem auto 1.5rem">
+		<Infos direction="column" margin="16px auto 24px">
 			<CustomFlex direction="column" justifyContent="flex-start" alignItems="flex-start" margin="0 auto">
 				<Text typo="h5" color="var(--text-color)">
 					💿 주민등록번호
@@ -21,13 +21,13 @@ const SearchInfo = ({ registrationNumber, recentSearchList, isError, isFetching,
 				{isError ? (
 					<NoResult>{registrationNumber}</NoResult>
 				) : (
-					<Flex justifyContent="center" gap="0.75rem" margin="0 auto">
+					<Flex justifyContent="center" gap="12px" margin="0 auto" width="100%">
 						<SearchResult isDataFetched={isDataFetched} isInputClean={isInputClean}>
-							{isFetching ? <Loading type="sm" size={27} /> : !isDataFetched || isInputClean ? '------' : registrationNumber.split('-')[0]}
+							{isFetching ? <SmallLoading /> : !isDataFetched || isInputClean ? '------' : registrationNumber.split('-')[0]}
 						</SearchResult>
 
 						<SearchResult isDataFetched={isDataFetched} isInputClean={isInputClean}>
-							{isFetching ? <Loading type="sm" size={27} /> : !isDataFetched || isInputClean ? '-------' : registrationNumber.split('-')[1]}
+							{isFetching ? <SmallLoading /> : !isDataFetched || isInputClean ? '-------' : registrationNumber.split('-')[1]}
 						</SearchResult>
 					</Flex>
 				)}
@@ -43,7 +43,7 @@ const SearchInfo = ({ registrationNumber, recentSearchList, isError, isFetching,
 						? '검색 내역이 없습니다 ☕️'
 						: recentSearchList.map(({ workerName, registrationNumber }) => (
 								<li key={workerName + registrationNumber}>
-									<Flex gap="1rem">
+									<Flex gap="16px">
 										<Circle size={14} bgColor={'var(--color-green-50)'} />
 										<span>{workerName}</span>
 									</Flex>
@@ -57,52 +57,39 @@ const SearchInfo = ({ registrationNumber, recentSearchList, isError, isFetching,
 };
 
 const Infos = styled(Flex)`
-	padding: 2rem 0 3rem;
+	padding: 32px 16px;
 `;
 
 const CustomFlex = styled(Flex)`
-	padding: 1rem;
-	width: 330px;
+	padding: 16px;
+	width: 100%;
 	border: 1px solid var(--outline-color);
 	border-radius: var(--radius);
-
-	@media screen and (min-width: 640px) {
-		width: 400px;
-	}
-
-	@media screen and (min-width: 768px) {
-		width: 600px;
-	}
 `;
 
 const SearchResult = styled.div<{ isDataFetched: boolean; isInputClean: boolean }>`
-	margin: 1rem 0;
+	margin: 16px 0;
 	padding: var(--btn-md-padding);
-	width: 140px;
-	font-size: 14px;
+	width: 100%;
+	font-size: var(--fz-m);
 	color: ${({ isDataFetched }) => (isDataFetched ? 'var(--text-color)' : 'var(--color-gray-600)')};
 	border: ${({ isDataFetched, isInputClean }) =>
 		isInputClean ? '1px solid var(--outline-color)' : isDataFetched ? '1px solid var(--color-green-50)' : 'none'};
 	border-radius: var(--radius);
 	outline: ${({ isDataFetched, isInputClean }) =>
-		isInputClean ? '1px dashed var(--text-color)' : isDataFetched ? '1px solid var(--text-color)' : '1px dashed var(--text-color)'};
+		isInputClean ? '1px dashed var(--text-color)' : isDataFetched ? '1px solid var(--color-gray-600)' : '1px dashed var(--text-color)'};
 	outline-offset: 2px;
 
-	@media screen and (min-width: 640px) {
-		width: 180px;
-	}
-
 	@media screen and (min-width: 768px) {
-		width: 270px;
-		font-size: 16px;
+		font-size: var(--fz-p);
 	}
 `;
 
 const NoResult = styled.div`
-	margin: 1rem 0;
+	margin: 16px 0;
 	padding: var(--btn-md-padding);
 	width: 100%;
-	font-size: 16px;
+	font-size: var(--fz-rp);
 	border: 1px solid var(--outline-color);
 	border-radius: var(--radius);
 `;
@@ -111,32 +98,26 @@ const RecentSearchList = styled.ul`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 1rem auto 0;
-	padding: 1.5rem 1rem;
-	width: 300px;
+	margin: 16px auto 0;
+	padding: 24px 16px;
+	width: 100%;
 	border-top: 1px solid var(--outline-color);
 	border-bottom: 1px solid var(--outline-color);
 
 	li {
 		display: inline-flex;
 		justify-content: space-between;
-		padding: 0.5rem 0;
-		font-size: 16px;
+		padding: 8px 0;
+		font-size: var(--fz-rp);
 		border-bottom: 1px solid var(--text-color);
 		outline-offset: 2px;
 	}
 
-	@media screen and (min-width: 640px) {
-		width: 320px;
-	}
-
 	@media screen and (min-width: 768px) {
-		width: 520px;
-
 		li {
 			display: flex;
 			align-items: center;
-			font-size: 18px;
+			font-size: var(--fz-h7);
 		}
 	}
 `;

@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import styled from '@emotion/styled';
 import { SearchInput, SearchInfo } from '../components';
 import { getSpecificWorker } from '../service/workData';
 import sleep from '../utils/sleep';
@@ -48,7 +49,7 @@ const Search = () => {
 	};
 
 	return (
-		<>
+		<Container>
 			<SearchInput
 				value={workerName}
 				setValue={setWorkerName}
@@ -82,8 +83,13 @@ const Search = () => {
 				isDataFetched={isDataFetched}
 				isInputClean={isInputClean}
 			/>
-		</>
+		</Container>
 	);
 };
+
+const Container = styled.div`
+	max-width: 600px;
+	width: 100%;
+`;
 
 export default Search;

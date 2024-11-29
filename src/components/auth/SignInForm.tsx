@@ -58,30 +58,21 @@ const SignInForm = () => {
 					<img src="/nasa.svg" />
 				</div>
 			</Header>
-			<Flex direction="column" gap="1rem">
-				<Input label="이메일" bottomText={errors?.email?.message} width={350}>
-					<Input.TextField
-						type="text"
-						placeholder="이메일을 입력해 주세요."
-						{...register('email')}
-						error={errors?.email?.message}
-						width={350}
-					/>
+			<Flex direction="column" gap="16px" width="100%">
+				<Input label="이메일" bottomText={errors?.email?.message}>
+					<Input.TextField type="text" placeholder="이메일을 입력해 주세요." {...register('email')} error={errors?.email?.message} />
 				</Input>
 
-				<Input label="비밀번호" bottomText={errors?.password?.message} width={350}>
+				<Input label="비밀번호" bottomText={errors?.password?.message}>
 					<Input.TextField
 						type="password"
 						placeholder="비밀번호를 입력해 주세요."
 						{...register('password')}
 						error={errors?.password?.message}
-						width={350}
 					/>
 				</Input>
 			</Flex>
-			<LoginButton type="submit" width={350}>
-				{isLoading ? Loading() : '로그인'}
-			</LoginButton>
+			<LoginButton type="submit">{isLoading ? Loading() : '로그인'}</LoginButton>
 			<Spacer size={16} />
 			<Text typo="sm" color="var(--text-color)">
 				서비스 이용을 위해 로그인이 필요합니다.
@@ -96,15 +87,19 @@ const Form = styled.form`
 	flex-direction: column;
 	align-items: center;
 	margin: 0 auto;
-	padding-top: 10rem;
+	padding: 10em 16px 0;
 	max-width: 360px;
+	width: 100%;
 `;
 
 const Header = styled(Flex)`
+	width: 100%;
+
 	div {
 		display: flex;
 		justify-content: center;
 		align-items: center;
+
 		padding: 12px;
 		background-color: var(--color-gray-opacity-50);
 		border-radius: var(--radius);
@@ -116,15 +111,12 @@ const Header = styled(Flex)`
 			height: 100%;
 		}
 	}
-
-	@media screen and (max-width: 640px) {
-		max-width: 270px;
-	}
 `;
 
-const LoginButton = styled(Button)<{ width: number }>`
-	margin-top: 24px;
-	min-width: 280px;
+const LoginButton = styled(Button)`
+	margin-top: 32px;
+	min-width: 270px;
+	width: 100%;
 	min-height: 48px;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
@@ -132,10 +124,6 @@ const LoginButton = styled(Button)<{ width: number }>`
 
 	&:hover {
 		background-color: var(--btn-hover-bg-color);
-	}
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
 	}
 `;
 

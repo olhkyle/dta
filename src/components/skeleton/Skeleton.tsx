@@ -1,14 +1,14 @@
 import styled from '@emotion/styled';
-import { Flex, Loading } from '../common';
+import { Flex, LayoutLoading } from '../common';
 
 const Skeleton = () => {
 	return (
-		<>
-			<Container justifyContent="center" gap="1rem" margin="3rem 0">
+		<Container>
+			<InputContainer justifyContent="center" gap="16px" margin="0 0">
 				<Input className="skeleton-loading" />
-			</Container>
+			</InputContainer>
 			<SearchFilters>
-				<Flex margin="2rem 0" gap="1rem">
+				<Flex margin="0 0" gap="16px">
 					<SegmentedControl className="skeleton-loading">
 						<Control />
 						<Control />
@@ -16,48 +16,39 @@ const Skeleton = () => {
 					<YearTrigger className="skeleton-loading" />
 					<MonthTrigger className="skeleton-loading" />
 				</Flex>
-				<Flex justifyContent="flex-end" margin="1rem 0">
+				<Flex justifyContent="flex-end" margin="16px 0">
 					<SumOfPayment className="skeleton-loading" />
 				</Flex>
 			</SearchFilters>
-			<Loading />
-		</>
+			<LayoutLoading />
+		</Container>
 	);
 };
 
-const Container = styled(Flex)`
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
-	width: 340px;
+const Container = styled.div`
+	padding: 0 16px;
+	max-width: 1280px;
+	width: 100%;
+`;
 
-	@media screen and (min-width: 640px) {
-		width: 400px;
-	}
-
-	@media screen and (min-width: 768px) {
-		width: 600px;
-	}
+const InputContainer = styled(Flex)`
+	margin: 48px auto 64px;
+	padding: 16px 16px 0;
+	max-width: 960px;
+	width: 100%;
 `;
 
 const Input = styled.div`
-	position: relative;
-	padding: 1rem 1rem;
-	width: 300px;
-	height: 60px;
+	width: 100%;
 	border: none;
-	border-radius: var(--radius);
-	background-color: var(--outline-color);
 	outline: none;
 	overflow: hidden;
 
 	@media screen and (min-width: 640px) {
-		padding: 1rem 2rem;
-		width: 400px;
+		padding: 16px 32px;
 	}
 
 	@media screen and (min-width: 768px) {
-		width: 600px;
 	}
 `;
 
@@ -65,6 +56,8 @@ const SearchFilters = styled.div`
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	margin-top: 32px;
+	width: 100%;
 
 	@media screen and (min-width: 640px) {
 		flex-direction: row;
@@ -76,15 +69,15 @@ const SegmentedControl = styled.ul`
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	gap: 0.5rem;
-	padding: 0.25rem;
+	gap: 8px;
+	padding: 4px;
 	width: 180px;
 	height: 50px;
-	background-color: var(--outline-color);
+	background-color: var(--skeleton-bg-color);
 	border-radius: var(--radius);
 
 	@media screen and (min-width: 640px) {
-		padding: 0.5rem;
+		padding: 8px;
 	}
 `;
 
@@ -104,7 +97,7 @@ const Control = styled.li`
 const Trigger = styled.button`
 	padding: 0.6rem 0.75rem;
 	border-radius: var(--radius);
-	background-color: var(--outline-color);
+	background-color: var(--skeleton-bg-color);
 
 	@media screen and (min-width: 640px) {
 		gap: 0.4rem;

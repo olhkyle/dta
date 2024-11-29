@@ -8,7 +8,7 @@ interface FlexProps extends HTMLAttributes<HTMLDivElement> {
 	margin?: string;
 	padding?: string;
 	width?: `${number}px` | `${number}%` | `${number}dvw` | 'auto';
-	height?: `${number}px` | `${number}%` | `${number}dvh` | 'auto';
+	height?: `${number}px` | `${number}%` | `${number}dvh` | 'auto' | string;
 }
 
 const Flex = ({

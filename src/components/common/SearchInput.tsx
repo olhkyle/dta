@@ -16,7 +16,7 @@ const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonCli
 	const ref = useRef(null);
 
 	return (
-		<Container justifyContent="center" gap="1rem" margin="3rem 0" role="search">
+		<Container justifyContent="space-between" alignItems="center" gap="16px" role="search">
 			<Input
 				type="text"
 				placeholder="이름을 입력해 주세요."
@@ -49,51 +49,43 @@ const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonCli
 };
 
 const Container = styled(Flex)`
-	position: relative;
-	margin-left: auto;
-	margin-right: auto;
-	width: 330px;
+	margin: 48px auto 64px;
+	padding: 16px 16px 0;
+	max-width: 960px;
 	border-bottom: 5px solid var(--outline-color);
 
 	&:focus-within {
 		border-bottom: 5px solid var(--text-color);
 	}
 
-	@media screen and (min-width: 640px) {
-		width: 400px;
+	@media screen and (max-width: 640px) {
+		padding: 16px;
+		max-width: 360px;
 	}
 
-	@media screen and (min-width: 768px) {
-		width: 600px;
+	@media screen and (max-width: 375px) {
+		max-width: 320px;
 	}
 `;
 
 const Input = styled.input`
-	padding: 1rem 1rem;
-	width: 300px;
-	font-size: 24px;
-	font-weight: 900;
+	width: 100%;
+	font-size: var(--fz-h5);
+	font-weight: var(--fw-black);
 	border: none;
 	color: var(--text-color);
 	outline: none;
 
 	@media screen and (min-width: 640px) {
-		padding: 1rem 2rem;
-		width: 400px;
-		font-size: 30px;
-	}
-
-	@media screen and (min-width: 768px) {
-		width: 600px;
+		padding: 16px;
+		font-size: var(--fz-h4);
 	}
 `;
 
 const RefreshButton = styled(Button)`
-	position: absolute;
-	right: 4rem;
 	display: inline-flex;
 	align-items: center;
-	padding: 0.3rem;
+	padding: 4px 8px;
 	border-radius: 9999px;
 
 	&:hover {
@@ -102,30 +94,26 @@ const RefreshButton = styled(Button)`
 
 	svg {
 		color: var(--text-color);
-		font-size: 30px;
+		font-size: var(--fz-h4);
 	}
 
 	@media screen and (min-width: 640px) {
-		right: 4.5rem;
-
 		svg {
-			font-size: 40px;
+			font-size: 32px;
 		}
 	}
 `;
 
 const SearchButton = styled(Button)`
-	position: absolute;
-	right: 0;
 	display: inline-flex;
 	align-items: center;
-	padding: 0.5rem 1rem;
+	padding: 4px 8px;
 	border-radius: var(--radius);
 	font-size: 27px;
 
 	@media screen and (min-width: 640px) {
 		svg {
-			font-size: 36px;
+			font-size: var(--fz-h4);
 		}
 	}
 `;

@@ -105,7 +105,7 @@ const Detail = ({ query }: DetailProps) => {
 const DetailTable = styled.table`
 	display: flex;
 	flex-direction: column;
-	margin-top: 1rem;
+	margin-top: 16px;
 	border: 1px solid #3a3d4a;
 	border-collapse: collapse;
 

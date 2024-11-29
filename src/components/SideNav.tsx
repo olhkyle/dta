@@ -96,7 +96,7 @@ const Container = styled.div`
 	background-color: var(--bg-color);
 	border-top: 1px solid var(--color-gray-opacity-200);
 	border-bottom: 1px solid var(--color-gray-opacity-200);
-	z-index: 999;
+	z-index: var(--sideNav-index);
 
 	@media screen and (min-width: 768px) {
 		display: none;
@@ -104,9 +104,9 @@ const Container = styled.div`
 `;
 
 const Navigation = styled(NavLink)`
-	padding: 1rem 0;
+	padding: 16px 0;
 	width: 100%;
-	font-size: 18px;
+	font-size: var(--fz-h7);
 	border-radius: 0;
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid var(--color-gray-opacity-200);
@@ -114,7 +114,6 @@ const Navigation = styled(NavLink)`
 
 	&:hover {
 		color: var(--color-green-300);
-		border-top: 1px solid var(--color-green-300);
 		border-bottom: 1px solid var(--color-green-300);
 	}
 `;
@@ -153,7 +152,7 @@ const LogoutButton = styled(Button)`
 	width: 100%;
 	min-width: 120px;
 	font-size: var(--fz-sm);
-	font-weight: 500;
+	font-weight: var(--fw-medium);
 	line-height: 1;
 	color: var(--text-color);
 	background-color: var(--bg-color);
@@ -167,7 +166,7 @@ const LogoutButton = styled(Button)`
 
 	@media screen and (min-width: 640px) {
 		padding: var(--btn-lg-padding);
-		font-size: 18px;
+		font-size: var(--fz-h7);
 	}
 
 	@media screen and (min-width: 768px) {

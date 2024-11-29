@@ -2,7 +2,7 @@ import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
-import { Footer, Main, Nav, ScrollToTopButton, ModalContainer, Loading } from '.';
+import { Footer, Main, Nav, ScrollToTopButton, ModalContainer, LayoutLoading } from '.';
 import { useScrollTopEffect } from '../hooks';
 import routes from '../constants/routes';
 
@@ -15,7 +15,7 @@ const Layout = () => {
 		<>
 			<Nav />
 			<Main>
-				<Suspense fallback={<Loading type="lg" />}>
+				<Suspense fallback={<LayoutLoading type="lg" />}>
 					<Outlet />
 				</Suspense>
 			</Main>
@@ -30,7 +30,7 @@ const Layout = () => {
 const StyledToastContainer = styled(ToastContainer)`
 	.Toastify__toast {
 		color: var(--text-color);
-		border-radius: 12px;
+		border-radius: calc(var(--radius) * 1.5);
 		background-color: var(--bg-color);
 		border: 1px solid var(--outline-color);
 	}

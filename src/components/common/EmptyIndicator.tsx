@@ -15,13 +15,14 @@ const Container = styled.div`
 	justify-content: center;
 	align-items: center;
 	gap: 8px;
-	margin: 5rem auto;
+	margin: 80px auto;
 	padding: 64px 32px;
-	font-size: 16px;
+	min-height: 320px;
+	font-size: var(--fz-rp);
 	font-weight: var(--fw-semibold);
 	text-align: center;
 	border-radius: var(--radius);
-	outline: 2px solid var(--color-gray-300);
+	outline: 1px solid var(--color-gray-200);
 
 	p {
 		margin-top: 16px;

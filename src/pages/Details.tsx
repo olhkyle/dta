@@ -5,7 +5,18 @@ import { IoPrintSharp } from 'react-icons/io5';
 import { BsBoxSeam } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { useDebounce, useInfiniteScroll, useGetWorkersDetailInfiniteQuery } from '../hooks';
-import { Badge, Button, CustomSelect, EmptyIndicator, Flex, Loading, SearchInput, SegmentedControl, DetailModal } from '../components';
+import {
+	Badge,
+	Button,
+	CustomSelect,
+	EmptyIndicator,
+	Flex,
+	SearchInput,
+	SegmentedControl,
+	DetailModal,
+	SmallLoading,
+	LayoutLoading,
+} from '../components';
 import routes from '../constants/routes';
 import { WorkerWithId, sortByNameAndWorkedDate } from '../service/workData';
 import { useAppDispatch, useAppSelector } from '../store/store';
@@ -43,11 +54,11 @@ const Details = () => {
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
 
 	return (
-		<>
+		<Container>
 			<SearchInput value={inputValue} setValue={setInputValue} />
 			<SearchFilters>
 				<Flex justifyContent="space-between">
-					<Flex margin="2rem 0 1rem" gap="1rem">
+					<Flex gap="16px">
 						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentControl} />
 						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
 						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
@@ -66,13 +77,13 @@ const Details = () => {
 						<IoPrintSharp size={24} color="var(--color-green-400)" />
 					</PrintButton>
 				</Flex>
-				<Flex justifyContent="flex-end" margin="3rem 0 2rem">
+				<Flex justifyContent="flex-end" margin="36px 0 18px">
 					<Badge label="총 합계" bgColor="var(--text-color)">
 						{formatCurrencyUnit(data?.pages[0].totalPayment)}
 					</Badge>
 				</Flex>
 			</SearchFilters>
-			<Suspense fallback={<Loading />}>
+			<Suspense fallback={<LayoutLoading />}>
 				{workers?.length === 0 ? (
 					<EmptyIndicator>
 						<BsBoxSeam size={60} color="var(--color-gray-500)" />
@@ -127,7 +138,9 @@ const Details = () => {
 												memo,
 											})
 										}>
-										<td aria-label="tableBody-index">{isFirstIdxOfArr ? position + 1 : ''}</td>
+										<td aria-label="tableBody-index">
+											<span>{isFirstIdxOfArr ? position + 1 : ''}</span>
+										</td>
 										<td aria-label="tableBody-workerName">{workerName}</td>
 										<td aria-label="tableBody-registrationNumber">
 											{isAdmin ? `${registrationNumberFront} - ${registrationNumberBack}` : <span aria-label="isNotAdmin">Classified</span>}
@@ -148,10 +161,16 @@ const Details = () => {
 					</Table>
 				)}
 			</Suspense>
-			<div ref={ref}>{hasNextPage && isFetchingNextPage && <Loading type="sm" size={40} />}</div>
-		</>
+			<div ref={ref}>{hasNextPage && isFetchingNextPage && <SmallLoading />}</div>
+		</Container>
 	);
 };
+
+const Container = styled.div`
+	padding: 0 16px;
+	max-width: 1280px;
+	width: 100%;
+`;
 
 const SearchFilters = styled.div`
 	display: flex;
@@ -161,13 +180,12 @@ const SearchFilters = styled.div`
 
 const PrintButton = styled(Button)`
 	display: none;
-	margin: 2rem 0 1rem;
 	padding: 0.6rem 1.5rem;
-	font-size: 15px;
+	font-size: var(--fz-p);
 	background: linear-gradient(0.45turn, #e1e1e1, var(--color-green-50));
 	color: var(--color-white);
 	outline-offset: 1px;
-	border-radius: 12px;
+	border-radius: calc(var(--radius) * 1.5);
 	transition: all 0.3s ease-in-out 0.15s;
 
 	&:hover {
@@ -179,7 +197,7 @@ const PrintButton = styled(Button)`
 		justify-content: center;
 		align-items: center;
 		padding: 0.6rem 2rem;
-		font-size: 21px;
+		font-size: var(--fz-h6);
 	}
 `;
 
@@ -187,9 +205,11 @@ const Table = styled.table<{ searched: boolean }>`
 	display: flex;
 	flex-direction: column;
 	gap: 0.8rem;
-	margin: 2rem auto 6rem;
+	margin: 32px auto 96px;
 	width: 100%;
 	text-align: center;
+	border: 1px solid var(--color-gray-300);
+	border-radius: var(--radius);
 
 	thead > tr,
 	tbody > tr {
@@ -202,11 +222,11 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tr {
-		padding: 1rem 0;
+		padding: 16px 0;
 	}
 
 	thead > tr {
-		border-bottom: 1px solid var(--color-gray-500);
+		border-bottom: 1px solid var(--color-gray-300);
 	}
 
 	tbody > tr {
@@ -227,18 +247,18 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	th {
-		font-size: 16px;
+		font-size: var(--fz-rp);
 
 		span {
-			font-size: 14px;
+			font-size: var(--fz-m);
 		}
 
 		@media screen and (min-width: 640px) {
-			font-size: 16px;
+			font-size: var(--fz-rp);
 		}
 
 		@media screen and (min-width: 720px) {
-			font-size: 18px;
+			font-size: var(--fz-h7);
 		}
 	}
 
@@ -262,22 +282,31 @@ const Table = styled.table<{ searched: boolean }>`
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		font-size: 14px;
+		font-size: var(--fz-m);
 
 		@media screen and (min-width: 520px) {
-			font-size: 16px;
+			font-size: var(--fz-rp);
 		}
 
 		@media screen and (min-width: 640px) {
-			font-size: 16px;
+			font-size: var(--fz-rp);
 		}
+	}
+
+	td[aria-label='tableBody-index'] > span {
+		display: inline-block;
+		width: 24px;
+		color: var(--color-gray-800);
+		background-color: var(--color-gray-100);
+		border: 1px solid var(--color-gray-opacity-200);
+		border-radius: calc(var(--radius) * 0.5);
 	}
 
 	td[aria-label='tableBody-workerName'],
 	td[aria-label='tableBody-payment'] {
-		font-weight: ${({ searched }) => (searched ? '900' : '400')};
+		font-weight: ${({ searched }) => (searched ? 'var(--fw-black)' : 'var(--fw-regular)')};
 		color: ${({ searched }) => (searched ? 'var(--color-green-300)' : 'var(--text-color)')};
-		border-radius: 8px;
+		border-radius: var(--radius);
 	}
 
 	td[aria-label='tableBody-payment'] {
@@ -300,13 +329,17 @@ const Table = styled.table<{ searched: boolean }>`
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		padding: 0.25rem 0.5rem;
-		font-size: 13px;
+		padding: 4px 8px;
+		font-size: var(--fz-sm);
 		backdrop-filter: blur(4px);
 		color: var(--color-gray-600);
 		background-color: var(--color-gray-400);
 		border: 1px solid var(--outline-color);
-		border-radius: 12px;
+		border-radius: calc(var(--radius) * 1.5);
+	}
+
+	@media screen and (max-width: 640px) {
+		border-color: var(--color-white);
 	}
 `;
 

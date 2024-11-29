@@ -22,8 +22,8 @@ const ScrollToTopButton = ({ topPosToShow = 500 }: ScrollToTopButtonProps) => {
 
 const Container = styled.button`
 	position: fixed;
-	bottom: 4rem;
-	right: 4vw;
+	bottom: 64px;
+	right: 4dvw;
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;

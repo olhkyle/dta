@@ -6,7 +6,7 @@ import { Flex } from '.';
 const Footer = () => {
 	return (
 		<Container>
-			<Flex alignItems="flex-end" gap="0.5rem">
+			<Flex alignItems="flex-end" gap="8px">
 				<Logo to={routes.HOME}>
 					<img src="./dta.png" alt="logo" />
 				</Logo>

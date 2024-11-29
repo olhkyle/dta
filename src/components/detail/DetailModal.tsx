@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { Input, Text, Button, NativeSelect, Flex, DatePicker, Loading } from '../../components';
+import { Input, Text, Button, NativeSelect, Flex, DatePicker, SmallLoading } from '../../components';
 import { RegisterSchema, registerSchema, SubmitHandler } from '../../components/register/schema';
 import { WorkerWithId } from '../../service/workData';
 import { useOverlayFixed, useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks';
@@ -143,7 +143,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 							<MdClose size="24" color="var(--text-color)" />
 						</CloseModalButton>
 					</Flex>
-					<Flex gap="1rem">
+					<Flex gap="16px">
 						<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
 							{isAllFieldsDisabled ? '수정취소' : '수정하기'}
 						</ModifyButton>
@@ -166,10 +166,9 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 								{...register('workerName')}
 								error={errors?.workerName?.message}
 								disabled={disabled.workerName}
-								width={270}
 							/>
 						</Input>
-						<CustomFlex alignItems="flex-start" gap="1rem">
+						<CustomFlex alignItems="flex-start" gap="16px">
 							{isAdmin ? (
 								<>
 									<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
@@ -179,7 +178,6 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 											{...register('registrationNumberFront')}
 											error={errors?.registrationNumberFront?.message}
 											disabled={disabled.registrationNumberFront}
-											width={270}
 										/>
 									</Input>
 									<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
@@ -189,16 +187,15 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 											{...register('registrationNumberBack')}
 											error={errors?.registrationNumberBack?.message}
 											disabled={disabled.registrationNumberBack}
-											width={270}
 										/>
 									</Input>
 								</>
 							) : (
-								<Flex direction="column" alignItems="flex-start" gap="0.5rem">
-									<div css={{ fontSize: '18px', fontWeight: '500' }}>주민등록번호</div>
-									<CustomFlex gap="1rem">
-										<Confidential width={270}>Classified</Confidential>
-										<Confidential width={270}>Classified</Confidential>
+								<Flex direction="column" alignItems="flex-start" gap="8px">
+									<div css={{ fontSize: '17px', fontWeight: 'var(--fw-medium)' }}>주민등록번호</div>
+									<CustomFlex gap="16px">
+										<Confidential>Classified</Confidential>
+										<Confidential>Classified</Confidential>
 									</CustomFlex>
 								</Flex>
 							)}
@@ -206,7 +203,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 
 						<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} disabled={disabled.workedDate} />
 
-						<CustomFlex alignItems="flex-start" gap="1rem">
+						<CustomFlex alignItems="flex-start" gap="16px">
 							<Input label="근로 지역" bottomText={errors?.workspace?.message}>
 								<Input.TextField
 									type="text"
@@ -214,7 +211,6 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 									{...register('workspace')}
 									error={errors?.workspace?.message}
 									disabled={disabled.workspace}
-									width={270}
 								/>
 							</Input>
 							<Input label="사업개시번호" bottomText={errors?.businessNumber?.message}>
@@ -224,19 +220,17 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 									{...register('businessNumber')}
 									error={errors?.businessNumber?.message}
 									disabled={disabled.businessNumber}
-									width={270}
 								/>
 							</Input>
 						</CustomFlex>
 
-						<CustomFlex alignItems="flex-start" gap="1.5rem">
+						<CustomFlex alignItems="flex-start" gap="16px">
 							<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
 								<NativeSelect.Field
 									id="송금 유형"
 									{...register('remittanceType')}
 									error={errors?.remittanceType?.message}
 									disabled={disabled.remittanceType}
-									width={270}
 								/>
 							</NativeSelect>
 							<Controller
@@ -260,7 +254,6 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 											onBlur={onBlur}
 											error={error?.message}
 											disabled={disabled.payment}
-											width={270}
 										/>
 									</Input>
 								)}
@@ -273,21 +266,20 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 								{...register('memo')}
 								error={errors?.memo?.message}
 								disabled={disabled.memo}
-								width={600}
 							/>
 						</Input>
 						{Object.values(disabled).every(val => val === false) && (
-							<UpdateButton type="submit" id="update" width={600} disabled={!isAllFieldsDisabled} aria-label="update-button">
+							<UpdateButton type="submit" id="update" disabled={!isAllFieldsDisabled} aria-label="update-button">
 								수정완료
 							</UpdateButton>
 						)}
-						<Flex direction="column" margin="5rem 0">
+						<Flex direction="column" margin="80px 0">
 							<Text color="var(--btn-hover-color)">
 								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
 							</Text>
-							<DeleteButton type="button" id="delete" width={600} aria-label="delete-button" onClick={handleRemoveWorkerButton}>
+							<DeleteButton type="button" id="delete" aria-label="delete-button" onClick={handleRemoveWorkerButton}>
 								삭제하기
-								{isDeleteProcessLoading && <Loading size={25} margin="0" />}
+								{isDeleteProcessLoading && <SmallLoading />}
 							</DeleteButton>
 						</Flex>
 					</Form>
@@ -302,9 +294,10 @@ const Container = styled.div`
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	padding: 2rem 1rem;
-	width: 100vw;
-	height: 90vh;
+	padding: 32px 16px;
+	min-height: 360px;
+	width: 100dvw;
+	height: calc(100dvh - var(--nav-height));
 	border-radius: var(--radius);
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
@@ -313,8 +306,9 @@ const Container = styled.div`
 	z-index: 9999;
 
 	@media screen and (min-width: 720px) {
+		height: calc(100dvh - 2 * var(--nav-height));
 		width: 720px;
-		padding: 2rem;
+		padding: 32px;
 	}
 `;
 
@@ -324,7 +318,7 @@ const CloseModalButton = styled(Button)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.5rem;
+	padding: 8px;
 	border-radius: 9999px;
 	background-color: var(--outline-color);
 
@@ -339,8 +333,8 @@ const CloseModalButton = styled(Button)`
 `;
 
 const ModifyButton = styled(Button)`
-	margin-top: 1.5rem;
-	padding: 0.5rem 0.75rem;
+	margin-top: 24px;
+	padding: 8px 12px;
 	color: var(--bg-color);
 	background-color: var(--color-green-50);
 
@@ -350,8 +344,8 @@ const ModifyButton = styled(Button)`
 `;
 
 const ViewWorkerDetailButton = styled(Button)`
-	margin-top: 1.5rem;
-	padding: 0.5rem 0.75rem;
+	margin-top: 24px;
+	padding: 8px 12px;
 	color: var(--bg-color);
 	background-color: var(--color-orange-100);
 
@@ -363,9 +357,9 @@ const ViewWorkerDetailButton = styled(Button)`
 const Body = styled.div`
 	display: flex;
 	justify-content: center;
-	gap: 4rem;
-	margin: 1rem 0 1rem;
-	padding: 1rem;
+	gap: 64px;
+	margin: 16px 0 16px;
+	padding: 16px;
 	width: 100%;
 	height: calc(100% - 15dvh);
 	border: 1px solid #e1e1e1;
@@ -383,7 +377,7 @@ const Body = styled.div`
 const Form = styled.form`
 	display: flex;
 	flex-direction: column;
-	gap: 1rem;
+	gap: 16px;
 	margin: 0 auto;
 `;
 
@@ -395,59 +389,48 @@ const CustomFlex = styled(Flex)`
 	}
 `;
 
-const Confidential = styled.div<{ width: number }>`
+const Confidential = styled.div`
 	margin: 0;
-	padding: 0.75rem 1rem;
+	padding: 12px 16px;
 	min-width: 250px;
-	font-size: 16px;
-	font-weight: 500;
+	width: 100%;
+	font-size: var(--fz-rp);
+	font-weight: var(--fw-medium);
 	line-height: 24px;
 	border: none;
 	border-radius: var(--radius);
 	background-color: var(--outline-color);
 	backdrop-filter: blur(4px);
 	color: var(--color-gray-500);
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
-	}
 `;
 
-const UpdateButton = styled(Button)<{ width: number }>`
-	margin: 1rem auto 0;
+const UpdateButton = styled(Button)`
+	margin: 16px auto 0;
 	min-width: 300px;
 	width: 100%;
 	color: var(--btn-text-color);
-	background-color: var(--btn-bg-color);
+	background-color: var(--color-green-300);
 
 	&:hover {
-		background-color: var(--btn-hover-bg-color);
-	}
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
+		background-color: var(--color-green-200);
 	}
 `;
 
-const DeleteButton = styled(Button)<{ width: number }>`
+const DeleteButton = styled(Button)`
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	gap: 0.4rem;
-	margin: 1rem auto;
+	margin: 16px auto;
 	min-width: 300px;
 	width: 100%;
 	color: var(--bg-color);
 	border: 1px solid var(--text-color);
-	background-color: var(--btn-hover-color);
+	background-color: var(--btn-bg-color);
 	transition: all 0.1s ease-in-out;
 
 	&:hover {
 		background-color: var(--btn-hover-bg-color);
-	}
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
 	}
 `;
 
@@ -459,7 +442,7 @@ const Overlay = styled.div`
 	bottom: 0;
 	backdrop-filter: blur(3px);
 	background-color: var(--backdrop-blur-bg-color);
-	z-index: 9991;
+	z-index: var(--overlay-index);
 `;
 
 export default DetailModal;

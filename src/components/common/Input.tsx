@@ -7,17 +7,16 @@ interface InputProps extends HTMLAttributes<HTMLInputElement> {
 	children: ReactElement;
 	bottomText?: string;
 	rightText?: string;
-	width?: number;
 }
 
-const Input = ({ label, children, bottomText, rightText, width = 250, ...props }: InputProps) => {
+const Input = ({ label, children, bottomText, rightText, ...props }: InputProps) => {
 	const child = Children.only(children);
 	const generatedId = useId('input');
 	const id = child.props.id ?? generatedId;
 	const isError: boolean = child.props.error ?? false;
 
 	return (
-		<div css={{ display: 'flex', flexDirection: 'column' }} {...props}>
+		<div css={{ display: 'flex', flexDirection: 'column', width: '100%' }} {...props}>
 			<label
 				htmlFor={id}
 				css={{
@@ -29,15 +28,11 @@ const Input = ({ label, children, bottomText, rightText, width = 250, ...props }
 				}}>
 				{label}
 			</label>
-			<div css={{ display: 'flex', alignItems: 'center' }}>
+			<div css={{ display: 'flex', alignItems: 'center', width: '100%' }}>
 				{cloneElement(child, { id, ...child.props })}
-				{rightText !== null ? <RightText>{rightText}</RightText> : null}
+				{rightText && <RightText>{rightText}</RightText>}
 			</div>
-			{bottomText !== null ? (
-				<BottomText isError={isError} width={width}>
-					{bottomText}
-				</BottomText>
-			) : null}
+			{bottomText && <BottomText isError={isError}>{bottomText}</BottomText>}
 		</div>
 	);
 };
@@ -49,11 +44,10 @@ interface TextFieldProps extends Omit<HTMLAttributes<HTMLInputElement>, 'size'> 
 	value?: string;
 	error: string | undefined;
 	disabled?: boolean;
-	width: number;
 }
 
 Input.TextField = forwardRef(
-	({ type, name, placeholder, error, disabled = false, width = 270, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
+	({ type, name, placeholder, error, disabled = false, ...props }: TextFieldProps, ref: ForwardedRef<HTMLInputElement>) => {
 		return (
 			<TextField
 				type={type}
@@ -63,25 +57,13 @@ Input.TextField = forwardRef(
 				error={error!}
 				disabled={disabled}
 				autoComplete="off"
-				width={width}
 				{...props}
 			/>
 		);
 	},
 );
 
-Input.ControlledTextField = ({
-	type,
-	name,
-	placeholder,
-	value,
-	onChange,
-	onBlur,
-	error,
-	disabled = false,
-	width,
-	...props
-}: TextFieldProps) => {
+Input.ControlledTextField = ({ type, name, placeholder, value, onChange, onBlur, error, disabled = false, ...props }: TextFieldProps) => {
 	return (
 		<TextField
 			type={type}
@@ -94,7 +76,6 @@ Input.ControlledTextField = ({
 			disabled={disabled}
 			aria-disabled={disabled}
 			autoComplete="off"
-			width={width}
 			{...props}
 		/>
 	);
@@ -106,24 +87,21 @@ const RightText = styled.span`
 	font-weight: var(--fw-semibold);
 `;
 
-const BottomText = styled.p<{ isError: boolean; width: number }>`
+const BottomText = styled.p<{ isError: boolean }>`
 	display: inline-block;
 	margin: 4px 0 0 0;
-	width: 250px;
+	min-width: 270px;
 	color: ${({ isError }) => (isError ? 'var(--color-green-300)' : 'var(--color-gray-400)')};
-	font-size: 14px;
+	font-size: var(--fz-m);
 	font-weight: var(--fw-regular);
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
-	}
 `;
 
-const TextField = styled.input<{ width: number; error: string; disabled: boolean }>`
+const TextField = styled.input<{ error: string; disabled: boolean }>`
 	margin: 0;
-	padding: 0.75rem 1rem;
+	padding: 12px 16px;
 	min-width: 270px;
-	font-size: 16px;
+	width: 100%;
+	font-size: var(--fz-rp);
 	line-height: 24px;
 	border: none;
 	border-radius: var(--radius);
@@ -138,10 +116,6 @@ const TextField = styled.input<{ width: number; error: string; disabled: boolean
 	&:focus {
 		background-color: var(--bg-color);
 		box-shadow: ${({ error }) => (error ? 'inset 0 0 0 2px var(--color-green-50)' : 'inset 0 0 0 1px var(--color-gray-600)')};
-	}
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
 	}
 `;
 

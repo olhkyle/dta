@@ -27,13 +27,12 @@ const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePicke
 	return (
 		<Container ref={containerRef}>
 			<FieldTitle>출력일</FieldTitle>
-			<CalendarSelectorContainer>
+			<CalendarSelectorContainer active={isDatePickerActive} disabled={disabled} onClick={toggleDayPicker}>
 				<CalendarSelector
 					type="text"
 					value={formattedDay}
 					id={generatedId}
 					active={isDatePickerActive}
-					onFocus={toggleDayPicker}
 					disabled={disabled}
 					aria-label="calendar-selector"
 					readOnly
@@ -43,6 +42,7 @@ const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePicke
 					color="var(--text-color)"
 					onClick={() => {
 						if (disabled) return;
+
 						toggleDayPicker();
 					}}
 				/>
@@ -74,7 +74,6 @@ const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePicke
 };
 
 const Container = styled.div`
-	position: relative;
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -82,50 +81,55 @@ const Container = styled.div`
 
 const FieldTitle = styled.div`
 	padding: 4px 0;
-	font-size: 16px;
-	font-weight: 500;
+	font-size: var(--fz-p);
+	font-weight: var(--fw-medium);
 `;
 
-const CalendarSelectorContainer = styled.div`
-	position: relative;
-	width: 280px;
-
-	svg {
-		position: absolute;
-		right: 1rem;
-		top: 1.4rem;
-		cursor: pointer;
-	}
-`;
-
-const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
-	margin-top: 0.5rem;
-	padding: 0.8rem 1.2rem;
-	width: 280px;
-	font-size: 16px;
-	font-weight: 500;
-	color: var(--text-color);
-	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
-	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
-	border-radius: var(--radius);
-	cursor: pointer;
-	-webkit-appearance: none;
-
+const CalendarSelectorContainer = styled.div<{ active: boolean; disabled: boolean }>`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 0 4px;
+	min-height: 48px;
+	min-width: 270px;
 	box-shadow: ${({ active }) => (active ? 'inset 0 0 0 1px var(--text-color)' : 'inset 0 0 0 1px var(--outline-color)')};
+	border-radius: var(--radius);
+	background-color: ${({ active, disabled }) =>
+		active ? 'var(--btn-text-color)' : disabled ? 'var(--outline-color)' : 'var(--color-gray-opacity-50)'};
+
+	cursor: pointer;
 
 	&:focus {
 		box-shadow: inset 0 0 0 1px var(--text-color);
 	}
+
+	svg {
+		margin-right: 16px;
+	}
+`;
+
+const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
+	padding: 12px;
+	width: 100%;
+	font-size: var(--fz-rp);
+	font-weight: var(--fw-medium);
+	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
+	background-color: ${({ active, disabled }) => (active ? 'var(--btn-text-color)' : disabled ? 'var(--outline-color)' : 'none')};
+	border-top-left-radius: var(--radius);
+	border-bottom-left-radius: var(--radius);
+	cursor: pointer;
+	-webkit-appearance: none;
 `;
 
 const SingleDayPicker = styled(DayPicker)`
+	max-width: 270px;
 	.rdp-months {
-		width: 300px;
+		width: 240px;
 	}
 
 	.rdp-month {
 		margin-left: -1rem;
-		padding: 1rem;
+		padding: 16px;
 		border: 1px solid var(--outline-color);
 		border-radius: 12px;
 	}
@@ -136,18 +140,18 @@ const SingleDayPicker = styled(DayPicker)`
 `;
 
 const DayDescription = styled.div`
-	margin: 0.75rem 0 0 0.5rem;
-	font-size: 14px;
+	margin: 12px 0 0 8px;
+	font-size: var(--fz-m);
 
 	strong {
-		font-size: 16px;
+		font-size: var(--fz-rp);
 		color: var(--color-green-300);
 	}
 
 	button {
-		margin-left: 0.5rem;
+		margin-left: 8px;
 		padding: 0.4rem 0.5rem;
-		font-weight: 600;
+		font-weight: var(--fw-semibold);
 		color: var(--color-white);
 		background-color: var(--color-green-300);
 		border-radius: var(--radius);

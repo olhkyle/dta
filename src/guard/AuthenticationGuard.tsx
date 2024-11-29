@@ -1,6 +1,6 @@
 import { ReactNode, Suspense } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { Loading, RegisterSkeleton, Skeleton } from '../components';
+import { LayoutLoading, RegisterSkeleton, Skeleton } from '../components';
 import routes from '../constants/routes';
 import { Route } from '../constants/routes';
 import useAuthQuery from '../hooks/useAuthQuery';
@@ -16,7 +16,7 @@ const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) 
 
 	const fallbackComponent =
 		pathname === routes.PRINT || pathname === routes.WORKER ? (
-			<Loading type="md" />
+			<LayoutLoading type="md" />
 		) : pathname === routes.REGISTER ? (
 			<RegisterSkeleton />
 		) : (

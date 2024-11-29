@@ -28,10 +28,10 @@ const Container = styled.div`
 	position: fixed;
 	max-width: 100%;
 	min-width: 100%;
-	height: 100vh;
+	height: 100dvh;
 	visibility: 'visible';
 	inset: 0px;
-	z-index: 9990;
+	z-index: var(--modal-index);
 `;
 
 export default ModalContainer;

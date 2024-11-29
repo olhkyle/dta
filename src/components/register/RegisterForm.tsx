@@ -4,7 +4,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { Button, DatePicker, Flex, HighlightText, Input, Loading, NativeSelect, Spacer, Text } from '..';
+import { Button, DatePicker, Flex, HighlightText, Input, NativeSelect, SmallLoading, Spacer, Text } from '..';
 import { addWorker, getSpecificWorker } from '../../service/workData';
 import { useAppSelector } from '../../store/store';
 import { getIsAdmin } from '../../store/userSlice';
@@ -122,25 +122,24 @@ const RegisterForm = () => {
 			<Spacer size={8} />
 			<Input
 				label={
-					<LabelFlex>
+					<Flex justifyContent="space-between" width="100%">
 						성 명
 						<CheckExistButton type="button" onClick={findSpecificWorker}>
-							{isFetching && <Loading type="sm" size={20} />}
+							{isFetching && <SmallLoading />}
 							대상 찾기
 						</CheckExistButton>
-					</LabelFlex>
+					</Flex>
 				}
 				bottomText={errors?.workerName?.message}>
-				<Input.TextField type="text" placeholder="이 름" {...register('workerName')} error={errors?.workerName?.message} width={270} />
+				<Input.TextField type="text" placeholder="이 름" {...register('workerName')} error={errors?.workerName?.message} />
 			</Input>
-			<CustomFlex alignItems="flex-start" gap="1rem">
+			<CustomFlex alignItems="flex-start" gap="16px">
 				<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
 					<Input.TextField
 						type="text"
 						placeholder="000000"
 						{...register('registrationNumberFront')}
 						error={errors?.registrationNumberFront?.message}
-						width={270}
 					/>
 				</Input>
 				<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
@@ -149,22 +148,15 @@ const RegisterForm = () => {
 						placeholder="0000000"
 						{...register('registrationNumberBack')}
 						error={errors?.registrationNumberBack?.message}
-						width={270}
 					/>
 				</Input>
 			</CustomFlex>
 
 			<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
 
-			<CustomFlex alignItems="flex-start" gap="1rem">
+			<CustomFlex alignItems="flex-start" gap="16px">
 				<Input label="근로 지역" bottomText={errors?.workspace?.message}>
-					<Input.TextField
-						type="text"
-						placeholder="작업 공간 이름"
-						{...register('workspace')}
-						error={errors?.workspace?.message}
-						width={270}
-					/>
+					<Input.TextField type="text" placeholder="작업 공간 이름" {...register('workspace')} error={errors?.workspace?.message} />
 				</Input>
 				<Input label="사업개시번호" bottomText={errors?.businessNumber?.message}>
 					<Input.TextField
@@ -172,14 +164,13 @@ const RegisterForm = () => {
 						placeholder="000-00-00000-0"
 						{...register('businessNumber')}
 						error={errors?.businessNumber?.message}
-						width={270}
 					/>
 				</Input>
 			</CustomFlex>
 
-			<CustomFlex alignItems="flex-start" gap="1.5rem">
+			<CustomFlex alignItems="flex-start" gap="16px">
 				<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
-					<NativeSelect.Field id="송금 유형" {...register('remittanceType')} error={errors?.remittanceType?.message} width={270} />
+					<NativeSelect.Field id="송금 유형" {...register('remittanceType')} error={errors?.remittanceType?.message} />
 				</NativeSelect>
 
 				<Controller
@@ -202,22 +193,15 @@ const RegisterForm = () => {
 								onChange={onChange}
 								onBlur={onBlur}
 								error={error?.message}
-								width={270}
 							/>
 						</Input>
 					)}
 				/>
 			</CustomFlex>
 			<Input label="메모/기타" bottomText={errors?.memo?.message}>
-				<Input.TextField
-					type="text"
-					placeholder="기타 필요한 사항을 기입하세요."
-					{...register('memo')}
-					error={errors?.memo?.message}
-					width={600}
-				/>
+				<Input.TextField type="text" placeholder="기타 필요한 사항을 기입하세요." {...register('memo')} error={errors?.memo?.message} />
 			</Input>
-			<CustomFlex gap="20px" margin="1.5rem 0 0 0">
+			<CustomFlex gap="20px" margin="24px 0 0 0">
 				<RegisterButton type="submit" id="register" width={400} aria-label="register-button">
 					등록하기
 				</RegisterButton>
@@ -225,7 +209,7 @@ const RegisterForm = () => {
 					추가 등록
 				</AdditionalRegisterButton>
 			</CustomFlex>
-			<Flex justifyContent="center" margin="1rem 1rem">
+			<Flex justifyContent="center" width="100%">
 				<HighlightText color="var(--disabled-text-color)" bgColor="var(--outline-color)" fontSize="14px">
 					💡 추가 등록 시 성명, 주민등록번호, 출력일은 바로 이전에 작성한 내용이 유지됩니다.
 				</HighlightText>
@@ -237,18 +221,10 @@ const RegisterForm = () => {
 const Form = styled.form`
 	display: flex;
 	flex-direction: column;
-	gap: 1.5rem;
+	gap: 24px;
 	margin: 0 auto;
-	padding: 5rem 0;
-`;
-
-const LabelFlex = styled(Flex)`
-	gap: 10.5rem;
-	min-width: 270px;
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
-	}
+	padding: 80px 0;
+	width: 100%;
 `;
 
 const CheckExistButton = styled.button`
@@ -259,7 +235,7 @@ const CheckExistButton = styled.button`
 	border-radius: var(--radius);
 	color: var(--color-white);
 	background-color: var(--color-orange-100);
-	font-weight: 500;
+	font-weight: var(--fw-medium);
 
 	&:hover {
 		background-color: var(--color-orange-200);
@@ -283,10 +259,6 @@ const RegisterButton = styled(Button)<{ width: number }>`
 	&:hover {
 		background-color: var(--btn-hover-bg-color);
 	}
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
-	}
 `;
 
 const AdditionalRegisterButton = styled(Button)<{ width: number }>`
@@ -297,10 +269,6 @@ const AdditionalRegisterButton = styled(Button)<{ width: number }>`
 
 	&:hover {
 		background-color: var(--color-green-300);
-	}
-
-	@media screen and (min-width: 640px) {
-		width: ${({ width }) => `${width}px`};
 	}
 `;
 

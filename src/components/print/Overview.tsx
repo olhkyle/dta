@@ -76,7 +76,7 @@ const Overview = ({ query }: OverviewProps) => {
 const OverviewTable = styled.table`
 	display: flex;
 	flex-direction: column;
-	margin-top: 1rem;
+	margin-top: 16px;
 	border: 1px solid #3a3d4a;
 	border-collapse: collapse;
 
@@ -94,7 +94,7 @@ const OverviewTable = styled.table`
 
 	thead > tr[aria-label='tableHead-title'] {
 		display: block;
-		padding: 0.5rem 0;
+		padding: 8px 0;
 
 		th {
 			display: block;

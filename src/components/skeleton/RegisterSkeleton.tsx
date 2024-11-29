@@ -27,22 +27,22 @@ const SkeletonForm = styled.form`
 	display: flex;
 	flex-direction: column;
 
-	gap: 1.5rem;
+	gap: 24px;
 	margin: 0 auto;
-	padding-top: 5rem;
-	padding-bottom: 5rem;
+	padding-top: 80px;
+	padding-bottom: 80px;
 `;
 
 const SkeletonText = styled.div`
-	padding: 1rem 1rem;
+	padding: 16px;
 	width: 300px;
 	height: 50px;
 	border: none;
 	border-radius: var(--radius);
-	background-color: var(--outline-color);
+	background-color: var(--skeleton-bg-color);
 
 	@media screen and (min-width: 640px) {
-		padding: 1rem 2rem;
+		padding: 16px 32px;
 	}
 `;
 
@@ -51,15 +51,15 @@ const SkeletonInput = styled.div`
 	flex-direction: column;
 
 	div {
-		padding: 1rem 1rem;
+		padding: 16px;
 		width: 300px;
 		height: 60px;
 		border: none;
 		border-radius: var(--radius);
-		background-color: var(--outline-color);
+		background-color: var(--skeleton-bg-color);
 
 		@media screen and (min-width: 640px) {
-			padding: 1rem 2rem;
+			padding: 16px 32px;
 		}
 	}
 `;

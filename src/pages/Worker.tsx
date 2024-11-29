@@ -119,22 +119,25 @@ const Worker = () => {
 };
 
 const Container = styled.div`
-	margin-top: 2rem;
+	margin: 32px auto;
+	padding: 0 16px;
+	max-width: 1280px;
+	width: 100%;
 `;
 
 const ProfileContainer = styled.div`
 	position: relative;
 	margin-left: auto;
-	margin-top: 2rem;
-	margin-bottom: 4rem;
+	margin-top: 32px;
+	margin-bottom: 64px;
 	padding: var(--btn-md-padding);
-	width: 40vw;
+	width: 40dvw;
 	border: 1px solid var(--color-gray-300);
 	border-radius: var(--radius);
 	background-color: var(--option-hover-bg-color);
 
 	@media screen and (max-width: 640px) {
-		width: 70vw;
+		width: 70dvw;
 	}
 `;
 
@@ -143,7 +146,7 @@ const GoBackButton = styled.button`
 	justify-content: center;
 	align-items: center;
 	padding: 0.3rem;
-	font-weight: 700;
+	font-weight: var(--fw-semibold);
 	background-color: var(--outline-color);
 	outline: 1px solid var(--table-border-color);
 	outline-offset: 2px;

@@ -85,11 +85,11 @@ const Trigger = styled.button<{ width: number }>`
 	@media screen and (min-width: 640px) {
 		gap: 0.4rem;
 		padding: 0.75rem 1.4rem;
-		font-size: 16px;
+		font-size: var(--fz-p);
 	}
 
-	@media screen and (min-width: 750px) {
-		font-size: 19px;
+	@media screen and (min-width: 768px) {
+		font-size: var(--fz-h6);
 	}
 `;
 
@@ -116,7 +116,7 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	width: 100%;
 	padding: 0.5rem 0.4rem 0.5rem 0.1rem;
 	font-size: var(--fz-p);
-	font-weight: ${({ isCurrent }) => (isCurrent ? 700 : 500)};
+	font-weight: ${({ isCurrent }) => (isCurrent ? 'var(--fw-bold)' : 'var(--fw-medium)')};
 	color: var(--text-color);
 	cursor: pointer;
 
@@ -130,7 +130,7 @@ const Option = styled.li<{ isCurrent: boolean }>`
 		font-size: var(--fz-h7);
 	}
 
-	@media screen and (min-width: 720px) {
+	@media screen and (min-width: 768px) {
 		font-size: var(--fz-h6);
 	}
 
