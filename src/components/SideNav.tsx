@@ -1,7 +1,7 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Flex, NavLink, Text, ThemeButton } from '.';
-import { useClickOutside, useSetUser, useSideNavActive } from '../hooks';
+import { useClickOutside, useMediaQuery, useSetUser, useSideNavActive } from '../hooks';
 import routes from '../constants/routes';
 
 interface SideNavProps {
@@ -22,6 +22,15 @@ const SideNav = ({ isLoading, Loading, onLogout }: SideNavProps) => {
 	} = useSideNavActive();
 
 	const ref = useClickOutside(() => setIsProfileClicked(false));
+
+	const isDesktop = useMediaQuery('(min-width: 768px)');
+
+	useEffect(() => {
+		if (isDesktop) {
+			console.log('isDesktop');
+			close();
+		}
+	}, [isDesktop]);
 
 	return (
 		<Container>

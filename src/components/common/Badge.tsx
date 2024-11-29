@@ -12,7 +12,8 @@ interface BadgeProps {
 const Badge = ({ label, bgColor, unit = '원', children }: BadgeProps) => {
 	return (
 		<Container css={{ display: 'flex', alignItems: 'center' }}>
-			<span css={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: '17px', fontWeight: '600' }}>
+			<span
+				css={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-semibold)' }}>
 				{label}
 				<CiSquareMinus size="20" />
 			</span>
@@ -22,13 +23,15 @@ const Badge = ({ label, bgColor, unit = '원', children }: BadgeProps) => {
 					padding: '0.3rem 0.6rem',
 					borderRadius: 'var(--radius)',
 					backgroundColor: bgColor,
-					fontSize: '17px',
-					fontWeight: '700',
+					fontSize: 'var(--fz-h7)',
+					fontWeight: 'var(--fw-bold)',
 					color: 'var(--bg-color)',
 				}}>
 				{children}
 			</span>
-			<span css={{ paddingLeft: '0.2rem', fontSize: '17px', fontWeight: '600', color: 'var(--text-color)' }}>{unit}</span>
+			<span css={{ paddingLeft: '0.2rem', fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-color)' }}>
+				{unit}
+			</span>
 		</Container>
 	);
 };
@@ -36,11 +39,11 @@ const Badge = ({ label, bgColor, unit = '원', children }: BadgeProps) => {
 const Container = styled.span`
 	span {
 		@media screen and (min-width: 640px) {
-			font-size: 19px;
+			font-size: var(--fz-h7);
 		}
 
 		@media screen and (min-width: 750px) {
-			font-size: 21px;
+			font-size: var(--fz-h6);
 		}
 	}
 `;

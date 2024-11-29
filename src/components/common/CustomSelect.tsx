@@ -20,8 +20,6 @@ const Select = ({ data, value: current, setValue, unit, width }: SelectProps) =>
 
 	const ref = useClickOutside(() => setOpen(false));
 
-	const isCurrent = (value: number) => (current === value ? true : false);
-
 	return (
 		<Container tabIndex={0} width={width} ref={ref}>
 			<Trigger
@@ -46,10 +44,10 @@ const Select = ({ data, value: current, setValue, unit, width }: SelectProps) =>
 								setValue(item);
 								setOpen(false);
 							}}
-							isCurrent={isCurrent(item)}
-							data-selected={isCurrent(item)}
+							isCurrent={item === current}
+							data-selected={item === current}
 							tabIndex={0}>
-							<span>{isCurrent(item) && <BsCheck size="20" />}</span>
+							<span>{item === current && <BsCheck size="20" />}</span>
 							{item}
 							{unit}
 						</Option>
@@ -72,7 +70,7 @@ const Trigger = styled.button<{ width: number }>`
 	gap: 0.2rem;
 	padding: 0.5rem 0.65rem;
 	font-size: 14px;
-	font-weight: 600;
+	font-weight: var(--fw-semibold);
 	line-height: 1.2;
 	border: 1px solid var(--outline-color);
 	border-radius: var(--radius);
@@ -117,7 +115,7 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	gap: 0.2rem;
 	width: 100%;
 	padding: 0.5rem 0.4rem 0.5rem 0.1rem;
-	font-size: 15px;
+	font-size: var(--fz-p);
 	font-weight: ${({ isCurrent }) => (isCurrent ? 700 : 500)};
 	color: var(--text-color);
 	cursor: pointer;
@@ -129,11 +127,11 @@ const Option = styled.li<{ isCurrent: boolean }>`
 
 	@media screen and (min-width: 640px) {
 		padding: 0.5rem 1rem 0.5rem 0;
-		font-size: 17px;
+		font-size: var(--fz-h7);
 	}
 
 	@media screen and (min-width: 720px) {
-		font-size: 19px;
+		font-size: var(--fz-h6);
 	}
 
 	span {

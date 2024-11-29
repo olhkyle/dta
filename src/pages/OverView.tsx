@@ -82,7 +82,7 @@ const OverView = () => {
 						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
 						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
 					</Flex>
-					<Flex justifyContent="flex-end" margin="16px 0">
+					<Flex justifyContent="flex-end" margin="16px 0 0 auto">
 						<Badge label="총 합계" bgColor="var(--text-color)">
 							{formatCurrencyUnit(data?.sumOfPayment)}
 						</Badge>

@@ -80,14 +80,14 @@ const SelectField = styled.select<{ width: number; error: string; disabled: bool
 	border: none;
 	border-radius: var(--radius);
 	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
-	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--bg-color)')};
+	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--color-gray-opacity-50)')};
 	outline: none;
 	cursor: pointer;
 
 	box-shadow: ${({ error }) => (error ? 'inset 0 0 0 1px var(--color-green-50)' : 'inset 0 0 0 1px var(--outline-color)')};
 
 	&:focus {
-		box-shadow: ${({ error }) => (error ? 'inset 0 0 0 2px var(--color-green-50)' : 'inset 0 0 0 1px var(--text-color)')};
+		box-shadow: ${({ error }) => (error ? 'inset 0 0 0 2px var(--color-green-50)' : 'inset 0 0 0 1px var(--color-gray-600)')};
 	}
 
 	option {

@@ -23,7 +23,7 @@ const Input = ({ label, children, bottomText, rightText, width = 250, ...props }
 				css={{
 					display: `${label ? 'inline-block' : 'none'}`,
 					padding: '4px 0',
-					fontWeight: '500',
+					fontWeight: 'var(--fw-medium)',
 					lineHeight: 1.6,
 					color: 'var(--text-color)',
 				}}>
@@ -102,8 +102,8 @@ Input.ControlledTextField = ({
 
 const RightText = styled.span`
 	display: inline-block;
-	margin-left: 0.5rem;
-	font-weight: 600;
+	margin-left: 8px;
+	font-weight: var(--fw-semibold);
 `;
 
 const BottomText = styled.p<{ isError: boolean; width: number }>`
@@ -112,7 +112,7 @@ const BottomText = styled.p<{ isError: boolean; width: number }>`
 	width: 250px;
 	color: ${({ isError }) => (isError ? 'var(--color-green-300)' : 'var(--color-gray-400)')};
 	font-size: 14px;
-	font-weight: 400;
+	font-weight: var(--fw-regular);
 
 	@media screen and (min-width: 640px) {
 		width: ${({ width }) => `${width}px`};

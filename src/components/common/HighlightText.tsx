@@ -15,8 +15,8 @@ const HighlightText = ({ color, bgColor, fontSize = '16px', children }: Highligh
 				backgroundColor: bgColor,
 				color,
 				fontSize,
-				borderRadius: '8px',
-				fontWeight: '600',
+				borderRadius: 'var(--radius)',
+				fontWeight: 'var(--fw-semibold)',
 				textAlign: 'center',
 			}}>
 			{children}

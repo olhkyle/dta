@@ -54,7 +54,7 @@ const Container = styled.div`
 
 		&:hover {
 			border-color: var(--text-color);
-			font-weight: 600;
+			font-weight: var(--fw-semibold);
 			transition: all 0.3s ease-in-out 0.15s;
 		}
 	}
@@ -65,17 +65,7 @@ const Container = styled.div`
 	}
 `;
 
-const Name = styled.span`
-	font-size: 15px;
-	font-weight: 700;
-	color: var(--color-white);
-
-	@media screen and (min-width: 1024px) {
-		font-size: 17px;
-	}
-`;
-
-const ImgContainer = styled.span`
+const ImgContainer = styled.div`
 	display: none;
 	justify-content: center;
 	align-items: center;
@@ -89,6 +79,16 @@ const ImgContainer = styled.span`
 
 	@media screen and (min-width: 800px) {
 		display: inline-flex;
+	}
+`;
+
+const Name = styled.span`
+	font-size: var(--fz-p);
+	font-weight: var(--fw-bold);
+	color: var(--color-white);
+
+	@media screen and (min-width: 1024px) {
+		font-size: var(--fz-h7);
 	}
 `;
 

@@ -14,24 +14,23 @@ const Container = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 8px;
 	margin: 5rem auto;
-	padding: 4rem 2rem;
+	padding: 64px 32px;
 	font-size: 16px;
-	font-weight: 600;
+	font-weight: var(--fw-semibold);
 	text-align: center;
 	border-radius: var(--radius);
 	outline: 2px solid var(--color-gray-300);
 
 	p {
-		margin-top: 1rem;
-		font-size: 15px;
+		margin-top: 16px;
+		font-size: var(--fz-p);
 		color: var(--color-gray-500);
 	}
 
 	@media screen and (min-width: 640px) {
-		/* width: 65vw; */
-		font-size: 20px;
+		font-size: var(--fz-h6);
 	}
 `;
 

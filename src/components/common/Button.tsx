@@ -13,9 +13,9 @@ const Button = ({ type, disabled = false, onClick, children, ...props }: ButtonP
 			type={type}
 			css={{
 				padding: '0.8rem 1.2rem',
-				borderRadius: '8px',
-				fontSize: '16px',
-				fontWeight: '600',
+				borderRadius: 'var(--radius)',
+				fontSize: 'var(--fz-p)',
+				fontWeight: 'var(--fw-semibold)',
 				color: 'var(--text-color)',
 			}}
 			disabled={disabled}

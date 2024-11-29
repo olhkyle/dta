@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import useIsMountedRef from './useIsMountedRef';
+import { ReactNode, useState } from 'react';
+import { useIsMountedRef } from '.';
 import { SmallLoading } from '../components';
 
-const usePromiseLoading = () => {
+const useLoading = (LoadingComponent: () => ReactNode = SmallLoading) => {
 	const [loading, setLoading] = useState<boolean>(false);
 	const ref = useIsMountedRef();
 
@@ -19,7 +19,7 @@ const usePromiseLoading = () => {
 		}
 	};
 
-	return { Loading: SmallLoading, isLoading: loading, startTransition };
+	return { Loading: LoadingComponent, isLoading: loading, startTransition };
 };
 
-export default usePromiseLoading;
+export default useLoading;

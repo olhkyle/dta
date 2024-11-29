@@ -29,7 +29,7 @@ const RegisterForm = () => {
 		setValue,
 		getValues,
 		control,
-	} = useForm<RegisterSchema>({ mode: 'onChange', resolver: zodResolver(registerSchema), shouldFocusError: true });
+	} = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema) });
 
 	const navigate = useNavigate();
 	const isAdmin = useAppSelector(getIsAdmin);
