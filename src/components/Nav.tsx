@@ -42,34 +42,36 @@ const Nav = () => {
 	useScrollTopEffect(active);
 
 	return (
-		<Container isAdmin={isAdmin}>
-			<Group>
-				<Logo to={routes.OVERVIEW} onClick={close} aria-label="logo">
-					<h1 className="underlined">
-						<img src="./dta.png" alt="logo" />
-					</h1>
-				</Logo>
-				<NavLinkContainer>
-					<Flex justifyContent="space-between" gap="4px">
-						{isAdmin && <Navigation to={routes.OVERVIEW}>월별 개요</Navigation>}
-						{isAdmin && <Navigation to={routes.DETAILS}>월별 상세</Navigation>}
-						{isAdmin && <Navigation to={routes.SEARCH_WORKERS}>일용직 검색</Navigation>}
-						{isAdmin && <Navigation to={routes.REGISTER}>일용직 등록</Navigation>}
-						{name ? (
-							<UserProfile name={name} isAdmin={isAdmin} onLogout={handleLogout} isLoading={isLoading} Loading={Loading} />
-						) : (
-							<Login to={routes.LOGIN}>로그인</Login>
-						)}
-					</Flex>
-					<ThemeButton />
-				</NavLinkContainer>
-				<NavToggleButton onClick={toggle}>
-					{active ? <RiCloseFill size="35" color="var(--text-color)" /> : <PiHamburger size="32" color="var(--text-color)" />}
-				</NavToggleButton>
-			</Group>
-			{active && <SideNav onLogout={handleLogout} isLoading={isLoading} Loading={Loading} />}
-			{active && <Overlay onClick={close} />}
-		</Container>
+		<>
+			<Container isAdmin={isAdmin}>
+				<Group>
+					<Logo to={routes.OVERVIEW} onClick={close} aria-label="logo">
+						<h1 className="underlined">
+							<img src="./dta.png" alt="logo" />
+						</h1>
+					</Logo>
+					<NavLinkContainer>
+						<Flex justifyContent="space-between" gap="4px">
+							{isAdmin && <Navigation to={routes.OVERVIEW}>월별 개요</Navigation>}
+							{isAdmin && <Navigation to={routes.DETAILS}>월별 상세</Navigation>}
+							{isAdmin && <Navigation to={routes.SEARCH_WORKERS}>일용직 검색</Navigation>}
+							{isAdmin && <Navigation to={routes.REGISTER}>일용직 등록</Navigation>}
+							{name ? (
+								<UserProfile name={name} isAdmin={isAdmin} onLogout={handleLogout} isLoading={isLoading} Loading={Loading} />
+							) : (
+								<Login to={routes.LOGIN}>로그인</Login>
+							)}
+						</Flex>
+						<ThemeButton />
+					</NavLinkContainer>
+					<NavToggleButton onClick={toggle}>
+						{active ? <RiCloseFill size="35" color="var(--text-color)" /> : <PiHamburger size="32" color="var(--text-color)" />}
+					</NavToggleButton>
+				</Group>
+			</Container>
+			<SideNav isShown={active} onLogout={handleLogout} isLoading={isLoading} Loading={Loading} />
+			<Overlay isShown={active} onClick={close} />
+		</>
 	);
 };
 
@@ -79,7 +81,7 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 	width: 100%;
 	border-bottom: 1px solid var(--color-gray-400);
 	backdrop-filter: blur(8px);
-	z-index: 9900;
+	z-index: var(--nav-index);
 `;
 
 const Group = styled.div`
@@ -160,14 +162,20 @@ const NavToggleButton = styled.button`
 	}
 `;
 
-const Overlay = styled.div`
+const Overlay = styled.div<{ isShown: boolean }>`
 	position: fixed;
 	top: 0;
 	left: 0;
 	right: 0;
 	bottom: 0;
-	backdrop-filter: blur(10px);
-	z-index: 99;
+	display: ${({ isShown }) => (isShown ? 'block' : 'none')};
+	width: 100dvw;
+	height: ${({ isShown }) => (isShown ? '100%' : '0')};
+	backdrop-filter: blur(4px);
+	opacity: ${({ isShown }) => (isShown ? '100%' : '0')};
+	transition: opacity 0.3s cubic-bezier(0.4, 0, 0.4, 1);
+	background-color: rgba(255, 255, 255, 0.3);
+	z-index: calc(var(--nav-index) - 10);
 `;
 
 export default Nav;

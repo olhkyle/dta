@@ -5,12 +5,13 @@ import { useClickOutside, useMediaQuery, useSetUser, useSideNavActive } from '..
 import routes from '../constants/routes';
 
 interface SideNavProps {
+	isShown: boolean;
 	isLoading: boolean;
 	Loading: () => ReactNode;
 	onLogout: () => void;
 }
 
-const SideNav = ({ isLoading, Loading, onLogout }: SideNavProps) => {
+const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 	const {
 		userData: { isAdmin, name },
 	} = useSetUser();
@@ -27,13 +28,12 @@ const SideNav = ({ isLoading, Loading, onLogout }: SideNavProps) => {
 
 	useEffect(() => {
 		if (isDesktop) {
-			console.log('isDesktop');
 			close();
 		}
 	}, [isDesktop]);
 
 	return (
-		<Container>
+		<Container isShown={isShown}>
 			<Flex direction="column" justifyContent="space-between">
 				{isAdmin && (
 					<Navigation to={routes.OVERVIEW} onClick={close}>
@@ -88,15 +88,18 @@ const SideNav = ({ isLoading, Loading, onLogout }: SideNavProps) => {
 	);
 };
 
-const Container = styled.div`
-	position: absolute;
-	top: 80px;
+const Container = styled.div<{ isShown: boolean }>`
+	position: fixed;
+	top: var(--nav-height);
 	left: 0;
+	max-height: ${({ isShown }) => (isShown ? '60%' : '0')};
 	width: 100%;
 	background-color: var(--bg-color);
 	border-top: 1px solid var(--color-gray-opacity-200);
 	border-bottom: 1px solid var(--color-gray-opacity-200);
 	z-index: var(--sideNav-index);
+	transition: max-height 0.3s ease-out;
+	overflow: hidden;
 
 	@media screen and (min-width: 768px) {
 		display: none;
