@@ -35,6 +35,7 @@ const router = createBrowserRouter([
 				path: routes.REGISTER,
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Register')} />,
 			},
+			{ path: routes.DASHBOARD, element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Dashboard')} /> },
 			{
 				path: routes.OVERVIEW,
 				loader: getWorkersOverviewLoader(queryClient),

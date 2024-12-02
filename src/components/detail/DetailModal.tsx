@@ -296,7 +296,7 @@ const Container = styled.div`
 	left: 50%;
 	padding: 32px 16px;
 	min-height: 360px;
-	width: 100dvw;
+	width: calc(100dvw - 64px);
 	height: calc(100dvh - var(--nav-height));
 	border-radius: var(--radius);
 	transform: translate(-50%, -50%);

@@ -112,7 +112,7 @@ const DetailTable = styled.table`
 	thead > tr,
 	tbody > tr {
 		display: grid;
-		grid-template-columns: 0.75fr 1.25fr 2fr 1fr 1.5fr 1.8fr 2fr;
+		grid-template-columns: 0.75fr 1.15fr 2fr 1fr 1.5fr 2.25fr 2fr;
 	}
 
 	thead {

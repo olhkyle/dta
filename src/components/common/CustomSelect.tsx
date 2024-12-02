@@ -67,7 +67,7 @@ const Trigger = styled.button`
 	align-items: center;
 	gap: 0.2rem;
 	padding: 0.5rem 0.65rem;
-	font-size: 14px;
+	font-size: var(--fz-m);
 	font-weight: var(--fw-semibold);
 	line-height: 1.2;
 	border: 1px solid var(--outline-color);

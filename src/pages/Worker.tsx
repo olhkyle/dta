@@ -1,5 +1,6 @@
 import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
+import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { BsArrowLeft } from 'react-icons/bs';
 import { useAppSelector } from '../store/store';
@@ -7,6 +8,9 @@ import { getIsAdmin } from '../store/userSlice';
 import { Circle, Flex, HighlightText, Text } from '../components';
 import { useGetWorkersDetailQuery, useGoBack, useMediaQuery, useTheme } from '../hooks';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
+import { getBarChartData, getBarChartOptions } from '../constants/\bchart';
+
+Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const Worker = () => {
 	const {
@@ -30,42 +34,16 @@ const Worker = () => {
 		workerName,
 	});
 
-	const chartOptions = {
-		responsive: true,
-		plugins: {
-			legend: {
-				display: false,
-			},
-			title: {
-				display: true,
-				text: `${month}월 [원 / ₩]`,
-			},
-		},
-	};
+	const chartOptions = getBarChartOptions({
+		title: `${month}월 [원 / ₩]`,
+	});
 
-	const chartData = {
-		labels: data?.workers.map(worker => worker.workedDate.getDate() + '일'),
-		datasets: [
-			{
-				type: 'bar' as const,
-				label: `${workerName}`,
-				barPercentage: isTabletScreen ? 0.6 : 0.4,
-				data: data?.workers.map(worker => worker.payment),
-				backgroundColor: theme === 'dark' ? 'rgb(255,255,255)' : 'rgb(0,0,0)',
-				borderColor: theme === 'dark' ? 'rgba(240, 240, 240, 0.4)' : 'rgba(240, 240, 240, 0.196)',
-				borderWidth: 1,
-				borderRadius: 3,
-				datalabels: {
-					anchor: 'start' as const,
-					align: 'end' as const,
-					font: {
-						weight: 'bold' as const,
-						size: 20,
-					},
-				},
-			},
-		],
-	};
+	const chartData = getBarChartData({
+		theme,
+		labels: (data?.workers ?? []).map(({ workedDate }) => workedDate.getDate() + '일'),
+		barPercentage: isTabletScreen ? 0.6 : 0.4,
+		data: (data?.workers ?? []).map(({ payment }) => payment),
+	});
 
 	return (
 		<Container>
@@ -77,7 +55,7 @@ const Worker = () => {
 				<div css={{ position: 'absolute', top: '-8px', left: '-4px' }}>
 					<Circle size={20} bgColor="var(--color-green-200)" />
 				</div>
-				<Flex gap="1rem" justifyContent="space-between" margin="0 0 1rem">
+				<Flex gap="1rem" justifyContent="space-between" margin="0 0 16px">
 					<Text typo={isMobileScreen ? 'h5' : 'h4'} color="var(--text-color)">
 						{workerName}
 					</Text>

@@ -26,7 +26,7 @@ const Overview = ({ query }: OverviewProps) => {
 					acc[acc.length - 1].push(currEl);
 					return acc;
 			  }, []);
-	console.log(workersOverviewForPrint);
+
 	return (
 		<>
 			{workersOverviewForPrint?.map((workerOverviewForPrint, arrIdx) => (

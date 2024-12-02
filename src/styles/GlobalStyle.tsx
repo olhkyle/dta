@@ -134,7 +134,7 @@ const GlobalStyle = css`
 		--btn-hover-color: var(--color-gray-700);
 		--btn-hover-bg-color: var(--color-gray-900);
 		--outline-color: var(--color-gray-100);
-		--table-border-color: var(--color-gray-600);
+		--table-border-color: var(--color-gray-opacity-200);
 		--text-color: var(--color-dark);
 		--disabled-text-color: var(--color-gray-600);
 		--bg-color: var(--color-white);

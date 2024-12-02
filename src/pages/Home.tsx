@@ -9,7 +9,7 @@ const Home = () => {
 	const user = useAppSelector(getUser);
 
 	return (
-		<Wrapper direction="column" justifyContent="center" gap="1rem">
+		<Wrapper direction="column" justifyContent="center" gap="16px">
 			<Subtitle color="var(--bg-color)">Document Tax Administration</Subtitle>
 			<About>
 				<h6>* Goal</h6>
@@ -21,7 +21,7 @@ const Home = () => {
 				</p>
 				<span></span>
 			</About>
-			<Navigation to={user ? routes.OVERVIEW : routes.LOGIN} className="clip-path-button">
+			<Navigation to={user ? routes.DASHBOARD : routes.LOGIN} className="clip-path-button">
 				서비스 이용하기
 			</Navigation>
 		</Wrapper>
@@ -29,40 +29,40 @@ const Home = () => {
 };
 
 const Wrapper = styled(Flex)`
-	margin: 12vh 0;
+	margin: 12dvh 0;
 
 	@media screen and (min-width: 1024px) {
-		margin: 16vh auto;
+		margin: 16dvh auto;
 	}
 `;
 
 const Subtitle = styled(Text)`
-	margin-bottom: 1rem;
+	margin-bottom: 16px;
 	font-size: 22px;
 	text-align: center;
 	-webkit-text-stroke: 1px var(--text-color);
 
 	@media screen and (min-width: 640px) {
-		font-size: 32px;
+		font-size: var(--fz-h4);
 	}
 
 	@media screen and (min-width: 768px) {
-		font-size: 34px;
+		font-size: var(--fz-h3);
 	}
 `;
 
 const About = styled.div`
 	position: relative;
-	margin-bottom: 1rem;
-	padding: 1rem;
+	margin-bottom: 16px;
+	padding: 16px;
 	width: 300px;
-	font-size: 15px;
+	font-size: var(--fz-p);
 	background-color: var(--option-hover-bg-color);
 	color: var(--text-color);
 	border-radius: var(--radius);
 
 	h6 {
-		font-weight: 700;
+		font-weight: var(--fw-bold);
 	}
 
 	span {
@@ -81,11 +81,11 @@ const About = styled.div`
 `;
 
 const Navigation = styled(NavLink)`
-	padding: 1rem;
+	padding: 16px;
 	min-width: 240px;
 	background: linear-gradient(0.25turn, var(--color-green-100), var(--color-green-400));
 	color: var(--bg-color);
-	font-size: 15px;
+	font-size: var(--fz-p);
 	font-weight: 600;
 	text-align: center;
 
@@ -95,8 +95,8 @@ const Navigation = styled(NavLink)`
 
 	@media screen and (min-width: 640px) {
 		flex-direction: row;
-		font-size: 17px;
-		font-weight: 700;
+		font-size: var(--fz-h7);
+		font-weight: var(--fw-bold);
 	}
 `;
 

@@ -48,7 +48,6 @@ const Details = () => {
 	});
 
 	const ref = useInfiniteScroll(fetchNextPage);
-
 	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
 
 	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
@@ -60,8 +59,8 @@ const Details = () => {
 				<Flex justifyContent="space-between">
 					<Flex gap="16px">
 						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentControl} />
-						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
-						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
+						<CustomSelect data={years} value={year} setValue={setYear} unit="년" />
+						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" />
 					</Flex>
 					<PrintButton
 						type="button"

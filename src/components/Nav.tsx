@@ -11,12 +11,12 @@ import routes from '../constants/routes';
 
 const Nav = () => {
 	const queryClient = useQueryClient();
+	const navigate = useNavigate();
 
 	const {
 		active,
 		actions: { toggle, close },
 	} = useSideNavActive();
-	const navigate = useNavigate();
 
 	const {
 		userData: { name, isAdmin },
@@ -45,7 +45,7 @@ const Nav = () => {
 		<>
 			<Container isAdmin={isAdmin}>
 				<Group>
-					<Logo to={routes.OVERVIEW} onClick={close} aria-label="logo">
+					<Logo to={routes.DASHBOARD} onClick={close} aria-label="logo">
 						<h1 className="underlined">
 							<img src="./dta.png" alt="logo" />
 						</h1>

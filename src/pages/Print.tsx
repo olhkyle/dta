@@ -24,7 +24,7 @@ const Print = () => {
 		<Container>
 			<Flex justifyContent="space-between" margin="0 0 32px 0" width="100%">
 				<GoBackButton type="button" onClick={goBack}>
-					<BsArrowLeftCircle size="24" color="var(--color-gray-700)" />
+					<BsArrowLeftCircle size="24" color="var(--color-gray-600)" />
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="16px">
@@ -68,8 +68,8 @@ const GoBackButton = styled(Button)`
 	gap: 0.5rem;
 	font-weight: 700;
 	font-size: 15px;
-	color: var(--color-gray-800);
-	background-color: #e7e7e9;
+	color: var(--color-gray-600);
+	background-color: var(--color-gray-opacity-100);
 	outline: 1px solid var(--color-white);
 	border-radius: 9999px;
 	transition: all 0.3s ease-in-out 0.15s;
