@@ -9,10 +9,9 @@ interface SelectProps {
 	value: number;
 	setValue: Dispatch<SetStateAction<number>>;
 	unit?: string;
-	width: number;
 }
 
-const Select = ({ data, value: current, setValue, unit, width }: SelectProps) => {
+const Select = ({ data, value: current, setValue, unit }: SelectProps) => {
 	const [open, setOpen] = useState(false);
 
 	const generatedId = useId('custom-select');
@@ -21,15 +20,14 @@ const Select = ({ data, value: current, setValue, unit, width }: SelectProps) =>
 	const ref = useClickOutside(() => setOpen(false));
 
 	return (
-		<Container tabIndex={0} width={width} ref={ref}>
+		<Container tabIndex={0} ref={ref}>
 			<Trigger
 				type="button"
 				id={generatedId}
 				onClick={() => setOpen(!open)}
 				aria-controls={generatedListId}
 				aria-expanded={open}
-				tabIndex={0}
-				width={width}>
+				tabIndex={0}>
 				<span>
 					{current} {unit}
 				</span>
@@ -58,12 +56,12 @@ const Select = ({ data, value: current, setValue, unit, width }: SelectProps) =>
 	);
 };
 
-const Container = styled.div<{ width: number }>`
+const Container = styled.div`
 	position: relative;
 	z-index: 10;
 `;
 
-const Trigger = styled.button<{ width: number }>`
+const Trigger = styled.button`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
