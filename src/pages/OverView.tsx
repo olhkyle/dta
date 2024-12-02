@@ -2,13 +2,14 @@ import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
-import { useDebounce, useMediaQuery, useTheme } from '../hooks';
+import { useDebounce, useTheme } from '../hooks';
 import { Badge, CustomSelect, EmptyIndicator, Flex, HighlightText, LayoutLoading, SearchInput, SegmentedControl } from '../components';
 import { useGetWorkersOverviewQuery } from '../hooks/queries';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
 import { monthOfToday, months, yearOfToday, years } from '../constants/day';
 import { SortOption, controls } from '../constants/sortControls';
 import { BsBoxSeam } from 'react-icons/bs';
+import { sortWorkerData } from '../service/utils';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -22,10 +23,8 @@ const OverView = () => {
 	const [currentDisplayType, setCurrentDisplayType] = useState<'목록' | '차트'>('목록');
 
 	const [theme] = useTheme();
-	const isTabletScreenSize = useMediaQuery('(max-width: 768px');
-	const isMobileScreenSize = useMediaQuery('(max-width: 480px');
 
-	const data = useGetWorkersOverviewQuery({ inOrder: currentSort, year, month, workerName });
+	const data = useGetWorkersOverviewQuery({ year, month, workerName });
 
 	const chartOptions = {
 		responsive: true,
@@ -48,13 +47,13 @@ const OverView = () => {
 	};
 
 	const chartData = {
-		labels: data?.workers.map(worker => worker.workerName),
+		labels: sortWorkerData(data?.workers ?? [], currentSort).map(worker => worker.workerName),
 		datasets: [
 			{
 				type: 'bar' as const,
 				label: `-`,
 				barPercentage: 0.75,
-				data: data?.workers.map(worker => worker.sumOfPayment),
+				data: sortWorkerData(data?.workers ?? [], currentSort).map(worker => worker.sumOfPayment),
 				backgroundColor: theme === 'dark' ? 'rgb(255,255,255)' : 'rgb(0,0,0)',
 				borderColor: theme === 'dark' ? 'rgba(240, 240, 240, 0.4)' : 'rgba(240, 240, 240, 0.196)',
 				borderWidth: 1,
@@ -64,7 +63,7 @@ const OverView = () => {
 					align: 'end' as const,
 					font: {
 						weight: 'bold' as const,
-						size: 20,
+						size: 18,
 					},
 				},
 			},
@@ -79,8 +78,8 @@ const OverView = () => {
 				<SearchFilters direction="column" justifyContent="space-between" gap="16px" width="100%">
 					<Flex gap="16px" alignItems="center" margin="0 auto 0 0">
 						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentSort} />
-						<CustomSelect data={years} value={year} setValue={setYear} unit="년" width={120} />
-						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" width={120} />
+						<CustomSelect data={years} value={year} setValue={setYear} unit="년" />
+						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" />
 					</Flex>
 					<Flex justifyContent="flex-end" margin="16px 0 0 auto">
 						<Badge label="총 합계" bgColor="var(--text-color)">
@@ -109,7 +108,7 @@ const OverView = () => {
 							</tr>
 						</thead>
 						<tbody>
-							{data?.workers.map(({ workerName, workedDate, sumOfPayment }, idx) => (
+							{sortWorkerData(data?.workers ?? [], currentSort).map(({ workerName, workedDate, sumOfPayment }, idx) => (
 								<tr key={workerName}>
 									<td aria-label="tableBody-index">
 										<span>{idx + 1}</span>
@@ -122,18 +121,13 @@ const OverView = () => {
 						</tbody>
 					</Table>
 				) : (
-					<Flex direction="column" margin="48px 0 0">
+					<Flex direction="column" margin="48px 0">
 						<Bar data={chartData} options={chartOptions} />
-						<Flex justifyContent="flex-end" margin="32px 0">
-							{isTabletScreenSize && (
-								<HighlightText
-									color="var(--bg-color)"
-									bgColor="var(--text-color)"
-									fontSize={isMobileScreenSize ? 'var(--fz-sm)' : 'var(--fz-rp)'}>
-									💡 현재 화면 사이즈에서는 차트의 정확한 데이터를 파악하기 어렵습니다
-								</HighlightText>
-							)}
-						</Flex>
+						<ResponsiveFlex justifyContent="flex-end" margin="32px 0">
+							<HighlightText color="var(--bg-color)" bgColor="var(--text-color)" fontSize="var(--fz-sm)">
+								💡 현재 화면 사이즈에서는 차트의 정확한 데이터를 파악하기 어렵습니다
+							</HighlightText>
+						</ResponsiveFlex>
 					</Flex>
 				)}
 			</Suspense>
@@ -221,6 +215,18 @@ const Table = styled.table`
 
 	@media screen and (max-width: 640px) {
 		border-color: var(--color-white);
+	}
+`;
+
+const ResponsiveFlex = styled(Flex)`
+	display: none;
+
+	@media screen and (min-width: 640px) {
+		font-size: var(--fz-rp);
+	}
+
+	@media screen and (max-width: 768px) {
+		display: flex;
 	}
 `;
 

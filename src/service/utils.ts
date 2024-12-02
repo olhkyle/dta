@@ -68,6 +68,5 @@ const sortWorkerData = <T extends WorkerWithId>(data: T[], inOrder: SortOption) 
 };
 
 export type { ReturnTypeOfPaginationQuery, SortOption };
-export default sortWorkerData;
 
-export { paginationQuery, specifySnapshotIntoData, formattedWorkedDate };
+export { sortWorkerData, paginationQuery, specifySnapshotIntoData, formattedWorkedDate };

@@ -1,6 +1,6 @@
 import { collection, query, where, doc, and, orderBy, getCountFromServer, getDocs, addDoc, updateDoc, deleteDoc } from 'firebase/firestore';
 import { db } from './firebase';
-import { SortOption, paginationQuery, specifySnapshotIntoData } from './utils';
+import { SortOption, paginationQuery, sortWorkerData, specifySnapshotIntoData } from './utils';
 import { Worker } from '../components/register/RegisterForm';
 import { WorkerQuery, WorkersPaginationQuery, WorkersQueryData } from '../queries/workerQuery';
 
@@ -16,10 +16,6 @@ type WorkersDetailBySort = ReturnType<typeof sortByNameAndWorkedDate>;
 
 const COLLECTION_NAME = 'people';
 const LIMIT_SIZE_PER_PAGE = 20;
-
-const sortWorkerData = <T extends WorkerWithId>(data: T[], inOrder: SortOption) => {
-	return data?.sort((prev, curr) => (inOrder === 'asc' ? prev?.createdAt - curr?.createdAt : curr?.createdAt - prev?.createdAt));
-};
 
 const addSumOfPaymentForEachWorker = (data: WorkersQueryData, inOrder: SortOption = 'asc') =>
 	sortWorkerData(
@@ -90,7 +86,7 @@ const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pagePa
 	};
 };
 
-const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
+const getWorkers = async ({ inOrder = 'asc', year, month, workerName }: WorkerQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
 
 	const queryByMonth = (year: number, month: number) =>
@@ -113,11 +109,11 @@ const getWorkers = async ({ inOrder, year, month, workerName }: WorkerQuery) => 
 	};
 };
 
-const getWorkersOverview = async ({ inOrder, year, month, workerName }: WorkerQuery) => {
-	const data = await getWorkers({ inOrder, year, month, workerName });
+const getWorkersOverview = async ({ year, month, workerName }: WorkerQuery) => {
+	const data = await getWorkers({ year, month, workerName });
 
 	return {
-		workers: addSumOfPaymentForEachWorker(data, inOrder),
+		workers: addSumOfPaymentForEachWorker(data),
 		sumOfPayment: data?.workers.reduce((acc, worker) => (acc += +worker.payment), 0),
 	};
 };

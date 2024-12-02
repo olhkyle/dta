@@ -13,7 +13,7 @@ interface WorkersQueryData {
 }
 
 interface WorkerQuery {
-	inOrder: SortOption;
+	inOrder?: SortOption;
 	year: number;
 	month: number;
 	workerName: string;
