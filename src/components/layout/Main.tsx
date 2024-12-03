@@ -15,7 +15,6 @@ const Container = styled.main`
 	margin: 0 auto;
 	max-width: 1280px;
 	width: 100%;
-	height: 100%;
 	min-height: calc(100dvh - var(--nav-height) - var(--footer-height));
 `;
 

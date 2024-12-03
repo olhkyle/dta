@@ -108,7 +108,7 @@ const TextField = styled.input<{ error: string; disabled: boolean }>`
 	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
 	background-color: ${({ disabled }) => (disabled ? 'var(--outline-color)' : 'var(--color-gray-opacity-50)')};
 	box-shadow: ${({ error }) => (error ? 'inset 0 0 0 1px var(--color-green-50)' : 'inset 0 0 0 1px var(--outline-color)')};
-	transition: color 0.1s ease-in-out;
+	transition: background 0.15s ease-in-out, color 0.1s ease-in-out;
 	outline: none;
 	cursor: pointer;
 	-webkit-appearance: none;

@@ -93,7 +93,7 @@ const GlobalStyle = css`
 		/* z-index */
 		--nav-index: 50;
 		--sideNav-index: 999;
-		--overlay-index: 999;
+		/* --overlay-index: 9900; */
 		--modal-index: 9990;
 		--toast-index: 9999;
 

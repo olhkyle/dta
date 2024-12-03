@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { MdClose } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -14,17 +13,19 @@ import { QueryRefetch } from '../../store/modalSlice';
 import { getIsAdmin } from '../../store/userSlice';
 import { unformatCurrencyUnit } from '../../utils/currencyUnit';
 import sleep from '../../utils/sleep';
+import ModalLayout from './ModalLayout';
 
 interface DetailModalProps {
 	data: WorkerWithId;
 	isOpen: boolean;
 	onClose: () => void;
 	refetch: QueryRefetch;
+	order: `modal-${number}`;
 }
 
 type DisabledState = Record<string, boolean>;
 
-const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProps) => {
+const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailModalProps) => {
 	const {
 		register,
 		handleSubmit,
@@ -133,31 +134,21 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 
 	return (
 		<>
-			<Container>
-				<Header>
-					<Flex justifyContent="space-between">
-						<Text typo="h4" color="var(--text-color)">
-							👨🏻‍💻 일용직 수정
-						</Text>
-						<CloseModalButton type="button" id="modify" onClick={onClose}>
-							<MdClose size="24" color="var(--text-color)" />
-						</CloseModalButton>
-					</Flex>
-					<Flex gap="16px">
-						<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
-							{isAllFieldsDisabled ? '수정취소' : '수정하기'}
-						</ModifyButton>
-						<ViewWorkerDetailButton
-							type="button"
-							onClick={() => {
-								onClose();
-								navigate(`/worker/${worker.id}`, { state: { worker } });
-							}}>
-							일용직 상세보기
-						</ViewWorkerDetailButton>
-					</Flex>
-				</Header>
-				<Body>
+			<ModalLayout title={'👨🏻‍💻 일용직 수정'} order={order} onClose={onClose}>
+				<ActionButtons gap="16px">
+					<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
+						{isAllFieldsDisabled ? '수정취소' : '수정하기'}
+					</ModifyButton>
+					<ViewWorkerDetailButton
+						type="button"
+						onClick={() => {
+							onClose();
+							navigate(`/worker/${worker.id}`, { state: { worker } });
+						}}>
+						일용직 상세보기
+					</ViewWorkerDetailButton>
+				</ActionButtons>
+				<Group aria-disabled={isAllFieldsDisabled}>
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						<Input label="성 명" bottomText={errors?.workerName?.message}>
 							<Input.TextField
@@ -273,7 +264,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 								수정완료
 							</UpdateButton>
 						)}
-						<Flex direction="column" margin="80px 0">
+						<Flex direction="column" margin="32px 0" width="100%">
 							<Text color="var(--btn-hover-color)">
 								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
 							</Text>
@@ -283,57 +274,21 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch }: DetailModalProp
 							</DeleteButton>
 						</Flex>
 					</Form>
-				</Body>
-			</Container>
-			<Overlay onClick={onClose} />
+				</Group>
+			</ModalLayout>
 		</>
 	);
 };
 
-const Container = styled.div`
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	padding: 32px 16px;
-	min-height: 360px;
-	width: calc(100dvw - 64px);
-	height: calc(100dvh - var(--nav-height));
-	border-radius: var(--radius);
-	transform: translate(-50%, -50%);
-	background-color: var(--bg-color);
-	border: 1px solid var(--outline-color);
-	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-	z-index: 9999;
-
-	@media screen and (min-width: 720px) {
-		height: calc(100dvh - 2 * var(--nav-height));
-		width: 720px;
-		padding: 32px;
-	}
-`;
-
-const Header = styled.div``;
-
-const CloseModalButton = styled(Button)`
-	display: inline-flex;
-	justify-content: center;
-	align-items: center;
-	padding: 8px;
-	border-radius: 9999px;
-	background-color: var(--outline-color);
-
-	&:hover {
-		outline: 1px solid var(--text-color);
-		outline-offset: 2px;
-	}
-
-	@media screen and (min-width: 640px) {
-		right: -2.5%;
-	}
+const ActionButtons = styled(Flex)`
+	position: sticky;
+	top: 0;
+	min-height: 48px;
+	background-color: var(--color-white);
+	z-index: var(--modal-index);
 `;
 
 const ModifyButton = styled(Button)`
-	margin-top: 24px;
 	padding: 8px 12px;
 	color: var(--bg-color);
 	background-color: var(--color-green-50);
@@ -344,7 +299,6 @@ const ModifyButton = styled(Button)`
 `;
 
 const ViewWorkerDetailButton = styled(Button)`
-	margin-top: 24px;
 	padding: 8px 12px;
 	color: var(--bg-color);
 	background-color: var(--color-orange-100);
@@ -354,17 +308,11 @@ const ViewWorkerDetailButton = styled(Button)`
 	}
 `;
 
-const Body = styled.div`
-	display: flex;
-	justify-content: center;
-	gap: 64px;
-	margin: 16px 0 16px;
+const Group = styled.div`
+	margin: 16px 0 0;
 	padding: 16px;
-	width: 100%;
-	height: calc(100% - 15dvh);
-	border: 1px solid #e1e1e1;
+	background-color: var(--color-white);
 	border-radius: var(--radius);
-	overflow: scroll;
 
 	-ms-overflow-style: none; /* IE and Edge */
 	scrollbar-width: none; /* Firefox */
@@ -372,13 +320,20 @@ const Body = styled.div`
 	::-webkit-scrollbar {
 		display: none;
 	}
+
+	&[aria-disabled='false'] {
+		background-color: var(--color-gray-opacity-50);
+	}
+
+	@media screen and (min-width: 640px) {
+		margin-top: 16px;
+	}
 `;
 
 const Form = styled.form`
 	display: flex;
 	flex-direction: column;
 	gap: 16px;
-	margin: 0 auto;
 `;
 
 const CustomFlex = styled(Flex)`
@@ -406,7 +361,6 @@ const Confidential = styled.div`
 
 const UpdateButton = styled(Button)`
 	margin: 16px auto 0;
-	min-width: 300px;
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--color-green-300);
@@ -417,12 +371,11 @@ const UpdateButton = styled(Button)`
 `;
 
 const DeleteButton = styled(Button)`
-	display: flex;
+	display: inline-flex;
 	justify-content: center;
 	align-items: center;
 	gap: 0.4rem;
-	margin: 16px auto;
-	min-width: 300px;
+	margin: 16px auto 0;
 	width: 100%;
 	color: var(--bg-color);
 	border: 1px solid var(--text-color);
@@ -432,17 +385,6 @@ const DeleteButton = styled(Button)`
 	&:hover {
 		background-color: var(--btn-hover-bg-color);
 	}
-`;
-
-const Overlay = styled.div`
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	backdrop-filter: blur(3px);
-	background-color: var(--backdrop-blur-bg-color);
-	z-index: var(--overlay-index);
 `;
 
 export default DetailModal;

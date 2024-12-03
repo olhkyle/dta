@@ -2,7 +2,7 @@ import { useState } from 'react';
 import styled from '@emotion/styled';
 import { SearchInput, SearchInfo } from '../components';
 import { getSpecificWorker } from '../service/workData';
-import sleep from '../utils/sleep';
+import { useLoading } from '../hooks';
 
 export interface RecentSearch {
 	workerName: string;
@@ -13,22 +13,16 @@ const Search = () => {
 	const [workerName, setWorkerName] = useState<string>('');
 	const [registrationNumber, setRegistrationNumber] = useState<string>('');
 	const [recentSearchList, setRecentSearchList] = useState<RecentSearch[]>([]);
-	const [isFetching, setIsFetching] = useState<boolean>(false);
 	const [isError, setIsError] = useState<boolean>(false);
-
-	const isDataFetched = registrationNumber.length !== 0;
-	const isInputClean = workerName.length === 0;
+	const { Loading, isLoading, startTransition } = useLoading();
 
 	const handleSearchResult = async () => {
 		try {
-			if (!isFetching) {
-				setIsFetching(true);
-			}
-
-			await sleep(500);
-			const data = await getSpecificWorker({
-				workerName: workerName,
-			});
+			const data = await startTransition(
+				getSpecificWorker({
+					workerName: workerName,
+				}),
+			);
 
 			const registrationNumber = data.registrationNumberFront + '-' + data.registrationNumberBack;
 
@@ -43,8 +37,6 @@ const Search = () => {
 			console.error(e);
 			setRegistrationNumber('검색 결과가 없습니다 ☕️');
 			setIsError(true);
-		} finally {
-			setIsFetching(false);
 		}
 	};
 
@@ -79,9 +71,10 @@ const Search = () => {
 				registrationNumber={registrationNumber}
 				recentSearchList={recentSearchList}
 				isError={isError}
-				isFetching={isFetching}
-				isDataFetched={isDataFetched}
-				isInputClean={isInputClean}
+				isLoading={isLoading}
+				loader={Loading()}
+				isDataFetched={registrationNumber.length !== 0}
+				isInputClean={workerName.length === 0}
 			/>
 		</Container>
 	);

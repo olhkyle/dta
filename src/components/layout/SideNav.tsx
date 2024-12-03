@@ -1,8 +1,8 @@
 import { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
-import { Button, Flex, NavLink, Text, ThemeButton } from '.';
-import { useClickOutside, useMediaQuery, useSetUser, useSideNavActive } from '../hooks';
-import routes from '../constants/routes';
+import { Button, Flex, NavLink, Text, ThemeButton } from '..';
+import { useClickOutside, useMediaQuery, useSetUser, useSideNavActive } from '../../hooks';
+import routes from '../../constants/routes';
 
 interface SideNavProps {
 	isShown: boolean;
@@ -43,11 +43,6 @@ const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 				{isAdmin && (
 					<Navigation to={routes.DETAILS} onClick={close}>
 						월별 상세 명세
-					</Navigation>
-				)}
-				{isAdmin && (
-					<Navigation to={routes.SEARCH_WORKERS} onClick={close}>
-						일용직 검색
 					</Navigation>
 				)}
 				{isAdmin && (
@@ -92,6 +87,7 @@ const Container = styled.div<{ isShown: boolean }>`
 	position: fixed;
 	top: var(--nav-height);
 	left: 0;
+	display: ${({ isShown }) => (isShown ? 'block' : 'none')};
 	max-height: ${({ isShown }) => (isShown ? '60%' : '0')};
 	width: 100%;
 	background-color: var(--bg-color);

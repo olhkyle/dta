@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { RxArrowUp } from 'react-icons/rx';
-import { useScroll } from '../hooks';
+import { useScroll } from '../../hooks';
 
 interface ScrollToTopButtonProps {
 	topPosToShow: number;

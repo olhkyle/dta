@@ -11,8 +11,8 @@ interface AuthenticationGuardProps {
 }
 
 const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) => {
-	const { pathname } = useLocation();
 	const { data, isLoading, error } = useAuthQuery();
+	const { pathname } = useLocation();
 
 	const fallbackComponent =
 		pathname === routes.PRINT || pathname === routes.WORKER ? (

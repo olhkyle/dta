@@ -50,8 +50,9 @@ const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonCli
 
 const Container = styled(Flex)`
 	margin: 48px auto 64px;
-	padding: 16px 16px 0;
+	padding: 16px 8px 0;
 	max-width: 960px;
+	width: 100%;
 	border-bottom: 5px solid var(--outline-color);
 
 	&:focus-within {
@@ -59,11 +60,12 @@ const Container = styled(Flex)`
 	}
 
 	@media screen and (max-width: 640px) {
-		padding: 16px;
+		padding: 8px 8px 16px 16px;
 		max-width: 360px;
 	}
 
 	@media screen and (max-width: 375px) {
+		padding: 16px 16px 16px;
 		max-width: 320px;
 	}
 `;
@@ -86,6 +88,7 @@ const RefreshButton = styled(Button)`
 	display: inline-flex;
 	align-items: center;
 	padding: 4px 8px;
+	font-size: 27px;
 	border-radius: 9999px;
 
 	&:hover {
@@ -94,12 +97,11 @@ const RefreshButton = styled(Button)`
 
 	svg {
 		color: var(--text-color);
-		font-size: var(--fz-h4);
 	}
 
 	@media screen and (min-width: 640px) {
 		svg {
-			font-size: 32px;
+			font-size: var(--fz-h4);
 		}
 	}
 `;

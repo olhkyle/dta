@@ -1,95 +1,55 @@
 import styled from '@emotion/styled';
-import { Circle, Flex, SmallLoading, Text } from '..';
+import { Button, Circle, Flex, Text } from '..';
 import { RecentSearch } from '../../pages/Search';
+import { toast } from 'react-toastify';
 
 interface SearchInfoProps {
-	registrationNumber: string;
 	recentSearchList: RecentSearch[];
-	isError: boolean;
-	isFetching: boolean;
-	isDataFetched: boolean;
-	isInputClean: boolean;
 }
 
-const SearchInfo = ({ registrationNumber, recentSearchList, isError, isFetching, isDataFetched, isInputClean }: SearchInfoProps) => {
+const SearchInfo = ({ recentSearchList }: SearchInfoProps) => {
+	//TODO:
+	// 1. isLoading, Loading 컴포넌트 SearchWorkerModal에서 prop으로 넘겨받기
+	// 2. error 처리
+	const handleCopyClipboard = async (text: string) => {
+		try {
+			if (navigator) {
+				await navigator.clipboard.writeText(text);
+				toast.success('성공적으로 복사되었습니다.');
+			}
+		} catch (error) {
+			console.error(error);
+			toast.error('복사하는 데 문제가 발생하였습니다.');
+		}
+	};
 	return (
-		<Infos direction="column" margin="16px auto 24px">
-			<CustomFlex direction="column" justifyContent="flex-start" alignItems="flex-start" margin="0 auto">
-				<Text typo="h5" color="var(--text-color)">
-					💿 주민등록번호
-				</Text>
-				{isError ? (
-					<NoResult>{registrationNumber}</NoResult>
-				) : (
-					<Flex justifyContent="center" gap="12px" margin="0 auto" width="100%">
-						<SearchResult isDataFetched={isDataFetched} isInputClean={isInputClean}>
-							{isFetching ? <SmallLoading /> : !isDataFetched || isInputClean ? '------' : registrationNumber.split('-')[0]}
-						</SearchResult>
-
-						<SearchResult isDataFetched={isDataFetched} isInputClean={isInputClean}>
-							{isFetching ? <SmallLoading /> : !isDataFetched || isInputClean ? '-------' : registrationNumber.split('-')[1]}
-						</SearchResult>
-					</Flex>
-				)}
-			</CustomFlex>
-
-			<CustomFlex direction="column" justifyContent="flex-start" alignItems="flex-start" margin="3rem auto">
-				<Text typo="h5" color="var(--text-color)">
-					💿 최근 검색 내역
-				</Text>
-
-				<RecentSearchList>
-					{recentSearchList.length === 0
-						? '검색 내역이 없습니다 ☕️'
-						: recentSearchList.map(({ workerName, registrationNumber }) => (
-								<li key={workerName + registrationNumber}>
-									<Flex gap="16px">
-										<Circle size={14} bgColor={'var(--color-green-50)'} />
-										<span>{workerName}</span>
-									</Flex>
+		<CustomFlex direction="column" justifyContent="flex-start" alignItems="flex-start" margin="0 auto" padding="16px" width="100%">
+			<Text typo="h5" color="var(--text-color)">
+				💿 최근 검색 내역
+			</Text>
+			<RecentSearchList>
+				{recentSearchList.length === 0
+					? '검색 내역이 없습니다 ☕️'
+					: recentSearchList.map(({ workerName, registrationNumber }) => (
+							<li key={workerName + registrationNumber}>
+								<Flex gap="16px">
+									<Circle size={14} bgColor={'var(--color-green-50)'} />
+									<span>{workerName}</span>
+								</Flex>
+								<Flex gap="32px">
 									<span>{registrationNumber}</span>
-								</li>
-						  ))}
-				</RecentSearchList>
-			</CustomFlex>
-		</Infos>
+									<CopyButton type="button" onClick={() => handleCopyClipboard(workerName)}>
+										복사
+									</CopyButton>
+								</Flex>
+							</li>
+					  ))}
+			</RecentSearchList>
+		</CustomFlex>
 	);
 };
 
-const Infos = styled(Flex)`
-	padding: 32px 16px;
-`;
-
 const CustomFlex = styled(Flex)`
-	padding: 16px;
-	width: 100%;
-	border: 1px solid var(--outline-color);
-	border-radius: var(--radius);
-`;
-
-const SearchResult = styled.div<{ isDataFetched: boolean; isInputClean: boolean }>`
-	margin: 16px 0;
-	padding: var(--btn-md-padding);
-	width: 100%;
-	font-size: var(--fz-m);
-	color: ${({ isDataFetched }) => (isDataFetched ? 'var(--text-color)' : 'var(--color-gray-600)')};
-	border: ${({ isDataFetched, isInputClean }) =>
-		isInputClean ? '1px solid var(--outline-color)' : isDataFetched ? '1px solid var(--color-green-50)' : 'none'};
-	border-radius: var(--radius);
-	outline: ${({ isDataFetched, isInputClean }) =>
-		isInputClean ? '1px dashed var(--text-color)' : isDataFetched ? '1px solid var(--color-gray-600)' : '1px dashed var(--text-color)'};
-	outline-offset: 2px;
-
-	@media screen and (min-width: 768px) {
-		font-size: var(--fz-p);
-	}
-`;
-
-const NoResult = styled.div`
-	margin: 16px 0;
-	padding: var(--btn-md-padding);
-	width: 100%;
-	font-size: var(--fz-rp);
 	border: 1px solid var(--outline-color);
 	border-radius: var(--radius);
 `;
@@ -98,8 +58,8 @@ const RecentSearchList = styled.ul`
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
-	margin: 16px auto 0;
-	padding: 24px 16px;
+	margin: 8px auto 0;
+	padding: 24px 8px;
 	width: 100%;
 	border-top: 1px solid var(--outline-color);
 	border-bottom: 1px solid var(--outline-color);
@@ -119,6 +79,16 @@ const RecentSearchList = styled.ul`
 			align-items: center;
 			font-size: var(--fz-h7);
 		}
+	}
+`;
+
+const CopyButton = styled(Button)`
+	color: var(--color-white);
+	background-color: var(--color-black);
+
+	&:focus,
+	&:hover {
+		background-color: var(--color-gray-900);
 	}
 `;
 

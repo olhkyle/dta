@@ -10,12 +10,12 @@ const ModalContainer = () => {
 	return (
 		<Portal>
 			{modals.length > 0 && (
-				<Container>
+				<Container id="modal-container">
 					{modals.map(({ Component, props }, index) => {
 						const closeModal = () => dispatch(close({ Component }));
 
 						if (props) {
-							return <Component key={index} onClose={closeModal} {...props} />;
+							return <Component key={index} order={`modal-${index + 1}`} onClose={closeModal} {...props} />;
 						}
 					})}
 				</Container>

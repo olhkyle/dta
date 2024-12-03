@@ -47,10 +47,6 @@ const router = createBrowserRouter([
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Details')} />,
 			},
 			{
-				path: routes.SEARCH_WORKERS,
-				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Search')} />,
-			},
-			{
 				path: routes.WORKER,
 				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Worker')} />,
 			},

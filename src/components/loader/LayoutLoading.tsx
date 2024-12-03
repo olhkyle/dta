@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { Flex } from '.';
+import { Flex } from '../common';
 
 interface LoadingProps {
 	type?: 'md' | 'lg';

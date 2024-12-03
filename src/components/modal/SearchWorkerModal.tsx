@@ -1,25 +1,29 @@
-import styled from '@emotion/styled';
-import { EmptyIndicator, SearchInfo, SearchInput } from '../components';
 import { useState } from 'react';
-import { getSpecificWorker } from '../service/workData';
-import { useLoading } from '../hooks';
+import { getSpecificWorker } from '../../service/workData';
+import { useLoading, useOverlayFixed } from '../../hooks';
+import { SearchInput, SearchInfo } from '..';
+import ModalLayout from './ModalLayout';
+import { toast } from 'react-toastify';
 
 interface RecentSearch {
 	workerName: string;
 	registrationNumber: string;
 }
 
-const Dashboard = () => {
+interface SearchWorkerModalProps {
+	isOpen: boolean;
+	order: `modal-${number}`;
+	onClose: () => void;
+}
+
+const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) => {
 	const [workerName, setWorkerName] = useState<string>('');
 	const [registrationNumber, setRegistrationNumber] = useState<string>('');
 	const [recentSearchList, setRecentSearchList] = useState<RecentSearch[]>([]);
-
 	const [isError, setIsError] = useState<boolean>(false);
-
 	const { Loading, isLoading, startTransition } = useLoading();
 
-	const isDataFetched = registrationNumber.length !== 0;
-	const isInputClean = workerName.length === 0;
+	useOverlayFixed(isOpen);
 
 	const handleSearchResult = async () => {
 		try {
@@ -40,13 +44,14 @@ const Dashboard = () => {
 			});
 		} catch (e) {
 			console.error(e);
-			setRegistrationNumber('검색 결과가 없습니다 ☕️');
+
 			setIsError(true);
+			toast.error('검색 결과가 없습니다.');
 		}
 	};
 
 	return (
-		<Container>
+		<ModalLayout title={'일용직 찾기'} order={order} onClose={onClose}>
 			<SearchInput
 				value={workerName}
 				setValue={setWorkerName}
@@ -73,15 +78,8 @@ const Dashboard = () => {
 			/>
 
 			<SearchInfo recentSearchList={recentSearchList} />
-			<EmptyIndicator>🛹 대시보드 추가 예정입니다</EmptyIndicator>
-		</Container>
+		</ModalLayout>
 	);
 };
 
-const Container = styled.div`
-	padding: 0 16px;
-	max-width: 1280px;
-	width: 100%;
-`;
-
-export default Dashboard;
+export default SearchWorkerModal;

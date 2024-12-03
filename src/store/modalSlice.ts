@@ -9,9 +9,9 @@ export type QueryRefetch = (options?: { throwOnError: boolean; cancelRefetch: bo
 interface ModalState {
 	Component: ElementType;
 	props?: {
-		data: WorkerWithId;
+		data?: WorkerWithId | null;
 		isOpen: boolean;
-		refetch: QueryRefetch;
+		refetch?: QueryRefetch;
 	};
 }
 

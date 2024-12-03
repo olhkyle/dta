@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
-import routes from '../constants/routes';
-import { Flex } from '.';
+import routes from '../../constants/routes';
+import { Flex } from '..';
 
 const Footer = () => {
 	return (
