@@ -3,6 +3,7 @@ import { EmptyIndicator, SearchInfo, SearchInput } from '../components';
 import { useState } from 'react';
 import { getSpecificWorker } from '../service/workData';
 import { useLoading } from '../hooks';
+import { toast } from 'react-toastify';
 
 interface RecentSearch {
 	workerName: string;
@@ -11,15 +12,12 @@ interface RecentSearch {
 
 const Dashboard = () => {
 	const [workerName, setWorkerName] = useState<string>('');
-	const [registrationNumber, setRegistrationNumber] = useState<string>('');
+
 	const [recentSearchList, setRecentSearchList] = useState<RecentSearch[]>([]);
 
 	const [isError, setIsError] = useState<boolean>(false);
 
-	const { Loading, isLoading, startTransition } = useLoading();
-
-	const isDataFetched = registrationNumber.length !== 0;
-	const isInputClean = workerName.length === 0;
+	const { startTransition } = useLoading();
 
 	const handleSearchResult = async () => {
 		try {
@@ -31,7 +29,6 @@ const Dashboard = () => {
 
 			const registrationNumber = data.registrationNumberFront + '-' + data.registrationNumberBack;
 
-			setRegistrationNumber(registrationNumber);
 			setRecentSearchList(recentSearchList => {
 				if (recentSearchList.find(item => item.workerName === workerName)) {
 					return [...recentSearchList];
@@ -40,8 +37,11 @@ const Dashboard = () => {
 			});
 		} catch (e) {
 			console.error(e);
-			setRegistrationNumber('검색 결과가 없습니다 ☕️');
 			setIsError(true);
+
+			if (isError) {
+				toast.error('검색결과가 없습니다.');
+			}
 		}
 	};
 
@@ -53,7 +53,6 @@ const Dashboard = () => {
 				clearValue={() => {
 					setIsError(false);
 					setWorkerName('');
-					setRegistrationNumber('');
 				}}
 				onSearchButtonClick={handleSearchResult}
 				onKeyDown={(e: React.SyntheticEvent) => {
@@ -67,7 +66,6 @@ const Dashboard = () => {
 					if ((e.target as HTMLInputElement).value.length === 0) {
 						setIsError(false);
 						setWorkerName('');
-						setRegistrationNumber('');
 					}
 				}}
 			/>
