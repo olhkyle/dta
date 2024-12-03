@@ -18,10 +18,10 @@ interface SearchWorkerModalProps {
 
 const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) => {
 	const [workerName, setWorkerName] = useState<string>('');
-	const [registrationNumber, setRegistrationNumber] = useState<string>('');
+
 	const [recentSearchList, setRecentSearchList] = useState<RecentSearch[]>([]);
 	const [isError, setIsError] = useState<boolean>(false);
-	const { Loading, isLoading, startTransition } = useLoading();
+	const { startTransition } = useLoading();
 
 	useOverlayFixed(isOpen);
 
@@ -35,7 +35,6 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 
 			const registrationNumber = data.registrationNumberFront + '-' + data.registrationNumberBack;
 
-			setRegistrationNumber(registrationNumber);
 			setRecentSearchList(recentSearchList => {
 				if (recentSearchList.find(item => item.workerName === workerName)) {
 					return [...recentSearchList];
@@ -46,7 +45,9 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 			console.error(e);
 
 			setIsError(true);
-			toast.error('검색 결과가 없습니다.');
+			if (isError) {
+				toast.error('검색 결과가 없습니다.');
+			}
 		}
 	};
 
@@ -58,7 +59,6 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 				clearValue={() => {
 					setIsError(false);
 					setWorkerName('');
-					setRegistrationNumber('');
 				}}
 				onSearchButtonClick={handleSearchResult}
 				onKeyDown={(e: React.SyntheticEvent) => {
@@ -72,7 +72,6 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 					if ((e.target as HTMLInputElement).value.length === 0) {
 						setIsError(false);
 						setWorkerName('');
-						setRegistrationNumber('');
 					}
 				}}
 			/>
