@@ -1,7 +1,11 @@
 import styled from '@emotion/styled';
 import { Button, Circle, Flex, Text } from '..';
-import { RecentSearch } from '../../pages/Search';
 import { toast } from 'react-toastify';
+
+interface RecentSearch {
+	workerName: string;
+	registrationNumber: string;
+}
 
 interface SearchInfoProps {
 	recentSearchList: RecentSearch[];
