@@ -1,29 +1,30 @@
 import { useRef } from 'react';
 import styled from '@emotion/styled';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { BsArrowLeftCircle } from 'react-icons/bs';
 import ReactToPrint from 'react-to-print';
 import { Button, Detail, Flex, HighlightText, Overview } from '../components';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
-import { useGoBack } from '../hooks';
+
 import { controls } from '../constants/sortControls';
+import routes from '../constants/routes';
 
 const Print = () => {
 	const {
 		state: { year, month },
 	} = useLocation();
 
-	const goBack = useGoBack();
+	const navigate = useNavigate();
 	const isAdmin = useAppSelector(getIsAdmin);
-	const printRef = useRef(null);
 
+	const printRef = useRef(null);
 	const query = { inOrder: controls[0], year, month, workerName: '' };
 
 	return (
 		<Container>
 			<Flex justifyContent="space-between" margin="0 0 32px 0" width="100%">
-				<GoBackButton type="button" onClick={goBack}>
+				<GoBackButton type="button" onClick={() => navigate(routes.DETAILS, { state: { year, month: month - 1 } })}>
 					<BsArrowLeftCircle size="24" color="var(--color-gray-600)" />
 					뒤로가기
 				</GoBackButton>
