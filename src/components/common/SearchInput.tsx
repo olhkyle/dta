@@ -3,13 +3,14 @@ import styled from '@emotion/styled';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
 import { Button, Flex } from '.';
+import { Id as ToastifyId } from 'react-toastify';
 
 interface SearchInputProps {
 	value: string;
 	setValue: (value: string) => void;
 	clearValue?: () => void;
 	onKeyDown?: (e: React.SyntheticEvent) => void;
-	onSearchButtonClick?: () => Promise<void>;
+	onSearchButtonClick?: () => Promise<ToastifyId | undefined>;
 }
 
 const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonClick }: SearchInputProps) => {

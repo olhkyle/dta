@@ -5,7 +5,7 @@ import { SearchInput, SearchInfo } from '..';
 import ModalLayout from './ModalLayout';
 import { toast } from 'react-toastify';
 
-interface RecentSearch {
+export interface RecentSearch {
 	workerName: string;
 	registrationNumber: string;
 }
@@ -18,10 +18,9 @@ interface SearchWorkerModalProps {
 
 const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) => {
 	const [workerName, setWorkerName] = useState<string>('');
-
 	const [recentSearchList, setRecentSearchList] = useState<RecentSearch[]>([]);
-	const [isError, setIsError] = useState<boolean>(false);
-	const { startTransition } = useLoading();
+
+	const { Loading, isLoading, startTransition } = useLoading();
 
 	useOverlayFixed(isOpen);
 
@@ -33,6 +32,10 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 				}),
 			);
 
+			if (!data) {
+				return toast.warn('검색 결과가 없습니다.');
+			}
+
 			const registrationNumber = data.registrationNumberFront + '-' + data.registrationNumberBack;
 
 			setRecentSearchList(recentSearchList => {
@@ -43,11 +46,7 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 			});
 		} catch (e) {
 			console.error(e);
-
-			setIsError(true);
-			if (isError) {
-				toast.error('검색 결과가 없습니다.');
-			}
+			toast.error('검색에 문제가 발생하였습니다.');
 		}
 	};
 
@@ -57,7 +56,6 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 				value={workerName}
 				setValue={setWorkerName}
 				clearValue={() => {
-					setIsError(false);
 					setWorkerName('');
 				}}
 				onSearchButtonClick={handleSearchResult}
@@ -70,13 +68,12 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 					}
 
 					if ((e.target as HTMLInputElement).value.length === 0) {
-						setIsError(false);
 						setWorkerName('');
 					}
 				}}
 			/>
 
-			<SearchInfo recentSearchList={recentSearchList} />
+			<SearchInfo recentSearchList={recentSearchList} loader={<Loading />} isLoading={isLoading} />
 		</ModalLayout>
 	);
 };

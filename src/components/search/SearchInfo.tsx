@@ -1,40 +1,28 @@
 import styled from '@emotion/styled';
-import { Button, Circle, Flex, Text } from '..';
-import { toast } from 'react-toastify';
-
-interface RecentSearch {
-	workerName: string;
-	registrationNumber: string;
-}
+import { Circle, Flex, Text } from '..';
+import { ReactNode } from 'react';
+import type { RecentSearch } from '../modal/SearchWorkerModal';
 
 interface SearchInfoProps {
 	recentSearchList: RecentSearch[];
+	loader: ReactNode;
+	isLoading: boolean;
 }
 
-const SearchInfo = ({ recentSearchList }: SearchInfoProps) => {
-	//TODO:
-	// 1. isLoading, Loading 컴포넌트 SearchWorkerModal에서 prop으로 넘겨받기
-	// 2. error 처리
-	const handleCopyClipboard = async (text: string) => {
-		try {
-			if (navigator) {
-				await navigator.clipboard.writeText(text);
-				toast.success('성공적으로 복사되었습니다.');
-			}
-		} catch (error) {
-			console.error(error);
-			toast.error('복사하는 데 문제가 발생하였습니다.');
-		}
-	};
+const SearchInfo = ({ recentSearchList, loader, isLoading }: SearchInfoProps) => {
 	return (
 		<CustomFlex direction="column" justifyContent="flex-start" alignItems="flex-start" margin="0 auto" padding="16px" width="100%">
-			<Text typo="h5" color="var(--text-color)">
+			<Text typo="h6" color="var(--text-color)">
 				💿 최근 검색 내역
 			</Text>
 			<RecentSearchList>
-				{recentSearchList.length === 0
-					? '검색 내역이 없습니다 ☕️'
-					: recentSearchList.map(({ workerName, registrationNumber }) => (
+				{recentSearchList.length === 0 ? (
+					<EmptyMessage>검색 내역이 없습니다 ☕️</EmptyMessage>
+				) : isLoading ? (
+					<>{loader}</>
+				) : (
+					<>
+						{recentSearchList.map(({ workerName, registrationNumber }) => (
 							<li key={workerName + registrationNumber}>
 								<Flex gap="16px">
 									<Circle size={14} bgColor={'var(--color-green-50)'} />
@@ -42,12 +30,11 @@ const SearchInfo = ({ recentSearchList }: SearchInfoProps) => {
 								</Flex>
 								<Flex gap="32px">
 									<span>{registrationNumber}</span>
-									<CopyButton type="button" onClick={() => handleCopyClipboard(workerName)}>
-										복사
-									</CopyButton>
 								</Flex>
 							</li>
-					  ))}
+						))}
+					</>
+				)}
 			</RecentSearchList>
 		</CustomFlex>
 	);
@@ -63,18 +50,17 @@ const RecentSearchList = styled.ul`
 	flex-direction: column;
 	justify-content: center;
 	margin: 8px auto 0;
-	padding: 24px 8px;
+	padding: 24px 16px;
 	width: 100%;
-	border-top: 1px solid var(--outline-color);
-	border-bottom: 1px solid var(--outline-color);
+	border-radius: var(--radius);
 
 	li {
 		display: inline-flex;
 		justify-content: space-between;
+		align-items: center;
 		padding: 8px 0;
 		font-size: var(--fz-rp);
-		border-bottom: 1px solid var(--text-color);
-		outline-offset: 2px;
+		border-bottom: 1px solid var(--table-border-color);
 	}
 
 	@media screen and (min-width: 768px) {
@@ -86,14 +72,10 @@ const RecentSearchList = styled.ul`
 	}
 `;
 
-const CopyButton = styled(Button)`
-	color: var(--color-white);
-	background-color: var(--color-black);
-
-	&:focus,
-	&:hover {
-		background-color: var(--color-gray-900);
-	}
+const EmptyMessage = styled.div`
+	padding: 8px;
+	background-color: var(--option-hover-bg-color);
+	border-radius: var(--radius);
 `;
 
 export default SearchInfo;
