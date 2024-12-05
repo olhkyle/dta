@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { forwardRef, RefObject } from 'react';
 import styled from '@emotion/styled';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
@@ -13,41 +13,39 @@ interface SearchInputProps {
 	onSearchButtonClick?: () => Promise<ToastifyId | undefined>;
 }
 
-const SearchInput = ({ value, setValue, clearValue, onKeyDown, onSearchButtonClick }: SearchInputProps) => {
-	const ref = useRef(null);
+const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
+	({ value, setValue, clearValue, onKeyDown, onSearchButtonClick }, ref) => {
+		return (
+			<Container justifyContent="space-between" alignItems="center" gap="16px" role="search">
+				<Input
+					type="text"
+					placeholder="이름을 입력해 주세요."
+					name="search-input"
+					ref={ref}
+					value={value}
+					onChange={e => setValue(e.currentTarget.value)}
+					onKeyDown={onKeyDown}
+					autoComplete="off"
+					aria-label="search-worker-input"
+				/>
+				{value.length > 0 && (
+					<RefreshButton
+						type="button"
+						onClick={() => {
+							clearValue ? clearValue() : setValue('');
 
-	return (
-		<Container justifyContent="space-between" alignItems="center" gap="16px" role="search">
-			<Input
-				type="text"
-				placeholder="이름을 입력해 주세요."
-				name="search-input"
-				ref={ref}
-				value={value}
-				onChange={e => setValue(e.currentTarget.value)}
-				onKeyDown={onKeyDown}
-				autoComplete="off"
-				aria-label="search-worker-input"
-			/>
-			{value.length > 0 && (
-				<RefreshButton
-					type="button"
-					onClick={() => {
-						clearValue ? clearValue() : setValue('');
-
-						if (ref.current) {
-							(ref.current as HTMLInputElement).focus();
-						}
-					}}>
-					<MdClose />
-				</RefreshButton>
-			)}
-			<SearchButton type="button" onClick={onSearchButtonClick}>
-				<HiOutlineSearch color="var(--text-color)" />
-			</SearchButton>
-		</Container>
-	);
-};
+							(ref as RefObject<HTMLInputElement>)?.current?.focus();
+						}}>
+						<MdClose />
+					</RefreshButton>
+				)}
+				<SearchButton type="button" onClick={onSearchButtonClick}>
+					<HiOutlineSearch color="var(--text-color)" />
+				</SearchButton>
+			</Container>
+		);
+	},
+);
 
 const Container = styled(Flex)`
 	margin: 48px auto 64px;

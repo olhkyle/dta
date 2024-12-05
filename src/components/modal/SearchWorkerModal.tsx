@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { getSpecificWorker } from '../../service/workData';
 import { useLoading, useOverlayFixed } from '../../hooks';
 import { SearchInput, SearchInfo } from '..';
@@ -19,6 +19,7 @@ interface SearchWorkerModalProps {
 const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) => {
 	const [workerName, setWorkerName] = useState<string>('');
 	const [recentSearchList, setRecentSearchList] = useState<RecentSearch[]>([]);
+	const inputRef = useRef<HTMLInputElement | null>(null);
 
 	const { Loading, isLoading, startTransition } = useLoading();
 
@@ -47,12 +48,15 @@ const SearchWorkerModal = ({ isOpen, order, onClose }: SearchWorkerModalProps) =
 		} catch (e) {
 			console.error(e);
 			toast.error('검색에 문제가 발생하였습니다.');
+		} finally {
+			inputRef.current?.blur();
 		}
 	};
 
 	return (
 		<ModalLayout title={'일용직 찾기'} order={order} onClose={onClose}>
 			<SearchInput
+				ref={inputRef}
 				value={workerName}
 				setValue={setWorkerName}
 				clearValue={() => {
