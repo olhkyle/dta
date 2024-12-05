@@ -21,7 +21,7 @@ const Home = () => {
 				</p>
 				<span></span>
 			</About>
-			<Navigation to={user ? routes.DASHBOARD : routes.LOGIN} className="clip-path-button">
+			<Navigation to={user ? routes.OVERVIEW : routes.LOGIN} className="clip-path-button">
 				서비스 이용하기
 			</Navigation>
 		</Wrapper>
