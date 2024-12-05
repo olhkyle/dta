@@ -17,6 +17,10 @@ type WorkersDetailBySort = ReturnType<typeof sortByNameAndWorkedDate>;
 const COLLECTION_NAME = 'people';
 const LIMIT_SIZE_PER_PAGE = 20;
 
+const sortWorkerDataByWorkedDate = <T extends WorkerWithId>(data: T[], inOrder: SortOption) => {
+	return data?.sort((prev, curr) => (inOrder === 'asc' ? prev?.workedDate - curr?.workedDate : curr?.workedDate - prev?.workedDate));
+};
+
 const addSumOfPaymentForEachWorker = (data: WorkersQueryData, inOrder: SortOption = 'asc') =>
 	sortWorkerData(
 		data.workers.reduce<UniqueWorker[]>((uniqueWorkers, worker) => {
@@ -48,7 +52,7 @@ const sortByNameAndWorkedDate = (workers: WorkerWithId[], inOrder: SortOption = 
 			return acc;
 		}, {}),
 	).flatMap((groupedWorkers, pos) =>
-		sortWorkerData(groupedWorkers, inOrder).map((worker, idx) => ({ ...worker, position: pos, isFirstIdxOfArr: idx === 0 })),
+		sortWorkerDataByWorkedDate(groupedWorkers, inOrder).map((worker, idx) => ({ ...worker, position: pos, isFirstIdxOfArr: idx === 0 })),
 	);
 };
 
