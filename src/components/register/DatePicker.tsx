@@ -40,7 +40,8 @@ const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePicke
 				<FaRegCalendarCheck
 					size="20"
 					color="var(--text-color)"
-					onClick={() => {
+					onClick={e => {
+						e.stopPropagation();
 						if (disabled) return;
 
 						toggleDayPicker();
