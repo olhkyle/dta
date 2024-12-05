@@ -72,7 +72,7 @@ const SignInForm = () => {
 					/>
 				</Input>
 			</Flex>
-			<LoginButton type="submit">{isLoading ? Loading() : '로그인'}</LoginButton>
+			<LoginButton type="submit">{isLoading ? <Loading /> : '로그인'}</LoginButton>
 			<Spacer size={16} />
 			<Text typo="sm" color="var(--text-color)">
 				서비스 이용을 위해 로그인이 필요합니다.

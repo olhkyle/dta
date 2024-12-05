@@ -68,7 +68,7 @@ const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 									onLogout();
 									close();
 								}}>
-								{isLoading ? Loading() : '로그아웃'}
+								{isLoading ? <Loading /> : '로그아웃'}
 							</LogoutButton>
 						)}
 					</Name>
@@ -90,8 +90,8 @@ const Container = styled.div<{ isShown: boolean }>`
 	max-height: ${({ isShown }) => (isShown ? '60%' : '0')};
 	width: 100%;
 	background-color: var(--bg-color);
-	border-top: 1px solid var(--color-gray-opacity-200);
-	border-bottom: 1px solid var(--color-gray-opacity-200);
+	border-top: ${({ isShown }) => (isShown ? '1px solid var(--color-gray-opacity-200)' : 'none')};
+	border-bottom: ${({ isShown }) => (isShown ? '1px solid var(--color-gray-opacity-200)' : 'none')};
 	overflow: ${({ isShown }) => (isShown ? 'visible' : 'hidden')};
 	z-index: var(--sideNav-index);
 	transition: max-height 0.3s ease-out;

@@ -19,7 +19,7 @@ const UserProfile = ({ name, isAdmin, isLoading, Loading, onLogout }: UserProfil
 			)}
 			<Name>{name}</Name>
 			<button type="button" onClick={onLogout}>
-				{isLoading ? Loading() : '로그아웃'}
+				{isLoading ? <Loading /> : '로그아웃'}
 			</button>
 		</Container>
 	);
