@@ -1,15 +1,18 @@
 import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import { Outlet, useLocation } from 'react-router-dom';
-import { useQueryClient } from '@tanstack/react-query';
 import { ToastContainer } from 'react-toastify';
 import { Footer, Main, Nav, ScrollToTopButton, ModalContainer, LayoutLoading, OpenSearchWorkerModalButton } from '..';
 import { useScrollTopEffect } from '../../hooks';
 import routes from '../../constants/routes';
+import { useAppSelector } from '../../store/store';
+import { getUser } from '../../store/userSlice';
 
 const Layout = () => {
 	const { pathname } = useLocation();
-	const queryClient = useQueryClient();
+	const user = useAppSelector(getUser);
+
+	const isLoggined = user.name.length > 0 && user.nickname !== 'test-id' && user.isAdmin;
 
 	useScrollTopEffect(pathname);
 
@@ -24,7 +27,7 @@ const Layout = () => {
 			{pathname !== routes.LOGIN && <Footer />}
 			<ScrollToTopButton topPosToShow={300} />
 			<StyledToastContainer position="bottom-center" autoClose={1500} closeOnClick={true} pauseOnHover={false} limit={1} />
-			{queryClient.getQueryData(['auth']) && <OpenSearchWorkerModalButton />}
+			{isLoggined && <OpenSearchWorkerModalButton />}
 			<ModalContainer />
 		</>
 	);
