@@ -20,7 +20,7 @@ export const registerSchema = z.object({
 		.regex(/^[0-9]+$/, { message: '숫자만 입력 가능합니다.' }),
 	workspace: z.string().min(1, { message: '1자 이상의 작업 공간 이름을 입력해 주세요.' }),
 	businessNumber: z.string().regex(/^\d{3}-\d{2}-\d{5}-\d$/, { message: '000-00-00000-0 형식으로 작성합니다.' }),
-	payment: z.string({ required_error: '숫자를 입력해 주세요' }).regex(/^[0-9,]+$/, { message: '숫자만 입력 가능합니다.' }),
+	payment: z.string({ required_error: '금액을 입력해 주세요' }).regex(/^[0-9,]+$/, { message: '숫자만 입력 가능합니다.' }),
 	remittanceType: z.string(),
 	memo: z.string(),
 });
