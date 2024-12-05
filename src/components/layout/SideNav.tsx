@@ -87,15 +87,14 @@ const Container = styled.div<{ isShown: boolean }>`
 	position: fixed;
 	top: var(--nav-height);
 	left: 0;
-	display: ${({ isShown }) => (isShown ? 'block' : 'none')};
 	max-height: ${({ isShown }) => (isShown ? '60%' : '0')};
 	width: 100%;
 	background-color: var(--bg-color);
 	border-top: 1px solid var(--color-gray-opacity-200);
 	border-bottom: 1px solid var(--color-gray-opacity-200);
+	overflow: ${({ isShown }) => (isShown ? 'visible' : 'hidden')};
 	z-index: var(--sideNav-index);
 	transition: max-height 0.3s ease-out;
-	overflow: hidden;
 
 	@media screen and (min-width: 768px) {
 		display: none;
@@ -146,7 +145,6 @@ const Name = styled.div`
 const LogoutButton = styled(Button)`
 	position: absolute;
 	bottom: -50px;
-	left: -5px;
 	padding: var(--btn-md-padding);
 	width: 100%;
 	min-width: 120px;
@@ -156,7 +154,7 @@ const LogoutButton = styled(Button)`
 	color: var(--text-color);
 	background-color: var(--bg-color);
 	border-radius: 8px;
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--table-border-color);
 	text-align: center;
 
 	&:hover {

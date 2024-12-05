@@ -54,7 +54,6 @@ const Nav = () => {
 						<Flex justifyContent="space-between" gap="4px">
 							{isAdmin && <Navigation to={routes.OVERVIEW}>월별 개요</Navigation>}
 							{isAdmin && <Navigation to={routes.DETAILS}>월별 상세</Navigation>}
-							{/* {isAdmin && <Navigation to={routes.SEARCH_WORKERS}>일용직 검색</Navigation>} */}
 							{isAdmin && <Navigation to={routes.REGISTER}>일용직 등록</Navigation>}
 							{name ? (
 								<UserProfile name={name} isAdmin={isAdmin} onLogout={handleLogout} isLoading={isLoading} Loading={Loading} />
@@ -174,7 +173,7 @@ const Overlay = styled.div<{ isShown: boolean }>`
 	backdrop-filter: blur(4px);
 	opacity: ${({ isShown }) => (isShown ? '100%' : '0')};
 	transition: opacity 0.3s cubic-bezier(0.4, 0, 0.4, 1);
-	background-color: rgba(255, 255, 255, 0.3);
+
 	z-index: calc(var(--nav-index) - 10);
 `;
 
