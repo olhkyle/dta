@@ -45,7 +45,7 @@ const Nav = () => {
 		<>
 			<Container isAdmin={isAdmin}>
 				<Group>
-					<Logo to={routes.DASHBOARD} onClick={close} aria-label="logo">
+					<Logo to={routes.OVERVIEW} onClick={close} aria-label="logo">
 						<h1 className="underlined">
 							<img src="./dta.png" alt="logo" />
 						</h1>
