@@ -4,10 +4,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { RiCloseFill } from 'react-icons/ri';
 import { PiHamburger } from 'react-icons/pi';
 import { toast } from 'react-toastify';
+import routes from '../../constants/routes';
 import { useLoading, useScrollTopEffect, useSetUser, useSideNavActive } from '../../hooks';
 import { Flex, NavLink, ThemeButton, SideNav, UserProfile } from '..';
 import { logOut } from '../../service/auth';
-import routes from '../../constants/routes';
 
 const Nav = () => {
 	const queryClient = useQueryClient();
