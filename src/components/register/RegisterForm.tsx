@@ -85,8 +85,8 @@ const RegisterForm = () => {
 				setValue('workerName', data.workerName);
 				setValue('registrationNumberFront', data.registrationNumberFront);
 				setValue('registrationNumberBack', data.registrationNumberBack);
-				setValue('workspace', '');
-				setValue('businessNumber', '');
+				setValue('workspace', data.workspace);
+				setValue('businessNumber', data.businessNumber);
 				setValue('payment', '', { shouldValidate: true });
 				setValue('memo', '');
 				setFocus('payment');
