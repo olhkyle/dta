@@ -8,7 +8,7 @@ const useAuthQuery = () => {
 	const { setCurrentUser, setLogoutUser } = useSetUser();
 
 	const { data, isFetched, isLoading, error, refetch } = useQuery<User | null, Error>({
-		queryKey: ['auth'], // queryKey는 배열로 설정
+		queryKey: ['auth'],
 		queryFn: async (): Promise<User | null> => {
 			return new Promise<User | null>((resolve, reject) => {
 				const unsubscribe = auth.onAuthStateChanged(

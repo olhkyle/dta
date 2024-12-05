@@ -29,7 +29,7 @@ const router = createBrowserRouter([
 		children: [
 			{
 				index: true,
-				element: loadLazy('Home'),
+				element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Home')} />,
 			},
 			{
 				path: routes.REGISTER,
