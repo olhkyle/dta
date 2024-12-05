@@ -32,6 +32,7 @@ const useGenericMutation = <TData, TVariables, TContext>({
 			queryClient.setQueryData(queryKey, context?.prevWorkerData);
 		},
 		onSettled: () => {
+			// Always refetch after error or success:
 			queryClient.invalidateQueries({ queryKey });
 		},
 	});

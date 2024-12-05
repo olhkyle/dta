@@ -5,7 +5,7 @@ import { remove } from '../../constants/mutateWorker';
 const useRemoveWorkerMutation = (id: string) => {
 	const queryKey = ['workersDetail', id];
 
-	const { mutate } = useGenericMutation({
+	const { mutate, isLoading } = useGenericMutation({
 		queryKey,
 		mutationFn: async (variables: { id: string }) => {
 			await removeWorker({ id: variables.id });
@@ -13,7 +13,7 @@ const useRemoveWorkerMutation = (id: string) => {
 		onMutate: remove,
 	});
 
-	return mutate;
+	return { mutate, isLoading };
 };
 
 export default useRemoveWorkerMutation;

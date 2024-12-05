@@ -4,11 +4,8 @@ import { edit } from '../../constants/mutateWorker';
 
 const useEditWorkerMutation = (id: string) => {
 	const queryKey = ['workersDetail', id];
-	async (variables: WorkerWithId) => {
-		await editWorker({ data: variables });
-	};
 
-	const { mutate } = useGenericMutation({
+	const { mutate, isLoading } = useGenericMutation({
 		queryKey,
 		mutationFn: async (variables: WorkerWithId) => {
 			await editWorker({ data: variables });
@@ -16,7 +13,7 @@ const useEditWorkerMutation = (id: string) => {
 		onMutate: edit,
 	});
 
-	return mutate;
+	return { mutate, isLoading };
 };
 
 export default useEditWorkerMutation;
