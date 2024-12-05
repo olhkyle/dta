@@ -4,14 +4,13 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { Button, DatePicker, Flex, HighlightText, Input, NativeSelect, SmallLoading, Spacer, Text } from '..';
+import { Button, DatePicker, Flex, HighlightText, Input, NativeSelect, Spacer, Text } from '..';
 import { addWorker, getSpecificWorker } from '../../service/workData';
-import { useAppSelector } from '../../store/store';
-import { getIsAdmin } from '../../store/userSlice';
 import { RegisterSchema, SubmitHandler, registerSchema } from './schema';
 import routes from '../../constants/routes';
 import { unformatCurrencyUnit } from '../../utils/currencyUnit';
 import sleep from '../../utils/sleep';
+import { useLoading } from '../../hooks';
 
 export interface Worker extends RegisterSchema {
 	workedDate: Date | any;
@@ -32,31 +31,23 @@ const RegisterForm = () => {
 	} = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema) });
 
 	const navigate = useNavigate();
-	const isAdmin = useAppSelector(getIsAdmin);
 
 	const [selectedDay, setSelectedDay] = useState<Date | undefined>(new Date());
-	const [isFetching, setIsFetching] = useState<boolean>(false);
+
+	const { Loading, isLoading, startTransition } = useLoading();
 
 	const findSpecificWorker = async () => {
 		try {
-			if (!isAdmin) {
-				toast.warn('This Feature is Admin Only');
-				return;
-			}
-
 			if (getValues('workerName').length === 0) {
 				toast.warn('일용직 이름을 입력해 주세요.');
 				return;
 			}
 
-			if (!isFetching) {
-				setIsFetching(true);
-			}
-
-			await sleep(500);
-			const { registrationNumberFront, registrationNumberBack } = await getSpecificWorker({
-				workerName: getValues('workerName'),
-			});
+			const { registrationNumberFront, registrationNumberBack } = await startTransition(
+				getSpecificWorker({
+					workerName: getValues('workerName'),
+				}),
+			);
 
 			setValue('registrationNumberFront', registrationNumberFront);
 			setValue('registrationNumberBack', registrationNumberBack);
@@ -64,8 +55,6 @@ const RegisterForm = () => {
 			toast.success('성공적으로 정보를 찾았습니다.');
 		} catch {
 			toast.error('해당 일용직 이름이 없습니다.');
-		} finally {
-			setIsFetching(false);
 		}
 	};
 
@@ -74,22 +63,19 @@ const RegisterForm = () => {
 			event.preventDefault();
 		}
 
-		if (!isAdmin) {
-			toast.warn('This Feature is Admin Only');
-			return;
-		}
-
 		const buttonId = ((event?.nativeEvent as any).submitter as HTMLElement)?.id as FormSubmitButtonId;
 
 		try {
 			if (buttonId === 'additionalRegister') await sleep(500);
 
-			await addWorker({
-				...data,
-				workedDate: selectedDay ?? new Date(),
-				payment: unformatCurrencyUnit(data.payment),
-				createdAt: new Date(),
-			});
+			await startTransition(
+				addWorker({
+					...data,
+					workedDate: selectedDay ?? new Date(),
+					payment: unformatCurrencyUnit(data.payment),
+					createdAt: new Date(),
+				}),
+			);
 
 			if (buttonId === 'register') {
 				navigate(routes.DETAILS, { state: { month: selectedDay?.getMonth() } });
@@ -103,7 +89,6 @@ const RegisterForm = () => {
 				setValue('businessNumber', '');
 				setValue('payment', '', { shouldValidate: true });
 				setValue('memo', '');
-
 				setFocus('payment');
 			}
 
@@ -125,7 +110,7 @@ const RegisterForm = () => {
 					<Flex justifyContent="space-between" width="100%">
 						성 명
 						<CheckExistButton type="button" onClick={findSpecificWorker}>
-							{isFetching && <SmallLoading />}
+							{isLoading && <Loading />}
 							대상 찾기
 						</CheckExistButton>
 					</Flex>
@@ -201,14 +186,14 @@ const RegisterForm = () => {
 			<Input label="메모/기타" bottomText={errors?.memo?.message}>
 				<Input.TextField type="text" placeholder="기타 필요한 사항을 기입하세요." {...register('memo')} error={errors?.memo?.message} />
 			</Input>
-			<CustomFlex gap="20px" margin="24px 0 0 0">
-				<RegisterButton type="submit" id="register" width={400} aria-label="register-button">
-					등록하기
-				</RegisterButton>
-				<AdditionalRegisterButton type="submit" id="additionalRegister" width={150} aria-label="additional-register-button">
-					추가 등록
+			<Flex gap="16px" margin="24px 0 0 0">
+				<AdditionalRegisterButton type="submit" id="additionalRegister" aria-label="additional-register-button">
+					{isLoading ? <Loading /> : '추가 등록'}
 				</AdditionalRegisterButton>
-			</CustomFlex>
+				<RegisterButton type="submit" id="register" aria-label="register-button">
+					{isLoading ? <Loading /> : '등록하기'}
+				</RegisterButton>
+			</Flex>
 			<Flex justifyContent="center" width="100%">
 				<HighlightText color="var(--disabled-text-color)" bgColor="var(--outline-color)" fontSize="14px">
 					💡 추가 등록 시 성명, 주민등록번호, 출력일은 바로 이전에 작성한 내용이 유지됩니다.
@@ -250,8 +235,8 @@ const CustomFlex = styled(Flex)`
 	}
 `;
 
-const RegisterButton = styled(Button)<{ width: number }>`
-	min-width: 300px;
+const RegisterButton = styled(Button)`
+	/* min-width: 300px; */
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
@@ -261,8 +246,8 @@ const RegisterButton = styled(Button)<{ width: number }>`
 	}
 `;
 
-const AdditionalRegisterButton = styled(Button)<{ width: number }>`
-	min-width: 200px;
+const AdditionalRegisterButton = styled(Button)`
+	/* min-width: 200px; */
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--color-green-50);

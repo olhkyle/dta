@@ -5,6 +5,7 @@ import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import { Input, Text, Button, NativeSelect, Flex, DatePicker, SmallLoading } from '../../components';
+import ModalLayout from './ModalLayout';
 import { RegisterSchema, registerSchema, SubmitHandler } from '../../components/register/schema';
 import { WorkerWithId } from '../../service/workData';
 import { useOverlayFixed, useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks';
@@ -12,8 +13,6 @@ import { useAppSelector } from '../../store/store';
 import { QueryRefetch } from '../../store/modalSlice';
 import { getIsAdmin } from '../../store/userSlice';
 import { unformatCurrencyUnit } from '../../utils/currencyUnit';
-import sleep from '../../utils/sleep';
-import ModalLayout from './ModalLayout';
 
 interface DetailModalProps {
 	data: WorkerWithId;
@@ -23,9 +22,13 @@ interface DetailModalProps {
 	order: `modal-${number}`;
 }
 
-type DisabledState = Record<string, boolean>;
-
 const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailModalProps) => {
+	const navigate = useNavigate();
+	const isAdmin = useAppSelector(getIsAdmin);
+
+	const [isEditMode, setIsEditMode] = useState(false);
+	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
+
 	const {
 		register,
 		handleSubmit,
@@ -33,52 +36,30 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 		formState: { errors },
 		setValue,
 	} = useForm<RegisterSchema>({
-		mode: 'onChange',
 		resolver: zodResolver(registerSchema),
-		shouldFocusError: true,
+		mode: 'onSubmit',
+		defaultValues: {
+			workerName: worker.workerName,
+			registrationNumberFront: worker.registrationNumberFront,
+			registrationNumberBack: worker.registrationNumberBack,
+			workspace: worker.workspace,
+			businessNumber: worker.businessNumber,
+			remittanceType: worker.remittanceType,
+			payment: worker.payment,
+			memo: worker.memo,
+		},
 	});
 
-	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
-	const [disabled, setDisabled] = useState<DisabledState>({
-		workerName: true,
-		registrationNumberFront: true,
-		registrationNumberBack: true,
-		workedDate: true,
-		workspace: true,
-		businessNumber: true,
-		remittanceType: true,
-		payment: true,
-		memo: true,
-	});
-
-	const [isDeleteProcessLoading, setDeleteProcessLoading] = useState(false);
-	const navigate = useNavigate();
-	const isAdmin = useAppSelector(getIsAdmin);
+	const { mutate: editMutate, isLoading: isEditMutateLoading } = useEditWorkerMutation(worker.id);
+	const { mutate: removeMutate, isLoading: isRemoveMutateLoading } = useRemoveWorkerMutation(worker.id);
 
 	useOverlayFixed(isOpen);
 
 	useEffect(() => {
-		for (const [key, value] of Object.entries(worker)) {
-			if (
-				key === 'workerName' ||
-				key === 'registrationNumberFront' ||
-				key === 'registrationNumberBack' ||
-				key === 'workspace' ||
-				key === 'businessNumber' ||
-				key === 'remittanceType' ||
-				key === 'payment' ||
-				key === 'memo'
-			) {
-				setValue(key, value);
-			}
+		if (worker?.workedDate) {
+			setSelectedDay(worker.workedDate);
 		}
-		setSelectedDay(worker.workedDate);
-	}, []);
-
-	const editMutate = useEditWorkerMutation(worker.id);
-	const removeMutate = useRemoveWorkerMutation(worker.id);
-
-	const isAllFieldsDisabled: boolean = Object.values(disabled).every(item => item === false);
+	}, [worker]);
 
 	const toggleAllFieldsDisabled = () => {
 		if (!isAdmin) {
@@ -86,50 +67,74 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 			return;
 		}
 
-		const updatedState: DisabledState = {};
-
-		const disabledKeys = Object.keys(disabled);
-
-		for (const key of disabledKeys) {
-			updatedState[key] = !disabled[key];
+		if (isEditMode) {
+			// 수정 모드를 끌 때 원래 값으로 reset
+			setValue('workerName', worker.workerName);
+			setValue('registrationNumberFront', worker.registrationNumberFront);
+			setValue('registrationNumberBack', worker.registrationNumberBack);
+			setValue('workspace', worker.workspace);
+			setValue('businessNumber', worker.businessNumber);
+			setValue('remittanceType', worker.remittanceType);
+			setValue('payment', worker.payment);
+			setValue('memo', worker.memo);
+			setSelectedDay(worker.workedDate);
 		}
 
-		setDisabled(updatedState);
+		setIsEditMode(prev => !prev);
 	};
 
-	const handleRemoveWorkerButton = async (loading = true) => {
+	const handleRemoveWorkerButton = () => {
 		if (!isAdmin) {
 			toast.warn('Delete Feature is Admin Only');
 			return;
 		}
 
-		try {
-			if (loading) setDeleteProcessLoading(true);
-			await sleep(1000);
-			removeMutate({ id: worker.id });
-
-			refetch();
-			onClose();
-			toast.success('성공적으로 삭제 되었습니다.');
-		} catch (e) {
-			console.error(e);
-		} finally {
-			if (loading) setDeleteProcessLoading(false);
-		}
+		removeMutate(
+			{ id: worker.id },
+			{
+				onSuccess: () => {
+					toast.success('성공적으로 삭제 되었습니다.');
+					onClose();
+					refetch();
+				},
+				onError: e => {
+					console.error(e);
+					toast.error('삭제하는데 문제가 발생하였습니다.');
+				},
+			},
+		);
 	};
 
 	const onSubmit: SubmitHandler<RegisterSchema> = fields => {
-		editMutate({
-			id: worker.id,
-			workedDate: selectedDay,
-			...fields,
-			payment: unformatCurrencyUnit(fields.payment),
-		});
+		if (!isEditMode) {
+			toast.warn('수정 모드에서만 저장할 수 있습니다.');
+			return;
+		}
 
-		// TODO: refetch 짝수번째에 되지 않는 간헐적 문제
-		refetch();
-		onClose();
-		toast.success('성공적으로 수정되었습니다.');
+		if (!selectedDay) {
+			toast.error('작업일자를 선택해 주세요');
+			return;
+		}
+
+		editMutate(
+			{
+				id: worker.id,
+				workedDate: selectedDay,
+				...fields,
+				payment: unformatCurrencyUnit(fields.payment),
+			},
+			{
+				onSuccess: () => {
+					toast.success('성공적으로 수정되었습니다.');
+					onClose();
+					refetch();
+				},
+				onError: e => {
+					console.error(e);
+					toast.error('수정하는데 문제가 발생하였습니다.');
+				},
+			},
+		);
 	};
 
 	return (
@@ -137,7 +142,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 			<ModalLayout title={'👨🏻‍💻 일용직 수정'} order={order} onClose={onClose}>
 				<ActionButtons gap="16px">
 					<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
-						{isAllFieldsDisabled ? '수정취소' : '수정하기'}
+						{isEditMode ? '수정취소' : '수정하기'}
 					</ModifyButton>
 					<ViewWorkerDetailButton
 						type="button"
@@ -148,7 +153,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 						일용직 상세보기
 					</ViewWorkerDetailButton>
 				</ActionButtons>
-				<Group aria-disabled={isAllFieldsDisabled}>
+				<Group aria-disabled={isEditMode}>
 					<Form onSubmit={handleSubmit(onSubmit)}>
 						<Input label="성 명" bottomText={errors?.workerName?.message}>
 							<Input.TextField
@@ -156,7 +161,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 								placeholder="이름을 입력하세요"
 								{...register('workerName')}
 								error={errors?.workerName?.message}
-								disabled={disabled.workerName}
+								disabled={!isEditMode}
 							/>
 						</Input>
 						<CustomFlex alignItems="flex-start" gap="16px">
@@ -168,7 +173,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 											placeholder="주민등록번호 앞 6자리"
 											{...register('registrationNumberFront')}
 											error={errors?.registrationNumberFront?.message}
-											disabled={disabled.registrationNumberFront}
+											disabled={!isEditMode}
 										/>
 									</Input>
 									<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
@@ -177,7 +182,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 											placeholder="주민등록번호 뒤 7자리"
 											{...register('registrationNumberBack')}
 											error={errors?.registrationNumberBack?.message}
-											disabled={disabled.registrationNumberBack}
+											disabled={!isEditMode}
 										/>
 									</Input>
 								</>
@@ -192,7 +197,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 							)}
 						</CustomFlex>
 
-						<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} disabled={disabled.workedDate} />
+						<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} disabled={!isEditMode} />
 
 						<CustomFlex alignItems="flex-start" gap="16px">
 							<Input label="근로 지역" bottomText={errors?.workspace?.message}>
@@ -201,7 +206,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 									placeholder="작업 공간 이름"
 									{...register('workspace')}
 									error={errors?.workspace?.message}
-									disabled={disabled.workspace}
+									disabled={!isEditMode}
 								/>
 							</Input>
 							<Input label="사업개시번호" bottomText={errors?.businessNumber?.message}>
@@ -210,7 +215,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 									placeholder="000-00-00000-0"
 									{...register('businessNumber')}
 									error={errors?.businessNumber?.message}
-									disabled={disabled.businessNumber}
+									disabled={!isEditMode}
 								/>
 							</Input>
 						</CustomFlex>
@@ -221,7 +226,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 									id="송금 유형"
 									{...register('remittanceType')}
 									error={errors?.remittanceType?.message}
-									disabled={disabled.remittanceType}
+									disabled={!isEditMode}
 								/>
 							</NativeSelect>
 							<Controller
@@ -244,7 +249,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 											onChange={onChange}
 											onBlur={onBlur}
 											error={error?.message}
-											disabled={disabled.payment}
+											disabled={!isEditMode}
 										/>
 									</Input>
 								)}
@@ -256,12 +261,12 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 								placeholder="기타 필요한 사항을 기입하세요."
 								{...register('memo')}
 								error={errors?.memo?.message}
-								disabled={disabled.memo}
+								disabled={!isEditMode}
 							/>
 						</Input>
-						{Object.values(disabled).every(val => val === false) && (
-							<UpdateButton type="submit" id="update" disabled={!isAllFieldsDisabled} aria-label="update-button">
-								수정완료
+						{isEditMode && (
+							<UpdateButton type="submit" id="update" disabled={!isEditMode} aria-label="update-button">
+								{isEditMutateLoading ? <SmallLoading /> : '수정하기'}
 							</UpdateButton>
 						)}
 						<Flex direction="column" margin="32px 0" width="100%">
@@ -269,8 +274,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
 							</Text>
 							<DeleteButton type="button" id="delete" aria-label="delete-button" onClick={handleRemoveWorkerButton}>
-								삭제하기
-								{isDeleteProcessLoading && <SmallLoading />}
+								{isRemoveMutateLoading ? <SmallLoading /> : '삭제하기'}
 							</DeleteButton>
 						</Flex>
 					</Form>
@@ -282,7 +286,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 
 const ActionButtons = styled(Flex)`
 	position: sticky;
-	top: 0;
+	top: -1px;
 	min-height: 48px;
 	background-color: var(--color-white);
 	z-index: var(--modal-index);
