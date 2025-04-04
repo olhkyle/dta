@@ -18,8 +18,10 @@ const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) 
 			<LayoutLoading type="md" />
 		) : pathname === routes.REGISTER ? (
 			<RegisterSkeleton />
-		) : (
+		) : pathname === routes.OVERVIEW || pathname === routes.DETAILS ? (
 			<GeneralSkeleton />
+		) : (
+			<LayoutLoading type="lg" />
 		);
 
 	if (isLoading) {
