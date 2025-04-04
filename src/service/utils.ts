@@ -60,8 +60,8 @@ const specifySnapshotIntoData = (snapshot: QuerySnapshot<DocumentData, DocumentD
 	});
 };
 
-const formattedWorkedDate = (data: Worker) => data?.workedDate?.toDate();
-const formattedCreatedAt = (data: Worker) => data?.createdAt?.toDate();
+const formattedWorkedDate = (data: Worker) => data?.workedDate.toDate();
+const formattedCreatedAt = (data: Worker) => data?.createdAt.toDate();
 
 const sortWorkerData = <T extends WorkerWithId>(data: T[], inOrder: SortOption) => {
 	return data?.sort((prev, curr) => (inOrder === 'asc' ? prev?.createdAt - curr?.createdAt : curr?.createdAt - prev?.createdAt));

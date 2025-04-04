@@ -23,8 +23,8 @@ import { sleep, unformatCurrencyUnit } from '../../utils';
 import { routes } from '../../constants';
 
 export interface Worker extends RegisterSchema {
-	workedDate: Date;
-	createdAt?: Date;
+	workedDate: Date | any;
+	createdAt?: Date | any;
 }
 
 export type FormSubmitButtonId = 'register' | 'additionalRegister';
