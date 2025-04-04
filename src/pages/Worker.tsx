@@ -12,7 +12,7 @@ import { formatCurrencyUnit } from '../utils/currencyUnit';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const Worker = () => {
+const WorkerPage = () => {
 	const {
 		state: {
 			worker: { workerName, workedDate, registrationNumberFront },
@@ -53,7 +53,7 @@ const Worker = () => {
 				<div css={{ position: 'absolute', top: '-8px', left: '-4px' }}>
 					<Circle size={20} bgColor="var(--color-green-200)" />
 				</div>
-				<Flex gap="1rem" justifyContent="space-between" margin="0 0 16px">
+				<Flex gap="16px" justifyContent="space-between" margin="0 0 16px">
 					<Text typo={isMobileScreen ? 'h5' : 'h4'} color="var(--text-color)">
 						{workerName}
 					</Text>
@@ -61,12 +61,12 @@ const Worker = () => {
 						{isAdmin ? registrationNumberFront : '******'}
 					</Text>
 				</Flex>
-				<Flex gap="1rem" margin="0 0 0.5rem">
+				<Flex gap="16px" margin="0 0 8px">
 					<Text typo={isMobileScreen ? 'p' : 'h6'} color="var(--disabled-text-color)">
 						{`${month}월 일한 횟수`}
 					</Text>
 
-					<Flex gap="0.3rem">
+					<Flex gap="5px">
 						<HighlightText color="var(--text-color)" bgColor="var(--bg-color)">
 							{data?.workers.length}
 						</HighlightText>
@@ -75,11 +75,11 @@ const Worker = () => {
 						</Text>
 					</Flex>
 				</Flex>
-				<Flex gap="1rem">
+				<Flex gap="16px">
 					<Text typo={isMobileScreen ? 'p' : 'h6'} color="var(--disabled-text-color)">
 						{`${month}월 총 지급 금액`}
 					</Text>
-					<Flex gap="0.3rem">
+					<Flex gap="5px">
 						<HighlightText color="var(--text-color)" bgColor="var(--bg-color)">
 							{formatCurrencyUnit(data?.sumOfPayment)}
 						</HighlightText>
@@ -134,4 +134,4 @@ const GoBackButton = styled.button`
 	}
 `;
 
-export default Worker;
+export default WorkerPage;

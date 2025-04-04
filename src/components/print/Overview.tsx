@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { useLocation } from 'react-router-dom';
 import { useGetWorkersOverviewQuery } from '../../hooks/queries';
-import { WorkerQuery } from '../../queries/workerQuery';
+import { WorkerQuery } from '../../queries';
 import { formatCurrencyUnit } from '../../utils';
 
 interface OverviewProps {

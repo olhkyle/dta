@@ -8,10 +8,10 @@ import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { routes, controls } from '../constants';
 
-const Print = () => {
+const PrintPage = () => {
 	const {
 		state: { year, month },
-	} = useLocation();
+	} = useLocation() as { state: { year: number; month: number } };
 
 	const navigate = useNavigate();
 	const isAdmin = useAppSelector(getIsAdmin);
@@ -95,4 +95,4 @@ const Data = styled.div`
 	border-color: var(--color-dark);
 `;
 
-export default Print;
+export default PrintPage;

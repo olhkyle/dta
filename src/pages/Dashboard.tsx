@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 import { EmptyIndicator } from '../components';
 
-const Dashboard = () => {
+const DashboardPage = () => {
 	return (
 		<Container>
 			<EmptyIndicator>🛹 대시보드 추가 예정입니다</EmptyIndicator>
@@ -15,4 +15,4 @@ const Container = styled.section`
 	width: 100%;
 `;
 
-export default Dashboard;
+export default DashboardPage;

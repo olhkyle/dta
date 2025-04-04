@@ -1,7 +1,7 @@
 import { SignInForm } from '../components';
 
-const SignIn = () => {
+const SignInPage = () => {
 	return <SignInForm />;
 };
 
-export default SignIn;
+export default SignInPage;

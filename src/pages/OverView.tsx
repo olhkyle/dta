@@ -5,7 +5,7 @@ import { useDebounce } from '../hooks';
 import { monthOfToday, yearOfToday, SortOption } from '../constants';
 import { OverviewContent, OverviewController } from '../components';
 
-const OverView = () => {
+const OverViewPage = () => {
 	const [inputValue, setInputValue] = useState('');
 	const workerName = useDebounce(inputValue, 500);
 
@@ -50,4 +50,4 @@ const Container = styled.section`
 	width: 100%;
 `;
 
-export default OverView;
+export default OverViewPage;

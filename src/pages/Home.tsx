@@ -5,7 +5,7 @@ import { useAppSelector } from '../store/store';
 import { getUser } from '../store/userSlice';
 import { routes } from '../constants';
 
-const Home = () => {
+const HomePage = () => {
 	const user = useAppSelector(getUser);
 
 	return (
@@ -100,4 +100,4 @@ const Navigation = styled(NavLink)`
 	}
 `;
 
-export default Home;
+export default HomePage;

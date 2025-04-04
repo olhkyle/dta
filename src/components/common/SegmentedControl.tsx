@@ -13,13 +13,13 @@ interface SegmentedControlProps<T extends string> {
 }
 
 const SegmentedControl = <T extends string>({ data, value: currentPosition, setValue, hasData = true }: SegmentedControlProps<T>) => {
-	const isTabletScreenSize = useMediaQuery('(max-width: 768px');
+	const isTablet = useMediaQuery('(max-width: 768px');
 
 	const dataDisplayType = (item: T) =>
 		item === '목록' ? (
-			<RxTable size={isTabletScreenSize ? '24' : '27'} />
+			<RxTable size={isTablet ? '24' : '27'} />
 		) : item === '차트' ? (
-			<RiLineChartFill size={isTabletScreenSize ? '24' : '27'} />
+			<RiLineChartFill size={isTablet ? '24' : '27'} />
 		) : item === 'asc' ? (
 			'오래된 순'
 		) : (

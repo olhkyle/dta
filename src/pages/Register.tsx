@@ -1,6 +1,6 @@
 import { Flex, RegisterForm } from '../components';
 
-const Register = () => {
+const RegisterPage = () => {
 	return (
 		<section>
 			<Flex margin={'0 auto'} width={'100%'} padding={'0 var(--padding-md)'} maxWidth={'600px'}>
@@ -10,4 +10,4 @@ const Register = () => {
 	);
 };
 
-export default Register;
+export default RegisterPage;

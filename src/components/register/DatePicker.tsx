@@ -110,7 +110,7 @@ const CalendarSelectorContainer = styled.div<{ active: boolean; disabled: boolea
 `;
 
 const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
-	padding: calc(var(--padding-sm) * 2);
+	padding: calc(var(--padding-sm) * 1.5);
 	width: 100%;
 	font-size: var(--fz-rp);
 	font-weight: var(--fw-medium);

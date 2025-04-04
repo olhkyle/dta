@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from 'react';
+import { SegmentedControl } from '..';
 import { controls, SortOption } from '../../constants';
 import { useGetWorkersOverviewQuery } from '../../hooks';
-import { SegmentedControl } from '../common';
 
 interface OverviewSegmentedControl {
 	year: number;

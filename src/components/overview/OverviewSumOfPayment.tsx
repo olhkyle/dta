@@ -1,4 +1,4 @@
-import { Badge } from '../common';
+import { Badge } from '..';
 import { useGetWorkersOverviewQuery } from '../../hooks';
 import { formatCurrencyUnit } from '../../utils';
 

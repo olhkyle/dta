@@ -2,7 +2,7 @@ import styled from '@emotion/styled';
 import { Button, Circle, Flex, Text } from '../components';
 import { useGoBack } from '../hooks';
 
-const NotFound = () => {
+const NotFoundPage = () => {
 	const goBack = useGoBack();
 
 	return (
@@ -46,4 +46,4 @@ const CustomFlex = styled(Flex)`
 	}
 `;
 
-export default NotFound;
+export default NotFoundPage;

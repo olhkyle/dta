@@ -33,7 +33,7 @@ const Container = styled.button`
 
 	&:focus,
 	&:hover {
-		background-color: var(--color-gray-900);
+		background-color: var(--btn-hover-bg-color);
 	}
 `;
 

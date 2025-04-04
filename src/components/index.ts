@@ -1,5 +1,6 @@
 export * from './common';
 export * from './auth';
+export * from './details';
 export * from './layout';
 export * from './modal';
 export * from './overview';

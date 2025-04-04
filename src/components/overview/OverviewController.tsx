@@ -1,6 +1,5 @@
 import { Dispatch, SetStateAction, Suspense } from 'react';
 import styled from '@emotion/styled';
-import { monthOfToday, months, SortOption, yearOfToday, years } from '../../constants';
 import {
 	CustomSelect,
 	Flex,
@@ -10,6 +9,7 @@ import {
 	OverviewSegmentedControlLoader,
 	OverviewSumOfPaymentLoader,
 } from '..';
+import { monthOfToday, months, SortOption, yearOfToday, years } from '../../constants';
 
 interface OverviewControllerProps {
 	year: number;

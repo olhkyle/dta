@@ -89,6 +89,10 @@ const Body = styled.div`
 	width: 100%;
 	height: calc(100% - var(--nav-height));
 	overflow-y: scroll;
+	scrollbar-width: none; // Firefox
+	&::-webkit-scrollbar {
+		display: none; // hide scrollbar
+	}
 `;
 
 const Overlay = styled.div<{ order: number }>`

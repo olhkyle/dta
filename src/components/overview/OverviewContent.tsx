@@ -1,11 +1,12 @@
 import styled from '@emotion/styled';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
+import { Bar } from 'react-chartjs-2';
+import { BsBoxSeam } from 'react-icons/bs';
+import { EmptyIndicator, Flex, HighlightText } from '..';
 import { useGetWorkersOverviewQuery, useTheme } from '../../hooks';
 import { getBarChartData, getBarChartOptions, SortOption } from '../../constants';
 import { sortWorkerData } from '../../service/utils';
-import { EmptyIndicator, Flex, HighlightText } from '../common';
-import { Bar } from 'react-chartjs-2';
-import { BsBoxSeam } from 'react-icons/bs';
+
 import { formatCurrencyUnit } from '../../utils';
 
 interface OverviewContentProps {
