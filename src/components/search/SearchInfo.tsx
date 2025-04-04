@@ -1,6 +1,6 @@
+import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { Circle, Flex, Text } from '..';
-import { ReactNode } from 'react';
 import type { RecentSearch } from '../modal/SearchWorkerModal';
 
 interface SearchInfoProps {
@@ -11,7 +11,13 @@ interface SearchInfoProps {
 
 const SearchInfo = ({ recentSearchList, loader, isLoading }: SearchInfoProps) => {
 	return (
-		<CustomFlex direction="column" justifyContent="flex-start" alignItems="flex-start" margin="0 auto" padding="16px" width="100%">
+		<CustomFlex
+			direction={'column'}
+			justifyContent={'flex-start'}
+			alignItems={'flex-start'}
+			margin={'0 auto'}
+			padding={'var(--padding-md)'}
+			width={'100%'}>
 			<Text typo="h6" color="var(--text-color)">
 				💿 최근 검색 내역
 			</Text>
@@ -24,11 +30,11 @@ const SearchInfo = ({ recentSearchList, loader, isLoading }: SearchInfoProps) =>
 					<>
 						{recentSearchList.map(({ workerName, registrationNumber }) => (
 							<li key={workerName + registrationNumber}>
-								<Flex gap="16px">
+								<Flex gap={'16px'}>
 									<Circle size={14} bgColor={'var(--color-green-50)'} />
 									<span>{workerName}</span>
 								</Flex>
-								<Flex gap="32px">
+								<Flex gap={'32px'}>
 									<span>{registrationNumber}</span>
 								</Flex>
 							</li>

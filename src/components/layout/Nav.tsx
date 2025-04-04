@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { RiCloseFill } from 'react-icons/ri';
 import { PiHamburger } from 'react-icons/pi';
 import { toast } from 'react-toastify';
-import routes from '../../constants/routes';
-import { useLoading, useScrollTopEffect, useSetUser, useSideNavActive } from '../../hooks';
 import { Flex, NavLink, ThemeButton, SideNav, UserProfile } from '..';
+import { useLoading, useScrollTopEffect, useSetUser, useSideNavActive } from '../../hooks';
+import { routes } from '../../constants';
 import { logOut } from '../../service/auth';
 
 const Nav = () => {
@@ -78,7 +78,7 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 	position: sticky;
 	top: 0;
 	width: 100%;
-	border-bottom: 1px solid var(--color-gray-400);
+	border-bottom: 1px solid var(--outline-color);
 	backdrop-filter: blur(8px);
 	z-index: var(--nav-index);
 `;
@@ -100,7 +100,7 @@ const Logo = styled(Link)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 16px;
+	padding: var(--padding-md);
 
 	h1 {
 		width: 45px;

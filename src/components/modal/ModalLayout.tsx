@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { MdClose } from 'react-icons/md';
-import { Button, Flex, Text } from '../common';
+import { Button, Flex, Text } from '..';
 
 interface ModalLayoutProps {
 	title: string | ReactNode;
@@ -14,8 +14,8 @@ const ModalLayout = ({ title, onClose, order, children }: ModalLayoutProps) => {
 	return (
 		<>
 			<Container order={+order.split('-')[1]} data-modal-order={order}>
-				<Header justifyContent="space-between" alignItems="center">
-					<Text typo="h3" color="var(--text-color)" aria-label="modal-layout-title">
+				<Header justifyContent={'space-between'} alignItems={'center'}>
+					<Text typo={'h3'} color={'var(--text-color)'} aria-label="modal-layout-title">
 						{title}
 					</Text>
 					<CloseModalButton type="button" id="close-button" onClick={onClose}>
@@ -33,7 +33,7 @@ const Container = styled.div<{ order: number }>`
 	position: absolute;
 	top: 50%;
 	left: 50%;
-	padding: 16px;
+	padding: var(--padding-md);
 	min-height: 360px;
 	width: calc(100dvw - 32px);
 	height: calc(100dvh - var(--nav-height));
@@ -69,7 +69,7 @@ const CloseModalButton = styled(Button)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 8px;
+	padding: var(--padding-sm);
 	border-radius: 9999px;
 	background-color: var(--outline-color);
 
@@ -79,7 +79,7 @@ const CloseModalButton = styled(Button)`
 	}
 
 	@media screen and (max-width: 640px) {
-		padding: 4px;
+		padding: calc(var(--padding-sm) * 0.5);
 	}
 `;
 

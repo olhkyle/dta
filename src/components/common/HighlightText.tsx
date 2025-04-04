@@ -11,7 +11,7 @@ const HighlightText = ({ color, bgColor, fontSize = '16px', children }: Highligh
 	return (
 		<span
 			css={{
-				padding: '0.2rem 0.4rem',
+				padding: 'calc(var(--padding-md) * 0.2) calc(var(--padding-md) * 0.4)',
 				backgroundColor: bgColor,
 				color,
 				fontSize,

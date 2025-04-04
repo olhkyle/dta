@@ -81,7 +81,7 @@ const Container = styled.div`
 `;
 
 const FieldTitle = styled.div`
-	padding: 4px 0;
+	padding: calc(var(--padding-sm) * 0.5) 0;
 	font-size: var(--fz-p);
 	font-weight: var(--fw-medium);
 `;
@@ -90,7 +90,7 @@ const CalendarSelectorContainer = styled.div<{ active: boolean; disabled: boolea
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 0 4px;
+	padding: 0 calc(var(--padding-sm) * 0.5);
 	min-height: 48px;
 	min-width: 270px;
 	box-shadow: ${({ active }) => (active ? 'inset 0 0 0 1px var(--text-color)' : 'inset 0 0 0 1px var(--outline-color)')};
@@ -110,7 +110,7 @@ const CalendarSelectorContainer = styled.div<{ active: boolean; disabled: boolea
 `;
 
 const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
-	padding: 12px;
+	padding: calc(var(--padding-sm) * 2);
 	width: 100%;
 	font-size: var(--fz-rp);
 	font-weight: var(--fw-medium);
@@ -130,7 +130,7 @@ const SingleDayPicker = styled(DayPicker)`
 
 	.rdp-month {
 		margin-left: -1rem;
-		padding: 16px;
+		padding: var(--padding-md);
 		border: 1px solid var(--outline-color);
 		border-radius: 12px;
 	}
@@ -151,7 +151,7 @@ const DayDescription = styled.div`
 
 	button {
 		margin-left: 8px;
-		padding: 0.4rem 0.5rem;
+		padding: calc(var(--padding-md) * 0.4) calc(var(--padding-md) * 0.5);
 		font-weight: var(--fw-semibold);
 		color: var(--color-white);
 		background-color: var(--color-green-300);

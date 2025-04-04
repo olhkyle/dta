@@ -4,13 +4,23 @@ import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { Button, DatePicker, Flex, HighlightText, Input, NativeSelect, Spacer, Text } from '..';
+import {
+	Button,
+	DatePicker,
+	Flex,
+	HighlightText,
+	Input,
+	NativeSelect,
+	Spacer,
+	Text,
+	RegisterSchema,
+	SubmitHandler,
+	registerSchema,
+} from '..';
 import { addWorker, getSpecificWorker } from '../../service/workData';
-import { RegisterSchema, SubmitHandler, registerSchema } from './schema';
-import routes from '../../constants/routes';
-import { unformatCurrencyUnit } from '../../utils/currencyUnit';
-import sleep from '../../utils/sleep';
 import { useLoading } from '../../hooks';
+import { sleep, unformatCurrencyUnit } from '../../utils';
+import { routes } from '../../constants';
 
 export interface Worker extends RegisterSchema {
 	workedDate: Date | any;
@@ -208,7 +218,7 @@ const Form = styled.form`
 	flex-direction: column;
 	gap: 24px;
 	margin: 0 auto;
-	padding: 80px 0;
+	padding: calc(var(--padding-md) * 5) 0;
 	width: 100%;
 `;
 
@@ -216,7 +226,7 @@ const CheckExistButton = styled.button`
 	display: inline-flex;
 	gap: 0.1rem;
 	align-items: center;
-	padding: 0.3rem 0.6rem;
+	padding: calc(var(--padding-md) * 0.3) calc(var(--padding-md) * 0.6);
 	border-radius: var(--radius);
 	color: var(--color-white);
 	background-color: var(--color-orange-100);
@@ -236,7 +246,6 @@ const CustomFlex = styled(Flex)`
 `;
 
 const RegisterButton = styled(Button)`
-	/* min-width: 300px; */
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
@@ -247,7 +256,6 @@ const RegisterButton = styled(Button)`
 `;
 
 const AdditionalRegisterButton = styled(Button)`
-	/* min-width: 200px; */
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--color-green-50);

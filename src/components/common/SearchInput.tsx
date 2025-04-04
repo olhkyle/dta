@@ -2,8 +2,8 @@ import { forwardRef, RefObject } from 'react';
 import styled from '@emotion/styled';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { MdClose } from 'react-icons/md';
-import { Button, Flex } from '.';
 import { Id as ToastifyId } from 'react-toastify';
+import { Button, Flex } from '.';
 
 interface SearchInputProps {
 	value: string;
@@ -49,7 +49,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 
 const Container = styled(Flex)`
 	margin: 48px auto 64px;
-	padding: 16px 8px 0;
+	padding: var(--padding-md) var(--padding-sm) 0;
 	max-width: 960px;
 	width: 100%;
 	border-bottom: 5px solid var(--outline-color);
@@ -59,12 +59,12 @@ const Container = styled(Flex)`
 	}
 
 	@media screen and (max-width: 640px) {
-		padding: 8px 8px 16px 16px;
+		padding: var(--padding-sm) var(--padding-sm) var(--padding-md) var(--padding-md);
 		max-width: 360px;
 	}
 
 	@media screen and (max-width: 375px) {
-		padding: 16px 16px 16px;
+		padding: var(--padding-md) var(--padding-md) var(--padding-md);
 		max-width: 320px;
 	}
 `;
@@ -78,7 +78,7 @@ const Input = styled.input`
 	outline: none;
 
 	@media screen and (min-width: 640px) {
-		padding: 16px;
+		padding: var(--padding-md);
 		font-size: var(--fz-h4);
 	}
 `;
@@ -86,7 +86,7 @@ const Input = styled.input`
 const RefreshButton = styled(Button)`
 	display: inline-flex;
 	align-items: center;
-	padding: 4px 8px;
+	padding: calc(var(--padding-sm) * 0.5) var(--padding-sm);
 	font-size: 27px;
 	border-radius: 9999px;
 
@@ -108,7 +108,7 @@ const RefreshButton = styled(Button)`
 const SearchButton = styled(Button)`
 	display: inline-flex;
 	align-items: center;
-	padding: 4px 8px;
+	padding: calc(var(--padding-sm) * 0.5) var(--padding-sm);
 	border-radius: var(--radius);
 	font-size: 27px;
 

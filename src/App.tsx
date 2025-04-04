@@ -4,13 +4,13 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { Provider as ReduxProvider } from 'react-redux';
 import { Global } from '@emotion/react';
-import { store } from './store/store';
-import { Layout, ErrorBoundary } from './components';
 import GlobalStyle from './styles/GlobalStyle';
+import { Layout, ErrorBoundary } from './components';
 import AuthenticationGuard from './guard/AuthenticationGuard';
+import { store } from './store/store';
 import { getWorkersDetailLoader, getWorkersOverviewLoader } from './loaders';
-import routes from './constants/routes';
-import loadLazy from './utils/loadLazy';
+import { routes } from './constants';
+import { loadLazy } from './utils';
 
 const queryClient = new QueryClient({
 	defaultOptions: {
@@ -56,7 +56,6 @@ const router = createBrowserRouter([
 			},
 		],
 	},
-
 	{
 		path: routes.PRINT,
 		element: <AuthenticationGuard redirectTo={routes.LOGIN} element={loadLazy('Print')} />,

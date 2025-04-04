@@ -68,6 +68,10 @@ const GlobalStyle = css`
 		--btn-lg-padding: 16px 24px;
 		--btn-font-size: 16px;
 
+		--padding-lg: 32px;
+		--padding-md: 16px;
+		--padding-sm: 8px;
+
 		--line-height-base: 1.5;
 		--fz-2xl: 96px;
 		--fz-xl: 72px;
@@ -93,7 +97,6 @@ const GlobalStyle = css`
 		/* z-index */
 		--nav-index: 50;
 		--sideNav-index: 999;
-		/* --overlay-index: 9900; */
 		--modal-index: 9990;
 		--toast-index: 9999;
 
@@ -281,25 +284,24 @@ const GlobalStyle = css`
 		position: relative;
 		overflow: hidden;
 
-		@keyframes loading {
+		@keyframes shimmer {
 			0% {
-				transform: translateX(0);
+				background-position: -200% 0;
 			}
-			50%,
 			100% {
-				transform: translateX(460px);
+				background-position: 200% 0;
 			}
 		}
 
-		&::before {
+		&::after {
 			content: '';
 			position: absolute;
 			top: 0;
 			left: 0;
-			width: 45px;
-			height: 100%;
-			background: var(--linear-gradient);
-			animation: loading 2s infinite linear;
+			inset: 0;
+			background: linear-gradient(90deg, transparent 0%, var(--blue100) 50%, transparent 100%);
+			background-size: 200% 100%;
+			animation: shimmer 2s infinite;
 		}
 	}
 

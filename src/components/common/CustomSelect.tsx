@@ -66,7 +66,7 @@ const Trigger = styled.button`
 	justify-content: center;
 	align-items: center;
 	gap: 0.2rem;
-	padding: 0.5rem 0.65rem;
+	padding: var(--padding-sm) calc(var(--padding-md) * 0.65);
 	font-size: var(--fz-m);
 	font-weight: var(--fw-semibold);
 	line-height: 1.2;
@@ -82,7 +82,7 @@ const Trigger = styled.button`
 
 	@media screen and (min-width: 640px) {
 		gap: 0.4rem;
-		padding: 0.75rem 1.4rem;
+		padding: calc(var(--padding-md) * 0.75) calc(var(--padding-md) * 1.4);
 		font-size: var(--fz-p);
 	}
 
@@ -112,7 +112,7 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	align-items: center;
 	gap: 0.2rem;
 	width: 100%;
-	padding: 0.5rem 0.4rem 0.5rem 0.1rem;
+	padding: calc(var(--padding-md) * 0.5) calc(var(--padding-md) * 0.4) calc(var(--padding-md) * 0.5) calc(var(--padding-md) * 0.1);
 	font-size: var(--fz-p);
 	font-weight: ${({ isCurrent }) => (isCurrent ? 'var(--fw-bold)' : 'var(--fw-medium)')};
 	color: var(--text-color);
@@ -124,7 +124,7 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	}
 
 	@media screen and (min-width: 640px) {
-		padding: 0.5rem 1rem 0.5rem 0;
+		padding: calc(var(--padding-md) * 0.5) calc(var(--padding-md)) calc(var(--padding-md) * 0.5) 0;
 		font-size: var(--fz-h7);
 	}
 

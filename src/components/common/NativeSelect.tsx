@@ -71,7 +71,7 @@ const BottomText = styled.p<{ isError: boolean }>`
 
 const SelectField = styled.select<{ error: string; disabled: boolean }>`
 	margin: 0;
-	padding: 12px 16px;
+	padding: calc(var(--padding-sm) * 1.5) var(--padding-md);
 	min-width: 270px;
 	width: 100%;
 	font-size: var(--fz-rp);

@@ -3,13 +3,13 @@ import { NavLink } from 'react-router-dom';
 import { Flex, Text } from '../components';
 import { useAppSelector } from '../store/store';
 import { getUser } from '../store/userSlice';
-import routes from '../constants/routes';
+import { routes } from '../constants';
 
 const Home = () => {
 	const user = useAppSelector(getUser);
 
 	return (
-		<Wrapper direction="column" justifyContent="center" gap="16px">
+		<Container direction={'column'} justifyContent={'center'} gap={'16px'}>
 			<Subtitle color="var(--bg-color)">Document Tax Administration</Subtitle>
 			<About>
 				<h6>* Goal</h6>
@@ -24,11 +24,11 @@ const Home = () => {
 			<Navigation to={user ? routes.OVERVIEW : routes.LOGIN} className="clip-path-button">
 				서비스 이용하기
 			</Navigation>
-		</Wrapper>
+		</Container>
 	);
 };
 
-const Wrapper = styled(Flex)`
+const Container = styled(Flex)`
 	margin: 12dvh 0;
 
 	@media screen and (min-width: 1024px) {
@@ -54,7 +54,7 @@ const Subtitle = styled(Text)`
 const About = styled.div`
 	position: relative;
 	margin-bottom: 16px;
-	padding: 16px;
+	padding: var(--padding-md);
 	width: 300px;
 	font-size: var(--fz-p);
 	background-color: var(--option-hover-bg-color);
@@ -81,7 +81,7 @@ const About = styled.div`
 `;
 
 const Navigation = styled(NavLink)`
-	padding: 16px;
+	padding: var(--padding-md);
 	min-width: 240px;
 	background: linear-gradient(0.25turn, var(--color-green-100), var(--color-green-400));
 	color: var(--bg-color);

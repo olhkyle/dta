@@ -4,7 +4,7 @@ import { Outlet, useLocation } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { Footer, Main, Nav, ScrollToTopButton, ModalContainer, LayoutLoading, OpenSearchWorkerModalButton } from '..';
 import { useScrollTopEffect } from '../../hooks';
-import routes from '../../constants/routes';
+import { routes } from '../../constants';
 import { useAppSelector } from '../../store/store';
 import { getUser } from '../../store/userSlice';
 

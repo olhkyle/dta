@@ -7,8 +7,8 @@ import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { Circle, Flex, HighlightText, Text } from '../components';
 import { useGetWorkersDetailQuery, useGoBack, useMediaQuery, useTheme } from '../hooks';
+import { getBarChartData, getBarChartOptions } from '../constants/barChart';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
-import { getBarChartData, getBarChartOptions } from '../constants/\bchart';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -19,13 +19,11 @@ const Worker = () => {
 		},
 	} = useLocation();
 	const goBack = useGoBack();
-
 	const [year, month] = [workedDate.getFullYear(), workedDate.getMonth() + 1];
 	const [theme] = useTheme();
 	const isAdmin = useAppSelector(getIsAdmin);
 
-	const isTabletScreen = useMediaQuery('(min-width: 1024px)');
-	const isMobileScreen = useMediaQuery('(max-width: 640px)');
+	const [isTabletScreen, isMobileScreen] = [useMediaQuery('(min-width: 1024px)'), useMediaQuery('(max-width: 640px)')];
 
 	const { data } = useGetWorkersDetailQuery({
 		inOrder: 'asc',
@@ -96,9 +94,9 @@ const Worker = () => {
 	);
 };
 
-const Container = styled.div`
+const Container = styled.section`
 	margin: 32px auto;
-	padding: 0 16px;
+	padding: 0 var(--padding-md);
 	max-width: 1280px;
 	width: 100%;
 `;
@@ -123,7 +121,7 @@ const GoBackButton = styled.button`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.3rem;
+	padding: calc(0.3 * var(--padding-md));
 	font-weight: var(--fw-semibold);
 	background-color: var(--outline-color);
 	outline: 1px solid var(--table-border-color);

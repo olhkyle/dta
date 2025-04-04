@@ -20,7 +20,7 @@ const Badge = ({ label, bgColor, unit = '원', children }: BadgeProps) => {
 			<span
 				css={{
 					marginLeft: '0.4rem',
-					padding: '0.3rem 0.6rem',
+					padding: 'calc(var(--padding-md) * 0.3) calc(var(--padding-md) * 0.6)',
 					borderRadius: 'var(--radius)',
 					backgroundColor: bgColor,
 					fontSize: 'var(--fz-h7)',
@@ -29,7 +29,13 @@ const Badge = ({ label, bgColor, unit = '원', children }: BadgeProps) => {
 				}}>
 				{children}
 			</span>
-			<span css={{ paddingLeft: '0.2rem', fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-semibold)', color: 'var(--text-color)' }}>
+			<span
+				css={{
+					paddingLeft: 'calc(var(--padding-md) * 0.2)',
+					fontSize: 'var(--fz-h7)',
+					fontWeight: 'var(--fw-semibold)',
+					color: 'var(--text-color)',
+				}}>
 				{unit}
 			</span>
 		</Container>

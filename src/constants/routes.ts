@@ -10,5 +10,7 @@ const routes = {
 	PRINT: '/print',
 } as const;
 
-export type Route<T> = T[keyof T];
-export default routes;
+type Route<T> = T[keyof T];
+
+export type { Route };
+export { routes };

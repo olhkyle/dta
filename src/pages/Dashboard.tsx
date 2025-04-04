@@ -9,8 +9,8 @@ const Dashboard = () => {
 	);
 };
 
-const Container = styled.div`
-	padding: 0 16px;
+const Container = styled.section`
+	padding: 0 var(--padding-md);
 	max-width: 1280px;
 	width: 100%;
 `;

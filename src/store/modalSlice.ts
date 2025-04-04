@@ -1,6 +1,6 @@
 import { ElementType } from 'react';
-import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { UseQueryResult } from '@tanstack/react-query';
+import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { RootState } from './store';
 import { WorkerWithId } from '../service/workData';
 

@@ -1,8 +1,8 @@
 import styled from '@emotion/styled';
+import { useLocation } from 'react-router-dom';
 import { useGetWorkersOverviewQuery } from '../../hooks/queries';
 import { WorkerQuery } from '../../queries/workerQuery';
-import { useLocation } from 'react-router-dom';
-import { formatCurrencyUnit } from '../../utils/currencyUnit';
+import { formatCurrencyUnit } from '../../utils';
 
 interface OverviewProps {
 	query: WorkerQuery;
@@ -13,7 +13,7 @@ const OVERVIEW_DIVISOR = 31;
 const Overview = ({ query }: OverviewProps) => {
 	const {
 		state: { year, month },
-	} = useLocation();
+	} = useLocation() as { state: { year: number; month: number } };
 
 	const workersOverview = useGetWorkersOverviewQuery(query);
 

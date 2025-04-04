@@ -8,14 +8,14 @@ const ThemeButton = () => {
 	return (
 		<Container onClick={toggleTheme} aria-label="theme-toggle-button">
 			<Switch />
-			<BtnText>
-				<BtnTextIcon>
+			<BtnEmojis>
+				<IconWrapper>
 					<HiSun size="20" color="var(--color-dark)" />
-				</BtnTextIcon>
-				<BtnTextIcon>
+				</IconWrapper>
+				<IconWrapper>
 					<HiMoon size="20" />
-				</BtnTextIcon>
-			</BtnText>
+				</IconWrapper>
+			</BtnEmojis>
 		</Container>
 	);
 };
@@ -33,13 +33,13 @@ const Switch = styled.div`
 	left: var(--position-left);
 	width: 22px;
 	height: 22px;
-	background-color: #fff;
+	background-color: var(--color-white);
 	border-radius: 100%;
 	transition: left calc(var(--transition-duration) * 1s);
 	outline: 3px solid var(--color-green-50);
 `;
 
-const BtnText = styled.div`
+const BtnEmojis = styled.div`
 	display: flex;
 	height: 100%;
 	background-color: var(--btn-bg-color);
@@ -48,7 +48,7 @@ const BtnText = styled.div`
 	transition: background-color calc(var(--transition-duration) * 1s);
 `;
 
-const BtnTextIcon = styled.div`
+const IconWrapper = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;

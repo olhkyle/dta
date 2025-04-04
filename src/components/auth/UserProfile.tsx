@@ -1,5 +1,5 @@
-import styled from '@emotion/styled';
 import { ReactNode } from 'react';
+import styled from '@emotion/styled';
 
 interface UserProfileProps {
 	name: string;
@@ -41,10 +41,10 @@ const Container = styled.div`
 		top: 100%;
 		left: 0;
 		margin-top: 0.4rem;
-		padding: 0.5rem 0.8rem;
+		padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md));
 		width: 100%;
 		color: var(--text-color);
-		border: 1px solid var(--color-gray-500);
+		border: 1px solid var(--color-gray-200);
 		border-radius: var(--radius);
 		background-color: var(--bg-color);
 		opacity: 0;

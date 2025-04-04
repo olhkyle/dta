@@ -1,10 +1,10 @@
 import styled from '@emotion/styled';
-import { useGetWorkersDetailQuery } from '../../hooks/queries';
+import { useGetWorkersDetailQuery } from '../../hooks';
 import { WorkerQuery } from '../../queries/workerQuery';
 import { WorkersDetailBySort } from '../../service/workData';
 import { useAppSelector } from '../../store/store';
 import { getIsAdmin } from '../../store/userSlice';
-import { formatCurrencyUnit } from '../../utils/currencyUnit';
+import { formatCurrencyUnit } from '../../utils';
 
 interface DetailProps {
 	query: WorkerQuery;

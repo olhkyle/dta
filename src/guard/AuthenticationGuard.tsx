@@ -1,8 +1,7 @@
 import { ReactNode, Suspense } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
-import { LayoutLoading, RegisterSkeleton, Skeleton } from '../components';
-import routes from '../constants/routes';
-import { Route } from '../constants/routes';
+import { LayoutLoading, RegisterSkeleton, GeneralSkeleton } from '../components';
+import { type Route, routes } from '../constants';
 import useAuthQuery from '../hooks/useAuthQuery';
 
 interface AuthenticationGuardProps {
@@ -20,7 +19,7 @@ const AuthenticationGuard = ({ redirectTo, element }: AuthenticationGuardProps) 
 		) : pathname === routes.REGISTER ? (
 			<RegisterSkeleton />
 		) : (
-			<Skeleton />
+			<GeneralSkeleton />
 		);
 
 	if (isLoading) {

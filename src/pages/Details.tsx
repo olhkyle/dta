@@ -17,7 +17,7 @@ import {
 	SmallLoading,
 	LayoutLoading,
 } from '../components';
-import routes from '../constants/routes';
+import { routes } from '../constants';
 import { WorkerWithId, sortByNameAndWorkedDate } from '../service/workData';
 import { useAppDispatch, useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
@@ -58,9 +58,14 @@ const Details = () => {
 			<SearchFilters>
 				<Flex justifyContent="space-between">
 					<Flex gap="16px">
-						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentControl} />
+						<SegmentedControl data={controls} value={currentSort} setValue={setCurrentControl} hasData={workers?.length !== 0} />
 						<CustomSelect data={years} value={year} setValue={setYear} unit="년" />
-						<CustomSelect data={months} value={month} setValue={setMonth} unit="월" />
+						<CustomSelect
+							data={yearOfToday === year ? months.filter(month => month <= monthOfToday) : months}
+							value={month}
+							setValue={setMonth}
+							unit="월"
+						/>
 					</Flex>
 					<PrintButton
 						type="button"
@@ -165,8 +170,8 @@ const Details = () => {
 	);
 };
 
-const Container = styled.div`
-	padding: 0 16px;
+const Container = styled.section`
+	padding: 0 var(--padding-md);
 	max-width: 1280px;
 	width: 100%;
 `;
@@ -179,7 +184,7 @@ const SearchFilters = styled.div`
 
 const PrintButton = styled(Button)`
 	display: none;
-	padding: 0.6rem 1.5rem;
+	padding: calc(var(--padding-md) * 0.6) var(var(--padding-md) * 1.5);
 	font-size: var(--fz-p);
 	background: linear-gradient(0.45turn, #e1e1e1, var(--color-green-50));
 	color: var(--color-white);
@@ -195,7 +200,7 @@ const PrintButton = styled(Button)`
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		padding: 0.6rem 2rem;
+		padding: calc(var(--padding-md) * 0.6) calc(var(--padding-md) * 2);
 		font-size: var(--fz-h6);
 	}
 `;
@@ -328,7 +333,7 @@ const Table = styled.table<{ searched: boolean }>`
 		display: inline-flex;
 		justify-content: center;
 		align-items: center;
-		padding: 4px 8px;
+		padding: calc(var(--padding-sm) * 0.5) var(--padding-sm);
 		font-size: var(--fz-sm);
 		backdrop-filter: blur(4px);
 		color: var(--color-gray-600);

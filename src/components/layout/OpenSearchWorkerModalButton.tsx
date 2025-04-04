@@ -10,7 +10,7 @@ const OpenSearchWorkerModalButton = () => {
 
 	return (
 		<Container type="button" onClick={openModal}>
-			<RiMenuSearchLine size="24" />
+			<RiMenuSearchLine size="24" color={'var(--btn-text-color)'} />
 		</Container>
 	);
 };
@@ -22,10 +22,10 @@ const Container = styled.button`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.65rem;
+	padding: calc(var(--padding-md) * 0.65);
 	font-weight: var(--fw-semibold);
 	color: var(--color-white);
-	background-color: var(--color-dark);
+	background-color: var(--btn-bg-color);
 	border: 1px solid var(--color-gray-opacity-200);
 	border-radius: var(--radius);
 	z-index: var(--modal-index);

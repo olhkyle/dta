@@ -6,9 +6,7 @@ import ReactToPrint from 'react-to-print';
 import { Button, Detail, Flex, HighlightText, Overview } from '../components';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
-
-import { controls } from '../constants/sortControls';
-import routes from '../constants/routes';
+import { routes, controls } from '../constants';
 
 const Print = () => {
 	const {
@@ -49,9 +47,9 @@ const Print = () => {
 	);
 };
 
-const Container = styled.div`
+const Container = styled.section`
 	margin: 16px auto;
-	padding: 48px 0;
+	padding: calc(var(--padding-md) * 3) 0;
 
 	@media screen and (min-width: 640px) {
 		width: 640px;

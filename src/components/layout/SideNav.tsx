@@ -2,7 +2,7 @@ import { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Flex, NavLink, Text, ThemeButton } from '..';
 import { useClickOutside, useMediaQuery, useSetUser, useSideNavActive } from '../../hooks';
-import routes from '../../constants/routes';
+import { routes } from '../../constants';
 
 interface SideNavProps {
 	isShown: boolean;
@@ -102,7 +102,7 @@ const Container = styled.div<{ isShown: boolean }>`
 `;
 
 const Navigation = styled(NavLink)`
-	padding: 16px 0;
+	padding: var(--padding-md) 0;
 	width: 100%;
 	font-size: var(--fz-h7);
 	border-radius: 0;

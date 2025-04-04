@@ -4,15 +4,25 @@ import { useNavigate } from 'react-router-dom';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
-import { Input, Text, Button, NativeSelect, Flex, DatePicker, SmallLoading } from '../../components';
-import ModalLayout from './ModalLayout';
-import { RegisterSchema, registerSchema, SubmitHandler } from '../../components/register/schema';
+import {
+	Input,
+	Text,
+	Button,
+	NativeSelect,
+	Flex,
+	DatePicker,
+	SmallLoading,
+	RegisterSchema,
+	registerSchema,
+	SubmitHandler,
+	ModalLayout,
+} from '../../components';
 import { WorkerWithId } from '../../service/workData';
 import { useOverlayFixed, useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks';
 import { useAppSelector } from '../../store/store';
 import { QueryRefetch } from '../../store/modalSlice';
 import { getIsAdmin } from '../../store/userSlice';
-import { unformatCurrencyUnit } from '../../utils/currencyUnit';
+import { unformatCurrencyUnit } from '../../utils';
 
 interface DetailModalProps {
 	data: WorkerWithId;
@@ -293,7 +303,7 @@ const ActionButtons = styled(Flex)`
 `;
 
 const ModifyButton = styled(Button)`
-	padding: 8px 12px;
+	padding: var(--padding-sm) calc(var(--padding-sm) * 1.5);
 	color: var(--bg-color);
 	background-color: var(--color-green-50);
 
@@ -303,7 +313,7 @@ const ModifyButton = styled(Button)`
 `;
 
 const ViewWorkerDetailButton = styled(Button)`
-	padding: 8px 12px;
+	padding: var(--padding-sm) calc(var(--padding-sm) * 1.5);
 	color: var(--bg-color);
 	background-color: var(--color-orange-100);
 
@@ -314,7 +324,7 @@ const ViewWorkerDetailButton = styled(Button)`
 
 const Group = styled.div`
 	margin: 16px 0 0;
-	padding: 16px;
+	padding: var(--padding-md);
 	background-color: var(--color-white);
 	border-radius: var(--radius);
 
@@ -350,7 +360,7 @@ const CustomFlex = styled(Flex)`
 
 const Confidential = styled.div`
 	margin: 0;
-	padding: 12px 16px;
+	padding: calc(var(--padding-sm) * 1.5) var(--padding-md);
 	min-width: 250px;
 	width: 100%;
 	font-size: var(--fz-rp);

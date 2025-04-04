@@ -27,7 +27,7 @@ const Container = styled.button`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.65rem;
+	padding: calc(var(--padding-md) * 0.5);
 	border: 1px solid var(--outline-color);
 	border-radius: calc(var(--radius) * 1.5);
 	background-color: var(--bg-color);

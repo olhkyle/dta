@@ -6,7 +6,7 @@ import { WorkerQuery } from './workerQuery';
 const staleTime = 1000 * 2;
 
 const getWorkersDetailByPageQuery = ({ inOrder = 'asc', year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
-	queryKey: ['workersDetailByPage', inOrder, year, month, workerName],
+	queryKey: ['workersDetailByPage', inOrder, `${year}-${month}`, workerName],
 	queryFn: async ({ pageParam = 0 }) => {
 		const data = await getWorkersDetailByPage({ inOrder, year, month, workerName, pageParam });
 		return data;

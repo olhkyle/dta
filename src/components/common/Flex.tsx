@@ -7,6 +7,8 @@ interface FlexProps extends HTMLAttributes<HTMLDivElement> {
 	gap?: string;
 	margin?: string;
 	padding?: string;
+	maxWidth?: `${number}px` | `${number}%` | `${number}dvw` | 'auto';
+	minWidth?: `${number}px` | `${number}%` | `${number}dvw` | 'auto';
 	width?: `${number}px` | `${number}%` | `${number}dvw` | 'auto';
 	height?: `${number}px` | `${number}%` | `${number}dvh` | 'auto' | string;
 }
@@ -18,6 +20,8 @@ const Flex = ({
 	gap = '0',
 	margin = '0px',
 	padding = '0px',
+	maxWidth = 'auto',
+	minWidth = 'auto',
 	width = 'auto',
 	height = 'auto',
 	...props
@@ -32,6 +36,8 @@ const Flex = ({
 				margin,
 				padding,
 				gap,
+				maxWidth: `${maxWidth}`,
+				minWidth: `${minWidth}`,
 				width: `${width}`,
 				height: `${height}`,
 			}}

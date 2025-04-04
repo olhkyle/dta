@@ -1,16 +1,15 @@
 import { useEffect } from 'react';
 import styled from '@emotion/styled';
+import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { SigninSchema, signInSchema } from './schema';
+import { SigninSchema, signInSchema, Button, Flex, Input, Spacer, Text } from '..';
 import { signIn } from '../../service/auth';
 import { useLoading, useSetUser } from '../../hooks';
-import { Button, Flex, Input, Spacer, Text } from '..';
-import routes from '../../constants/routes';
-import { useQueryClient } from '@tanstack/react-query';
+import { routes } from '../../constants';
 
 const SignInForm = () => {
 	const queryClient = useQueryClient();
@@ -25,7 +24,6 @@ const SignInForm = () => {
 
 	const navigate = useNavigate();
 	const { setCurrentUser } = useSetUser();
-
 	const { Loading, isLoading, startTransition } = useLoading();
 
 	const onSubmit = async (data: SigninSchema) => {
@@ -34,9 +32,9 @@ const SignInForm = () => {
 
 			if (userData) {
 				setCurrentUser(userData);
-				navigate(routes.DASHBOARD);
 				queryClient.setQueryData(['auth'], userData);
 				toast.success('성공적으로 로그인 되었습니다');
+				navigate(routes.OVERVIEW);
 			}
 		} catch (e) {
 			setFocus('email');
@@ -87,7 +85,7 @@ const Form = styled.form`
 	flex-direction: column;
 	align-items: center;
 	margin: 0 auto;
-	padding: 10em 16px 0;
+	padding: 10em var(--padding-md) 0;
 	max-width: 360px;
 	width: 100%;
 `;
@@ -99,8 +97,7 @@ const Header = styled(Flex)`
 		display: flex;
 		justify-content: center;
 		align-items: center;
-
-		padding: 12px;
+		padding: calc(var(--padding-sm) * 1.5);
 		background-color: var(--color-gray-opacity-50);
 		border-radius: var(--radius);
 		border: 1px solid var(--color-gray-200);
@@ -116,8 +113,8 @@ const Header = styled(Flex)`
 const LoginButton = styled(Button)`
 	margin-top: 32px;
 	min-width: 270px;
-	width: 100%;
 	min-height: 48px;
+	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
 	transition: background 0.15s ease-in-out;

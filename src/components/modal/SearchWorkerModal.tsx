@@ -1,9 +1,8 @@
 import { useRef, useState } from 'react';
+import { toast } from 'react-toastify';
+import { SearchInput, SearchInfo, ModalLayout } from '..';
 import { getSpecificWorker } from '../../service/workData';
 import { useLoading, useOverlayFixed } from '../../hooks';
-import { SearchInput, SearchInfo } from '..';
-import ModalLayout from './ModalLayout';
-import { toast } from 'react-toastify';
 
 export interface RecentSearch {
 	workerName: string;
