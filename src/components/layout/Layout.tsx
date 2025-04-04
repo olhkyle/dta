@@ -17,7 +17,7 @@ const Layout = () => {
 	useScrollTopEffect(pathname);
 
 	return (
-		<>
+		<Suspense fallback={<LayoutLoading type="lg" />}>
 			<Nav />
 			<Main>
 				<Suspense fallback={<LayoutLoading type="lg" />}>
@@ -29,7 +29,7 @@ const Layout = () => {
 			<StyledToastContainer position="bottom-center" autoClose={1500} closeOnClick={true} pauseOnHover={false} limit={1} />
 			{isLoggined && <OpenSearchWorkerModalButton />}
 			<ModalContainer />
-		</>
+		</Suspense>
 	);
 };
 
