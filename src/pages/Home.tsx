@@ -86,8 +86,9 @@ const Navigation = styled(NavLink)`
 	background: linear-gradient(0.25turn, var(--color-green-100), var(--color-green-400));
 	color: var(--bg-color);
 	font-size: var(--fz-p);
-	font-weight: 600;
+	font-weight: var(--fw-semibold);
 	text-align: center;
+	transition: opacity 0.15s ease-in-out;
 
 	&:hover {
 		opacity: 0.8;

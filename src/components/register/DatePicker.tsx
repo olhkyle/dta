@@ -8,16 +8,16 @@ import { ko } from 'date-fns/locale';
 import { useClickOutside, useId } from '../../hooks';
 
 interface DatePickerProps {
-	selectedDay: Date | undefined;
-	setSelectedDay: Dispatch<SetStateAction<Date | undefined>>;
+	selected: Date | undefined;
+	setSelected: (date: Date | undefined) => void | Dispatch<SetStateAction<Date>>;
 	disabled?: boolean;
 }
 
-const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePickerProps) => {
+const DatePicker = ({ selected, setSelected, disabled = false }: DatePickerProps) => {
 	const [isDatePickerActive, setIsDatePickerActive] = useState<boolean>(false);
 	const generatedId = useId('calendar-selector');
 
-	const formattedDay: string = format(selectedDay ?? new Date(), 'yyyy-MM-dd');
+	const formattedDay: string = format(selected ?? new Date(), 'yyyy-MM-dd');
 
 	const toggleDayPicker = () => setIsDatePickerActive(!isDatePickerActive);
 	const closeDayPicker = () => setIsDatePickerActive(false);
@@ -54,12 +54,12 @@ const DatePicker = ({ selectedDay, setSelectedDay, disabled = false }: DatePicke
 					defaultMonth={new Date()}
 					showOutsideDays={true}
 					locale={ko}
-					selected={selectedDay}
-					onSelect={setSelectedDay}
+					selected={selected}
+					onSelect={setSelected}
 					footer={
-						selectedDay ? (
+						selected ? (
 							<DayDescription>
-								선택한 날짜는 <strong>{format(selectedDay, 'yyyy-MM-dd')}</strong> 입니다.
+								선택한 날짜는 <strong>{format(selected, 'yyyy-MM-dd')}</strong> 입니다.
 								<button type="button" onClick={closeDayPicker}>
 									확인
 								</button>

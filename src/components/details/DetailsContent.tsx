@@ -17,7 +17,7 @@ interface DetailsContentProps {
 }
 
 const DetailsContent = ({ year, month, workerName, currentSort }: DetailsContentProps) => {
-	const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useGetWorkersDetailInfiniteQuery({
+	const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useGetWorkersDetailInfiniteQuery({
 		inOrder: currentSort,
 		year,
 		month,
@@ -30,7 +30,13 @@ const DetailsContent = ({ year, month, workerName, currentSort }: DetailsContent
 
 	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
 
-	const openModal = (data: WorkerWithId) => dispatch(open({ Component: DetailModal, props: { data, isOpen: true, refetch } }));
+	const openModal = (data: WorkerWithId) =>
+		dispatch(
+			open({
+				Component: DetailModal,
+				props: { data: { worker: data, currentSort, date: `${year}-${month}`, workerName }, isOpen: true },
+			}),
+		);
 
 	return (
 		<>

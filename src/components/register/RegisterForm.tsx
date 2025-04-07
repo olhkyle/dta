@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import styled from '@emotion/styled';
 import { Controller, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
@@ -23,7 +22,7 @@ import { sleep, unformatCurrencyUnit } from '../../utils';
 import { routes } from '../../constants';
 
 export interface Worker extends RegisterSchema {
-	workedDate: Date | any;
+	workedDate: Date | any; // technical debt
 	createdAt?: Date | any;
 }
 
@@ -38,11 +37,10 @@ const RegisterForm = () => {
 		setValue,
 		getValues,
 		control,
-	} = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema) });
+		watch,
+	} = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema), defaultValues: { workedDate: new Date() } });
 
 	const navigate = useNavigate();
-
-	const [selectedDay, setSelectedDay] = useState<Date | undefined>(new Date());
 
 	const { Loading, isLoading, startTransition } = useLoading();
 
@@ -81,14 +79,13 @@ const RegisterForm = () => {
 			await startTransition(
 				addWorker({
 					...data,
-					workedDate: selectedDay ?? new Date(),
 					payment: unformatCurrencyUnit(data.payment),
 					createdAt: new Date(),
 				}),
 			);
 
 			if (buttonId === 'register') {
-				navigate(routes.DETAILS, { state: { month: selectedDay?.getMonth() } });
+				navigate(routes.DETAILS, { state: { month: watch('workedDate')?.getMonth() } });
 			}
 
 			if (buttonId === 'additionalRegister') {
@@ -147,7 +144,13 @@ const RegisterForm = () => {
 				</Input>
 			</CustomFlex>
 
-			<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} />
+			<Controller
+				name="workedDate"
+				control={control}
+				render={({ field: { value, onChange } }) => (
+					<DatePicker selected={value} setSelected={(date: Date | undefined) => onChange(date)} />
+				)}
+			/>
 
 			<CustomFlex alignItems="flex-start" gap="16px">
 				<Input label="근로 지역" bottomText={errors?.workspace?.message}>

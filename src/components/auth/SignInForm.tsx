@@ -52,9 +52,9 @@ const SignInForm = () => {
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
 			<Header direction="row" gap="8px" margin={'0 0 16px 0'} width={'100%'}>
-				<div>
+				<Logo>
 					<img src="/nasa.svg" />
-				</div>
+				</Logo>
 			</Header>
 			<Flex direction="column" gap="16px" width="100%">
 				<Input label="이메일" bottomText={errors?.email?.message}>
@@ -92,21 +92,21 @@ const Form = styled.form`
 
 const Header = styled(Flex)`
 	width: 100%;
+`;
 
-	div {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		padding: calc(var(--padding-sm) * 1.5);
-		background-color: var(--color-gray-opacity-50);
-		border-radius: var(--radius);
-		border: 1px solid var(--color-gray-200);
+const Logo = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: calc(var(--padding-sm) * 1.5);
+	background-color: var(--color-gray-opacity-50);
+	border-radius: var(--radius);
+	border: 1px solid var(--color-gray-200);
 
-		img {
-			display: block;
-			width: 100%;
-			height: 100%;
-		}
+	img {
+		display: block;
+		width: 100%;
+		height: 100%;
 	}
 `;
 

@@ -3,12 +3,13 @@ import { auth } from '../service/firebase';
 import { useQuery } from '@tanstack/react-query';
 import useSetUser from './useSetUser';
 import { getSignedUserData } from '../service/auth';
+import { queryKey } from '../constants';
 
 const useAuthQuery = () => {
 	const { setCurrentUser, setLogoutUser } = useSetUser();
 
 	const { data, isFetched, isLoading, error, refetch } = useQuery<User | null, Error>({
-		queryKey: ['auth'],
+		queryKey: queryKey.AUTH,
 		queryFn: async (): Promise<User | null> => {
 			return new Promise<User | null>((resolve, reject) => {
 				const unsubscribe = auth.onAuthStateChanged(

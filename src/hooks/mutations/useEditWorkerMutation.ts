@@ -1,9 +1,16 @@
 import { useGenericMutation } from '.';
 import { WorkerWithId, editWorker } from '../../service/workData';
 import { edit } from '../../constants/mutateWorker';
+import { queryKey as QUERY_KEY, SortOption } from '../../constants';
 
-const useEditWorkerMutation = (id: string) => {
-	const queryKey = ['workersDetail', id];
+interface UseEditWorkerMutation {
+	currentSort: SortOption;
+	date: string;
+	workerName: string;
+}
+
+const useEditWorkerMutation = ({ currentSort, date, workerName }: UseEditWorkerMutation) => {
+	const queryKey = [...QUERY_KEY.WORKERS_DETAIL_BY_PAGE, currentSort, date, workerName];
 
 	const { mutate, isLoading } = useGenericMutation({
 		queryKey,

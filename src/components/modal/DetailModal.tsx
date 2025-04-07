@@ -23,21 +23,25 @@ import { useAppSelector } from '../../store/store';
 import { QueryRefetch } from '../../store/modalSlice';
 import { getIsAdmin } from '../../store/userSlice';
 import { unformatCurrencyUnit } from '../../utils';
+import { SortOption } from '../../constants';
 
 interface DetailModalProps {
-	data: WorkerWithId;
+	data: {
+		worker: WorkerWithId;
+		currentSort: SortOption;
+		date: string;
+		workerName: string;
+	};
 	isOpen: boolean;
 	onClose: () => void;
 	refetch: QueryRefetch;
 	order: `modal-${number}`;
 }
 
-const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailModalProps) => {
+const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, onClose, order }: DetailModalProps) => {
 	const navigate = useNavigate();
 	const isAdmin = useAppSelector(getIsAdmin);
-
 	const [isEditMode, setIsEditMode] = useState(false);
-	const [selectedDay, setSelectedDay] = useState<Date | undefined>();
 
 	const {
 		register,
@@ -45,9 +49,9 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 		control,
 		formState: { errors },
 		setValue,
+		watch,
 	} = useForm<RegisterSchema>({
 		resolver: zodResolver(registerSchema),
-		mode: 'onSubmit',
 		defaultValues: {
 			workerName: worker.workerName,
 			registrationNumberFront: worker.registrationNumberFront,
@@ -57,17 +61,18 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 			remittanceType: worker.remittanceType,
 			payment: worker.payment,
 			memo: worker.memo,
+			workedDate: worker.workedDate,
 		},
 	});
 
-	const { mutate: editMutate, isLoading: isEditMutateLoading } = useEditWorkerMutation(worker.id);
-	const { mutate: removeMutate, isLoading: isRemoveMutateLoading } = useRemoveWorkerMutation(worker.id);
+	const { mutate: editMutate, isLoading: isEditMutateLoading } = useEditWorkerMutation({ currentSort, date, workerName });
+	const { mutate: removeMutate, isLoading: isRemoveMutateLoading } = useRemoveWorkerMutation({ currentSort, date, workerName });
 
 	useOverlayFixed(isOpen);
 
 	useEffect(() => {
 		if (worker?.workedDate) {
-			setSelectedDay(worker.workedDate);
+			setValue('workedDate', worker.workedDate);
 		}
 	}, [worker]);
 
@@ -87,7 +92,7 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 			setValue('remittanceType', worker.remittanceType);
 			setValue('payment', worker.payment);
 			setValue('memo', worker.memo);
-			setSelectedDay(worker.workedDate);
+			setValue('workedDate', worker.workedDate);
 		}
 
 		setIsEditMode(prev => !prev);
@@ -105,7 +110,6 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 				onSuccess: () => {
 					toast.success('성공적으로 삭제 되었습니다.');
 					onClose();
-					refetch();
 				},
 				onError: e => {
 					console.error(e);
@@ -121,15 +125,14 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 			return;
 		}
 
-		if (!selectedDay) {
-			toast.error('작업일자를 선택해 주세요');
+		if (!watch('workedDate')) {
+			toast.error('작업 일자를 선택해 주세요');
 			return;
 		}
 
 		editMutate(
 			{
 				id: worker.id,
-				workedDate: selectedDay,
 				...fields,
 				payment: unformatCurrencyUnit(fields.payment),
 			},
@@ -137,7 +140,6 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 				onSuccess: () => {
 					toast.success('성공적으로 수정되었습니다.');
 					onClose();
-					refetch();
 				},
 				onError: e => {
 					console.error(e);
@@ -207,7 +209,13 @@ const DetailModal = ({ data: worker, isOpen, onClose, refetch, order }: DetailMo
 							)}
 						</CustomFlex>
 
-						<DatePicker selectedDay={selectedDay} setSelectedDay={setSelectedDay} disabled={!isEditMode} />
+						<Controller
+							name="workedDate"
+							control={control}
+							render={({ field: { value, onChange } }) => (
+								<DatePicker selected={value} setSelected={(date: Date | undefined) => onChange(date)} disabled={!isEditMode} />
+							)}
+						/>
 
 						<CustomFlex alignItems="flex-start" gap="16px">
 							<Input label="근로 지역" bottomText={errors?.workspace?.message}>
