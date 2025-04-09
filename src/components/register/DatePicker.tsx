@@ -22,7 +22,7 @@ const DatePicker = ({ selected, setSelected, disabled = false }: DatePickerProps
 	const toggleDayPicker = () => setIsDatePickerActive(!isDatePickerActive);
 	const closeDayPicker = () => setIsDatePickerActive(false);
 
-	const containerRef = useClickOutside(closeDayPicker);
+	const containerRef = useClickOutside<HTMLDivElement>(closeDayPicker);
 
 	return (
 		<Container ref={containerRef}>

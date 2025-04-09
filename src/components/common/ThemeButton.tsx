@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { HiSun, HiMoon } from 'react-icons/hi';
 import { useTheme } from '../../hooks';
+import Flex from './Flex';
 
 const ThemeButton = () => {
 	const [, toggleTheme] = useTheme();
@@ -8,11 +9,11 @@ const ThemeButton = () => {
 	return (
 		<Container onClick={toggleTheme} aria-label="theme-toggle-button">
 			<Switch />
-			<BtnEmojis>
-				<IconWrapper>
+			<BtnEmojis height={'100%'}>
+				<IconWrapper justifyContent={'center'} alignItems={'center'} width={'50%'}>
 					<HiSun size="20" color="var(--color-dark)" />
 				</IconWrapper>
-				<IconWrapper>
+				<IconWrapper justifyContent={'center'} alignItems={'center'} width={'50%'}>
 					<HiMoon size="20" />
 				</IconWrapper>
 			</BtnEmojis>
@@ -34,27 +35,21 @@ const Switch = styled.div`
 	width: 22px;
 	height: 22px;
 	background-color: var(--color-white);
-	border-radius: 100%;
+	border-radius: var(--radius-extra);
 	transition: left calc(var(--transition-duration) * 1s);
 	outline: 3px solid var(--color-green-50);
 `;
 
-const BtnEmojis = styled.div`
-	display: flex;
-	height: 100%;
+const BtnEmojis = styled(Flex)`
 	background-color: var(--btn-bg-color);
 	border-radius: 25px;
 	box-shadow: 2px 2px 5px 0 rgba(50, 50, 50, 0.25);
 	transition: background-color calc(var(--transition-duration) * 1s);
 `;
 
-const IconWrapper = styled.div`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 50%;
+const IconWrapper = styled(Flex)`
 	text-align: center;
-	color: #fff;
+	color: var(--color-white);
 `;
 
 export default ThemeButton;

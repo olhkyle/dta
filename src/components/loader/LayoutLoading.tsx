@@ -35,7 +35,7 @@ const LoadingSvg = ({ type = 'md' }: LoadingSvgProps) => (
 
 const LayoutLoading = ({ type = 'md' }: LoadingProps) => {
 	return (
-		<Flex margin="0 auto" width={'100dvw'} height={'calc(100dvh - var(--nav-height) - var(--footer-height))'}>
+		<Flex margin={'0 auto'} width={'100dvw'} height={'calc(100dvh - var(--nav-height) - var(--footer-height))'}>
 			<LoadingSvg type={type} />
 		</Flex>
 	);

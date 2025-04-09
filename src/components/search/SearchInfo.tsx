@@ -18,7 +18,7 @@ const SearchInfo = ({ recentSearchList, loader, isLoading }: SearchInfoProps) =>
 			margin={'0 auto'}
 			padding={'var(--padding-md)'}
 			width={'100%'}>
-			<Text typo="h6" color="var(--text-color)">
+			<Text typo={'h6'} color={'var(--text-color)'}>
 				💿 최근 검색 내역
 			</Text>
 			<RecentSearchList>
@@ -56,7 +56,7 @@ const RecentSearchList = styled.ul`
 	flex-direction: column;
 	justify-content: center;
 	margin: 8px auto 0;
-	padding: 24px 16px;
+	padding: calc(var(--padding-md) * 1.5) var(--padding-md);
 	width: 100%;
 	border-radius: var(--radius);
 
@@ -64,7 +64,7 @@ const RecentSearchList = styled.ul`
 		display: inline-flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 8px 0;
+		padding: var(--padding-sm) 0;
 		font-size: var(--fz-rp);
 		border-bottom: 1px solid var(--table-border-color);
 	}
@@ -79,7 +79,7 @@ const RecentSearchList = styled.ul`
 `;
 
 const EmptyMessage = styled.div`
-	padding: 8px;
+	padding: var(--padding-sm);
 	background-color: var(--option-hover-bg-color);
 	border-radius: var(--radius);
 `;

@@ -9,7 +9,7 @@ import {
 	OverviewSegmentedControlLoader,
 	OverviewSumOfPaymentLoader,
 } from '..';
-import { monthOfToday, months, SortOption, yearOfToday, years } from '../../constants';
+import { displayType, type DisplayValues, monthOfToday, months, SortOption, yearOfToday, years } from '../../constants';
 
 interface OverviewControllerProps {
 	year: number;
@@ -19,8 +19,8 @@ interface OverviewControllerProps {
 	workerName: string;
 	currentSort: SortOption;
 	setCurrentSort: Dispatch<SetStateAction<SortOption>>;
-	currentDisplayType: '목록' | '차트';
-	setCurrentDisplayType: Dispatch<SetStateAction<'목록' | '차트'>>;
+	currentDisplayType: DisplayValues;
+	setCurrentDisplayType: Dispatch<SetStateAction<DisplayValues>>;
 }
 
 const OverviewController = ({
@@ -36,7 +36,7 @@ const OverviewController = ({
 }: OverviewControllerProps) => {
 	return (
 		<CustomFlex margin={'32px 0'} gap={'16px'}>
-			<SegmentedControl data={['목록', '차트']} value={currentDisplayType} setValue={setCurrentDisplayType} />
+			<SegmentedControl data={Object.values(displayType)} value={currentDisplayType} setValue={setCurrentDisplayType} />
 			<SearchFilters direction={'column'} justifyContent={'space-between'} gap={'16px'} width={'100%'}>
 				<Flex gap={'16px'} alignItems={'center'} margin={'0 auto 0 0'}>
 					<Suspense fallback={<OverviewSegmentedControlLoader />}>
@@ -48,12 +48,12 @@ const OverviewController = ({
 							setCurrentSort={setCurrentSort}
 						/>
 					</Suspense>
-					<CustomSelect data={years} value={year} setValue={setYear} unit="년" />
+					<CustomSelect data={years} value={year} setValue={setYear} unit={'년'} />
 					<CustomSelect
 						data={yearOfToday === year ? months.filter(month => month <= monthOfToday) : months}
 						value={yearOfToday === year && month > monthOfToday ? monthOfToday : month}
 						setValue={setMonth}
-						unit="월"
+						unit={'월'}
 					/>
 				</Flex>
 				<Flex justifyContent={'flex-end'} margin={'16px 0 0 auto'}>

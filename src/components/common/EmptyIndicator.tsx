@@ -1,22 +1,28 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
+import Flex from './Flex';
 
 interface EmptyIndicatorProps {
-	children: ReactNode;
+	decoration: ReactNode;
+	label: string;
 }
 
-const EmptyIndicator = ({ children }: EmptyIndicatorProps) => {
-	return <Container>{children}</Container>;
+const EmptyIndicator = ({ decoration, label }: EmptyIndicatorProps) => {
+	return (
+		<Container
+			direction={'column'}
+			justifyContent={'center'}
+			alignItems={'center'}
+			gap={'var(--padding-sm)'}
+			margin={'80px auto'}
+			padding={'calc(var(--padding-md) * 4) calc(var(--padding-md) * 2)'}>
+			<Decoration>{decoration}</Decoration>
+			<Label>{label}</Label>
+		</Container>
+	);
 };
 
-const Container = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	align-items: center;
-	gap: var(--padding-sm);
-	margin: 80px auto;
-	padding: 64px 32px;
+const Container = styled(Flex)`
 	min-height: 320px;
 	font-size: var(--fz-rp);
 	font-weight: var(--fw-semibold);
@@ -24,15 +30,23 @@ const Container = styled.div`
 	border-radius: var(--radius);
 	outline: 1px solid var(--color-gray-200);
 
-	p {
-		margin-top: 16px;
-		font-size: var(--fz-p);
-		color: var(--color-gray-500);
-	}
-
 	@media screen and (min-width: 640px) {
 		font-size: var(--fz-h6);
 	}
+`;
+
+const Decoration = styled.div`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-width: 60px;
+	font-size: 48px;
+`;
+
+const Label = styled.p`
+	margin-top: 16px;
+	font-size: var(--fz-p);
+	color: var(--color-gray-500);
 `;
 
 export default EmptyIndicator;

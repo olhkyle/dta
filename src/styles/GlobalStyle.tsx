@@ -59,6 +59,7 @@ const GlobalStyle = css`
 		--transition-duration: 0.2;
 
 		--radius: 8px;
+		--radius-extra: 9999px;
 
 		--nav-height: 80px;
 		--footer-height: 60px;

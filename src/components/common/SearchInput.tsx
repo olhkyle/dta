@@ -16,7 +16,15 @@ interface SearchInputProps {
 const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 	({ value, setValue, clearValue, onKeyDown, onSearchButtonClick }, ref) => {
 		return (
-			<Container justifyContent="space-between" alignItems="center" gap="16px" role="search">
+			<Container
+				role="search"
+				justifyContent={'space-between'}
+				alignItems={'center'}
+				gap={'16px'}
+				margin={' 48px auto 64px'}
+				padding={'var(--padding-md) var(--padding-sm) 0'}
+				maxWidth={'960px'}
+				width={'100%'}>
 				<Input
 					type="text"
 					placeholder="이름을 입력해 주세요."
@@ -48,10 +56,6 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 );
 
 const Container = styled(Flex)`
-	margin: 48px auto 64px;
-	padding: var(--padding-md) var(--padding-sm) 0;
-	max-width: 960px;
-	width: 100%;
 	border-bottom: 5px solid var(--outline-color);
 
 	&:focus-within {
@@ -59,6 +63,7 @@ const Container = styled(Flex)`
 	}
 
 	@media screen and (max-width: 640px) {
+		gap: 8px;
 		padding: var(--padding-sm) var(--padding-sm) var(--padding-md) var(--padding-md);
 		max-width: 360px;
 	}
@@ -71,6 +76,7 @@ const Container = styled(Flex)`
 
 const Input = styled.input`
 	width: 100%;
+	min-height: 45px;
 	font-size: var(--fz-h5);
 	font-weight: var(--fw-black);
 	border: none;
@@ -86,9 +92,9 @@ const Input = styled.input`
 const RefreshButton = styled(Button)`
 	display: inline-flex;
 	align-items: center;
-	padding: calc(var(--padding-sm) * 0.5) var(--padding-sm);
+	padding: var(--padding-sm);
 	font-size: 27px;
-	border-radius: 9999px;
+	border-radius: var(--radius-extra);
 
 	&:hover {
 		background-color: var(--outline-color);

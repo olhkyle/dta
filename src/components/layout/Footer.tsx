@@ -43,7 +43,7 @@ const MadeBy = styled(Link)`
 	}
 
 	@media screen and (min-width: 640px) {
-		font-size: 16px;
+		font-size: var(--fz-rp);
 	}
 `;
 

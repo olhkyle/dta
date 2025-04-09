@@ -2,7 +2,7 @@ import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
 import { LayoutLoading, OverviewControllerLoader, SearchInput } from '../components';
 import { useDebounce } from '../hooks';
-import { monthOfToday, yearOfToday, SortOption } from '../constants';
+import { type DisplayValues, monthOfToday, yearOfToday, SortOption, displayType } from '../constants';
 import { OverviewContent, OverviewController } from '../components';
 
 const OverViewPage = () => {
@@ -12,7 +12,7 @@ const OverViewPage = () => {
 	const [year, setYear] = useState(yearOfToday);
 	const [month, setMonth] = useState(monthOfToday);
 	const [currentSort, setCurrentSort] = useState<SortOption>('asc');
-	const [currentDisplayType, setCurrentDisplayType] = useState<'목록' | '차트'>('목록');
+	const [currentDisplayType, setCurrentDisplayType] = useState<DisplayValues>(displayType.LIST);
 
 	return (
 		<Container>

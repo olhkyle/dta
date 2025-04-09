@@ -4,7 +4,7 @@ interface CircleProps {
 }
 
 const Circle = ({ size, bgColor }: CircleProps) => {
-	return <div css={{ width: `${size}px`, height: `${size}px`, backgroundColor: bgColor, borderRadius: '9999px' }} />;
+	return <div css={{ width: `${size}px`, height: `${size}px`, backgroundColor: bgColor, borderRadius: 'var(--radius-extra)' }} />;
 };
 
 export default Circle;

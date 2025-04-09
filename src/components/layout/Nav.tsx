@@ -1,3 +1,4 @@
+import logoImage from '../../assets/dta.webp';
 import styled from '@emotion/styled';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
@@ -25,6 +26,8 @@ const Nav = () => {
 
 	const { Loading, isLoading, startTransition } = useLoading();
 
+	useScrollTopEffect(active);
+
 	const handleLogout = async () => {
 		try {
 			await startTransition(logOut());
@@ -39,19 +42,17 @@ const Nav = () => {
 		}
 	};
 
-	useScrollTopEffect(active);
-
 	return (
 		<>
 			<Container isAdmin={isAdmin}>
-				<Group>
+				<Group justifyContent={'space-between'} gap={'16px'} margin={'0 auto'} maxWidth={'1280px'}>
 					<Logo to={routes.OVERVIEW} onClick={close} aria-label="logo">
 						<h1 className="underlined">
-							<img src="./dta.png" alt="logo" />
+							<img src={logoImage} alt="logo" />
 						</h1>
 					</Logo>
-					<NavLinkContainer>
-						<Flex justifyContent="space-between" gap="4px">
+					<NavLinkContainer justifyContent={'space-between'} alignItems={'center'} gap={'48px'} margin={'0.4rem 0 0'}>
+						<Flex justifyContent={'space-between'} gap={'4px'}>
 							{isAdmin && <Navigation to={routes.OVERVIEW}>월별 개요</Navigation>}
 							{isAdmin && <Navigation to={routes.DETAILS}>월별 상세</Navigation>}
 							{isAdmin && <Navigation to={routes.REGISTER}>일용직 등록</Navigation>}
@@ -83,12 +84,7 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 	z-index: var(--nav-index);
 `;
 
-const Group = styled.div`
-	display: flex;
-	justify-content: space-between;
-	gap: 16px;
-	margin: 0 auto;
-	max-width: 1280px;
+const Group = styled(Flex)`
 	min-height: var(--nav-height);
 
 	@media screen and (min-width: 640px) {
@@ -118,12 +114,8 @@ const Logo = styled(Link)`
 	}
 `;
 
-const NavLinkContainer = styled.div`
+const NavLinkContainer = styled(Flex)`
 	display: none;
-	justify-content: space-between;
-	align-items: center;
-	gap: 48px;
-	margin: 0.4rem 0 0;
 
 	@media screen and (min-width: 768px) {
 		display: flex;
@@ -172,9 +164,8 @@ const Overlay = styled.div<{ isShown: boolean }>`
 	height: ${({ isShown }) => (isShown ? '100%' : '0')};
 	backdrop-filter: blur(4px);
 	opacity: ${({ isShown }) => (isShown ? '100%' : '0')};
-	transition: opacity 0.3s cubic-bezier(0.4, 0, 0.4, 1);
-
 	z-index: calc(var(--nav-index) - 10);
+	transition: opacity 0.3s cubic-bezier(0.4, 0, 0.4, 1);
 `;
 
 export default Nav;

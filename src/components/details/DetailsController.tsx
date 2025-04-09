@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction, Suspense } from 'react';
-import styled from '@emotion/styled';
 import {
 	CustomSelect,
 	DetailsSegmentedControl,
@@ -23,10 +22,12 @@ interface DetailsControllerProps {
 }
 
 const DetailsController = ({ year, setYear, month, setMonth, workerName, currentSort, setCurrentControl }: DetailsControllerProps) => {
+	console.log(months.filter(month => month <= monthOfToday));
+	console.log(months);
 	return (
-		<SearchFilters>
-			<Flex justifyContent="space-between">
-				<Flex gap="16px">
+		<Flex direction={'column'} justifyContent={'space-between'} alignItems={'flex-start'} width={'100%'}>
+			<Flex justifyContent={'space-between'} width={'100%'}>
+				<Flex gap={'16px'}>
 					<Suspense fallback={<DetailsSegmentedControlLoader />}>
 						<DetailsSegmentedControl
 							year={year}
@@ -36,31 +37,25 @@ const DetailsController = ({ year, setYear, month, setMonth, workerName, current
 							setCurrentControl={setCurrentControl}
 						/>
 					</Suspense>
-					<CustomSelect data={years} value={year} setValue={setYear} unit="년" />
+					<CustomSelect data={years} value={year} setValue={setYear} unit={'년'} />
 					<CustomSelect
 						data={yearOfToday === year ? months.filter(month => month <= monthOfToday) : months}
-						value={month}
+						value={yearOfToday === year && month > monthOfToday ? monthOfToday : month}
 						setValue={setMonth}
-						unit="월"
+						unit={'월'}
 					/>
 				</Flex>
 				<Suspense fallback={<DetailsPrintButtonLoader />}>
 					<DetailsPrintButton year={year} month={month} workerName={workerName} currentSort={currentSort} />
 				</Suspense>
 			</Flex>
-			<Flex justifyContent="flex-end" margin="36px 0 18px">
+			<Flex justifyContent={'flex-end'} margin={'36px 0 18px'} width={'100%'}>
 				<Suspense fallback={<DetailsSumOfPaymentLoader />}>
 					<DetailsSumOfPayment year={year} month={month} workerName={workerName} currentSort={currentSort} />
 				</Suspense>
 			</Flex>
-		</SearchFilters>
+		</Flex>
 	);
 };
-
-const SearchFilters = styled.div`
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-`;
 
 export default DetailsController;

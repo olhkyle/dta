@@ -22,7 +22,7 @@ const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 		actions: { close },
 	} = useSideNavActive();
 
-	const ref = useClickOutside(() => setIsProfileClicked(false));
+	const ref = useClickOutside<HTMLDivElement>(() => setIsProfileClicked(false));
 
 	const isDesktop = useMediaQuery('(min-width: 768px)');
 
@@ -34,7 +34,7 @@ const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 
 	return (
 		<Container isShown={isShown}>
-			<Flex direction="column" justifyContent="space-between">
+			<Flex direction={'column'} justifyContent={'space-between'}>
 				{isAdmin && (
 					<Navigation to={routes.OVERVIEW} onClick={close}>
 						월별 개요 명세
@@ -51,14 +51,14 @@ const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 					</Navigation>
 				)}
 			</Flex>
-			<Flex justifyContent="space-between" margin="18px 0" padding="0 24px">
+			<Flex justifyContent={'space-between'} margin={'18px 0'} padding={'0 calc(var(--padding-md) * 1.5)'}>
 				{name ? (
 					<Name
 						ref={ref}
 						onClick={() => {
 							setIsProfileClicked(!isProfileClicked);
 						}}>
-						<Text typo="h7" color="var(--text-color)">
+						<Text typo={'h7'} color={'var(--text-color)'}>
 							👨‍🚀 {name}
 						</Text>
 						{isProfileClicked && (
@@ -156,18 +156,14 @@ const LogoutButton = styled(Button)`
 	border-radius: 8px;
 	border: 1px solid var(--table-border-color);
 	text-align: center;
+	transition: font-weight 0.15s ease-in-out;
 
 	&:hover {
-		color: var(--color-green-300);
-	}
-
-	@media screen and (min-width: 640px) {
-		padding: var(--btn-lg-padding);
-		font-size: var(--fz-h7);
+		font-weight: var(--fw-semibold);
 	}
 
 	@media screen and (min-width: 768px) {
-		padding: var(--btn-md-padding);
+		font-size: var(--fz-h7);
 	}
 `;
 

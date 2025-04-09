@@ -72,7 +72,7 @@ const About = styled.div`
 		width: 24px;
 		height: 24px;
 		background-color: var(--color-dark);
-		border-radius: 9999px;
+		border-radius: var(--radius-extra);
 	}
 
 	@media screen and (min-width: 640px) {

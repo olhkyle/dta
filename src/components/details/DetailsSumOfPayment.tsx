@@ -19,7 +19,7 @@ const DetailsSumOfPayment = ({ year, month, workerName, currentSort }: DetailsSu
 	});
 
 	return (
-		<Badge label="총 합계" bgColor="var(--text-color)">
+		<Badge label={'총 합계'} bgColor={'var(--text-color)'}>
 			{formatCurrencyUnit(data?.pages[0].totalPayment)}
 		</Badge>
 	);

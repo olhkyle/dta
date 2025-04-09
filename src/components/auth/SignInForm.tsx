@@ -51,23 +51,18 @@ const SignInForm = () => {
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
-			<Header direction="row" gap="8px" margin={'0 0 16px 0'} width={'100%'}>
+			<Header direction={'row'} gap={'8px'} margin={'0 0 16px'} width={'100%'}>
 				<Logo>
 					<img src="/nasa.svg" />
 				</Logo>
 			</Header>
-			<Flex direction="column" gap="16px" width="100%">
-				<Input label="이메일" bottomText={errors?.email?.message}>
-					<Input.TextField type="text" placeholder="이메일을 입력해 주세요." {...register('email')} error={errors?.email?.message} />
+			<Flex direction={'column'} gap={'16px'} width={'100%'}>
+				<Input label={'이메일'} bottomText={errors?.email?.message}>
+					<Input.TextField type="text" placeholder="example@email.com" {...register('email')} error={errors?.email?.message} />
 				</Input>
 
-				<Input label="비밀번호" bottomText={errors?.password?.message}>
-					<Input.TextField
-						type="password"
-						placeholder="비밀번호를 입력해 주세요."
-						{...register('password')}
-						error={errors?.password?.message}
-					/>
+				<Input label={'비밀번호'} bottomText={errors?.password?.message}>
+					<Input.TextField type="password" placeholder="********" {...register('password')} error={errors?.password?.message} />
 				</Input>
 			</Flex>
 			<LoginButton type="submit">{isLoading ? <Loading /> : '로그인'}</LoginButton>
@@ -75,7 +70,6 @@ const SignInForm = () => {
 			<Text typo="sm" color="var(--text-color)">
 				서비스 이용을 위해 로그인이 필요합니다.
 			</Text>
-			<Spacer size={300} />
 		</Form>
 	);
 };
@@ -85,9 +79,13 @@ const Form = styled.form`
 	flex-direction: column;
 	align-items: center;
 	margin: 0 auto;
-	padding: 10em var(--padding-md) 0;
+	padding: 5em var(--padding-md) 0;
 	max-width: 360px;
 	width: 100%;
+
+	@media screen and (min-width: 640px) {
+		padding-top: 10em;
+	}
 `;
 
 const Header = styled(Flex)`
@@ -98,7 +96,7 @@ const Logo = styled.div`
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: calc(var(--padding-sm) * 1.5);
+	padding: calc(var(--padding-sm) * 1.2);
 	background-color: var(--color-gray-opacity-50);
 	border-radius: var(--radius);
 	border: 1px solid var(--color-gray-200);

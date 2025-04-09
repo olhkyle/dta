@@ -1,7 +1,5 @@
-import styled from '@emotion/styled';
-
 const SmallLoading = () => (
-	<Svg
+	<svg
 		xmlns="http://www.w3.org/2000/svg"
 		xmlnsXlink="http://www.w3.org/1999/xlink"
 		css={{
@@ -9,6 +7,8 @@ const SmallLoading = () => (
 			background: 'none',
 			display: 'block',
 			shapeRendering: 'auto',
+			width: '18px',
+			height: '18px',
 		}}
 		viewBox="0 0 100 100"
 		preserveAspectRatio="xMidYMid">
@@ -22,12 +22,7 @@ const SmallLoading = () => (
 				keyTimes="0;1"
 			/>
 		</circle>
-	</Svg>
+	</svg>
 );
-
-const Svg = styled.svg`
-	width: 18px;
-	height: 18px;
-`;
 
 export default SmallLoading;

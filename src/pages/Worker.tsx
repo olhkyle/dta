@@ -103,9 +103,7 @@ const Container = styled.section`
 
 const ProfileContainer = styled.div`
 	position: relative;
-	margin-left: auto;
-	margin-top: 32px;
-	margin-bottom: 64px;
+	margin: 32px 0 64px auto;
 	padding: var(--btn-md-padding);
 	width: 40dvw;
 	border: 1px solid var(--color-gray-300);

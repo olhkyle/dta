@@ -23,7 +23,7 @@ const PrintPage = () => {
 		<Container>
 			<Flex justifyContent="space-between" margin="0 0 32px 0" width="100%">
 				<GoBackButton type="button" onClick={() => navigate(routes.DETAILS, { state: { year, month: month - 1 } })}>
-					<BsArrowLeftCircle size="24" color="var(--color-gray-600)" />
+					<BsArrowLeftCircle size="24" color="var(--color-gray-500)" />
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="16px">
@@ -64,27 +64,27 @@ const GoBackButton = styled(Button)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	gap: 0.5rem;
+	gap: 8px;
 	font-weight: 700;
 	font-size: 15px;
-	color: var(--color-gray-600);
+	color: var(--color-gray-500);
 	background-color: var(--color-gray-opacity-100);
 	outline: 1px solid var(--color-white);
-	border-radius: 9999px;
+	border-radius: var(--radius-extra);
 	transition: all 0.3s ease-in-out 0.15s;
 
 	&:hover {
-		outline: 2px solid #3a3d4a;
+		outline: 1px solid #c4c4c4;
 		outline-offset: 2px;
 	}
 `;
 
 const PrintButton = styled(Button)<{ disabled: boolean }>`
-	font-weight: 700;
+	font-weight: var(--fw-bold);
 	color: #fff;
 	background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-50)')};
-	border-radius: ${({ disabled }) => (disabled ? '8px' : '9999px')};
-	transition: all 0.3s ease-in-out 0.15s;
+	border-radius: ${({ disabled }) => (disabled ? 'var(--radius)' : 'var(--radius-extra)')};
+	transition: background 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-200)')};

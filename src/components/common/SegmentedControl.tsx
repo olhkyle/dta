@@ -4,6 +4,7 @@ import { RiLineChartFill } from 'react-icons/ri';
 import { RxTable } from 'react-icons/rx';
 import { toast } from 'react-toastify';
 import { useMediaQuery } from '../../hooks';
+import { control, controls, displayType } from '../../constants';
 
 interface SegmentedControlProps<T extends string> {
 	data: T[];
@@ -16,14 +17,14 @@ const SegmentedControl = <T extends string>({ data, value: currentPosition, setV
 	const isTablet = useMediaQuery('(max-width: 768px');
 
 	const dataDisplayType = (item: T) =>
-		item === '목록' ? (
+		item === displayType.LIST ? (
 			<RxTable size={isTablet ? '24' : '27'} />
-		) : item === '차트' ? (
+		) : item === displayType.CHART ? (
 			<RiLineChartFill size={isTablet ? '24' : '27'} />
-		) : item === 'asc' ? (
-			'오래된 순'
+		) : item === controls[0] ? (
+			control['asc']
 		) : (
-			'최신 순'
+			control['desc']
 		);
 
 	return (
@@ -36,7 +37,6 @@ const SegmentedControl = <T extends string>({ data, value: currentPosition, setV
 						if (!hasData) {
 							return toast.warn('정렬할 데이터가 없습니다.');
 						}
-
 						setValue(item);
 					}}>
 					{dataDisplayType(item)}

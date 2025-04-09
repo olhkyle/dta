@@ -167,31 +167,31 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 				</ActionButtons>
 				<Group aria-disabled={isEditMode}>
 					<Form onSubmit={handleSubmit(onSubmit)}>
-						<Input label="성 명" bottomText={errors?.workerName?.message}>
+						<Input label={'성 명'} bottomText={errors?.workerName?.message}>
 							<Input.TextField
-								type="text"
-								placeholder="이름을 입력하세요"
+								type={'text'}
+								placeholder={'이름을 입력하세요'}
 								{...register('workerName')}
 								error={errors?.workerName?.message}
 								disabled={!isEditMode}
 							/>
 						</Input>
-						<CustomFlex alignItems="flex-start" gap="16px">
+						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
 							{isAdmin ? (
 								<>
-									<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
+									<Input label={'주민등록번호 앞 자리'} bottomText={errors?.registrationNumberFront?.message}>
 										<Input.TextField
-											type="text"
-											placeholder="주민등록번호 앞 6자리"
+											type={'text'}
+											placeholder={'주민등록번호 앞 6자리'}
 											{...register('registrationNumberFront')}
 											error={errors?.registrationNumberFront?.message}
 											disabled={!isEditMode}
 										/>
 									</Input>
-									<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
+									<Input label={'주민등록번호 뒷 자리'} bottomText={errors?.registrationNumberBack?.message}>
 										<Input.TextField
-											type="text"
-											placeholder="주민등록번호 뒤 7자리"
+											type={'text'}
+											placeholder={'주민등록번호 뒤 7자리'}
 											{...register('registrationNumberBack')}
 											error={errors?.registrationNumberBack?.message}
 											disabled={!isEditMode}
@@ -199,9 +199,9 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 									</Input>
 								</>
 							) : (
-								<Flex direction="column" alignItems="flex-start" gap="8px">
-									<div css={{ fontSize: '17px', fontWeight: 'var(--fw-medium)' }}>주민등록번호</div>
-									<CustomFlex gap="16px">
+								<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'}>
+									<div css={{ fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-medium)' }}>주민등록번호</div>
+									<CustomFlex gap={'16px'}>
 										<Confidential>Classified</Confidential>
 										<Confidential>Classified</Confidential>
 									</CustomFlex>
@@ -217,20 +217,20 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 							)}
 						/>
 
-						<CustomFlex alignItems="flex-start" gap="16px">
-							<Input label="근로 지역" bottomText={errors?.workspace?.message}>
+						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+							<Input label={'근로 지역'} bottomText={errors?.workspace?.message}>
 								<Input.TextField
-									type="text"
-									placeholder="작업 공간 이름"
+									type={'text'}
+									placeholder={'작업 공간 이름'}
 									{...register('workspace')}
 									error={errors?.workspace?.message}
 									disabled={!isEditMode}
 								/>
 							</Input>
-							<Input label="사업개시번호" bottomText={errors?.businessNumber?.message}>
+							<Input label={'사업개시번호'} bottomText={errors?.businessNumber?.message}>
 								<Input.TextField
-									type="text"
-									placeholder="000-00-00000-0"
+									type={'text'}
+									placeholder={'000-00-00000-0'}
 									{...register('businessNumber')}
 									error={errors?.businessNumber?.message}
 									disabled={!isEditMode}
@@ -238,10 +238,11 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 							</Input>
 						</CustomFlex>
 
-						<CustomFlex alignItems="flex-start" gap="16px">
-							<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
+						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+							<NativeSelect label={'송금 유형'} bottomText={errors?.remittanceType?.message}>
 								<NativeSelect.Field
-									id="송금 유형"
+									data={['개인', '사업자']}
+									id={'송금 유형'}
 									{...register('remittanceType')}
 									error={errors?.remittanceType?.message}
 									disabled={!isEditMode}
@@ -251,10 +252,10 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 								name="payment"
 								control={control}
 								render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
-									<Input label="지급 금액" bottomText={error?.message} rightText="원">
+									<Input label={'지급 금액'} bottomText={error?.message} rightText={'원'}>
 										<Input.ControlledTextField
-											type="text"
-											placeholder="지급 금액"
+											type={'text'}
+											placeholder={'지급 금액'}
 											name={name}
 											value={
 												value
@@ -273,10 +274,10 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 								)}
 							/>
 						</CustomFlex>
-						<Input label="메모/기타" bottomText={errors?.memo?.message}>
+						<Input label={'메모/기타'} bottomText={errors?.memo?.message}>
 							<Input.TextField
-								type="text"
-								placeholder="기타 필요한 사항을 기입하세요."
+								type={'text'}
+								placeholder={'기타 필요한 사항을 기입하세요.'}
 								{...register('memo')}
 								error={errors?.memo?.message}
 								disabled={!isEditMode}
@@ -287,7 +288,7 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 								{isEditMutateLoading ? <SmallLoading /> : '수정하기'}
 							</UpdateButton>
 						)}
-						<Flex direction="column" margin="32px 0" width="100%">
+						<Flex direction={'column'} margin={'32px 0'} width={'100%'}>
 							<Text color="var(--btn-hover-color)">
 								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
 							</Text>

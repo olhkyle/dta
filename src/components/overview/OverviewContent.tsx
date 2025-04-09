@@ -4,9 +4,8 @@ import { Bar } from 'react-chartjs-2';
 import { BsBoxSeam } from 'react-icons/bs';
 import { EmptyIndicator, Flex, HighlightText } from '..';
 import { useGetWorkersOverviewQuery, useTheme } from '../../hooks';
-import { getBarChartData, getBarChartOptions, SortOption } from '../../constants';
+import { type DisplayValues, displayType, getBarChartData, getBarChartOptions, SortOption } from '../../constants';
 import { sortWorkerData } from '../../service/utils';
-
 import { formatCurrencyUnit } from '../../utils';
 
 interface OverviewContentProps {
@@ -14,7 +13,7 @@ interface OverviewContentProps {
 	month: number;
 	workerName: string;
 	currentSort: SortOption;
-	currentDisplayType: '목록' | '차트';
+	currentDisplayType: DisplayValues;
 }
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -34,11 +33,8 @@ const OverviewContent = ({ year, month, workerName, currentSort, currentDisplayT
 	return (
 		<>
 			{data?.workers.length === 0 ? (
-				<EmptyIndicator>
-					<BsBoxSeam size={60} color="var(--color-gray-500)" />
-					<p>해당 월에는 작업한 일용직이 없습니다</p>
-				</EmptyIndicator>
-			) : currentDisplayType === '목록' ? (
+				<EmptyIndicator decoration={<BsBoxSeam size={60} color="var(--color-gray-500)" />} label={'해당 월에는 작업한 일용직이 없습니다'} />
+			) : currentDisplayType === displayType.LIST ? (
 				<Table>
 					<thead>
 						<tr>
@@ -64,10 +60,10 @@ const OverviewContent = ({ year, month, workerName, currentSort, currentDisplayT
 					</tbody>
 				</Table>
 			) : (
-				<Flex direction="column" margin="48px 0">
+				<Flex direction={'column'} margin={'48px 0'}>
 					<Bar data={chartData} options={chartOptions} />
-					<ResponsiveFlex justifyContent="flex-end" margin="32px 0">
-						<HighlightText color="var(--bg-color)" bgColor="var(--text-color)" fontSize="var(--fz-sm)">
+					<ResponsiveFlex justifyContent={'flex-end'} margin={'32px 0'}>
+						<HighlightText color={'var(--bg-color)'} bgColor={'var(--text-color)'} fontSize={'var(--fz-sm)'}>
 							💡 현재 화면 사이즈에서는 차트의 정확한 데이터를 파악하기 어렵습니다
 						</HighlightText>
 					</ResponsiveFlex>

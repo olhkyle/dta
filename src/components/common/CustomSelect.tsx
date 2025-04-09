@@ -2,22 +2,23 @@ import { Dispatch, SetStateAction, useState } from 'react';
 import styled from '@emotion/styled';
 import { BiSolidDownArrow } from 'react-icons/bi';
 import { BsCheck } from 'react-icons/bs';
-import { useClickOutside, useId } from '../../hooks';
+import { useClickOutside, useId, useMediaQuery } from '../../hooks';
 
-interface SelectProps {
-	data: readonly number[];
-	value: number;
-	setValue: Dispatch<SetStateAction<number>>;
+interface SelectProps<T extends number | string> {
+	data: readonly T[];
+	value: T;
+	setValue: Dispatch<SetStateAction<T>>;
 	unit?: string;
 }
 
-const Select = ({ data, value: current, setValue, unit }: SelectProps) => {
+const Select = <T extends number | string>({ data, value: current, setValue, unit }: SelectProps<T>) => {
 	const [open, setOpen] = useState(false);
 
 	const generatedId = useId('custom-select');
 	const generatedListId = useId('custom-select-list');
+	const isMobile = useMediaQuery('(max-width: 640px)');
 
-	const ref = useClickOutside(() => setOpen(false));
+	const ref = useClickOutside<HTMLDivElement>(() => setOpen(false));
 
 	return (
 		<Container tabIndex={0} ref={ref}>
@@ -31,7 +32,7 @@ const Select = ({ data, value: current, setValue, unit }: SelectProps) => {
 				<span>
 					{current} {unit}
 				</span>
-				<BiSolidDownArrow size="14" />
+				<BiSolidDownArrow size={isMobile ? '12' : '14'} />
 			</Trigger>
 			{open && (
 				<Options id={generatedListId} role="listbox" aria-labelledby={generatedId}>
@@ -45,9 +46,11 @@ const Select = ({ data, value: current, setValue, unit }: SelectProps) => {
 							isCurrent={item === current}
 							data-selected={item === current}
 							tabIndex={0}>
-							<span>{item === current && <BsCheck size="20" />}</span>
-							{item}
-							{unit}
+							<CheckedArea>{item === current && <BsCheck size="20" />}</CheckedArea>
+							<span>
+								{item}
+								{unit}
+							</span>
 						</Option>
 					))}
 				</Options>
@@ -110,16 +113,17 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	gap: 0.2rem;
+	gap: 4px;
 	width: 100%;
 	padding: calc(var(--padding-md) * 0.5) calc(var(--padding-md) * 0.4) calc(var(--padding-md) * 0.5) calc(var(--padding-md) * 0.1);
 	font-size: var(--fz-p);
 	font-weight: ${({ isCurrent }) => (isCurrent ? 'var(--fw-bold)' : 'var(--fw-medium)')};
 	color: var(--text-color);
+	transition: all 0.15s ease-in-out;
 	cursor: pointer;
 
 	&:hover {
-		background-color: var(--color-green-50);
+		background-color: var(--color-dark);
 		color: var(--color-white);
 	}
 
@@ -131,12 +135,12 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	@media screen and (min-width: 768px) {
 		font-size: var(--fz-h6);
 	}
+`;
 
-	span {
-		display: inline-flex;
-		align-items: center;
-		width: 20px;
-	}
+const CheckedArea = styled.span`
+	display: inline-flex;
+	align-items: center;
+	min-width: 20px;
 `;
 
 export default Select;

@@ -70,7 +70,7 @@ const CloseModalButton = styled(Button)`
 	justify-content: center;
 	align-items: center;
 	padding: var(--padding-sm);
-	border-radius: 9999px;
+	border-radius: var(--radius-extra);
 	background-color: var(--outline-color);
 
 	&:hover {

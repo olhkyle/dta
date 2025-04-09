@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { throttle } from 'lodash';
+import throttle from 'lodash/throttle';
 
 const WAIT_TIME = 500;
 

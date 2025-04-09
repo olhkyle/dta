@@ -1,5 +1,6 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
+import profileEmoji from '../../assets/profile.webp';
 
 interface UserProfileProps {
 	name: string;
@@ -14,7 +15,7 @@ const UserProfile = ({ name, isAdmin, isLoading, Loading, onLogout }: UserProfil
 		<Container>
 			{isAdmin && (
 				<ImgContainer>
-					<img src="./profile.png" alt="profile" />
+					<img src={profileEmoji} alt="profile emoji" />
 				</ImgContainer>
 			)}
 			<Name>{name}</Name>
@@ -53,9 +54,8 @@ const Container = styled.div`
 			-webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s;
 
 		&:hover {
-			border-color: var(--text-color);
+			transition: all 0.15s ease-in-out;
 			font-weight: var(--fw-semibold);
-			transition: all 0.3s ease-in-out 0.15s;
 		}
 	}
 

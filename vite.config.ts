@@ -18,10 +18,6 @@ export default defineConfig({
 						return '@firebase';
 					}
 
-					if (id.includes('lodash')) {
-						return '@lodash';
-					}
-
 					if (id.includes('zod')) {
 						return '@zod';
 					}

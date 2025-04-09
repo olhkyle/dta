@@ -8,7 +8,7 @@ const DetailsPrintButtonLoader = () => {
 	return (
 		<>
 			{!isMobile && (
-				<Flex justifyContent="flex-end" margin="0 0">
+				<Flex justifyContent={'flex-end'} margin={'0'}>
 					<SkeletonItem width={isMobile ? '130px' : '88px'} height={isMobile ? '35px' : '45px'} theme={theme} />
 				</Flex>
 			)}

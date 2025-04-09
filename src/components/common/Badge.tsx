@@ -1,6 +1,7 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import { CiSquareMinus } from 'react-icons/ci';
+import Flex from './Flex';
 
 interface BadgeProps {
 	label: string;
@@ -11,7 +12,7 @@ interface BadgeProps {
 
 const Badge = ({ label, bgColor, unit = '원', children }: BadgeProps) => {
 	return (
-		<Container css={{ display: 'flex', alignItems: 'center' }}>
+		<Container>
 			<span
 				css={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-semibold)' }}>
 				{label}
@@ -42,7 +43,7 @@ const Badge = ({ label, bgColor, unit = '원', children }: BadgeProps) => {
 	);
 };
 
-const Container = styled.span`
+const Container = styled(Flex)`
 	span {
 		@media screen and (min-width: 640px) {
 			font-size: var(--fz-h7);

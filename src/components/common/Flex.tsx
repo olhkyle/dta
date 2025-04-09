@@ -9,7 +9,7 @@ interface FlexProps extends HTMLAttributes<HTMLDivElement> {
 	padding?: string;
 	maxWidth?: `${number}px` | `${number}%` | `${number}dvw` | 'auto';
 	minWidth?: `${number}px` | `${number}%` | `${number}dvw` | 'auto';
-	width?: `${number}px` | `${number}%` | `${number}dvw` | 'auto';
+	width?: `${number}px` | `${number}%` | `${number}dvw` | 'auto' | string;
 	height?: `${number}px` | `${number}%` | `${number}dvh` | 'auto' | string;
 }
 

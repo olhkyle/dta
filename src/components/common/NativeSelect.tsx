@@ -34,6 +34,7 @@ const Select = ({ label, bottomText, children }: SelectProps) => {
 };
 
 interface SelectFieldProps extends HTMLAttributes<HTMLSelectElement> {
+	data: string[];
 	id: string;
 	name: string;
 	error: string | undefined;
@@ -41,7 +42,7 @@ interface SelectFieldProps extends HTMLAttributes<HTMLSelectElement> {
 }
 
 Select.Field = forwardRef(
-	({ id, name, onChange, onBlur, error, disabled, ...props }: SelectFieldProps, ref: ForwardedRef<HTMLSelectElement>) => {
+	({ data: options, id, name, onChange, onBlur, error, disabled, ...props }: SelectFieldProps, ref: ForwardedRef<HTMLSelectElement>) => {
 		return (
 			<SelectField
 				id={id}
@@ -54,8 +55,11 @@ Select.Field = forwardRef(
 				disabled={disabled ?? false}
 				aria-disabled={disabled}
 				{...props}>
-				<option value="사업자">사업자</option>
-				<option value="개인">개 인</option>
+				{options.map(option => (
+					<option key={option} value={option}>
+						{option}
+					</option>
+				))}
 			</SelectField>
 		);
 	},
@@ -90,7 +94,7 @@ const SelectField = styled.select<{ error: string; disabled: boolean }>`
 	}
 
 	option {
-		padding: 16px;
+		padding: var(--padding-md);
 		cursor: pointer;
 	}
 `;

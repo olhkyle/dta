@@ -12,15 +12,15 @@ const Layout = () => {
 	const { pathname } = useLocation();
 	const user = useAppSelector(getUser);
 
-	const isLoggined = user.name.length > 0 && user.nickname !== 'test-id' && user.isAdmin;
-
 	useScrollTopEffect(pathname);
 
+	const isLoggined = user.name.length > 0 && user.nickname !== 'test-id' && user.isAdmin;
+
 	return (
-		<Suspense fallback={<LayoutLoading type="lg" />}>
+		<Suspense fallback={<LayoutLoading type={'lg'} />}>
 			<Nav />
 			<Main>
-				<Suspense fallback={<LayoutLoading type="lg" />}>
+				<Suspense fallback={<LayoutLoading type={'lg'} />}>
 					<Outlet />
 				</Suspense>
 			</Main>

@@ -4,7 +4,7 @@ import { EmptyIndicator } from '../components';
 const DashboardPage = () => {
 	return (
 		<Container>
-			<EmptyIndicator>🛹 대시보드 추가 예정입니다</EmptyIndicator>
+			<EmptyIndicator decoration={'🛹'} label={'대시보드 추가 예정입니다'} />
 		</Container>
 	);
 };

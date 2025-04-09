@@ -108,13 +108,13 @@ const RegisterForm = () => {
 
 	return (
 		<Form onSubmit={handleSubmit(onSubmit)}>
-			<Text typo="h2" color="var(--text-color)">
+			<Text typo={'h2'} color={'var(--text-color)'}>
 				일용직 등록
 			</Text>
 			<Spacer size={8} />
 			<Input
 				label={
-					<Flex justifyContent="space-between" width="100%">
+					<Flex justifyContent={'space-between'} width={'100%'}>
 						성 명
 						<CheckExistButton type="button" onClick={findSpecificWorker}>
 							{isLoading && <Loading />}
@@ -123,21 +123,21 @@ const RegisterForm = () => {
 					</Flex>
 				}
 				bottomText={errors?.workerName?.message}>
-				<Input.TextField type="text" placeholder="이 름" {...register('workerName')} error={errors?.workerName?.message} />
+				<Input.TextField type={'text'} placeholder={'이 름'} {...register('workerName')} error={errors?.workerName?.message} />
 			</Input>
-			<CustomFlex alignItems="flex-start" gap="16px">
-				<Input label="주민등록번호 앞 자리" bottomText={errors?.registrationNumberFront?.message}>
+			<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+				<Input label={'주민등록번호 앞 자리'} bottomText={errors?.registrationNumberFront?.message}>
 					<Input.TextField
-						type="text"
-						placeholder="000000"
+						type={'text'}
+						placeholder={'000000'}
 						{...register('registrationNumberFront')}
 						error={errors?.registrationNumberFront?.message}
 					/>
 				</Input>
-				<Input label="주민등록번호 뒷 자리" bottomText={errors?.registrationNumberBack?.message}>
+				<Input label={'주민등록번호 뒷 자리'} bottomText={errors?.registrationNumberBack?.message}>
 					<Input.TextField
-						type="text"
-						placeholder="0000000"
+						type={'text'}
+						placeholder={'0000000'}
 						{...register('registrationNumberBack')}
 						error={errors?.registrationNumberBack?.message}
 					/>
@@ -152,33 +152,38 @@ const RegisterForm = () => {
 				)}
 			/>
 
-			<CustomFlex alignItems="flex-start" gap="16px">
-				<Input label="근로 지역" bottomText={errors?.workspace?.message}>
-					<Input.TextField type="text" placeholder="작업 공간 이름" {...register('workspace')} error={errors?.workspace?.message} />
+			<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+				<Input label={'근로 지역'} bottomText={errors?.workspace?.message}>
+					<Input.TextField type={'text'} placeholder={'작업 공간 이름'} {...register('workspace')} error={errors?.workspace?.message} />
 				</Input>
-				<Input label="사업개시번호" bottomText={errors?.businessNumber?.message}>
+				<Input label={'사업개시번호'} bottomText={errors?.businessNumber?.message}>
 					<Input.TextField
-						type="text"
-						placeholder="000-00-00000-0"
+						type={'text'}
+						placeholder={'000-00-00000-0'}
 						{...register('businessNumber')}
 						error={errors?.businessNumber?.message}
 					/>
 				</Input>
 			</CustomFlex>
 
-			<CustomFlex alignItems="flex-start" gap="16px">
-				<NativeSelect label="송금 유형" bottomText={errors?.remittanceType?.message}>
-					<NativeSelect.Field id="송금 유형" {...register('remittanceType')} error={errors?.remittanceType?.message} />
+			<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+				<NativeSelect label={'송금 유형'} bottomText={errors?.remittanceType?.message}>
+					<NativeSelect.Field
+						data={['사업자', '개인']}
+						id={'송금 유형'}
+						{...register('remittanceType')}
+						error={errors?.remittanceType?.message}
+					/>
 				</NativeSelect>
 
 				<Controller
 					name="payment"
 					control={control}
 					render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
-						<Input label="지급 금액" bottomText={error?.message} rightText="원">
+						<Input label={'지급 금액'} bottomText={error?.message} rightText={'원'}>
 							<Input.ControlledTextField
-								type="text"
-								placeholder="1,000"
+								type={'text'}
+								placeholder={'1,000'}
 								name={name}
 								value={
 									value
@@ -196,10 +201,10 @@ const RegisterForm = () => {
 					)}
 				/>
 			</CustomFlex>
-			<Input label="메모/기타" bottomText={errors?.memo?.message}>
-				<Input.TextField type="text" placeholder="기타 필요한 사항을 기입하세요." {...register('memo')} error={errors?.memo?.message} />
+			<Input label={'메모/기타'} bottomText={errors?.memo?.message}>
+				<Input.TextField type={'text'} placeholder={'기타 필요한 사항을 기입하세요'} {...register('memo')} error={errors?.memo?.message} />
 			</Input>
-			<Flex gap="16px" margin="24px 0 0 0">
+			<Flex gap={'16px'} margin={'24px 0 0'}>
 				<AdditionalRegisterButton type="submit" id="additionalRegister" aria-label="additional-register-button">
 					{isLoading ? <Loading /> : '추가 등록'}
 				</AdditionalRegisterButton>
@@ -207,8 +212,8 @@ const RegisterForm = () => {
 					{isLoading ? <Loading /> : '등록하기'}
 				</RegisterButton>
 			</Flex>
-			<Flex justifyContent="center" width="100%">
-				<HighlightText color="var(--disabled-text-color)" bgColor="var(--outline-color)" fontSize="14px">
+			<Flex justifyContent={'center'} width={'100%'}>
+				<HighlightText color={'var(--disabled-text-color)'} bgColor={'var(--outline-color)'} fontSize={'14px'}>
 					💡 추가 등록 시 성명, 주민등록번호, 출력일은 바로 이전에 작성한 내용이 유지됩니다.
 				</HighlightText>
 			</Flex>

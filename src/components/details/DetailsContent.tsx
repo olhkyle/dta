@@ -41,10 +41,7 @@ const DetailsContent = ({ year, month, workerName, currentSort }: DetailsContent
 	return (
 		<>
 			{workers?.length === 0 ? (
-				<EmptyIndicator>
-					<BsBoxSeam size={60} color="var(--color-gray-500)" />
-					<p>해당 월에는 작업한 일용직이 없습니다</p>
-				</EmptyIndicator>
+				<EmptyIndicator decoration={<BsBoxSeam size={60} color="var(--color-gray-500)" />} label={'해당 월에는 작업한 일용직이 없습니다'} />
 			) : (
 				<Table searched={workerName.length > 0}>
 					<thead>
@@ -152,10 +149,16 @@ const Table = styled.table<{ searched: boolean }>`
 	tbody > tr {
 		border-top: 1px solid var(--outline-color);
 		border-bottom: 1px solid var(--outline-color);
+
 		transition: all 0.15s ease-out;
 
 		&:nth-of-type(1) {
 			border-top-color: var(--bg-color);
+		}
+
+		&:last-child {
+			border-bottom: none;
+			border-radius: 0 0 var(--radius) var(--radius);
 		}
 	}
 
