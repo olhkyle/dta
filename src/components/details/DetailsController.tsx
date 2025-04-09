@@ -22,8 +22,6 @@ interface DetailsControllerProps {
 }
 
 const DetailsController = ({ year, setYear, month, setMonth, workerName, currentSort, setCurrentControl }: DetailsControllerProps) => {
-	console.log(months.filter(month => month <= monthOfToday));
-	console.log(months);
 	return (
 		<Flex direction={'column'} justifyContent={'space-between'} alignItems={'flex-start'} width={'100%'}>
 			<Flex justifyContent={'space-between'} width={'100%'}>
