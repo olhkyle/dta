@@ -1,14 +1,15 @@
 import styled from '@emotion/styled';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { BsArrowLeft } from 'react-icons/bs';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
 import { Circle, Flex, HighlightText, Text } from '../components';
-import { useGetWorkersDetailQuery, useGoBack, useMediaQuery, useTheme } from '../hooks';
+import { useGetWorkersDetailQuery, useMediaQuery, useTheme } from '../hooks';
 import { getBarChartData, getBarChartOptions } from '../constants/barChart';
 import { formatCurrencyUnit } from '../utils/currencyUnit';
+import { routes } from '../constants';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -18,7 +19,8 @@ const WorkerPage = () => {
 			worker: { workerName, workedDate, registrationNumberFront },
 		},
 	} = useLocation();
-	const goBack = useGoBack();
+	const navigate = useNavigate();
+
 	const [year, month] = [workedDate.getFullYear(), workedDate.getMonth() + 1];
 	const [theme] = useTheme();
 	const isAdmin = useAppSelector(getIsAdmin);
@@ -45,7 +47,7 @@ const WorkerPage = () => {
 
 	return (
 		<Container>
-			<GoBackButton type="button" onClick={goBack}>
+			<GoBackButton type="button" onClick={() => navigate(routes.DETAILS, { state: { month: month - 1 } })}>
 				<BsArrowLeft size="24" color="var(--text-color)" />
 			</GoBackButton>
 
