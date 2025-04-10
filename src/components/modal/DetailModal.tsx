@@ -99,11 +99,6 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 	};
 
 	const handleRemoveWorkerButton = () => {
-		if (!isAdmin) {
-			toast.warn('Delete Feature is Admin Only');
-			return;
-		}
-
 		removeMutate(
 			{ id: worker.id },
 			{
@@ -156,14 +151,16 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 					<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
 						{isEditMode ? '수정취소' : '수정하기'}
 					</ModifyButton>
-					<ViewWorkerDetailButton
-						type="button"
-						onClick={() => {
-							onClose();
-							navigate(`/worker/${worker.id}`, { state: { worker } });
-						}}>
-						일용직 상세보기
-					</ViewWorkerDetailButton>
+					{isAdmin && (
+						<ViewWorkerDetailButton
+							type="button"
+							onClick={() => {
+								onClose();
+								navigate(`/worker/${worker.id}`, { state: { worker } });
+							}}>
+							일용직 상세보기
+						</ViewWorkerDetailButton>
+					)}
 				</ActionButtons>
 				<Group aria-disabled={isEditMode}>
 					<Form onSubmit={handleSubmit(onSubmit)}>
@@ -199,12 +196,12 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 									</Input>
 								</>
 							) : (
-								<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'}>
+								<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
 									<div css={{ fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-medium)' }}>주민등록번호</div>
-									<CustomFlex gap={'16px'}>
+									<Flex gap={'16px'} width={'100%'}>
 										<Confidential>Classified</Confidential>
 										<Confidential>Classified</Confidential>
-									</CustomFlex>
+									</Flex>
 								</Flex>
 							)}
 						</CustomFlex>
@@ -218,24 +215,38 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 						/>
 
 						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
-							<Input label={'근로 지역'} bottomText={errors?.workspace?.message}>
-								<Input.TextField
-									type={'text'}
-									placeholder={'작업 공간 이름'}
-									{...register('workspace')}
-									error={errors?.workspace?.message}
-									disabled={!isEditMode}
-								/>
-							</Input>
-							<Input label={'사업개시번호'} bottomText={errors?.businessNumber?.message}>
-								<Input.TextField
-									type={'text'}
-									placeholder={'000-00-00000-0'}
-									{...register('businessNumber')}
-									error={errors?.businessNumber?.message}
-									disabled={!isEditMode}
-								/>
-							</Input>
+							{isAdmin ? (
+								<Input label={'근로 지역'} bottomText={errors?.workspace?.message}>
+									<Input.TextField
+										type={'text'}
+										placeholder={'작업 공간 이름'}
+										{...register('workspace')}
+										error={errors?.workspace?.message}
+										disabled={!isEditMode}
+									/>
+								</Input>
+							) : (
+								<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
+									<div css={{ fontSize: 'var(--fz-p)', fontWeight: 'var(--fw-medium)' }}>근로 지역</div>
+									<Confidential>Classified</Confidential>
+								</Flex>
+							)}
+							{isAdmin ? (
+								<Input label={'사업개시번호'} bottomText={errors?.businessNumber?.message}>
+									<Input.TextField
+										type={'text'}
+										placeholder={'000-00-00000-0'}
+										{...register('businessNumber')}
+										error={errors?.businessNumber?.message}
+										disabled={!isEditMode}
+									/>
+								</Input>
+							) : (
+								<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
+									<div css={{ fontSize: 'var(--fz-p)', fontWeight: 'var(--fw-medium)' }}>사업개시번호</div>
+									<Confidential>Classified</Confidential>
+								</Flex>
+							)}
 						</CustomFlex>
 
 						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
@@ -248,31 +259,38 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 									disabled={!isEditMode}
 								/>
 							</NativeSelect>
-							<Controller
-								name="payment"
-								control={control}
-								render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
-									<Input label={'지급 금액'} bottomText={error?.message} rightText={'원'}>
-										<Input.ControlledTextField
-											type={'text'}
-											placeholder={'지급 금액'}
-											name={name}
-											value={
-												value
-													? value
-															.toString()
-															.replace(/,/gi, '')
-															.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
-													: ''
-											}
-											onChange={onChange}
-											onBlur={onBlur}
-											error={error?.message}
-											disabled={!isEditMode}
-										/>
-									</Input>
-								)}
-							/>
+							{isAdmin ? (
+								<Controller
+									name="payment"
+									control={control}
+									render={({ field: { name, value, onChange, onBlur }, fieldState: { error } }) => (
+										<Input label={'지급 금액'} bottomText={error?.message} rightText={'원'}>
+											<Input.ControlledTextField
+												type={'text'}
+												placeholder={'지급 금액'}
+												name={name}
+												value={
+													value
+														? value
+																.toString()
+																.replace(/,/gi, '')
+																.replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ',')
+														: ''
+												}
+												onChange={onChange}
+												onBlur={onBlur}
+												error={error?.message}
+												disabled={!isEditMode}
+											/>
+										</Input>
+									)}
+								/>
+							) : (
+								<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
+									<div css={{ fontSize: 'var(--fz-p)', fontWeight: 'var(--fw-medium)' }}>지급 금액</div>
+									<Confidential>Classified</Confidential>
+								</Flex>
+							)}
 						</CustomFlex>
 						<Input label={'메모/기타'} bottomText={errors?.memo?.message}>
 							<Input.TextField
@@ -288,14 +306,16 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 								{isEditMutateLoading ? <SmallLoading /> : '수정하기'}
 							</UpdateButton>
 						)}
-						<Flex direction={'column'} margin={'64px 0 32px'} width={'100%'}>
-							<Text color="var(--btn-hover-color)">
-								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
-							</Text>
-							<DeleteButton type="button" id="delete" aria-label="delete-button" onClick={handleRemoveWorkerButton}>
-								{isRemoveMutateLoading ? <SmallLoading /> : '삭제하기'}
-							</DeleteButton>
-						</Flex>
+						{isAdmin && (
+							<Flex direction={'column'} margin={'64px 0 32px'} width={'100%'}>
+								<Text color="var(--btn-hover-color)">
+									해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
+								</Text>
+								<DeleteButton type="button" id="delete" aria-label="delete-button" onClick={handleRemoveWorkerButton}>
+									{isRemoveMutateLoading ? <SmallLoading /> : '삭제하기'}
+								</DeleteButton>
+							</Flex>
+						)}
 					</Form>
 				</Group>
 			</ModalLayout>

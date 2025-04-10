@@ -6,6 +6,8 @@ import { toast } from 'react-toastify';
 import { routes, SortOption } from '../../constants';
 import { useGetWorkersDetailInfiniteQuery } from '../../hooks';
 import { sortByNameAndWorkedDate } from '../../service/workData';
+import { getIsAdmin } from '../../store/userSlice';
+import { useAppSelector } from '../../store/store';
 
 interface DetailsPrintButtonProps {
 	year: number;
@@ -23,14 +25,20 @@ const DetailsPrintButton = ({ year, month, workerName, currentSort }: DetailsPri
 	});
 
 	const navigate = useNavigate();
+	const isAdmin = useAppSelector(getIsAdmin);
 	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
 
 	return (
 		<PrintButton
 			type="button"
 			onClick={() => {
-				if (workers?.length === 0) {
-					toast.warn('해당 월의 출력 대상자가 없습니다.');
+				if (!isAdmin) {
+					toast.warn('관리자만 출력할 수 있습니다');
+					return;
+				}
+
+				if (isAdmin && workers?.length === 0) {
+					toast.warn('해당 월의 출력 대상자가 없습니다');
 					return;
 				}
 
