@@ -5,10 +5,11 @@ import { Link, useNavigate } from 'react-router-dom';
 import { RiCloseFill } from 'react-icons/ri';
 import { PiHamburger } from 'react-icons/pi';
 import { toast } from 'react-toastify';
-import { Flex, NavLink, ThemeButton, SideNav, UserProfile } from '..';
+import { Flex, NavLink, ThemeButton, SideNav, UserProfile, LoginLinkLoader } from '..';
 import { useLoading, useScrollTopEffect, useSetUser, useSideNavActive } from '../../hooks';
 import { routes } from '../../constants';
 import { logOut } from '../../service/auth';
+import useAuthQuery from '../../hooks/useAuthQuery';
 
 const Nav = () => {
 	const queryClient = useQueryClient();
@@ -23,6 +24,8 @@ const Nav = () => {
 		userData: { name, isAdmin },
 		setLogoutUser,
 	} = useSetUser();
+
+	const { isLoading: isAuthLoading } = useAuthQuery();
 
 	const { Loading, isLoading, startTransition } = useLoading();
 
@@ -56,10 +59,12 @@ const Nav = () => {
 							{isAdmin && <Navigation to={routes.OVERVIEW}>월별 개요</Navigation>}
 							{isAdmin && <Navigation to={routes.DETAILS}>월별 상세</Navigation>}
 							{isAdmin && <Navigation to={routes.REGISTER}>일용직 등록</Navigation>}
-							{name ? (
-								<UserProfile name={name} isAdmin={isAdmin} onLogout={handleLogout} isLoading={isLoading} Loading={Loading} />
+							{isAuthLoading ? (
+								<LoginLinkLoader />
+							) : !name ? (
+								<LoginLink to={routes.LOGIN}>로그인</LoginLink>
 							) : (
-								<Login to={routes.LOGIN}>로그인</Login>
+								<UserProfile name={name} isAdmin={isAdmin} onLogout={handleLogout} isLoading={isLoading} Loading={Loading} />
 							)}
 						</Flex>
 						<ThemeButton />
@@ -131,7 +136,7 @@ const Navigation = styled(NavLink)`
 	}
 `;
 
-const Login = styled(NavLink)`
+const LoginLink = styled(NavLink)`
 	margin-left: 16px;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
