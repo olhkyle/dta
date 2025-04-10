@@ -115,7 +115,7 @@ const TextField = styled.input<{ error: string; disabled: boolean }>`
 
 	&:focus {
 		background-color: var(--bg-color);
-		box-shadow: ${({ error }) => (error ? 'inset 0 0 0 2px var(--color-green-50)' : 'inset 0 0 0 1px var(--color-gray-600)')};
+		box-shadow: ${({ error }) => (error ? 'inset 0 0 0 2px var(--color-green-50)' : 'inset 0 0 0 1px var(--color-gray-500)')};
 	}
 `;
 

@@ -12,7 +12,6 @@ const Button = ({ type, disabled = false, onClick, children, ...props }: ButtonP
 		<button
 			type={type}
 			css={{
-				padding: 'calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2)',
 				borderRadius: 'var(--radius)',
 				fontSize: 'var(--fz-p)',
 				fontWeight: 'var(--fw-semibold)',

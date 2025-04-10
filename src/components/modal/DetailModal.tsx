@@ -288,7 +288,7 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 								{isEditMutateLoading ? <SmallLoading /> : '수정하기'}
 							</UpdateButton>
 						)}
-						<Flex direction={'column'} margin={'32px 0'} width={'100%'}>
+						<Flex direction={'column'} margin={'64px 0 32px'} width={'100%'}>
 							<Text color="var(--btn-hover-color)">
 								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
 							</Text>
@@ -384,6 +384,7 @@ const Confidential = styled.div`
 
 const UpdateButton = styled(Button)`
 	margin: 16px auto 0;
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--color-green-300);
@@ -399,6 +400,7 @@ const DeleteButton = styled(Button)`
 	align-items: center;
 	gap: 0.4rem;
 	margin: 16px auto 0;
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	width: 100%;
 	color: var(--bg-color);
 	border: 1px solid var(--text-color);
