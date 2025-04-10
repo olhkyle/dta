@@ -61,6 +61,7 @@ const Select = <T extends number | string>({ data, value: current, setValue, uni
 
 const Container = styled.div`
 	position: relative;
+	display: inline-block;
 	z-index: 10;
 `;
 
@@ -76,11 +77,10 @@ const Trigger = styled.button`
 	border: 1px solid var(--outline-color);
 	border-radius: var(--radius);
 	color: var(--text-color);
-	transition: outline 0.15s ease-out;
+	transition: background 0.15s ease-in-out;
 
 	&:hover {
-		outline: 1px solid var(--color-gray-400);
-		outline-offset: 1px;
+		background-color: var(--outline-color);
 	}
 
 	@media screen and (min-width: 640px) {
@@ -123,8 +123,8 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	cursor: pointer;
 
 	&:hover {
-		background-color: var(--color-dark);
-		color: var(--color-white);
+		background-color: var(--btn-bg-color);
+		color: var(--bg-color);
 	}
 
 	@media screen and (min-width: 640px) {
