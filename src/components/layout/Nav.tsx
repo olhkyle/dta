@@ -6,10 +6,9 @@ import { RiCloseFill } from 'react-icons/ri';
 import { PiHamburger } from 'react-icons/pi';
 import { toast } from 'react-toastify';
 import { Flex, NavLink, ThemeButton, SideNav, UserProfile, LoginLinkLoader } from '..';
-import { useLoading, useScrollTopEffect, useSetUser, useSideNavActive } from '../../hooks';
+import { useAuthQuery, useLoading, useScrollTopEffect, useSetUser, useSideNavActive } from '../../hooks';
 import { routes } from '../../constants';
 import { logOut } from '../../service/auth';
-import useAuthQuery from '../../hooks/useAuthQuery';
 
 const Nav = () => {
 	const queryClient = useQueryClient();
@@ -26,7 +25,6 @@ const Nav = () => {
 	} = useSetUser();
 
 	const { isLoading: isAuthLoading } = useAuthQuery();
-
 	const { Loading, isLoading, startTransition } = useLoading();
 
 	useScrollTopEffect(active);

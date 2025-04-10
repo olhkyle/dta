@@ -134,7 +134,7 @@ const Name = styled.div`
 	justify-content: center;
 	align-items: center;
 	padding: var(--btn-sm-padding);
-	width: 120px;
+	min-width: 120px;
 	border: 1px solid var(--outline-color);
 	border-radius: 8px;
 	outline: 1px solid var(--color-green-50);
