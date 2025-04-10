@@ -1,4 +1,4 @@
-import { getWorkersOverview } from '../service/workData';
+import { getWorkersOverviewByYearAndMonth } from '../service/workData';
 import { monthOfToday, yearOfToday } from '../constants/day';
 import { WorkerQuery } from './workerQuery';
 import { queryKey } from '../constants';
@@ -9,7 +9,7 @@ const staleTime = 1000 * 5;
 const getWorkersOverviewQuery = ({ year = yearOfToday, month = monthOfToday, workerName = '' }: WorkerQuery) => ({
 	queryKey: [queryKey.WORKERS_OVERVIEW, `${year}-${month}`, workerName],
 	queryFn: async () => {
-		const data = await getWorkersOverview({ year, month, workerName });
+		const data = await getWorkersOverviewByYearAndMonth({ year, month, workerName });
 		return data;
 	},
 	onError: (error: unknown) => console.error(error),
