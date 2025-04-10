@@ -21,13 +21,13 @@ const PrintPage = () => {
 
 	return (
 		<Container>
-			<Flex justifyContent="space-between" margin="0 0 32px 0" width="100%">
+			<Flex justifyContent={'space-between'} margin={'0 0 32px'} width={'100%'}>
 				<GoBackButton type="button" onClick={() => navigate(routes.DETAILS, { state: { year, month: month - 1 } })}>
 					<BsArrowLeftCircle size="24" color="var(--text-color)" />
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="16px">
-					<HighlightText color="white" bgColor="black">{`${year}월 ${month}월`}</HighlightText>
+					<HighlightText color={'white'} bgColor={'black'}>{`${year}월 ${month}월`}</HighlightText>
 
 					<ReactToPrint
 						trigger={() => (
