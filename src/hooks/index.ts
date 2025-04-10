@@ -1,6 +1,7 @@
 export * from './mutations';
 export * from './queries';
 
+export { default as useAuthQuery } from './useAuthQuery';
 export { default as useClickOutside } from './useClickOutside';
 export { default as useId } from './useId';
 export { default as useScroll } from './useScroll';
