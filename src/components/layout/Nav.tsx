@@ -64,7 +64,7 @@ const Nav = () => {
 						</Flex>
 						<ThemeButton />
 					</NavLinkContainer>
-					<NavToggleButton onClick={toggle}>
+					<NavToggleButton onClick={toggle} aria-label="side-navigation-toggle-button">
 						{active ? <RiCloseFill size="35" color="var(--text-color)" /> : <PiHamburger size="32" color="var(--text-color)" />}
 					</NavToggleButton>
 				</Group>
