@@ -27,7 +27,7 @@ const PrintPage = () => {
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="16px">
-					<HighlightText color={'white'} bgColor={'black'}>{`${year}월 ${month}월`}</HighlightText>
+					<HighlightText color={'var(--bg-color)'} bgColor={'var(--text-color)'}>{`${year}월 ${month}월`}</HighlightText>
 
 					<ReactToPrint
 						trigger={() => (
@@ -65,6 +65,7 @@ const GoBackButton = styled(Button)`
 	justify-content: center;
 	align-items: center;
 	gap: 8px;
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	font-weight: 700;
 	font-size: 15px;
 	color: var(--text-color);
@@ -80,6 +81,7 @@ const GoBackButton = styled(Button)`
 `;
 
 const PrintButton = styled(Button)<{ disabled: boolean }>`
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	font-weight: var(--fw-bold);
 	color: #fff;
 	background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-50)')};
