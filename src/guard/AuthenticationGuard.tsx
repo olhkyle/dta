@@ -2,7 +2,7 @@ import { ReactNode, Suspense } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 import { LayoutLoading, RegisterSkeleton, GeneralSkeleton } from '../components';
 import { type Route, routes } from '../constants';
-import useAuthQuery from '../hooks/useAuthQuery';
+import { useAuthQuery } from '../hooks';
 
 interface AuthenticationGuardProps {
 	redirectTo: Route<typeof routes>;
