@@ -23,7 +23,7 @@ const PrintPage = () => {
 		<Container>
 			<Flex justifyContent="space-between" margin="0 0 32px 0" width="100%">
 				<GoBackButton type="button" onClick={() => navigate(routes.DETAILS, { state: { year, month: month - 1 } })}>
-					<BsArrowLeftCircle size="24" color="var(--color-gray-500)" />
+					<BsArrowLeftCircle size="24" color="var(--text-color)" />
 					뒤로가기
 				</GoBackButton>
 				<Flex gap="16px">
@@ -67,7 +67,7 @@ const GoBackButton = styled(Button)`
 	gap: 8px;
 	font-weight: 700;
 	font-size: 15px;
-	color: var(--color-gray-500);
+	color: var(--text-color);
 	background-color: var(--color-gray-opacity-100);
 	outline: 1px solid var(--color-white);
 	border-radius: var(--radius-extra);

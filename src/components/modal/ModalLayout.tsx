@@ -72,10 +72,11 @@ const CloseModalButton = styled(Button)`
 	padding: var(--padding-sm);
 	border-radius: var(--radius-extra);
 	background-color: var(--outline-color);
+	transition: all 0.15s ease-in-out;
 
 	&:hover {
-		outline: 1px solid var(--text-color);
-		outline-offset: 2px;
+		outline: 1px solid var(--table-border-color);
+		outline-offset: 1px;
 	}
 
 	@media screen and (max-width: 640px) {
