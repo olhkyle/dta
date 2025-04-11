@@ -126,7 +126,7 @@ const NavLinkContainer = styled(Flex)`
 `;
 
 const Navigation = styled(NavLink)`
-	transition: background 0.15s ease-in-out;
+	transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
 
 	&:hover {
 		color: var(--btn-hover-color);
@@ -138,7 +138,7 @@ const LoginLink = styled(NavLink)`
 	margin-left: 16px;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
-	transition: background 0.3s ease-in-out 0.15s;
+	transition: background-color 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		background-color: var(--btn-hover-bg-color);

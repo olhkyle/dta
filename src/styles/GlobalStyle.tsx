@@ -11,7 +11,7 @@ const GlobalStyle = css`
 		text-size-adjust: 100%;
 
 		--color-black: #191a20;
-		--color-white: #ffffff;
+		--color-white: #fff;
 
 		--color-gray-50: #f9fafb;
 		--color-gray-100: #f2f4f6;
@@ -114,11 +114,6 @@ const GlobalStyle = css`
 		-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 	}
 
-	html {
-		width: 100%;
-		height: 100%;
-	}
-
 	body {
 		width: 100%;
 		height: 100%;
@@ -155,7 +150,7 @@ const GlobalStyle = css`
 		--bg-color: var(--color-dark);
 		--btn-text-color: var(--color-dark);
 		--btn-bg-color: var(--color-white);
-		--btn-light-bg-color: var(--color-gray-800);
+		--btn-light-bg-color: var(--color-gray-900);
 		--btn-hover-color: var(--color-gray-200);
 		--btn-hover-bg-color: var(--color-gray-100);
 		--btn-hover-light-bg-color: var(--color-gray-900);

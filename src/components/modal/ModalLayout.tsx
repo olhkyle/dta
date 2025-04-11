@@ -72,7 +72,7 @@ const CloseModalButton = styled(Button)`
 	padding: var(--padding-sm);
 	border-radius: var(--radius-extra);
 	background-color: var(--btn-light-bg-color);
-	transition: all 0.15s ease-in-out;
+	transition: outline 0.15s ease-in-out;
 
 	&:hover {
 		outline: 1px solid var(--outline-light-color);

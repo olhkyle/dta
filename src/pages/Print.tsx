@@ -72,7 +72,7 @@ const GoBackButton = styled(Button)`
 	background-color: var(--color-gray-opacity-100);
 	outline: 1px solid var(--color-white);
 	border-radius: var(--radius-extra);
-	transition: all 0.3s ease-in-out 0.15s;
+	transition: outline 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		outline: 1px solid #c4c4c4;
@@ -86,7 +86,7 @@ const PrintButton = styled(Button)<{ disabled: boolean }>`
 	color: #fff;
 	background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-50)')};
 	border-radius: ${({ disabled }) => (disabled ? 'var(--radius)' : 'var(--radius-extra)')};
-	transition: background 0.3s ease-in-out 0.15s;
+	transition: background-color 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		background-color: ${({ disabled }) => (disabled ? 'var(--color-gray-500)' : 'var(--color-green-200)')};

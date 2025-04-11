@@ -115,7 +115,7 @@ const LoginButton = styled(Button)`
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
-	transition: background 0.15s ease-in-out;
+	transition: background-color 0.15s ease-in-out;
 
 	&:hover {
 		background-color: var(--btn-hover-bg-color);

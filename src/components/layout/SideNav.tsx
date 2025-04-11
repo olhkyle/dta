@@ -94,7 +94,7 @@ const Container = styled.div<{ isShown: boolean }>`
 	border-bottom: ${({ isShown }) => (isShown ? '1px solid var(--color-gray-opacity-200)' : 'none')};
 	overflow: ${({ isShown }) => (isShown ? 'visible' : 'hidden')};
 	z-index: var(--sideNav-index);
-	transition: max-height 0.3s ease-out;
+	transition: max-height 0.3s ease-out, border 0.25s ease-out;
 
 	@media screen and (min-width: 768px) {
 		display: none;
@@ -108,7 +108,7 @@ const Navigation = styled(NavLink)`
 	border-radius: 0;
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid var(--color-gray-opacity-200);
-	transition: all 0.1s ease-in-out 0.05s;
+	transition: color 0.1s ease-in-out 0.05s, border 0.1s ease-in-out 0.05s;
 
 	&:hover {
 		color: var(--color-green-300);

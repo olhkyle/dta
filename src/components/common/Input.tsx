@@ -102,13 +102,13 @@ const TextField = styled.input<{ error: string; disabled: boolean }>`
 	min-width: 270px;
 	width: 100%;
 	font-size: var(--fz-rp);
-	line-height: 24px;
+	line-height: 1.6;
 	border: none;
 	border-radius: var(--radius);
 	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
 	background-color: ${({ disabled }) => (disabled ? 'var(--btn-light-bg-color)' : 'var(--color-gray-opacity-50)')};
 	box-shadow: ${({ error }) => (error ? 'inset 0 0 0 1px var(--color-green-50)' : 'inset 0 0 0 1px var(--border-color)')};
-	transition: background 0.15s ease-in-out, color 0.1s ease-in-out;
+	transition: background-color 0.15s ease-in-out, color 0.1s ease-in-out;
 	outline: none;
 	cursor: pointer;
 	-webkit-appearance: none;

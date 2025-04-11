@@ -58,7 +58,7 @@ const PrintButton = styled(Button)`
 	color: var(--color-white);
 	outline-offset: 1px;
 	border-radius: calc(var(--radius) * 1.5);
-	transition: all 0.3s ease-in-out 0.15s;
+	transition: background-color 0.3s ease-in-out 0.15s;
 
 	&:hover {
 		background-color: var(--color-green-200);

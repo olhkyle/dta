@@ -16,7 +16,7 @@ const Button = ({ type, disabled = false, onClick, children, ...props }: ButtonP
 				fontSize: 'var(--fz-p)',
 				fontWeight: 'var(--fw-semibold)',
 				color: 'var(--text-color)',
-				transition: 'background 0.15s ease-in-out',
+				transition: 'background-color 0.15s ease-in-out',
 			}}
 			disabled={disabled}
 			onClick={onClick}

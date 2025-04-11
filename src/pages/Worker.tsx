@@ -3,13 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import { BsArrowLeft } from 'react-icons/bs';
+import { Button, Circle, Flex, HighlightText, Text } from '../components';
+import { useGetWorkersDetailQuery, useMediaQuery, useTheme } from '../hooks';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
-import { Circle, Flex, HighlightText, Text } from '../components';
-import { useGetWorkersDetailQuery, useMediaQuery, useTheme } from '../hooks';
-import { getBarChartData, getBarChartOptions } from '../constants/barChart';
-import { formatCurrencyUnit } from '../utils/currencyUnit';
-import { routes } from '../constants';
+import { getBarChartData, getBarChartOptions, routes } from '../constants';
+import { formatCurrencyUnit } from '../utils';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -53,18 +52,18 @@ const WorkerPage = () => {
 
 			<ProfileContainer>
 				<div css={{ position: 'absolute', top: '-8px', left: '-4px' }}>
-					<Circle size={20} bgColor="var(--color-green-200)" />
+					<Circle size={16} bgColor="var(--text-color)" />
 				</div>
 				<Flex gap="16px" justifyContent="space-between" margin="0 0 16px">
-					<Text typo={isMobileScreen ? 'h5' : 'h4'} color="var(--text-color)">
+					<Text typo={isMobileScreen ? 'h6' : 'h5'} color="var(--text-color)">
 						{workerName}
 					</Text>
-					<Text typo={isMobileScreen ? 'h6' : 'h5'} color="var(--disabled-text-color)">
+					<Text typo={isMobileScreen ? 'h7' : 'h6'} color="var(--disabled-text-color)">
 						{isAdmin ? registrationNumberFront : '******'}
 					</Text>
 				</Flex>
 				<Flex gap="16px" margin="0 0 8px">
-					<Text typo={isMobileScreen ? 'p' : 'h6'} color="var(--disabled-text-color)">
+					<Text typo={isMobileScreen ? 'p' : 'h7'} color="var(--disabled-text-color)">
 						{`${month}월 일한 횟수`}
 					</Text>
 
@@ -72,20 +71,20 @@ const WorkerPage = () => {
 						<HighlightText color="var(--text-color)" bgColor="var(--bg-color)">
 							{data?.workers.length}
 						</HighlightText>
-						<Text typo={isMobileScreen ? 'p' : 'h6'} color="var(--disabled-text-color)">
+						<Text typo={isMobileScreen ? 'p' : 'h7'} color="var(--disabled-text-color)">
 							회
 						</Text>
 					</Flex>
 				</Flex>
 				<Flex gap="16px">
-					<Text typo={isMobileScreen ? 'p' : 'h6'} color="var(--disabled-text-color)">
+					<Text typo={isMobileScreen ? 'p' : 'h7'} color="var(--disabled-text-color)">
 						{`${month}월 총 지급 금액`}
 					</Text>
 					<Flex gap="5px">
 						<HighlightText color="var(--text-color)" bgColor="var(--bg-color)">
 							{formatCurrencyUnit(data?.sumOfPayment)}
 						</HighlightText>
-						<Text typo={isMobileScreen ? 'p' : 'h6'} color="var(--disabled-text-color)">
+						<Text typo={isMobileScreen ? 'p' : 'h7'} color="var(--disabled-text-color)">
 							원
 						</Text>
 					</Flex>
@@ -107,17 +106,17 @@ const ProfileContainer = styled.div`
 	position: relative;
 	margin: 32px 0 64px auto;
 	padding: calc(var(--padding-md) * 0.75) calc(var(--padding-md) * 1.25);
-	width: 40dvw;
-	border: 1px solid var(--color-gray-300);
+	width: 90dvw;
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
-	background-color: var(--btn-hover-light-bg-color);
+	background-color: var(--btn-light-bg-color);
 
-	@media screen and (max-width: 640px) {
-		width: 70dvw;
+	@media screen and (min-width: 640px) {
+		width: 50dvw;
 	}
 `;
 
-const GoBackButton = styled.button`
+const GoBackButton = styled(Button)`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
@@ -126,8 +125,7 @@ const GoBackButton = styled.button`
 	background-color: var(--btn-light-bg-color);
 	outline: 1px solid var(--outline-light-color);
 	outline-offset: 2px;
-	border-radius: var(--radius);
-	transition: background 0.15s ease-in-out;
+	transition: background-color 0.15s ease-in-out;
 
 	&:hover {
 		background-color: var(--btn-hover-light-bg-color);

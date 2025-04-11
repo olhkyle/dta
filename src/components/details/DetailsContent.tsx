@@ -121,7 +121,6 @@ const DetailsContent = ({ year, month, workerName, currentSort }: DetailsContent
 const Table = styled.table<{ searched: boolean }>`
 	display: flex;
 	flex-direction: column;
-	gap: 0.8rem;
 	margin: 32px auto 96px;
 	width: 100%;
 	text-align: center;
@@ -163,8 +162,8 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tbody > tr:hover {
-		border-top: 1px solid var(--color-green-50);
-		border-bottom: 1px solid var(--color-green-50);
+		border-top: 1px solid var(--border-light-color);
+		border-bottom: 1px solid var(--border-light-color);
 		background-color: var(--btn-hover-light-bg-color);
 		cursor: pointer;
 	}
@@ -262,7 +261,7 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	@media screen and (max-width: 640px) {
-		border-color: var(--color-white);
+		border-color: var(--bg-color);
 	}
 `;
 

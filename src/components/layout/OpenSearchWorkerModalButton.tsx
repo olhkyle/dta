@@ -29,7 +29,7 @@ const Container = styled.button`
 	border: 1px solid var(--color-gray-opacity-200);
 	border-radius: var(--radius);
 	z-index: var(--modal-index);
-	transition: background 0.15s ease-in-out;
+	transition: background-color 0.15s ease-in-out;
 
 	&:focus,
 	&:hover {
