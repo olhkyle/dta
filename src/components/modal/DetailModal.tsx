@@ -397,7 +397,7 @@ const Confidential = styled.div`
 	line-height: 24px;
 	border: none;
 	border-radius: var(--radius);
-	background-color: var(--outline-color);
+	background-color: var(--btn-light-bg-color);
 	backdrop-filter: blur(4px);
 	color: var(--color-gray-500);
 `;

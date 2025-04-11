@@ -74,13 +74,13 @@ const Trigger = styled.button`
 	font-size: var(--fz-m);
 	font-weight: var(--fw-semibold);
 	line-height: 1.2;
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 	color: var(--text-color);
 	transition: background 0.15s ease-in-out;
 
 	&:hover {
-		background-color: var(--outline-color);
+		background-color: var(--btn-light-bg-color);
 	}
 
 	@media screen and (min-width: 640px) {
@@ -97,7 +97,7 @@ const Trigger = styled.button`
 const Options = styled.ul`
 	position: absolute;
 	top: 110%;
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 	background-color: var(--bg-color);
 	overflow-y: scroll;

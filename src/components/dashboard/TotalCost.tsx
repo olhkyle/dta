@@ -23,7 +23,7 @@ const TotalCost = ({ year }: TotalCostProps) => {
 };
 
 const Container = styled(Flex)`
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 `;
 export default TotalCost;

@@ -32,7 +32,7 @@ const Container = styled.div`
 	align-items: center;
 	gap: 0.4rem;
 	margin-left: 32px;
-	padding: var(--btn-sm-padding);
+	padding: var(--padding-sm) var(--padding-md);
 	border-radius: var(--radius);
 	background-color: var(--color-green-300);
 	cursor: pointer;

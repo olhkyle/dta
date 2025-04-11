@@ -11,7 +11,7 @@ const GlobalStyle = css`
 		text-size-adjust: 100%;
 
 		--color-black: #191a20;
-		--color-white: #fff;
+		--color-white: #ffffff;
 
 		--color-gray-50: #f9fafb;
 		--color-gray-100: #f2f4f6;
@@ -56,18 +56,8 @@ const GlobalStyle = css`
 		--color-red: #ff4545;
 		--color-dark: #090b16;
 
-		--transition-duration: 0.2;
-
-		--radius: 8px;
-		--radius-extra: 9999px;
-
 		--nav-height: 80px;
 		--footer-height: 60px;
-
-		--btn-sm-padding: 8px 16px;
-		--btn-md-padding: 12px 20px;
-		--btn-lg-padding: 16px 24px;
-		--btn-font-size: 16px;
 
 		--padding-lg: 32px;
 		--padding-md: 16px;
@@ -95,11 +85,16 @@ const GlobalStyle = css`
 		--fw-bold: 700;
 		--fw-black: 900;
 
+		--radius: 8px;
+		--radius-extra: 9999px;
+
 		/* z-index */
 		--nav-index: 50;
 		--sideNav-index: 999;
 		--modal-index: 9990;
 		--toast-index: 9999;
+
+		--transition-duration: 0.2;
 
 		--toastify-color-success: var(--color-green-50);
 		--toastify-color-error: var(--color-red);
@@ -133,50 +128,46 @@ const GlobalStyle = css`
 
 	body[data-theme='light'] {
 		--position-left: 2px;
-		--btn-text-color: var(--color-white);
-		--btn-bg-color: var(--color-dark);
-		--btn-hover-color: var(--color-gray-700);
-		--btn-hover-bg-color: var(--color-gray-900);
-		--outline-color: var(--color-gray-100);
-		--table-border-color: var(--color-gray-opacity-200);
 		--text-color: var(--color-dark);
 		--disabled-text-color: var(--color-gray-600);
 		--bg-color: var(--color-white);
-		--option-hover-bg-color: var(--color-gray-opacity-100);
+		--btn-text-color: var(--color-white);
+		--btn-bg-color: var(--color-dark);
+		--btn-light-bg-color: var(--color-gray-100);
+		--btn-hover-color: var(--color-gray-700);
+		--btn-hover-bg-color: var(--color-gray-900);
+		--btn-hover-light-bg-color: var(--color-gray-100);
+		--border-color: var(--color-gray-100);
+		--border-light-color: var(--color-gray-opacity-200);
+		--outline-light-color: var(--color-gray-opacity-200);
+		--table-border-color: var(--color-gray-opacity-200);
+		--overlay-bg-color: rgb(0 0 0 / 0.15);
 		--skeleton-bg-color: var(--color-gray-opacity-50);
-		--backdrop-blur-bg-color: rgb(0 0 0 / 0.15);
-		--linear-gradient: linear-gradient(to right, #f2f2f2, #ddd, #f2f2f2);
+
 		color: var(--color-dark);
 		background-color: var(--color-white);
 	}
 
 	body[data-theme='dark'] {
 		--position-left: 26px;
-		--btn-text-color: var(--color-dark);
-		--btn-bg-color: var(--color-white);
-		--btn-hover-color: var(--color-gray-200);
-		--btn-hover-bg-color: var(--color-gray-100);
-		--outline-color: var(--color-gray-800);
-		--table-border-color: var(--color-gray-600);
 		--text-color: var(--color-white);
 		--disabled-text-color: var(--color-gray-300);
 		--bg-color: var(--color-dark);
-		--option-hover-bg-color: var(--color-gray-700);
+		--btn-text-color: var(--color-dark);
+		--btn-bg-color: var(--color-white);
+		--btn-light-bg-color: var(--color-gray-800);
+		--btn-hover-color: var(--color-gray-200);
+		--btn-hover-bg-color: var(--color-gray-100);
+		--btn-hover-light-bg-color: var(--color-gray-900);
+		--border-color: var(--color-gray-800);
+		--border-light-color: var(--color-gray-600);
+		--outline-light-color: var(--color-gray-600);
+		--table-border-color: var(--color-gray-600);
+		--overlay-bg-color: rgb(0 0 0/ 0.4);
 		--skeleton-bg-color: var(--color-gray-opacity-800);
-		--backdrop-blur-bg-color: rgb(0 0 0/ 0.4);
-		--linear-gradient: linear-gradient(to right, #3a3d4a, #4b4c53, #3a3d4a);
+
 		color: var(--color-white);
 		background-color: var(--color-dark);
-	}
-
-	html {
-		width: 100%;
-		height: 100%;
-	}
-
-	body {
-		width: 100%;
-		height: 100%;
 	}
 
 	h1,
@@ -246,7 +237,7 @@ const GlobalStyle = css`
 
 	.underlined:after {
 		content: '';
-		height: 3px;
+		height: 2px;
 		transform: scaleX(0);
 		transition: transform 0.25s ease;
 		transform-origin: left;

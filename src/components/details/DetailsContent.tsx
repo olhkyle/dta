@@ -147,8 +147,8 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tbody > tr {
-		border-top: 1px solid var(--outline-color);
-		border-bottom: 1px solid var(--outline-color);
+		border-top: 1px solid var(--border-color);
+		border-bottom: 1px solid var(--border-color);
 
 		transition: all 0.15s ease-out;
 
@@ -165,7 +165,7 @@ const Table = styled.table<{ searched: boolean }>`
 	tbody > tr:hover {
 		border-top: 1px solid var(--color-green-50);
 		border-bottom: 1px solid var(--color-green-50);
-		background-color: var(--option-hover-bg-color);
+		background-color: var(--btn-hover-light-bg-color);
 		cursor: pointer;
 	}
 
@@ -257,7 +257,7 @@ const Table = styled.table<{ searched: boolean }>`
 		backdrop-filter: blur(4px);
 		color: var(--color-gray-600);
 		background-color: var(--color-gray-200);
-		border: 1px solid var(--outline-color);
+		border: 1px solid var(--border-color);
 		border-radius: calc(var(--radius) * 1.5);
 	}
 

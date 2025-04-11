@@ -118,7 +118,7 @@ const Navigation = styled(NavLink)`
 
 const Login = styled(NavLink)`
 	font-size: var(--fz-p);
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: 8px;
 	outline-offset: 2px;
 
@@ -133,9 +133,9 @@ const Name = styled.div`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: var(--btn-sm-padding);
+	padding: var(--padding-sm) var(--padding-md);
 	min-width: 120px;
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: 8px;
 	outline: 1px solid var(--color-green-50);
 	outline-offset: 2px;
@@ -145,7 +145,7 @@ const Name = styled.div`
 const LogoutButton = styled(Button)`
 	position: absolute;
 	bottom: -50px;
-	padding: var(--btn-md-padding);
+	padding: calc(var(--padding-md) * 0.75) calc(var(--padding-md) * 1.25);
 	width: 100%;
 	min-width: 120px;
 	font-size: var(--fz-sm);
@@ -154,7 +154,7 @@ const LogoutButton = styled(Button)`
 	color: var(--text-color);
 	background-color: var(--bg-color);
 	border-radius: 8px;
-	border: 1px solid var(--table-border-color);
+	border: 1px solid var(--border-light-color);
 	text-align: center;
 	transition: font-weight 0.15s ease-in-out;
 

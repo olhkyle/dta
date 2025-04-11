@@ -21,7 +21,7 @@ const Container = styled.footer`
 	padding: 0 var(--padding-md);
 	width: 100%;
 	min-height: var(--footer-height);
-	border-top: 1px solid var(--outline-color);
+	border-top: 1px solid var(--border-color);
 `;
 
 const CopyRight = styled.span`

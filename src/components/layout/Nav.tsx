@@ -82,7 +82,7 @@ const Container = styled.nav<{ isAdmin: boolean }>`
 	position: sticky;
 	top: 0;
 	width: 100%;
-	border-bottom: 1px solid var(--outline-color);
+	border-bottom: 1px solid var(--border-color);
 	backdrop-filter: blur(8px);
 	z-index: var(--nav-index);
 `;
@@ -130,7 +130,7 @@ const Navigation = styled(NavLink)`
 
 	&:hover {
 		color: var(--btn-hover-color);
-		background-color: var(--option-hover-bg-color);
+		background-color: var(--btn-hover-light-bg-color);
 	}
 `;
 

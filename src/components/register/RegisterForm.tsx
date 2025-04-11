@@ -213,7 +213,7 @@ const RegisterForm = () => {
 				</RegisterButton>
 			</Flex>
 			<Flex justifyContent={'center'} width={'100%'}>
-				<HighlightText color={'var(--disabled-text-color)'} bgColor={'var(--outline-color)'} fontSize={'14px'}>
+				<HighlightText color={'var(--disabled-text-color)'} bgColor={'var(--btn-light-bg-color)'} fontSize={'14px'}>
 					💡 추가 등록 시 성명, 주민등록번호, 출력일은 바로 이전에 작성한 내용이 유지됩니다.
 				</HighlightText>
 			</Flex>

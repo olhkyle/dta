@@ -22,7 +22,7 @@ const WorkPlace = () => {
 };
 
 const Container = styled(Flex)`
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 `;
 
@@ -38,7 +38,7 @@ const WorkPlaceList = styled.div`
 		background-color: var(--btn-hover-bg-color);
 		font-size: var(--fz-sm);
 		font-weight: var(--fw-medium);
-		border: 1px solid var(--outline-color);
+		border: 1px solid var(--border-color);
 		border-radius: var(--radius);
 	}
 `;

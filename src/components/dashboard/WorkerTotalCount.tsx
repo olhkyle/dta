@@ -24,7 +24,7 @@ const WorkerTotalCount = ({ year }: WorkerTotalCountProps) => {
 
 const Container = styled(Flex)`
 	padding: var(--padding-md);
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 `;
 

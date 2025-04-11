@@ -101,7 +101,7 @@ const Table = styled.table`
 	}
 
 	tbody > tr {
-		border-bottom: 1px solid var(--outline-color);
+		border-bottom: 1px solid var(--border-color);
 	}
 
 	th {

@@ -106,11 +106,11 @@ const Container = styled.section`
 const ProfileContainer = styled.div`
 	position: relative;
 	margin: 32px 0 64px auto;
-	padding: var(--btn-md-padding);
+	padding: calc(var(--padding-md) * 0.75) calc(var(--padding-md) * 1.25);
 	width: 40dvw;
 	border: 1px solid var(--color-gray-300);
 	border-radius: var(--radius);
-	background-color: var(--option-hover-bg-color);
+	background-color: var(--btn-hover-light-bg-color);
 
 	@media screen and (max-width: 640px) {
 		width: 70dvw;
@@ -123,14 +123,14 @@ const GoBackButton = styled.button`
 	align-items: center;
 	padding: calc(0.3 * var(--padding-md));
 	font-weight: var(--fw-semibold);
-	background-color: var(--outline-color);
-	outline: 1px solid var(--table-border-color);
+	background-color: var(--btn-light-bg-color);
+	outline: 1px solid var(--outline-light-color);
 	outline-offset: 2px;
 	border-radius: var(--radius);
-	transition: all 0.3s ease-in-out 0.15s;
+	transition: background 0.15s ease-in-out;
 
 	&:hover {
-		background-color: var(--option-hover-bg-color);
+		background-color: var(--btn-hover-light-bg-color);
 	}
 `;
 

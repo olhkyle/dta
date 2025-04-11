@@ -5,8 +5,6 @@ const SkeletonItem = styled.div<{
 	height: `${number}px` | `${number}%`;
 	theme: 'light' | 'dark';
 }>`
-	--linear-gradient: linear-gradient(to right, var(--color-green-50), var(--color-gray-50), var(--color-green-50));
-
 	position: relative;
 	width: ${({ width }) => width};
 	height: ${({ height }) => height};
