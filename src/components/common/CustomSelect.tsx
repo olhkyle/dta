@@ -61,6 +61,7 @@ const Select = <T extends number | string>({ data, value: current, setValue, uni
 
 const Container = styled.div`
 	position: relative;
+	display: inline-block;
 	z-index: 10;
 `;
 
@@ -73,14 +74,13 @@ const Trigger = styled.button`
 	font-size: var(--fz-m);
 	font-weight: var(--fw-semibold);
 	line-height: 1.2;
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 	color: var(--text-color);
-	transition: outline 0.15s ease-out;
+	transition: background-color 0.15s ease-in-out;
 
 	&:hover {
-		outline: 1px solid var(--color-gray-400);
-		outline-offset: 1px;
+		background-color: var(--btn-light-bg-color);
 	}
 
 	@media screen and (min-width: 640px) {
@@ -97,7 +97,7 @@ const Trigger = styled.button`
 const Options = styled.ul`
 	position: absolute;
 	top: 110%;
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 	background-color: var(--bg-color);
 	overflow-y: scroll;
@@ -119,12 +119,12 @@ const Option = styled.li<{ isCurrent: boolean }>`
 	font-size: var(--fz-p);
 	font-weight: ${({ isCurrent }) => (isCurrent ? 'var(--fw-bold)' : 'var(--fw-medium)')};
 	color: var(--text-color);
-	transition: all 0.15s ease-in-out;
+	transition: background-color 0.15s ease-in-out, color 0.15s ease-in-out;
 	cursor: pointer;
 
 	&:hover {
-		background-color: var(--color-dark);
-		color: var(--color-white);
+		background-color: var(--btn-bg-color);
+		color: var(--bg-color);
 	}
 
 	@media screen and (min-width: 640px) {

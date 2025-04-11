@@ -47,7 +47,7 @@ const SearchInfo = ({ recentSearchList, loader, isLoading }: SearchInfoProps) =>
 };
 
 const CustomFlex = styled(Flex)`
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
 `;
 
@@ -66,7 +66,7 @@ const RecentSearchList = styled.ul`
 		align-items: center;
 		padding: var(--padding-sm) 0;
 		font-size: var(--fz-rp);
-		border-bottom: 1px solid var(--table-border-color);
+		border-bottom: 1px solid var(--border-light-color);
 	}
 
 	@media screen and (min-width: 768px) {
@@ -80,7 +80,7 @@ const RecentSearchList = styled.ul`
 
 const EmptyMessage = styled.div`
 	padding: var(--padding-sm);
-	background-color: var(--option-hover-bg-color);
+	background-color: var(--btn-hover-light-bg-color);
 	border-radius: var(--radius);
 `;
 

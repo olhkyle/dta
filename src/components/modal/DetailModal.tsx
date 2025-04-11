@@ -16,7 +16,7 @@ import {
 	registerSchema,
 	SubmitHandler,
 	ModalLayout,
-} from '../../components';
+} from '..';
 import { WorkerWithId } from '../../service/workData';
 import { useOverlayFixed, useEditWorkerMutation, useRemoveWorkerMutation } from '../../hooks';
 import { useAppSelector } from '../../store/store';
@@ -99,11 +99,6 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 	};
 
 	const handleRemoveWorkerButton = () => {
-		if (!isAdmin) {
-			toast.warn('Delete Feature is Admin Only');
-			return;
-		}
-
 		removeMutate(
 			{ id: worker.id },
 			{
@@ -150,12 +145,12 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 	};
 
 	return (
-		<>
-			<ModalLayout title={'👨🏻‍💻 일용직 수정'} order={order} onClose={onClose}>
-				<ActionButtons gap="16px">
-					<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
-						{isEditMode ? '수정취소' : '수정하기'}
-					</ModifyButton>
+		<ModalLayout title={'👨🏻‍💻 일용직 수정'} order={order} onClose={onClose}>
+			<ActionButtons gap="16px">
+				<ModifyButton type="button" onClick={toggleAllFieldsDisabled}>
+					{isEditMode ? '수정취소' : '수정하기'}
+				</ModifyButton>
+				{isAdmin && (
 					<ViewWorkerDetailButton
 						type="button"
 						onClick={() => {
@@ -164,60 +159,62 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 						}}>
 						일용직 상세보기
 					</ViewWorkerDetailButton>
-				</ActionButtons>
-				<Group aria-disabled={isEditMode}>
-					<Form onSubmit={handleSubmit(onSubmit)}>
-						<Input label={'성 명'} bottomText={errors?.workerName?.message}>
-							<Input.TextField
-								type={'text'}
-								placeholder={'이름을 입력하세요'}
-								{...register('workerName')}
-								error={errors?.workerName?.message}
-								disabled={!isEditMode}
-							/>
-						</Input>
-						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
-							{isAdmin ? (
-								<>
-									<Input label={'주민등록번호 앞 자리'} bottomText={errors?.registrationNumberFront?.message}>
-										<Input.TextField
-											type={'text'}
-											placeholder={'주민등록번호 앞 6자리'}
-											{...register('registrationNumberFront')}
-											error={errors?.registrationNumberFront?.message}
-											disabled={!isEditMode}
-										/>
-									</Input>
-									<Input label={'주민등록번호 뒷 자리'} bottomText={errors?.registrationNumberBack?.message}>
-										<Input.TextField
-											type={'text'}
-											placeholder={'주민등록번호 뒤 7자리'}
-											{...register('registrationNumberBack')}
-											error={errors?.registrationNumberBack?.message}
-											disabled={!isEditMode}
-										/>
-									</Input>
-								</>
-							) : (
-								<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'}>
-									<div css={{ fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-medium)' }}>주민등록번호</div>
-									<CustomFlex gap={'16px'}>
-										<Confidential>Classified</Confidential>
-										<Confidential>Classified</Confidential>
-									</CustomFlex>
-								</Flex>
-							)}
-						</CustomFlex>
-
-						<Controller
-							name="workedDate"
-							control={control}
-							render={({ field: { value, onChange } }) => (
-								<DatePicker selected={value} setSelected={(date: Date | undefined) => onChange(date)} disabled={!isEditMode} />
-							)}
+				)}
+			</ActionButtons>
+			<Group aria-disabled={isEditMode}>
+				<Form onSubmit={handleSubmit(onSubmit)}>
+					<Input label={'성 명'} bottomText={errors?.workerName?.message}>
+						<Input.TextField
+							type={'text'}
+							placeholder={'이름을 입력하세요'}
+							{...register('workerName')}
+							error={errors?.workerName?.message}
+							disabled={!isEditMode}
 						/>
+					</Input>
+					<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+						{isAdmin ? (
+							<>
+								<Input label={'주민등록번호 앞 자리'} bottomText={errors?.registrationNumberFront?.message}>
+									<Input.TextField
+										type={'text'}
+										placeholder={'주민등록번호 앞 6자리'}
+										{...register('registrationNumberFront')}
+										error={errors?.registrationNumberFront?.message}
+										disabled={!isEditMode}
+									/>
+								</Input>
+								<Input label={'주민등록번호 뒷 자리'} bottomText={errors?.registrationNumberBack?.message}>
+									<Input.TextField
+										type={'text'}
+										placeholder={'주민등록번호 뒤 7자리'}
+										{...register('registrationNumberBack')}
+										error={errors?.registrationNumberBack?.message}
+										disabled={!isEditMode}
+									/>
+								</Input>
+							</>
+						) : (
+							<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
+								<div css={{ fontSize: 'var(--fz-h7)', fontWeight: 'var(--fw-medium)' }}>주민등록번호</div>
+								<Flex gap={'16px'} width={'100%'}>
+									<Confidential>Classified</Confidential>
+									<Confidential>Classified</Confidential>
+								</Flex>
+							</Flex>
+						)}
+					</CustomFlex>
 
-						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+					<Controller
+						name="workedDate"
+						control={control}
+						render={({ field: { value, onChange } }) => (
+							<DatePicker selected={value} setSelected={(date: Date | undefined) => onChange(date)} disabled={!isEditMode} />
+						)}
+					/>
+
+					<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+						{isAdmin ? (
 							<Input label={'근로 지역'} bottomText={errors?.workspace?.message}>
 								<Input.TextField
 									type={'text'}
@@ -227,6 +224,13 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 									disabled={!isEditMode}
 								/>
 							</Input>
+						) : (
+							<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
+								<div css={{ fontSize: 'var(--fz-p)', fontWeight: 'var(--fw-medium)' }}>근로 지역</div>
+								<Confidential>Classified</Confidential>
+							</Flex>
+						)}
+						{isAdmin ? (
 							<Input label={'사업개시번호'} bottomText={errors?.businessNumber?.message}>
 								<Input.TextField
 									type={'text'}
@@ -236,18 +240,25 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 									disabled={!isEditMode}
 								/>
 							</Input>
-						</CustomFlex>
+						) : (
+							<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
+								<div css={{ fontSize: 'var(--fz-p)', fontWeight: 'var(--fw-medium)' }}>사업개시번호</div>
+								<Confidential>Classified</Confidential>
+							</Flex>
+						)}
+					</CustomFlex>
 
-						<CustomFlex alignItems={'flex-start'} gap={'16px'}>
-							<NativeSelect label={'송금 유형'} bottomText={errors?.remittanceType?.message}>
-								<NativeSelect.Field
-									data={['개인', '사업자']}
-									id={'송금 유형'}
-									{...register('remittanceType')}
-									error={errors?.remittanceType?.message}
-									disabled={!isEditMode}
-								/>
-							</NativeSelect>
+					<CustomFlex alignItems={'flex-start'} gap={'16px'}>
+						<NativeSelect label={'송금 유형'} bottomText={errors?.remittanceType?.message}>
+							<NativeSelect.Field
+								data={['개인', '사업자']}
+								id={'송금 유형'}
+								{...register('remittanceType')}
+								error={errors?.remittanceType?.message}
+								disabled={!isEditMode}
+							/>
+						</NativeSelect>
+						{isAdmin ? (
 							<Controller
 								name="payment"
 								control={control}
@@ -273,22 +284,29 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 									</Input>
 								)}
 							/>
-						</CustomFlex>
-						<Input label={'메모/기타'} bottomText={errors?.memo?.message}>
-							<Input.TextField
-								type={'text'}
-								placeholder={'기타 필요한 사항을 기입하세요.'}
-								{...register('memo')}
-								error={errors?.memo?.message}
-								disabled={!isEditMode}
-							/>
-						</Input>
-						{isEditMode && (
-							<UpdateButton type="submit" id="update" disabled={!isEditMode} aria-label="update-button">
-								{isEditMutateLoading ? <SmallLoading /> : '수정하기'}
-							</UpdateButton>
+						) : (
+							<Flex direction={'column'} alignItems={'flex-start'} gap={'8px'} width={'100%'}>
+								<div css={{ fontSize: 'var(--fz-p)', fontWeight: 'var(--fw-medium)' }}>지급 금액</div>
+								<Confidential>Classified</Confidential>
+							</Flex>
 						)}
-						<Flex direction={'column'} margin={'32px 0'} width={'100%'}>
+					</CustomFlex>
+					<Input label={'메모/기타'} bottomText={errors?.memo?.message}>
+						<Input.TextField
+							type={'text'}
+							placeholder={'기타 필요한 사항을 기입하세요.'}
+							{...register('memo')}
+							error={errors?.memo?.message}
+							disabled={!isEditMode}
+						/>
+					</Input>
+					{isEditMode && (
+						<UpdateButton type="submit" id="update" disabled={!isEditMode} aria-label="update-button">
+							{isEditMutateLoading ? <SmallLoading /> : '수정하기'}
+						</UpdateButton>
+					)}
+					{isAdmin && (
+						<Flex direction={'column'} margin={'64px 0 32px'} width={'100%'}>
 							<Text color="var(--btn-hover-color)">
 								해당 정보가 불필요하다면 <strong css={{ textDecoration: 'underline' }}>삭제하기</strong>를 클릭해 주세요🫨
 							</Text>
@@ -296,10 +314,10 @@ const DetailModal = ({ data: { worker, currentSort, date, workerName }, isOpen, 
 								{isRemoveMutateLoading ? <SmallLoading /> : '삭제하기'}
 							</DeleteButton>
 						</Flex>
-					</Form>
-				</Group>
-			</ModalLayout>
-		</>
+					)}
+				</Form>
+			</Group>
+		</ModalLayout>
 	);
 };
 
@@ -307,8 +325,12 @@ const ActionButtons = styled(Flex)`
 	position: sticky;
 	top: -1px;
 	min-height: 48px;
-	background-color: var(--color-white);
+	background-color: var(--bg-color);
 	z-index: var(--modal-index);
+
+	@media screen and (max-width: 640px) {
+		margin-top: 4px;
+	}
 `;
 
 const ModifyButton = styled(Button)`
@@ -374,16 +396,17 @@ const Confidential = styled.div`
 	width: 100%;
 	font-size: var(--fz-rp);
 	font-weight: var(--fw-medium);
-	line-height: 24px;
+	line-height: 1.5;
 	border: none;
 	border-radius: var(--radius);
-	background-color: var(--outline-color);
+	background-color: var(--btn-light-bg-color);
 	backdrop-filter: blur(4px);
 	color: var(--color-gray-500);
 `;
 
 const UpdateButton = styled(Button)`
 	margin: 16px auto 0;
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--color-green-300);
@@ -399,11 +422,12 @@ const DeleteButton = styled(Button)`
 	align-items: center;
 	gap: 0.4rem;
 	margin: 16px auto 0;
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	width: 100%;
 	color: var(--bg-color);
 	border: 1px solid var(--text-color);
 	background-color: var(--btn-bg-color);
-	transition: all 0.1s ease-in-out;
+	transition: background-color 0.1s ease-in-out;
 
 	&:hover {
 		background-color: var(--btn-hover-bg-color);

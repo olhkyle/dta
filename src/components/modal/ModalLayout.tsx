@@ -40,7 +40,7 @@ const Container = styled.div<{ order: number }>`
 	border-radius: var(--radius);
 	transform: translate(-50%, -50%);
 	background-color: var(--bg-color);
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 	z-index: ${({ order }) => `calc(var(--modal-index) + ${order * 10} + 1)`};
 
@@ -71,11 +71,12 @@ const CloseModalButton = styled(Button)`
 	align-items: center;
 	padding: var(--padding-sm);
 	border-radius: var(--radius-extra);
-	background-color: var(--outline-color);
+	background-color: var(--btn-light-bg-color);
+	transition: outline 0.15s ease-in-out;
 
 	&:hover {
-		outline: 1px solid var(--text-color);
-		outline-offset: 2px;
+		outline: 1px solid var(--outline-light-color);
+		outline-offset: 1px;
 	}
 
 	@media screen and (max-width: 640px) {
@@ -102,7 +103,7 @@ const Overlay = styled.div<{ order: number }>`
 	right: 0;
 	bottom: 0;
 	backdrop-filter: blur(3px);
-	background-color: var(--backdrop-blur-bg-color);
+	background-color: var(--overlay-bg-color);
 	z-index: ${({ order }) => `calc(var(--modal-index) + ${order * 10})`};
 	cursor: pointer;
 `;

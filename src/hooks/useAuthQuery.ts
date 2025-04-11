@@ -27,7 +27,7 @@ const useAuthQuery = () => {
 
 							const userData = {
 								...user,
-								name: user.displayName ?? '',
+								name: user.displayName ?? signedUserData.nickname,
 								nickname: signedUserData?.nickname,
 								isAdmin: signedUserData?.isAdmin,
 							};

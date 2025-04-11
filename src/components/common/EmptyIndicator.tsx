@@ -14,7 +14,6 @@ const EmptyIndicator = ({ decoration, label }: EmptyIndicatorProps) => {
 			justifyContent={'center'}
 			alignItems={'center'}
 			gap={'var(--padding-sm)'}
-			margin={'80px auto'}
 			padding={'calc(var(--padding-md) * 4) calc(var(--padding-md) * 2)'}>
 			<Decoration>{decoration}</Decoration>
 			<Label>{label}</Label>
@@ -23,7 +22,8 @@ const EmptyIndicator = ({ decoration, label }: EmptyIndicatorProps) => {
 };
 
 const Container = styled(Flex)`
-	min-height: 320px;
+	margin: 32px auto;
+	min-height: 360px;
 	font-size: var(--fz-rp);
 	font-weight: var(--fw-semibold);
 	text-align: center;
@@ -31,6 +31,7 @@ const Container = styled(Flex)`
 	outline: 1px solid var(--color-gray-200);
 
 	@media screen and (min-width: 640px) {
+		margin: 32px auto 80px;
 		font-size: var(--fz-h6);
 	}
 `;

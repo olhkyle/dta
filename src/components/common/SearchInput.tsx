@@ -56,7 +56,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 );
 
 const Container = styled(Flex)`
-	border-bottom: 5px solid var(--outline-color);
+	border-bottom: 5px solid var(--border-color);
 
 	&:focus-within {
 		border-bottom: 5px solid var(--text-color);
@@ -97,7 +97,7 @@ const RefreshButton = styled(Button)`
 	border-radius: var(--radius-extra);
 
 	&:hover {
-		background-color: var(--outline-color);
+		background-color: var(--btn-light-bg-color);
 	}
 
 	svg {

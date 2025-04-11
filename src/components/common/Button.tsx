@@ -12,12 +12,11 @@ const Button = ({ type, disabled = false, onClick, children, ...props }: ButtonP
 		<button
 			type={type}
 			css={{
-				padding: 'calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2)',
 				borderRadius: 'var(--radius)',
 				fontSize: 'var(--fz-p)',
 				fontWeight: 'var(--fw-semibold)',
 				color: 'var(--text-color)',
-				transition: 'background 0.15s ease-in-out',
+				transition: 'background-color 0.15s ease-in-out',
 			}}
 			disabled={disabled}
 			onClick={onClick}

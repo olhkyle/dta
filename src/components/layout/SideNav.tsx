@@ -94,7 +94,7 @@ const Container = styled.div<{ isShown: boolean }>`
 	border-bottom: ${({ isShown }) => (isShown ? '1px solid var(--color-gray-opacity-200)' : 'none')};
 	overflow: ${({ isShown }) => (isShown ? 'visible' : 'hidden')};
 	z-index: var(--sideNav-index);
-	transition: max-height 0.3s ease-out;
+	transition: max-height 0.3s ease-out, border 0.25s ease-out;
 
 	@media screen and (min-width: 768px) {
 		display: none;
@@ -108,7 +108,7 @@ const Navigation = styled(NavLink)`
 	border-radius: 0;
 	border-top: 1px solid #fff;
 	border-bottom: 1px solid var(--color-gray-opacity-200);
-	transition: all 0.1s ease-in-out 0.05s;
+	transition: color 0.1s ease-in-out 0.05s, border 0.1s ease-in-out 0.05s;
 
 	&:hover {
 		color: var(--color-green-300);
@@ -118,7 +118,7 @@ const Navigation = styled(NavLink)`
 
 const Login = styled(NavLink)`
 	font-size: var(--fz-p);
-	border: 1px solid var(--outline-color);
+	border: 1px solid var(--border-color);
 	border-radius: 8px;
 	outline-offset: 2px;
 
@@ -133,9 +133,9 @@ const Name = styled.div`
 	display: inline-flex;
 	justify-content: center;
 	align-items: center;
-	padding: var(--btn-sm-padding);
-	width: 120px;
-	border: 1px solid var(--outline-color);
+	padding: var(--padding-sm) var(--padding-md);
+	min-width: 120px;
+	border: 1px solid var(--border-color);
 	border-radius: 8px;
 	outline: 1px solid var(--color-green-50);
 	outline-offset: 2px;
@@ -145,7 +145,7 @@ const Name = styled.div`
 const LogoutButton = styled(Button)`
 	position: absolute;
 	bottom: -50px;
-	padding: var(--btn-md-padding);
+	padding: calc(var(--padding-md) * 0.75) calc(var(--padding-md) * 1.25);
 	width: 100%;
 	min-width: 120px;
 	font-size: var(--fz-sm);
@@ -154,7 +154,7 @@ const LogoutButton = styled(Button)`
 	color: var(--text-color);
 	background-color: var(--bg-color);
 	border-radius: 8px;
-	border: 1px solid var(--table-border-color);
+	border: 1px solid var(--border-light-color);
 	text-align: center;
 	transition: font-weight 0.15s ease-in-out;
 

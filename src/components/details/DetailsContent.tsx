@@ -101,9 +101,9 @@ const DetailsContent = ({ year, month, workerName, currentSort }: DetailsContent
 									<td aria-label="tableBody-workedDate">
 										{workedDate.getMonth() + 1}/{workedDate.getDate()}
 									</td>
-									<td aria-label="tableBody-payment">{formatCurrencyUnit(Number(payment))}</td>
+									<td aria-label="tableBody-payment">{isAdmin ? formatCurrencyUnit(Number(payment)) : 'Classified'}</td>
 
-									<td aria-label="tableBody-workspace">{workspace ?? '해당 없음'}</td>
+									<td aria-label="tableBody-workspace">{isAdmin ? workspace ?? '해당 없음' : 'Classified'}</td>
 									<td aria-label="tableBody-businessNumber">
 										{isAdmin ? businessNumber ?? '해당 없음' : <span aria-label="isNotAdmin">Classified</span>}
 									</td>
@@ -121,7 +121,6 @@ const DetailsContent = ({ year, month, workerName, currentSort }: DetailsContent
 const Table = styled.table<{ searched: boolean }>`
 	display: flex;
 	flex-direction: column;
-	gap: 0.8rem;
 	margin: 32px auto 96px;
 	width: 100%;
 	text-align: center;
@@ -147,8 +146,8 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tbody > tr {
-		border-top: 1px solid var(--outline-color);
-		border-bottom: 1px solid var(--outline-color);
+		border-top: 1px solid var(--border-color);
+		border-bottom: 1px solid var(--border-color);
 
 		transition: all 0.15s ease-out;
 
@@ -163,9 +162,9 @@ const Table = styled.table<{ searched: boolean }>`
 	}
 
 	tbody > tr:hover {
-		border-top: 1px solid var(--color-green-50);
-		border-bottom: 1px solid var(--color-green-50);
-		background-color: var(--option-hover-bg-color);
+		border-top: 1px solid var(--border-light-color);
+		border-bottom: 1px solid var(--border-light-color);
+		background-color: var(--btn-hover-light-bg-color);
 		cursor: pointer;
 	}
 
@@ -256,13 +255,13 @@ const Table = styled.table<{ searched: boolean }>`
 		font-size: var(--fz-sm);
 		backdrop-filter: blur(4px);
 		color: var(--color-gray-600);
-		background-color: var(--color-gray-400);
-		border: 1px solid var(--outline-color);
+		background-color: var(--color-gray-200);
+		border: 1px solid var(--border-color);
 		border-radius: calc(var(--radius) * 1.5);
 	}
 
 	@media screen and (max-width: 640px) {
-		border-color: var(--color-white);
+		border-color: var(--bg-color);
 	}
 `;
 

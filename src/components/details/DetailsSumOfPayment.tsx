@@ -2,6 +2,8 @@ import { Badge } from '..';
 import { formatCurrencyUnit } from '../../utils';
 import { useGetWorkersDetailInfiniteQuery } from '../../hooks';
 import { SortOption } from '../../constants';
+import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 
 interface DetailsSumOfPaymentProps {
 	year: number;
@@ -18,9 +20,11 @@ const DetailsSumOfPayment = ({ year, month, workerName, currentSort }: DetailsSu
 		workerName,
 	});
 
+	const isAdmin = useAppSelector(getIsAdmin);
+
 	return (
 		<Badge label={'총 합계'} bgColor={'var(--text-color)'}>
-			{formatCurrencyUnit(data?.pages[0].totalPayment)}
+			{isAdmin ? formatCurrencyUnit(data?.pages[0].totalPayment) : '﹡﹡﹡﹡﹡﹡'}
 		</Badge>
 	);
 };

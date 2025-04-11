@@ -52,7 +52,7 @@ const Container = styled.ul`
 	align-items: center;
 	gap: 8px;
 	padding: calc(var(--padding-sm) * 0.5);
-	background-color: var(--outline-color);
+	background-color: var(--btn-light-bg-color);
 	border-radius: var(--radius);
 
 	@media screen and (min-width: 640px) {
@@ -68,7 +68,7 @@ const Control = styled.li<{ active: boolean }>`
 	border-radius: var(--radius);
 	font-size: var(--fz-m);
 	font-weight: var(--fw-m);
-	background-color: ${({ active }) => (active ? 'var(--bg-color)' : 'var(--outline-color)')};
+	background-color: ${({ active }) => (active ? 'var(--bg-color)' : 'var(--btn-light-bg-color)')};
 	cursor: pointer;
 	box-shadow: ${({ active }) => active && 'rgba(0, 0, 0, 0.12) 0px 1px 2px'};
 

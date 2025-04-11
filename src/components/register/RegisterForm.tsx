@@ -204,7 +204,7 @@ const RegisterForm = () => {
 			<Input label={'메모/기타'} bottomText={errors?.memo?.message}>
 				<Input.TextField type={'text'} placeholder={'기타 필요한 사항을 기입하세요'} {...register('memo')} error={errors?.memo?.message} />
 			</Input>
-			<Flex gap={'16px'} margin={'24px 0 0'}>
+			<Flex gap={'16px'} margin={'24px 0 0'} width={'100%'}>
 				<AdditionalRegisterButton type="submit" id="additionalRegister" aria-label="additional-register-button">
 					{isLoading ? <Loading /> : '추가 등록'}
 				</AdditionalRegisterButton>
@@ -213,7 +213,7 @@ const RegisterForm = () => {
 				</RegisterButton>
 			</Flex>
 			<Flex justifyContent={'center'} width={'100%'}>
-				<HighlightText color={'var(--disabled-text-color)'} bgColor={'var(--outline-color)'} fontSize={'14px'}>
+				<HighlightText color={'var(--disabled-text-color)'} bgColor={'var(--btn-light-bg-color)'} fontSize={'14px'}>
 					💡 추가 등록 시 성명, 주민등록번호, 출력일은 바로 이전에 작성한 내용이 유지됩니다.
 				</HighlightText>
 			</Flex>
@@ -254,6 +254,7 @@ const CustomFlex = styled(Flex)`
 `;
 
 const RegisterButton = styled(Button)`
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--btn-bg-color);
@@ -264,6 +265,7 @@ const RegisterButton = styled(Button)`
 `;
 
 const AdditionalRegisterButton = styled(Button)`
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md) * 1.2);
 	width: 100%;
 	color: var(--btn-text-color);
 	background-color: var(--color-green-50);

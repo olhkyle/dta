@@ -93,10 +93,10 @@ const CalendarSelectorContainer = styled.div<{ active: boolean; disabled: boolea
 	padding: 0 calc(var(--padding-sm) * 0.5);
 	min-height: 48px;
 	min-width: 270px;
-	box-shadow: ${({ active }) => (active ? 'inset 0 0 0 1px var(--text-color)' : 'inset 0 0 0 1px var(--outline-color)')};
+	box-shadow: ${({ active }) => (active ? 'inset 0 0 0 1px var(--text-color)' : 'inset 0 0 0 1px var(--border-color)')};
 	border-radius: var(--radius);
 	background-color: ${({ active, disabled }) =>
-		active ? 'var(--btn-text-color)' : disabled ? 'var(--outline-color)' : 'var(--color-gray-opacity-50)'};
+		active ? 'var(--btn-text-color)' : disabled ? 'var(--btn-light-bg-color)' : 'var(--color-gray-opacity-50)'};
 
 	cursor: pointer;
 
@@ -115,7 +115,7 @@ const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
 	font-size: var(--fz-rp);
 	font-weight: var(--fw-medium);
 	color: ${({ disabled }) => (disabled ? 'var(--disabled-text-color)' : 'var(--text-color)')};
-	background-color: ${({ active, disabled }) => (active ? 'var(--btn-text-color)' : disabled ? 'var(--outline-color)' : 'none')};
+	background-color: ${({ active, disabled }) => (active ? 'var(--btn-text-color)' : disabled ? 'var(--btn-light-bg-color)' : 'none')};
 	border-top-left-radius: var(--radius);
 	border-bottom-left-radius: var(--radius);
 	cursor: pointer;
@@ -124,6 +124,7 @@ const CalendarSelector = styled.input<{ active: boolean; disabled: boolean }>`
 
 const SingleDayPicker = styled(DayPicker)`
 	max-width: 270px;
+
 	.rdp-months {
 		width: 240px;
 	}
@@ -131,8 +132,8 @@ const SingleDayPicker = styled(DayPicker)`
 	.rdp-month {
 		margin-left: -1rem;
 		padding: var(--padding-md);
-		border: 1px solid var(--outline-color);
-		border-radius: 12px;
+		border: 1px solid var(--border-color);
+		border-radius: calc(var(--radius) * 1.5);
 	}
 
 	.rdp-day_selected {

@@ -38,7 +38,7 @@ const StyledToastContainer = styled(ToastContainer)`
 		color: var(--text-color);
 		border-radius: calc(var(--radius) * 1.5);
 		background-color: var(--bg-color);
-		border: 1px solid var(--outline-color);
+		border: 1px solid var(--border-color);
 	}
 `;
 

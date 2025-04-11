@@ -7,6 +7,8 @@ import { useGetWorkersOverviewQuery, useTheme } from '../../hooks';
 import { type DisplayValues, displayType, getBarChartData, getBarChartOptions, SortOption } from '../../constants';
 import { sortWorkerData } from '../../service/utils';
 import { formatCurrencyUnit } from '../../utils';
+import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 
 interface OverviewContentProps {
 	year: number;
@@ -21,6 +23,7 @@ Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 const OverviewContent = ({ year, month, workerName, currentSort, currentDisplayType }: OverviewContentProps) => {
 	const data = useGetWorkersOverviewQuery({ year, month, workerName });
 	const [theme] = useTheme();
+	const isAdmin = useAppSelector(getIsAdmin);
 
 	const chartOptions = getBarChartOptions({ title: `${month}월 일용직 [원/₩]` });
 
@@ -54,7 +57,7 @@ const OverviewContent = ({ year, month, workerName, currentSort, currentDisplayT
 								</td>
 								<td aria-label="tableBody-workerName">{workerName}</td>
 								<td aria-label="tableBody-monthOfWorkedDate">{workedDate.getMonth() + 1}월</td>
-								<td aria-label="tableBody-sumOfPayment">{formatCurrencyUnit(sumOfPayment)}</td>
+								<td aria-label="tableBody-sumOfPayment">{isAdmin ? formatCurrencyUnit(sumOfPayment) : 'Classified'}</td>
 							</tr>
 						))}
 					</tbody>
@@ -98,7 +101,7 @@ const Table = styled.table`
 	}
 
 	tbody > tr {
-		border-bottom: 1px solid var(--outline-color);
+		border-bottom: 1px solid var(--border-color);
 	}
 
 	th {

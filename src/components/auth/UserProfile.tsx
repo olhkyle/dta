@@ -1,6 +1,9 @@
 import { ReactNode } from 'react';
 import styled from '@emotion/styled';
 import profileEmoji from '../../assets/profile.webp';
+import { Button, Flex } from '../common';
+import { Link } from 'react-router-dom';
+import { routes } from '../../constants';
 
 interface UserProfileProps {
 	name: string;
@@ -14,14 +17,17 @@ const UserProfile = ({ name, isAdmin, isLoading, Loading, onLogout }: UserProfil
 	return (
 		<Container>
 			{isAdmin && (
-				<ImgContainer>
+				<ImageBlock>
 					<img src={profileEmoji} alt="profile emoji" />
-				</ImgContainer>
+				</ImageBlock>
 			)}
 			<Name>{name}</Name>
-			<button type="button" onClick={onLogout}>
-				{isLoading ? <Loading /> : '로그아웃'}
-			</button>
+			<CustomFlex direction={'column'} aria-haspopup="true">
+				<LogoutButton type="button" onClick={onLogout}>
+					{isLoading ? <Loading aria-label="isLoading" /> : '로그아웃'}
+				</LogoutButton>
+				{isAdmin && <DashboardLink to={routes.DASHBOARD}>Dashboard</DashboardLink>}
+			</CustomFlex>
 		</Container>
 	);
 };
@@ -32,40 +38,58 @@ const Container = styled.div`
 	align-items: center;
 	gap: 0.4rem;
 	margin-left: 32px;
-	padding: var(--btn-sm-padding);
+	padding: var(--padding-sm) var(--padding-md);
 	border-radius: var(--radius);
 	background-color: var(--color-green-300);
 	cursor: pointer;
+	transition: all 0.15s ease-in-out;
 
-	button {
-		position: absolute;
-		top: 100%;
-		left: 0;
-		margin-top: 0.4rem;
-		padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md));
-		width: 100%;
-		color: var(--text-color);
-		border: 1px solid var(--color-gray-200);
-		border-radius: var(--radius);
-		background-color: var(--bg-color);
-		opacity: 0;
-		visibility: hidden;
-		transition: opacity 0.3s ease-in-out 0.15s, visibility 0.3s ease-in-out 0.15s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s,
-			-webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s;
-
-		&:hover {
-			transition: all 0.15s ease-in-out;
-			font-weight: var(--fw-semibold);
-		}
-	}
-
-	&:hover button {
+	&:hover > div[aria-haspopup='true'] {
 		opacity: 1;
 		visibility: visible;
 	}
 `;
 
-const ImgContainer = styled.div`
+const CustomFlex = styled(Flex)`
+	position: absolute;
+	top: 100%;
+	left: 0;
+	margin-top: 6px;
+	padding: calc(var(--padding-sm) * 0.5);
+	background-color: var(--bg-color);
+	border: 1px solid var(--color-gray-200);
+	border-radius: var(--radius);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 0.3s ease-in-out 0.15s, visibility 0.3s ease-in-out 0.15s, transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s,
+		-webkit-transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1) 0.45s;
+`;
+
+const LogoutButton = styled(Button)`
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md));
+	width: 100%;
+	color: var(--text-color);
+	background-color: var(--bg-color);
+
+	&:hover {
+		background-color: var(--btn-light-bg-color);
+	}
+`;
+
+const DashboardLink = styled(Link)`
+	padding: calc(var(--padding-md) * 0.8) calc(var(--padding-md));
+	width: 100%;
+	color: var(--text-color);
+	background-color: var(--bg-color);
+	font-weight: var(--fw-semibold);
+	border-radius: var(--radius);
+
+	&:hover {
+		background-color: var(--btn-light-bg-color);
+	}
+`;
+
+const ImageBlock = styled.div`
 	display: none;
 	justify-content: center;
 	align-items: center;

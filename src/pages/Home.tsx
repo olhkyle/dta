@@ -57,7 +57,7 @@ const About = styled.div`
 	padding: var(--padding-md);
 	width: 300px;
 	font-size: var(--fz-p);
-	background-color: var(--option-hover-bg-color);
+	background-color: var(--btn-hover-light-bg-color);
 	color: var(--text-color);
 	border-radius: var(--radius);
 
