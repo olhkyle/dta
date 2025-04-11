@@ -5,6 +5,7 @@ import { queryKey } from '../../constants';
 import { getWorkersOverviewByYear } from '../../service/workData';
 import { formatCurrencyUnit } from '../../utils';
 import { WorkerQuery } from '../../queries';
+import { useMediaQuery } from '../../hooks';
 
 interface TotalCostSumOfPaymentProps {
 	year: WorkerQuery['year'];
@@ -16,9 +17,11 @@ const TotalCostSumOfPayment = ({ year }: TotalCostSumOfPaymentProps) => {
 		queryFn: () => getWorkersOverviewByYear({ year }),
 	});
 
+	const isMobile = useMediaQuery('(max-width: 640px)');
+
 	return (
 		<Content>
-			<FaWonSign size="32" color="var(--text-color)" />
+			<FaWonSign size={isMobile ? '24' : '32'} color="var(--text-color)" />
 			<div>{formatCurrencyUnit(data?.sumOfPayment)}</div>
 		</Content>
 	);
