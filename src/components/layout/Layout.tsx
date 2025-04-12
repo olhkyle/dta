@@ -17,7 +17,7 @@ const Layout = () => {
 	const isLoggined = user.name.length > 0 && user.nickname !== 'test-id' && user.isAdmin;
 
 	return (
-		<Suspense fallback={<LayoutLoading type={'lg'} />}>
+		<Suspense fallback={<LayoutLoading type={'lg'} asChild={false} />}>
 			<Nav />
 			<Main>
 				<Suspense fallback={<LayoutLoading type={'lg'} />}>
