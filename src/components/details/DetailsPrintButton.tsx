@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { routes, SortOption } from '../../constants';
 import { useGetWorkersDetailInfiniteQuery } from '../../hooks';
-import { sortByNameAndWorkedDate } from '../../service/workData';
+import { sortWorkersByNameAndWorkedDate } from '../../service/workData';
 import { getIsAdmin } from '../../store/userSlice';
 import { useAppSelector } from '../../store/store';
 
@@ -26,7 +26,7 @@ const DetailsPrintButton = ({ year, month, workerName, currentSort }: DetailsPri
 
 	const navigate = useNavigate();
 	const isAdmin = useAppSelector(getIsAdmin);
-	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
+	const workers = sortWorkersByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
 
 	return (
 		<PrintButton
