@@ -1,9 +1,8 @@
 import { Suspense, useState } from 'react';
 import styled from '@emotion/styled';
-import { LayoutLoading, OverviewControllerLoader, SearchInput } from '../components';
+import { LayoutLoading, OverviewControllerLoader, SearchInput, OverviewContent, OverviewController } from '../components';
 import { useDebounce } from '../hooks';
 import { type DisplayValues, monthOfToday, yearOfToday, SortOption, displayType } from '../constants';
-import { OverviewContent, OverviewController } from '../components';
 
 const OverViewPage = () => {
 	const [inputValue, setInputValue] = useState('');
