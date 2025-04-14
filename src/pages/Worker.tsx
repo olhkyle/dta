@@ -7,7 +7,7 @@ import { Button, Circle, Flex, HighlightText, Text } from '../components';
 import { useGetWorkersDetailQuery, useMediaQuery, useTheme } from '../hooks';
 import { useAppSelector } from '../store/store';
 import { getIsAdmin } from '../store/userSlice';
-import { getBarChartData, getBarChartOptions, routes } from '../constants';
+import { getBarChartData, getChartOptions, routes } from '../constants';
 import { formatCurrencyUnit } from '../utils';
 
 Chart.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
@@ -33,8 +33,9 @@ const WorkerPage = () => {
 		workerName,
 	});
 
-	const chartOptions = getBarChartOptions({
+	const chartOptions = getChartOptions({
 		title: `${month}월 [원 / ₩]`,
+		theme,
 	});
 
 	const chartData = getBarChartData({
@@ -90,7 +91,9 @@ const WorkerPage = () => {
 					</Flex>
 				</Flex>
 			</ProfileContainer>
-			<Bar data={chartData} options={chartOptions} />
+			<Flex justifyContent={'center'} width={'100%'} height={isMobileScreen ? '360px' : '500px'}>
+				<Bar data={chartData} options={chartOptions} />
+			</Flex>
 		</Container>
 	);
 };
