@@ -3,7 +3,7 @@ import { BsBoxSeam } from 'react-icons/bs';
 import { DetailModal, EmptyIndicator, SmallLoading } from '..';
 import { SortOption } from '../../constants';
 import { useGetWorkersDetailInfiniteQuery, useInfiniteScroll } from '../../hooks';
-import { sortByNameAndWorkedDate, WorkerWithId } from '../../service/workData';
+import { sortWorkersByNameAndWorkedDate, WorkerWithId } from '../../service/workData';
 import { formatCurrencyUnit } from '../../utils';
 import { useAppDispatch, useAppSelector } from '../../store/store';
 import { open } from '../../store/modalSlice';
@@ -28,7 +28,7 @@ const DetailsContent = ({ year, month, workerName, currentSort }: DetailsContent
 	const isAdmin = useAppSelector(getIsAdmin);
 	const ref = useInfiniteScroll(fetchNextPage);
 
-	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
+	const workers = sortWorkersByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
 
 	const openModal = (data: WorkerWithId) =>
 		dispatch(

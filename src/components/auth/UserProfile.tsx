@@ -23,10 +23,10 @@ const UserProfile = ({ name, isAdmin, isLoading, Loading, onLogout }: UserProfil
 			)}
 			<Name>{name}</Name>
 			<CustomFlex direction={'column'} aria-haspopup="true">
+				{isAdmin && <DashboardLink to={routes.DASHBOARD}>대시보드</DashboardLink>}
 				<LogoutButton type="button" onClick={onLogout}>
 					{isLoading ? <Loading aria-label="isLoading" /> : '로그아웃'}
 				</LogoutButton>
-				{isAdmin && <DashboardLink to={routes.DASHBOARD}>Dashboard</DashboardLink>}
 			</CustomFlex>
 		</Container>
 	);
@@ -36,7 +36,7 @@ const Container = styled.div`
 	position: relative;
 	display: flex;
 	align-items: center;
-	gap: 0.4rem;
+	gap: 6px;
 	margin-left: 32px;
 	padding: var(--padding-sm) var(--padding-md);
 	border-radius: var(--radius);

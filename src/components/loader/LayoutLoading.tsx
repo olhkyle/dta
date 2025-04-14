@@ -3,6 +3,7 @@ import { Flex } from '../common';
 
 interface LoadingProps {
 	type?: 'md' | 'lg';
+	asChild?: boolean;
 }
 
 type LoadingSvgProps = Omit<LoadingProps, 'margin'>;
@@ -33,10 +34,10 @@ const LoadingSvg = ({ type = 'md' }: LoadingSvgProps) => (
 	</Svg>
 );
 
-const LayoutLoading = ({ type = 'md' }: LoadingProps) => {
+const LayoutLoading = ({ type = 'md', asChild = true }: LoadingProps) => {
 	return (
-		<Flex margin={'0 auto'} width={'100dvw'} height={'calc(100dvh - var(--nav-height) - var(--footer-height))'}>
-			<LoadingSvg type={type} />
+		<Flex margin={'0 auto'} width={'100dvw'} height={asChild ? 'calc(100dvh - var(--nav-height) - var(--footer-height))' : '100dvh'}>
+			<LoadingSvg type={type} asChild={asChild} />
 		</Flex>
 	);
 };

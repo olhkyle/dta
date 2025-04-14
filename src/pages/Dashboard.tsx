@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styled from '@emotion/styled';
-import { CustomSelect, EmptyIndicator, Flex, TotalCost, WorkerTotalCount, WorkPlace } from '../components';
+import { CustomSelect, Flex, TotalCost, WorkerExpenseChart, WorkerList, WorkerTotalCount, WorkSpace } from '../components';
 import { yearOfToday, years } from '../constants';
 
 const DashboardPage = () => {
@@ -15,10 +15,13 @@ const DashboardPage = () => {
 				<Overview>
 					<TotalCost year={currentYear} />
 					<WorkerTotalCount year={currentYear} />
-					<WorkPlace />
+					<WorkSpace year={currentYear} />
 				</Overview>
+				<ChartAndList>
+					<WorkerExpenseChart />
+					<WorkerList year={currentYear} />
+				</ChartAndList>
 			</DataViews>
-			<EmptyIndicator decoration={'🛹'} label={'대시보드 추가 예정입니다'} />
 		</Container>
 	);
 };
@@ -38,11 +41,22 @@ const DataViews = styled.div``;
 const Overview = styled.div`
 	display: grid;
 	grid-template-columns: 1fr;
-	gap: 8px;
+	gap: 16px;
 	margin-top: 16px;
 
 	@media screen and (min-width: 768px) {
 		grid-template-columns: repeat(3, 1fr);
+	}
+`;
+
+const ChartAndList = styled.div`
+	display: grid;
+	grid-template-columns: 1fr;
+	gap: 32px;
+	margin-top: 16px;
+
+	@media screen and (min-width: 768px) {
+		grid-template-columns: 2fr 1fr;
 	}
 `;
 

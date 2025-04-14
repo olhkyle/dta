@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import { SegmentedControl } from '..';
 import { controls, SortOption } from '../../constants';
 import { useGetWorkersDetailInfiniteQuery } from '../../hooks';
-import { sortByNameAndWorkedDate } from '../../service/workData';
+import { sortWorkersByNameAndWorkedDate } from '../../service/workData';
 
 interface DetailsSegmentedControlProps {
 	year: number;
@@ -20,7 +20,7 @@ const DetailsSegmentedControl = ({ year, month, workerName, currentSort, setCurr
 		workerName,
 	});
 
-	const workers = sortByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
+	const workers = sortWorkersByNameAndWorkedDate(data?.pages.map(({ paginationData }) => paginationData.data).flat() ?? [], currentSort);
 
 	return <SegmentedControl data={controls} value={currentSort} setValue={setCurrentControl} hasData={workers?.length !== 0} />;
 };

@@ -12,13 +12,33 @@ interface UniqueWorker extends WorkerWithId {
 	sumOfPayment?: number;
 }
 
-type WorkersDetailBySort = ReturnType<typeof sortByNameAndWorkedDate>;
+type WorkersDetailBySort = ReturnType<typeof sortWorkersByNameAndWorkedDate>;
 
 const COLLECTION_NAME = 'people';
 const LIMIT_SIZE_PER_PAGE = 20;
 
-const sortWorkersDataByWorkedDate = <T extends WorkerWithId>(data: T[], sortOption: SortOption) => {
+const sortWorkersByWorkedDate = <T extends WorkerWithId>(data: T[], sortOption: SortOption) => {
 	return data?.sort((prev, curr) => (sortOption === 'asc' ? prev?.workedDate - curr?.workedDate : curr?.workedDate - prev?.workedDate));
+};
+
+const sortWorkersByNameAndWorkedDate = (workers: WorkerWithId[], sortOption: SortOption = 'asc') => {
+	return Object.values(
+		sortWorkerData(workers, sortOption).reduce<{ [key: string]: WorkerWithId[] }>((acc, worker) => {
+			const { workerName } = worker;
+			if (!acc[workerName]) {
+				acc[workerName] = [];
+			}
+
+			acc[workerName].push(worker);
+			return acc;
+		}, {}),
+	).flatMap((groupedWorkers, pos) =>
+		sortWorkersByWorkedDate(groupedWorkers, sortOption).map((worker, idx) => ({
+			...worker,
+			position: pos,
+			isFirstIdxOfArr: idx === 0,
+		})),
+	);
 };
 
 const addSumOfPaymentForEachWorker = (data: WorkersQueryData, sortOption: SortOption = 'asc') =>
@@ -45,59 +65,16 @@ const getSumOfPaymentByWorkerName = (data: WorkersQueryData, targetName: string)
 
 const checkExist = (workers: WorkerWithId[], targetName: string) => workers.find(({ workerName }) => workerName === targetName);
 
-const sortByNameAndWorkedDate = (workers: WorkerWithId[], sortOption: SortOption = 'asc') => {
-	return Object.values(
-		sortWorkerData(workers, sortOption).reduce<{ [key: string]: WorkerWithId[] }>((acc, worker) => {
-			const { workerName } = worker;
-			if (!acc[workerName]) {
-				acc[workerName] = [];
-			}
+const getWorkersWithDailyCount = (workers: WorkerWithId[]) =>
+	workers.reduce<{ [key: string]: number }>((acc, curr) => {
+		if (!acc[curr.workerName]) {
+			acc[curr.workerName] = 0;
+		}
 
-			acc[workerName].push(worker);
-			return acc;
-		}, {}),
-	).flatMap((groupedWorkers, pos) =>
-		sortWorkersDataByWorkedDate(groupedWorkers, sortOption).map((worker, idx) => ({
-			...worker,
-			position: pos,
-			isFirstIdxOfArr: idx === 0,
-		})),
-	);
-};
+		acc[curr.workerName] += 1;
 
-const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pageParam }: WorkersPaginationQuery) => {
-	const collectionRef = collection(db, COLLECTION_NAME);
-
-	const searchConditionByMonth = (year: number, month: number) =>
-		and(where('workedDate', '<', new Date(year, month, 1)), where('workedDate', '>=', new Date(year, month - 1, 1)));
-
-	const orderCondition = orderBy('workedDate', inOrder);
-	const createdAtCondition = orderBy('createdAt', inOrder);
-
-	const q = query(collectionRef, searchConditionByMonth(year, month), orderCondition, createdAtCondition);
-
-	const [paginationData, dataSnapshot] = await Promise.all([
-		paginationQuery({
-			collectionRef,
-			pageParam,
-			searchCondition: searchConditionByMonth(year, month),
-			orderCondition,
-			createdAtCondition,
-			limitSizePerPage: LIMIT_SIZE_PER_PAGE,
-		}),
-		getDocs(q),
-	]);
-
-	const filteredData = {
-		...paginationData,
-		data: paginationData.data.filter(worker => new RegExp(workerName, 'g').test(worker.workerName)),
-	};
-
-	return {
-		paginationData: filteredData,
-		totalPayment: specifySnapshotIntoData(dataSnapshot).reduce((acc, curr) => (acc += +curr.payment), 0),
-	};
-};
+		return acc;
+	}, {});
 
 const getWorkersByYearAndMonth = async ({ inOrder = 'asc', year, month, workerName }: WorkerQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
@@ -135,9 +112,10 @@ const getWorkersByYear = async ({ year }: Pick<WorkerQuery, 'year'>) => {
 	const dataSnapshot = await getDocs(queryByYear(year));
 
 	const workers = specifySnapshotIntoData(dataSnapshot);
+	const allWorkspaces = [...new Set(workers.map(({ workspace }) => workspace))];
 	const totalCount = [...new Set(workers.map(({ workerName }) => workerName))].length;
 
-	return { workers, totalCount };
+	return { workers, allWorkspaces, totalCount };
 };
 
 const getWorkersOverviewByYearAndMonth = async ({ year, month, workerName }: WorkerQuery) => {
@@ -155,6 +133,8 @@ const getWorkersOverviewByYear = async ({ year }: Pick<WorkerQuery, 'year'>) => 
 	return {
 		sumOfPayment: getSumOfPaymentByDefault(data),
 		totalCount: data.totalCount,
+		allWorkspaces: data.allWorkspaces,
+		workersList: getWorkersWithDailyCount(data.workers),
 	};
 };
 
@@ -162,9 +142,43 @@ const getWorkersDetail = async ({ inOrder, year, month, workerName }: WorkerQuer
 	const data = await getWorkersByYearAndMonth({ inOrder, year, month, workerName });
 
 	return {
-		workers: sortByNameAndWorkedDate(data?.workers, inOrder),
+		workers: sortWorkersByNameAndWorkedDate(data?.workers, inOrder),
 		totalLength: data?.totalLength,
 		sumOfPayment: data?.workers.reduce((acc, worker) => (acc += +worker.payment), 0),
+	};
+};
+
+const getWorkersDetailByPage = async ({ inOrder, year, month, workerName, pageParam }: WorkersPaginationQuery) => {
+	const collectionRef = collection(db, COLLECTION_NAME);
+
+	const searchConditionByMonth = (year: number, month: number) =>
+		and(where('workedDate', '<', new Date(year, month, 1)), where('workedDate', '>=', new Date(year, month - 1, 1)));
+
+	const orderCondition = orderBy('workedDate', inOrder);
+	const createdAtCondition = orderBy('createdAt', inOrder);
+
+	const q = query(collectionRef, searchConditionByMonth(year, month), orderCondition, createdAtCondition);
+
+	const [paginationData, dataSnapshot] = await Promise.all([
+		paginationQuery({
+			collectionRef,
+			pageParam,
+			searchCondition: searchConditionByMonth(year, month),
+			orderCondition,
+			createdAtCondition,
+			limitSizePerPage: LIMIT_SIZE_PER_PAGE,
+		}),
+		getDocs(q),
+	]);
+
+	const filteredData = {
+		...paginationData,
+		data: paginationData.data.filter(worker => new RegExp(workerName, 'g').test(worker.workerName)),
+	};
+
+	return {
+		paginationData: filteredData,
+		totalPayment: specifySnapshotIntoData(dataSnapshot).reduce((acc, curr) => (acc += +curr.payment), 0),
 	};
 };
 
@@ -195,6 +209,7 @@ const removeWorker = async ({ id }: { id: string }) => {
 
 export type { WorkersDetailBySort };
 export {
+	sortWorkersByNameAndWorkedDate,
 	getWorkersDetailByPage,
 	getWorkersByYearAndMonth,
 	getWorkersOverviewByYearAndMonth,
@@ -204,5 +219,4 @@ export {
 	addWorker,
 	editWorker,
 	removeWorker,
-	sortByNameAndWorkedDate,
 };
