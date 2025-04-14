@@ -14,7 +14,8 @@ const EmptyIndicator = ({ decoration, label }: EmptyIndicatorProps) => {
 			justifyContent={'center'}
 			alignItems={'center'}
 			gap={'var(--padding-sm)'}
-			padding={'calc(var(--padding-md) * 4) calc(var(--padding-md) * 2)'}>
+			padding={'calc(var(--padding-md) * 4) calc(var(--padding-md) * 2)'}
+			width={'100%'}>
 			<Decoration>{decoration}</Decoration>
 			<Label>{label}</Label>
 		</Container>
