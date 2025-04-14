@@ -1,23 +1,20 @@
-import { Suspense } from 'react';
 import styled from '@emotion/styled';
 import { IoMdPerson } from 'react-icons/io';
-import { Flex, Label, WorkerTotalCountItem, WorkerTotalCountItemLoader } from '..';
-import { WorkerQuery } from '../../queries';
+import { Flex, Label, WorkerTotalCountItem } from '..';
+import { WorkersOverviewDashboardData } from '../../service/workData';
 
 interface WorkerTotalCountProps {
-	year: WorkerQuery['year'];
+	data?: WorkersOverviewDashboardData;
 }
 
-const WorkerTotalCount = ({ year }: WorkerTotalCountProps) => {
+const WorkerTotalCount = ({ data }: WorkerTotalCountProps) => {
 	return (
 		<Container direction={'column'} justifyContent={'space-between'} alignItems={'flex-start'} gap={'8px'} padding={'var(--padding-md)'}>
 			<Label>
 				<div>총 일용직</div>
 				<IoMdPerson size="21" color="var(--color-gray-500)" />
 			</Label>
-			<Suspense fallback={<WorkerTotalCountItemLoader />}>
-				<WorkerTotalCountItem year={year} />
-			</Suspense>
+			<WorkerTotalCountItem data={data} />
 		</Container>
 	);
 };

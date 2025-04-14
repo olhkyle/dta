@@ -3,8 +3,8 @@ import { Chart, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend }
 import { Bar } from 'react-chartjs-2';
 import { BsBoxSeam } from 'react-icons/bs';
 import { EmptyIndicator, Flex, HighlightText } from '..';
-import { useGetWorkersOverviewQuery, useTheme } from '../../hooks';
-import { type DisplayValues, displayType, getBarChartData, getBarChartOptions, SortOption } from '../../constants';
+import { useGetWorkersOverviewQuery, useMediaQuery, useTheme } from '../../hooks';
+import { type DisplayValues, displayType, getBarChartData, getChartOptions, SortOption } from '../../constants';
 import { sortWorkerData } from '../../service/utils';
 import { formatCurrencyUnit } from '../../utils';
 import { useAppSelector } from '../../store/store';
@@ -25,13 +25,16 @@ const OverviewContent = ({ year, month, workerName, currentSort, currentDisplayT
 	const [theme] = useTheme();
 	const isAdmin = useAppSelector(getIsAdmin);
 
-	const chartOptions = getBarChartOptions({ title: `${month}월 일용직 [원/₩]` });
+	const isMobile = useMediaQuery('(max-width: 640px)');
+	const chartOptions = getChartOptions({ title: `${month}월 일용직 [${isMobile ? '1000' : ''}원/₩]`, theme });
 
 	const chartData = getBarChartData({
 		theme,
 		labels: sortWorkerData(data?.workers ?? [], currentSort).map(({ workerName }) => workerName),
 		barPercentage: 0.75,
-		data: sortWorkerData(data?.workers ?? [], currentSort).map(({ sumOfPayment }) => sumOfPayment),
+		data: sortWorkerData(data?.workers ?? [], currentSort).map(({ sumOfPayment }) =>
+			isMobile ? [...`${sumOfPayment}`].slice(0, 4).join('') : sumOfPayment,
+		),
 	});
 	return (
 		<>
@@ -63,10 +66,10 @@ const OverviewContent = ({ year, month, workerName, currentSort, currentDisplayT
 					</tbody>
 				</Table>
 			) : (
-				<Flex direction={'column'} margin={'48px 0'}>
+				<Flex direction={'column'} margin={'48px 0'} width={'100%'} height={isMobile ? '360px' : '500px'}>
 					<Bar data={chartData} options={chartOptions} />
 					<ResponsiveFlex justifyContent={'flex-end'} margin={'32px 0'}>
-						<HighlightText color={'var(--bg-color)'} bgColor={'var(--text-color)'} fontSize={'var(--fz-sm)'}>
+						<HighlightText color={'var(--disabled-text-color)'} bgColor={'var(--btn-light-bg-color)'} fontSize={'var(--fz-sm)'}>
 							💡 현재 화면 사이즈에서는 차트의 정확한 데이터를 파악하기 어렵습니다
 						</HighlightText>
 					</ResponsiveFlex>
