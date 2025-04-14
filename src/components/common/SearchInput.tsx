@@ -21,7 +21,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 				justifyContent={'space-between'}
 				alignItems={'center'}
 				gap={'16px'}
-				margin={' 48px auto 64px'}
+				margin={'48px auto 64px'}
 				padding={'var(--padding-md) var(--padding-sm) 0'}
 				maxWidth={'960px'}
 				width={'100%'}>
@@ -56,6 +56,7 @@ const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
 );
 
 const Container = styled(Flex)`
+	margin-top: 24px;
 	border-bottom: 5px solid var(--border-color);
 
 	&:focus-within {
@@ -64,7 +65,7 @@ const Container = styled(Flex)`
 
 	@media screen and (max-width: 640px) {
 		gap: 8px;
-		padding: var(--padding-sm) var(--padding-sm) var(--padding-md) var(--padding-md);
+		padding: var(--padding-md) var(--padding-sm) var(--padding-md) var(--padding-md);
 		max-width: 360px;
 	}
 

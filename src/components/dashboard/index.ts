@@ -1,4 +1,6 @@
 export { default as Content } from './Content';
+export { default as DashboardContent } from './DashboardContent';
+export { default as ExpenseLineChart } from './ExpenseLineChart';
 export { default as Label } from './Label';
 export { default as TotalCost } from './TotalCost';
 export { default as TotalCostSumOfPayment } from './TotalCostSumOfPayment';

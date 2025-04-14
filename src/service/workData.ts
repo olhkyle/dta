@@ -3,6 +3,7 @@ import { db } from './firebase';
 import { Worker } from '../components/register/RegisterForm';
 import { WorkerQuery, WorkersPaginationQuery, WorkersQueryData } from '../queries';
 import { SortOption, paginationQuery, sortWorkerData, specifySnapshotIntoData } from './utils';
+import { months } from '../constants';
 
 export interface WorkerWithId extends Worker {
 	id: string;
@@ -13,6 +14,7 @@ interface UniqueWorker extends WorkerWithId {
 }
 
 type WorkersDetailBySort = ReturnType<typeof sortWorkersByNameAndWorkedDate>;
+type WorkersOverviewDashboardData = Awaited<ReturnType<typeof getWorkersOverviewByYear>>;
 
 const COLLECTION_NAME = 'people';
 const LIMIT_SIZE_PER_PAGE = 20;
@@ -76,6 +78,22 @@ const getWorkersWithDailyCount = (workers: WorkerWithId[]) =>
 		return acc;
 	}, {});
 
+const getTotalExpensesPerMonth = (workers: WorkerWithId[]) => {
+	const totalExpensePerMonth = workers.reduce<{ [key: string]: number }>((acc, curr) => {
+		const month = curr.workedDate.getMonth() + 1;
+
+		if (!acc[month]) {
+			acc[month] = 0;
+		}
+
+		acc[month] += +curr.payment;
+
+		return acc;
+	}, {});
+
+	return [...months].reverse().map(month => ({ month: month, price: totalExpensePerMonth[month] ?? 0 }));
+};
+
 const getWorkersByYearAndMonth = async ({ inOrder = 'asc', year, month, workerName }: WorkerQuery) => {
 	const collectionRef = collection(db, COLLECTION_NAME);
 
@@ -134,6 +152,7 @@ const getWorkersOverviewByYear = async ({ year }: Pick<WorkerQuery, 'year'>) => 
 		sumOfPayment: getSumOfPaymentByDefault(data),
 		totalCount: data.totalCount,
 		allWorkspaces: data.allWorkspaces,
+		totalExpensesPerMonth: getTotalExpensesPerMonth(data.workers),
 		workersList: getWorkersWithDailyCount(data.workers),
 	};
 };
@@ -207,7 +226,7 @@ const removeWorker = async ({ id }: { id: string }) => {
 	await deleteDoc(doc(db, COLLECTION_NAME, id));
 };
 
-export type { WorkersDetailBySort };
+export type { WorkersDetailBySort, WorkersOverviewDashboardData };
 export {
 	sortWorkersByNameAndWorkedDate,
 	getWorkersDetailByPage,

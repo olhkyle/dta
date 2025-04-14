@@ -84,7 +84,7 @@ const Trigger = styled.button`
 	}
 
 	@media screen and (min-width: 640px) {
-		gap: 0.4rem;
+		gap: 0.3rem;
 		padding: calc(var(--padding-md) * 0.75) calc(var(--padding-md) * 1.4);
 		font-size: var(--fz-p);
 	}

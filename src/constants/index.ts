@@ -1,4 +1,4 @@
-export * from './barChart';
+export * from './chart';
 export * from './day';
 export * from './displayType';
 export * from './mutateWorker';

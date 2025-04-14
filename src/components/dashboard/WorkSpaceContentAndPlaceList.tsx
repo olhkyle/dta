@@ -1,23 +1,14 @@
-import styled from '@emotion/styled';
-import { Content } from '.';
-import { WorkerQuery } from '../../queries';
-import { useQuery } from '@tanstack/react-query';
-import { queryKey } from '../../constants';
-import { getWorkersOverviewByYear } from '../../service/workData';
-import { Button } from '../common';
 import { useState } from 'react';
+import styled from '@emotion/styled';
+import { Button, Content } from '..';
+import { WorkersOverviewDashboardData } from '../../service/workData';
 import { useClickOutside } from '../../hooks';
 
 interface WorkSpaceContentAndPlaceListProps {
-	year: WorkerQuery['year'];
+	data?: WorkersOverviewDashboardData;
 }
 
-const WorkSpaceContentAndPlaceList = ({ year }: WorkSpaceContentAndPlaceListProps) => {
-	const { data } = useQuery({
-		queryKey: [...queryKey.WORKERS_OVERVIEW_DASHBOARD, year],
-		queryFn: () => getWorkersOverviewByYear({ year }),
-	});
-
+const WorkSpaceContentAndPlaceList = ({ data }: WorkSpaceContentAndPlaceListProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
 
@@ -67,6 +58,7 @@ const PlaceList = styled.ul`
 	background-color: var(--bg-color);
 	border: 1px solid var(--border-color);
 	border-radius: var(--radius);
+	z-index: 1;
 
 	li {
 		padding: calc(var(--padding-sm) * 0.5) var(--padding-sm);
