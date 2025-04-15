@@ -16,21 +16,48 @@ const RegisterSkeleton = () => {
 			width={'calc(100dvw - 32px)'}>
 			<SkeletonItem width={'280px'} height={'50px'} theme={theme} />
 			<Spacer size={8} />
-			<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
-			<Flex direction={isMobile ? 'column' : 'row'} gap="16px" width={'100%'}>
-				<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
-				<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
+			<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+				<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+				<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
 			</Flex>
-			<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
-			<Flex direction={isMobile ? 'column' : 'row'} gap="16px" width={'100%'}>
-				<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
-				<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
+			<Flex direction={isMobile ? 'column' : 'row'} alignItems={isMobile ? 'flex-start' : 'center'} gap="16px" width={'100%'}>
+				<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+					<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+					<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
+				</Flex>
+				<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+					<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+					<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
+				</Flex>
 			</Flex>
-			<Flex direction={isMobile ? 'column' : 'row'} gap="16px" width={'100%'}>
-				<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
-				<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
+			<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+				<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+				<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
 			</Flex>
-			<SkeletonItem width={'100%'} height={'60px'} theme={theme} />
+			<Flex direction={isMobile ? 'column' : 'row'} alignItems={isMobile ? 'flex-start' : 'center'} gap="16px" width={'100%'}>
+				<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+					<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+					<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
+				</Flex>
+				<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+					<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+					<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
+				</Flex>
+			</Flex>
+			<Flex direction={isMobile ? 'column' : 'row'} alignItems={isMobile ? 'flex-start' : 'center'} gap="16px" width={'100%'}>
+				<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+					<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+					<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
+				</Flex>
+				<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+					<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+					<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
+				</Flex>
+			</Flex>
+			<Flex direction={'column'} alignItems={'flex-start'} gap={'4px'} width={'100%'}>
+				<SkeletonItem width={'30%'} height={'30px'} theme={theme} />
+				<SkeletonItem width={'100%'} height={'50px'} theme={theme} />
+			</Flex>
 		</Flex>
 	);
 };
