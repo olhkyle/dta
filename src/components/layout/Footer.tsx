@@ -1,13 +1,14 @@
 import styled from '@emotion/styled';
 import { Link } from 'react-router-dom';
 import { Flex } from '..';
+import { url } from '../../constants';
 
 const Footer = () => {
 	return (
 		<Container>
 			<Flex justifyContent={'space-between'} width={'100%'} maxWidth={'1280px'}>
 				<CopyRight>© radial</CopyRight>
-				<MadeBy to={'https://lazykyle.me'}>lazykyle.me</MadeBy>
+				<MadeBy to={url.MY_WEBSITE}>lazykyle.me</MadeBy>
 			</Flex>
 		</Container>
 	);
