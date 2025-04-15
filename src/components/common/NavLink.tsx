@@ -20,7 +20,6 @@ const StyledLink = styled(Link)`
 	padding: var(--padding-sm) var(--padding-md);
 	font-size: var(--fz-p);
 	font-weight: var(--fw-semibold);
-	line-height: 1.25;
 	border-radius: var(--radius);
 	text-align: center;
 	word-break: keep-all;
