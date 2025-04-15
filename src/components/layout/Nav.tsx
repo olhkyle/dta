@@ -3,7 +3,7 @@ import styled from '@emotion/styled';
 import { useQueryClient } from '@tanstack/react-query';
 import { Link, useNavigate } from 'react-router-dom';
 import { RiCloseFill } from 'react-icons/ri';
-import { PiHamburger } from 'react-icons/pi';
+import { IoReorderTwoOutline } from 'react-icons/io5';
 import { toast } from 'react-toastify';
 import { Flex, NavLink, ThemeButton, SideNav, UserProfile, LoginLinkLoader } from '..';
 import { useAuthQuery, useLoading, useScrollTopEffect, useSetUser, useSideNavActive } from '../../hooks';
@@ -68,7 +68,7 @@ const Nav = () => {
 						<ThemeButton />
 					</NavLinkContainer>
 					<NavToggleButton onClick={toggle} aria-label="side-navigation-toggle-button">
-						{active ? <RiCloseFill size="35" color="var(--text-color)" /> : <PiHamburger size="32" color="var(--text-color)" />}
+						{active ? <RiCloseFill size="32" color="var(--text-color)" /> : <IoReorderTwoOutline size="34" color={'var(--text-color)'} />}
 					</NavToggleButton>
 				</Group>
 			</Container>
@@ -147,9 +147,14 @@ const LoginLink = styled(NavLink)`
 
 const NavToggleButton = styled.button`
 	display: inline-flex;
+	justify-content: center;
 	align-items: center;
 	margin-left: auto;
 	margin-right: 16px;
+	padding: calc(var(--padding-sm) * 0.5);
+	min-width: 44px;
+	border-radius: var(--radius);
+	background-color: var(--btn-light-bg-color);
 
 	@media screen and (min-width: 768px) {
 		display: none;
