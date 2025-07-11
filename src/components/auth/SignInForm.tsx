@@ -1,12 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import styled from '@emotion/styled';
 import { useQueryClient } from '@tanstack/react-query';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { IoMdArrowDropright } from 'react-icons/io';
 import { SigninSchema, signInSchema, Button, Flex, Input, Spacer, HighlightText } from '..';
 import { signIn } from '../../service/auth';
 import { useLoading, useSetUser } from '../../hooks';
@@ -26,8 +25,6 @@ const SignInForm = () => {
 	const navigate = useNavigate();
 	const { setCurrentUser } = useSetUser();
 	const { Loading, isLoading, startTransition } = useLoading();
-
-	const [isOpen, setIsOpen] = useState(false);
 
 	const onSubmit = async (data: SigninSchema) => {
 		try {
@@ -72,24 +69,13 @@ const SignInForm = () => {
 			<Spacer size={16} />
 
 			<Description>
-				<CommonInfo onClick={() => setIsOpen(isOpen => !isOpen)}>
-					<HighlightText color={'var(--color-blue-200)'} bgColor={'var(--white)'} fontSize={'var(--fz-sm)'} textAlign="start">
-						이 서비스는 특정 회사를 위한 것으로, 제한적인 서비스 이용을 원하는 경우 테스트 계정을 제공합니다
-					</HighlightText>
-					<RotatableSvg size="48" color="var(--color-blue-200)" isOpen={isOpen} />
-				</CommonInfo>
-				{isOpen && (
-					<LoginInfo>
-						<div>
-							<dt>Email</dt>
-							<dd>testid@gmail.com</dd>
-						</div>
-						<div>
-							<dt>Password</dt>
-							<dd>test@12345678</dd>
-						</div>
-					</LoginInfo>
-				)}
+				<HighlightText color={'var(--color-blue-200)'} bgColor={'var(--white)'} fontSize={'var(--fz-sm)'} textAlign="start">
+					이 서비스는 특정 회사를 위한 것으로 제한적인 서비스의 테스트를 원하는 경우,{' '}
+					<TestAccountLink to={'https://kwonkyle.vercel.app'} target="_blank">
+						해당 페이지의 이메일
+					</TestAccountLink>{' '}
+					로 요청주세요
+				</HighlightText>
 			</Description>
 		</Form>
 	);
@@ -145,40 +131,24 @@ const LoginButton = styled(Button)`
 
 const Description = styled.div`
 	display: flex;
-	flex-direction: column;
-	gap: 8px;
-`;
-
-const CommonInfo = styled.div`
-	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: var(--padding-sm);
+	padding: calc(var(--padding-sm) * 0.75);
 	background-color: var(--color-blue-50);
 	border-radius: var(--radius);
+	line-height: 1.75;
 	cursor: pointer;
 `;
 
-const RotatableSvg = styled(IoMdArrowDropright)<{ isOpen: boolean }>`
-	transition: transform 0.15s ease-in-out;
-	transform: ${({ isOpen }) => (isOpen ? 'rotate(90deg)' : 'rotate(0deg)')};
-`;
-
-const LoginInfo = styled.dl`
-	display: flex;
-	flex-direction: column;
-	padding: var(--padding-sm);
-	border: 1px solid var(--color-gray-100);
+const TestAccountLink = styled(Link)`
+	padding: calc(var(--padding-sm) * 0.5);
+	color: var(--color-white);
+	background-color: var(--color-blue-300);
 	border-radius: var(--radius);
-	background-color: var(--color-gray-50);
+	transition: background-color 0.15s ease-in-out;
 
-	div {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: var(--padding-sm);
-		font-size: var(--fz-sm);
-		color: var(--color-gray-600);
+	&:hover {
+		background-color: var(--color-blue-200);
 	}
 `;
 
