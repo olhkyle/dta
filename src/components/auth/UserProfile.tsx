@@ -23,7 +23,7 @@ const UserProfile = ({ name, isAdmin, isLoading, Loading, onLogout }: UserProfil
 			)}
 			<Name>{name}</Name>
 			<CustomFlex direction={'column'} aria-haspopup="true">
-				{isAdmin && <DashboardLink to={routes.DASHBOARD}>대시보드</DashboardLink>}
+				<DashboardLink to={routes.DASHBOARD}>대시보드</DashboardLink>
 				<LogoutButton type="button" onClick={onLogout}>
 					{isLoading ? <Loading aria-label="isLoading" /> : '로그아웃'}
 				</LogoutButton>

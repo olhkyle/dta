@@ -36,6 +36,7 @@ const OverviewContent = ({ year, month, workerName, currentSort, currentDisplayT
 			isMobile ? [...`${sumOfPayment}`].slice(0, 4).join('') : sumOfPayment,
 		),
 	});
+
 	return (
 		<>
 			{data?.workers.length === 0 ? (

@@ -1,7 +1,7 @@
 import { ReactNode, useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { Button, Flex, NavLink, Text, ThemeButton } from '..';
-import { useClickOutside, useMediaQuery, useSetUser, useSideNavActive } from '../../hooks';
+import { useAuthQuery, useClickOutside, useMediaQuery, useSetUser, useSideNavActive } from '../../hooks';
 import { routes } from '../../constants';
 import { Link } from 'react-router-dom';
 
@@ -13,6 +13,7 @@ interface SideNavProps {
 }
 
 const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
+	const { data } = useAuthQuery();
 	const {
 		userData: { isAdmin, name },
 	} = useSetUser();
@@ -36,17 +37,17 @@ const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 	return (
 		<Container isShown={isShown}>
 			<Flex direction={'column'} justifyContent={'space-between'}>
-				{isAdmin && (
+				{data && (
 					<Navigation to={routes.OVERVIEW} onClick={close}>
 						월별 개요 명세
 					</Navigation>
 				)}
-				{isAdmin && (
+				{data && (
 					<Navigation to={routes.DETAILS} onClick={close}>
 						월별 상세 명세
 					</Navigation>
 				)}
-				{isAdmin && (
+				{data && (
 					<Navigation to={routes.REGISTER} onClick={close}>
 						일용직 등록
 					</Navigation>
@@ -60,15 +61,14 @@ const SideNav = ({ isShown, isLoading, Loading, onLogout }: SideNavProps) => {
 							setIsProfileClicked(!isProfileClicked);
 						}}>
 						<Text typo={'h7'} color={'var(--text-color)'}>
-							👨‍🚀 {name}
+							{isAdmin ? '🐧' : '⁉️'} {name}
 						</Text>
 						{isProfileClicked && (
 							<UserActions direction={'column'} aria-haspopup="true">
-								{isAdmin && (
-									<DashboardLink to={routes.DASHBOARD} onClick={close}>
-										대시보드
-									</DashboardLink>
-								)}
+								<DashboardLink to={routes.DASHBOARD} onClick={close}>
+									대시보드
+								</DashboardLink>
+
 								<LogoutButton
 									type="button"
 									onClick={() => {

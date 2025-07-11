@@ -33,7 +33,7 @@ const DetailsPrintButton = ({ year, month, workerName, currentSort }: DetailsPri
 			type="button"
 			onClick={() => {
 				if (!isAdmin) {
-					toast.warn('관리자만 출력할 수 있습니다');
+					toast.warn('Admin Only Feature');
 					return;
 				}
 

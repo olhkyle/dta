@@ -5,6 +5,8 @@ import { RxTable } from 'react-icons/rx';
 import { toast } from 'react-toastify';
 import { useMediaQuery } from '../../hooks';
 import { control, controls, displayType } from '../../constants';
+import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 
 interface SegmentedControlProps<T extends string> {
 	data: T[];
@@ -15,6 +17,7 @@ interface SegmentedControlProps<T extends string> {
 
 const SegmentedControl = <T extends string>({ data, value: currentPosition, setValue, hasData = true }: SegmentedControlProps<T>) => {
 	const isTablet = useMediaQuery('(max-width: 768px');
+	const isAdmin = useAppSelector(getIsAdmin);
 
 	const dataDisplayType = (item: T) =>
 		item === displayType.LIST ? (
@@ -34,9 +37,14 @@ const SegmentedControl = <T extends string>({ data, value: currentPosition, setV
 					key={item}
 					active={item === currentPosition}
 					onClick={() => {
+						if (!isAdmin) {
+							return toast.warn('Admin Only Feature');
+						}
+
 						if (!hasData) {
 							return toast.warn('정렬할 데이터가 없습니다.');
 						}
+
 						setValue(item);
 					}}>
 					{dataDisplayType(item)}

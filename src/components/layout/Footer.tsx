@@ -8,7 +8,7 @@ const Footer = () => {
 		<Container>
 			<Flex justifyContent={'space-between'} width={'100%'} maxWidth={'1280px'}>
 				<CopyRight>© radial</CopyRight>
-				<MadeBy to={url.MY_WEBSITE}>lazykyle.me</MadeBy>
+				<MadeBy to={url.MY_WEBSITE}>kwonkyle.app</MadeBy>
 			</Flex>
 		</Container>
 	);
