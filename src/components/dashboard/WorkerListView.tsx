@@ -1,8 +1,10 @@
 import styled from '@emotion/styled';
-import { Text } from '..';
+import { Classified, Text } from '..';
 import { WorkersOverviewDashboardData } from '../../service/workData';
 import { useMediaQuery } from '../../hooks';
 import { WorkerQuery } from '../../queries';
+import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 
 interface WorkerListViewProps {
 	data?: WorkersOverviewDashboardData;
@@ -11,30 +13,37 @@ interface WorkerListViewProps {
 
 const WorkerListView = ({ data, year }: WorkerListViewProps) => {
 	const isMobile = useMediaQuery('(max-width: 640px)');
+	const isAdmin = useAppSelector(getIsAdmin);
 	const workers = Object.entries(data?.workersList ?? {}).sort((prev, curr) => curr[1] - prev[1]);
 
 	return (
 		<>
-			{workers.length === 0 ? (
-				<EmptyMessage>⚡️ 일한 일용직이 없습니다</EmptyMessage>
+			{isAdmin ? (
+				<>
+					{workers.length === 0 ? (
+						<EmptyMessage>⚡️ 일한 일용직이 없습니다</EmptyMessage>
+					) : (
+						<List>
+							{workers.slice(0, 10).map(([key, value]) => (
+								<Worker key={key}>
+									<Text typo={isMobile ? 'h7' : 'h6'} color="var(--text-color)">
+										{key}
+									</Text>
+									<Text typo={isMobile ? 'h6' : 'h5'} color="var(--text-color)">
+										+{value}
+									</Text>
+								</Worker>
+							))}
+						</List>
+					)}
+					<Description>
+						<span>{year}</span>에 <span>{workers.length}</span>명이 일하였습니다
+						<p>﹡ 위 데이터는 가장 많은 날을 일한 사람 순으로 최대 10명을 보여줍니다</p>
+					</Description>
+				</>
 			) : (
-				<List>
-					{workers.slice(0, 10).map(([key, value]) => (
-						<Worker key={key}>
-							<Text typo={isMobile ? 'h7' : 'h6'} color="var(--text-color)">
-								{key}
-							</Text>
-							<Text typo={isMobile ? 'h6' : 'h5'} color="var(--text-color)">
-								+{value}
-							</Text>
-						</Worker>
-					))}
-				</List>
+				<Classified />
 			)}
-			<Description>
-				<span>{year}</span>에 <span>{workers.length}</span>명이 일하였습니다
-				<p>﹡ 위 데이터는 가장 많은 날을 일한 사람 순으로 최대 10명을 보여줍니다</p>
-			</Description>
 		</>
 	);
 };

@@ -20,6 +20,8 @@ import { addWorker, getSpecificWorker } from '../../service/workData';
 import { useLoading } from '../../hooks';
 import { sleep, unformatCurrencyUnit } from '../../utils';
 import { routes } from '../../constants';
+import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 
 export interface Worker extends RegisterSchema {
 	workedDate: Date | any; // technical debt
@@ -39,6 +41,7 @@ const RegisterForm = () => {
 		control,
 		watch,
 	} = useForm<RegisterSchema>({ resolver: zodResolver(registerSchema), defaultValues: { workedDate: new Date() } });
+	const isAdmin = useAppSelector(getIsAdmin);
 
 	const navigate = useNavigate();
 
@@ -46,6 +49,10 @@ const RegisterForm = () => {
 
 	const findSpecificWorker = async () => {
 		try {
+			if (!isAdmin) {
+				return toast.warn('Admin Only Feature');
+			}
+
 			if (getValues('workerName').length === 0) {
 				toast.warn('일용직 이름을 입력해 주세요.');
 				return;
@@ -213,7 +220,11 @@ const RegisterForm = () => {
 				</RegisterButton>
 			</Flex>
 			<Flex justifyContent={'center'} width={'100%'}>
-				<HighlightText color={'var(--disabled-text-color)'} bgColor={'var(--btn-light-bg-color)'} fontSize={'14px'}>
+				<HighlightText
+					color={'var(--disabled-text-color)'}
+					bgColor={'var(--btn-light-bg-color)'}
+					fontSize={'var(--fz-sm)'}
+					textAlign={'start'}>
 					💡 추가 등록 시 성명, 주민등록번호, 출력일은 바로 이전에 작성한 내용이 유지됩니다.
 				</HighlightText>
 			</Flex>
@@ -226,8 +237,12 @@ const Form = styled.form`
 	flex-direction: column;
 	gap: 24px;
 	margin: 0 auto;
-	padding: calc(var(--padding-md) * 5) 0;
+	padding: calc(var(--padding-md) * 4) 0;
 	width: 100%;
+
+	@media screen and (max-width: 480px) {
+		padding-top: calc(var(--padding-md) * 2);
+	}
 `;
 
 const CheckExistButton = styled.button`

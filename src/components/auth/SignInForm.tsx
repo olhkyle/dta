@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import styled from '@emotion/styled';
 import { useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
@@ -6,7 +6,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { SigninSchema, signInSchema, Button, Flex, Input, Spacer, Text } from '..';
+import { IoMdArrowDropright } from 'react-icons/io';
+import { SigninSchema, signInSchema, Button, Flex, Input, Spacer, HighlightText } from '..';
 import { signIn } from '../../service/auth';
 import { useLoading, useSetUser } from '../../hooks';
 import { routes } from '../../constants';
@@ -25,6 +26,8 @@ const SignInForm = () => {
 	const navigate = useNavigate();
 	const { setCurrentUser } = useSetUser();
 	const { Loading, isLoading, startTransition } = useLoading();
+
+	const [isOpen, setIsOpen] = useState(false);
 
 	const onSubmit = async (data: SigninSchema) => {
 		try {
@@ -67,9 +70,27 @@ const SignInForm = () => {
 			</Flex>
 			<LoginButton type="submit">{isLoading ? <Loading /> : '로그인'}</LoginButton>
 			<Spacer size={16} />
-			<Text typo="sm" color="var(--text-color)">
-				서비스 이용을 위해 로그인이 필요합니다.
-			</Text>
+
+			<Description>
+				<CommonInfo onClick={() => setIsOpen(isOpen => !isOpen)}>
+					<HighlightText color={'var(--color-blue-200)'} bgColor={'var(--white)'} fontSize={'var(--fz-sm)'} textAlign="start">
+						이 서비스는 특정 회사를 위한 것으로, 제한적인 서비스 이용을 원하는 경우 테스트 계정을 제공합니다
+					</HighlightText>
+					<RotatableSvg size="48" color="var(--color-blue-200)" isOpen={isOpen} />
+				</CommonInfo>
+				{isOpen && (
+					<LoginInfo>
+						<div>
+							<dt>Email</dt>
+							<dd>testid@gmail.com</dd>
+						</div>
+						<div>
+							<dt>Password</dt>
+							<dd>test@12345678</dd>
+						</div>
+					</LoginInfo>
+				)}
+			</Description>
 		</Form>
 	);
 };
@@ -78,7 +99,7 @@ const Form = styled.form`
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin: 0 auto;
+	margin: 0 auto 64px;
 	padding: 5em var(--padding-md) 0;
 	max-width: 360px;
 	width: 100%;
@@ -119,6 +140,45 @@ const LoginButton = styled(Button)`
 
 	&:hover {
 		background-color: var(--btn-hover-bg-color);
+	}
+`;
+
+const Description = styled.div`
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+`;
+
+const CommonInfo = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: var(--padding-sm);
+	background-color: var(--color-blue-50);
+	border-radius: var(--radius);
+	cursor: pointer;
+`;
+
+const RotatableSvg = styled(IoMdArrowDropright)<{ isOpen: boolean }>`
+	transition: transform 0.15s ease-in-out;
+	transform: ${({ isOpen }) => (isOpen ? 'rotate(90deg)' : 'rotate(0deg)')};
+`;
+
+const LoginInfo = styled.dl`
+	display: flex;
+	flex-direction: column;
+	padding: var(--padding-sm);
+	border: 1px solid var(--color-gray-100);
+	border-radius: var(--radius);
+	background-color: var(--color-gray-50);
+
+	div {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: var(--padding-sm);
+		font-size: var(--fz-sm);
+		color: var(--color-gray-600);
 	}
 `;
 

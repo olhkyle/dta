@@ -3,6 +3,8 @@ import styled from '@emotion/styled';
 import { Button, Content } from '..';
 import { WorkersOverviewDashboardData } from '../../service/workData';
 import { useClickOutside } from '../../hooks';
+import { useAppSelector } from '../../store/store';
+import { getIsAdmin } from '../../store/userSlice';
 
 interface WorkSpaceContentAndPlaceListProps {
 	data?: WorkersOverviewDashboardData;
@@ -11,15 +13,22 @@ interface WorkSpaceContentAndPlaceListProps {
 const WorkSpaceContentAndPlaceList = ({ data }: WorkSpaceContentAndPlaceListProps) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const ref = useClickOutside<HTMLDivElement>(() => setIsOpen(false));
+	const isAdmin = useAppSelector(getIsAdmin);
 
 	return (
 		<>
 			<Content>
-				<div>+ {data?.allWorkspaces.length}</div>
-				<span>곳</span>
+				{isAdmin ? (
+					<>
+						<div>+ {data?.allWorkspaces.length}</div>
+						<span>곳</span>
+					</>
+				) : (
+					'Classified'
+				)}
 			</Content>
 
-			{data?.allWorkspaces.length && data?.allWorkspaces.filter(workspace => workspace !== undefined).length ? (
+			{isAdmin && data?.allWorkspaces.length && data?.allWorkspaces.filter(workspace => workspace !== undefined).length ? (
 				<ListArea ref={ref}>
 					<ListToggleButton type="button" onClick={() => setIsOpen(!isOpen)}>
 						리스트 보기

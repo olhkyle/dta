@@ -1,3 +1,4 @@
+export { default as Classified } from './Classified';
 export { default as Content } from './Content';
 export { default as DashboardContent } from './DashboardContent';
 export { default as ExpenseLineChart } from './ExpenseLineChart';

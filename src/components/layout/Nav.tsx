@@ -24,7 +24,7 @@ const Nav = () => {
 		setLogoutUser,
 	} = useSetUser();
 
-	const { isLoading: isAuthLoading } = useAuthQuery();
+	const { data, isLoading: isAuthLoading } = useAuthQuery();
 	const { Loading, isLoading, startTransition } = useLoading();
 
 	useScrollTopEffect(active);
@@ -54,9 +54,9 @@ const Nav = () => {
 					</Logo>
 					<NavLinkContainer justifyContent={'space-between'} alignItems={'center'} gap={'48px'} margin={'0.4rem 0 0'}>
 						<Flex justifyContent={'space-between'} gap={'4px'}>
-							{isAdmin && <Navigation to={routes.OVERVIEW}>월별 개요</Navigation>}
-							{isAdmin && <Navigation to={routes.DETAILS}>월별 상세</Navigation>}
-							{isAdmin && <Navigation to={routes.REGISTER}>일용직 등록</Navigation>}
+							{data && <Navigation to={routes.OVERVIEW}>월별 개요</Navigation>}
+							{data && <Navigation to={routes.DETAILS}>월별 상세</Navigation>}
+							{data && <Navigation to={routes.REGISTER}>일용직 등록</Navigation>}
 							{isAuthLoading ? (
 								<LoginLinkLoader />
 							) : !name ? (

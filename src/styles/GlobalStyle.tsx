@@ -42,6 +42,7 @@ const GlobalStyle = css`
 		--color-green-300: #15c47e;
 		--color-green-400: #0e7b6c;
 
+		--color-blue-50: #e2edfc;
 		--color-blue-100: #0687f0;
 		--color-blue-200: #2272eb;
 		--color-blue-300: #0164e6;
