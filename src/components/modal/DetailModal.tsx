@@ -356,7 +356,7 @@ const ViewWorkerDetailButton = styled(Button)`
 const Group = styled.div`
 	margin: 16px 0 0;
 	padding: var(--padding-md);
-	background-color: var(--color-white);
+	background-color: var(--bg-color);
 	border-radius: var(--radius);
 
 	-ms-overflow-style: none; /* IE and Edge */

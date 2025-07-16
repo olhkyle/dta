@@ -263,6 +263,14 @@ const Table = styled.table<{ searched: boolean }>`
 	@media screen and (max-width: 640px) {
 		border-color: var(--bg-color);
 	}
+
+	td[aria-label='tableBody-workspace'] {
+		padding: 0 calc(var(--padding-sm));
+	}
+
+	td[aria-label='tableBody-businessNumber'] {
+		padding: 0 calc(var(--padding-sm));
+	}
 `;
 
 export default DetailsContent;
