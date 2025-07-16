@@ -71,10 +71,10 @@ const SignInForm = () => {
 			<Description>
 				<HighlightText color={'var(--color-blue-200)'} bgColor={'var(--white)'} fontSize={'var(--fz-sm)'} textAlign="start">
 					이 서비스는 특정 회사를 위한 것으로 제한적인 서비스의 테스트를 원하는 경우,{' '}
-					<TestAccountLink to={'https://kwonkyle.vercel.app'} target="_blank">
-						해당 페이지의 이메일
+					<TestAccountLink to={'https://tektzimmer.notion.site/dta-docs'} target="_blank">
+						테스트 계정
 					</TestAccountLink>{' '}
-					로 요청주세요
+					을 확인해 주세요
 				</HighlightText>
 			</Description>
 		</Form>
