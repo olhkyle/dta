@@ -47,7 +47,7 @@ const Overview = ({ query }: OverviewProps) => {
 					<tbody>
 						{workerOverviewForPrint?.map(({ workerName, workedDate, sumOfPayment }, dataIdx) => (
 							<tr key={workerName}>
-								<td aria-label="tableBody-index">{arrIdx === 0 ? dataIdx + 1 : dataIdx + 1 + OVERVIEW_DIVISOR}</td>
+								<td aria-label="tableBody-index">{dataIdx + 1 + arrIdx * OVERVIEW_DIVISOR}</td>
 								<td aria-label="tableBody-workerName">{workerName}</td>
 								<td aria-label="tableBody-monthOfWorkedDate">{workedDate.getMonth() + 1}월</td>
 								<td aria-label="tableBody-sumOfPayment">{formatCurrencyUnit(sumOfPayment)}</td>
