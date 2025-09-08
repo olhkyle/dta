@@ -112,7 +112,7 @@ const DetailTable = styled.table`
 	thead > tr,
 	tbody > tr {
 		display: grid;
-		grid-template-columns: 0.75fr 1.15fr 2fr 1fr 1.5fr 2.25fr 2fr;
+		grid-template-columns: 0.75fr 1.15fr 2fr 1fr 1.25fr 2.5fr 2fr;
 	}
 
 	thead {
@@ -165,6 +165,11 @@ const DetailTable = styled.table`
 	td[aria-label='tableBody-sum-title'],
 	td[aria-label='tableBody-total-sumOfPayment'] {
 		font-weight: 600;
+	}
+
+	td[aria-label='tableBody-workspace'] {
+		text-align: center;
+		font-size: 12px;
 	}
 `;
 
