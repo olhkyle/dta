@@ -284,11 +284,16 @@ const GlobalStyle = css`
 			page-break-inside: avoid;
 			page-break-after: auto;
 		}
+
+		tr {
+			break-inside: avoid;
+			page-break-inside: avoid;
+		}
 	}
 
 	@page {
 		size: A4;
-		margin: 15mm 20mm;
+		margin: 15mm 10mm;
 	}
 `;
 
